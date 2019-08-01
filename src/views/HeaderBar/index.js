@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import PreviewPane from './PreviewPane';
+import HeaderBar from './HeaderBar';
 
 const mapStateToProps = state => {
     return {
@@ -13,4 +13,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(PreviewPane)
+export default connect(mapStateToProps,mapDispatchToProps)(HeaderBar)

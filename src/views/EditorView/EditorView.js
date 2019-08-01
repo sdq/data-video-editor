@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { Layout } from 'antd';
+import HeaderBar from '../HeaderBar';
 import EditPane from '../EditPane';
 import ResourcePane from '../ResourcePane';
 import ToolPane from '../ToolPane';
-import TrackPane from '../TrackPane/TrackPane';
-import PreviewPane from '../PreviewPane/PreviewPane';
+import TrackPane from '../TrackPane';
+import PreviewPane from '../PreviewPane';
 
 const { Header, Footer, Sider, Content } = Layout;
 
@@ -12,23 +13,21 @@ export default class EditorView extends Component {
     render() {
         return (
             <div>
+                <HeaderBar/>
                 <Layout>
-                    <Header>
-                        Header
-                    </Header>
                     <Layout>
                         <Sider 
-                        width={240} 
+                        width={360} 
                         style={{ background: '#fff', height: '500px' }} 
                         // trigger={null} collapsible collapsedWidth={0} collapsed={this.props.isSidebarDisplayed}
                         >
                             <ResourcePane/>
                         </Sider>
-                        <Content>
-                            <PreviewPane/>
+                        <Content style={{ background: '#fff', height: '500px' }}>
+                            <EditPane/>
                         </Content>
                         <Sider 
-                        width={240} 
+                        width={300} 
                         style={{ background: '#fff', height: '500px' }} 
                         // trigger={null} collapsible collapsedWidth={0} collapsed={this.props.isSidebarDisplayed}
                         >
@@ -37,7 +36,7 @@ export default class EditorView extends Component {
                     </Layout>
                     <Layout>
                         <Content
-                        style={{ background: '#eee', height: '200px' }} 
+                        style={{ background: '#eee', height: '300px' }} 
                         >
                             <TrackPane/>
                         </Content>
