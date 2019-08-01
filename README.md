@@ -1,4 +1,4 @@
-# Data View Editor
+# Data Video Editor
 
 ### Development
 

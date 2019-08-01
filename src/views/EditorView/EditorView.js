@@ -5,7 +5,6 @@ import EditPane from '../EditPane';
 import ResourcePane from '../ResourcePane';
 import ToolPane from '../ToolPane';
 import TrackPane from '../TrackPane';
-import PreviewPane from '../PreviewPane';
 
 const { Header, Footer, Sider, Content } = Layout;
 
