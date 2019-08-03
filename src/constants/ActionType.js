@@ -1,0 +1,10 @@
+export default {
+    // UI Action
+    DISPLAY_SIDEBAR : 'SHOW_SIDEBAR',
+    // Timeline Action
+    SELECT_SCENE: 'SELECT_SCENE',
+    ADD_SCENE : 'ADD_SCENE',
+    REMOVE_SCENE : 'REMOVE_SCENE',
+    UPDATE_SCENE : 'UPDATE_SCENE',
+    REORDER_SCENE : 'REORDER_SCENES',
+}

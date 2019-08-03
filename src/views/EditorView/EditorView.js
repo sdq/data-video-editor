@@ -5,13 +5,15 @@ import EditPane from '../EditPane';
 import ResourcePane from '../ResourcePane';
 import ToolPane from '../ToolPane';
 import TrackPane from '../TrackPane';
+import HTML5Backend from 'react-dnd-html5-backend'
+import { DndProvider } from 'react-dnd'
 
 const { Header, Footer, Sider, Content } = Layout;
 
 export default class EditorView extends Component {
     render() {
         return (
-            <div>
+            <DndProvider backend={HTML5Backend}>
                 <HeaderBar/>
                 <Layout>
                     <Layout>
@@ -41,7 +43,7 @@ export default class EditorView extends Component {
                         </Content>
                     </Layout>
                 </Layout>
-            </div>
+            </DndProvider>
         )
     }
 }

@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import uiReducer from './uiReducer';
+import ui from './ui';
 export default combineReducers({
-    uiReducer,
+    ui,
 });
