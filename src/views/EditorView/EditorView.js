@@ -8,7 +8,7 @@ import TrackPane from '../TrackPane';
 import HTML5Backend from 'react-dnd-html5-backend'
 import { DndProvider } from 'react-dnd'
 
-const { Header, Footer, Sider, Content } = Layout;
+const { Sider, Content } = Layout;
 
 export default class EditorView extends Component {
     render() {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Stage, Layer, Rect, Transformer } from 'react-konva';
+import { Stage, Layer } from 'react-konva';
 import ImageElement from './Elements/ImageElement';
 import TextElement from './Elements/TextElement';
 import Scene from '../../models/Scene';
@@ -42,7 +42,7 @@ export default class EditCanvas extends Component {
                                     case SceneType.IMAGE:
                                         return <ImageElement key={index} x={element.info.x} y={element.info.y} src={element.info.src} />
                                     default:
-                                        break;
+                                        return <div></div>;
                                 }
                             })}
                         </Layer>

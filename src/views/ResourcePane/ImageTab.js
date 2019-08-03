@@ -30,7 +30,7 @@ export default class ImageTab extends Component {
                         {/* <Card title={item.title}>Card content</Card> */}
                         <LazyLoad>
                             <div className="imagecard" align="center">
-                                <img src={item.src} />
+                                <img src={item.src} alt="" />
                             </div>
                         </LazyLoad>
                     </List.Item>
