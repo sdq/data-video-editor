@@ -25,10 +25,6 @@ const getListStyle = isDraggingOver => ({
 
 export default class Track extends Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         return (
             <Droppable droppableId={this.props.droppableId} direction="horizontal">

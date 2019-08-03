@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Icon, Button, Row, Col} from 'antd';
+import {Button, Row} from 'antd';
 
 export default class PlayControlBar extends Component {
     constructor(props) {

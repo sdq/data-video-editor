@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { DragDropContext } from 'react-beautiful-dnd';
 import Track from './Track';
 
 // fake data generator
@@ -33,14 +33,6 @@ const move = (source, destination, droppableSource, droppableDestination) => {
 
     return result;
 };
-
-const grid = 8;
-
-const getListStyle = isDraggingOver => ({
-    background: isDraggingOver ? 'lightblue' : 'lightgrey',
-    padding: grid,
-    width: 250
-});
 
 export default class TrackGroup extends Component {
     state = {

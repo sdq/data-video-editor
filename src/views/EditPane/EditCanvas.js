@@ -3,8 +3,8 @@ import { Stage, Layer, Rect, Transformer } from 'react-konva';
 import ImageElement from './Elements/ImageElement';
 import TextElement from './Elements/TextElement';
 import Scene from '../../models/Scene';
-import ImageInfo from '../../models/ImageInfo';
-import TextInfo from '../../models/TextInfo';
+import { Element, ImageInfo, TextInfo} from '../../models/Element';
+import SceneType from '../../constants/SceneType';
 import './editpane.css';
 
 const demoimage = new ImageInfo(
@@ -14,18 +14,15 @@ const demoimage = new ImageInfo(
     100,
     100,
     0,
-    1,
 )
 const demotext = new TextInfo(
     "http://localhost:8080/images/man.png",
     100,
     100,
-    100,
-    100,
-    0,
-    1,
 )
-const scene = new Scene([demoimage, demotext], 5);
+const element1 = new Element(SceneType.IMAGE, demoimage);
+const element2 = new Element(SceneType.TEXT, demotext);
+const scene = new Scene([element1, element2], 5);
 
 export default class EditCanvas extends Component {
     state = {
@@ -38,8 +35,16 @@ export default class EditCanvas extends Component {
                 <div id="canvasContainer">
                     <Stage width={640} height={360}>
                         <Layer>
-                            <TextElement x={this.state.currentScene.elements[1].x} y={this.state.currentScene.elements[1].y} text={this.state.currentScene.elements[1].text} />
-                            <ImageElement x={this.state.currentScene.elements[0].x} y={this.state.currentScene.elements[0].y} src={this.state.currentScene.elements[0].src} />
+                            {this.state.currentScene.elements.map(function(element, index) {
+                                switch (element.type) {
+                                    case SceneType.TEXT:
+                                        return <TextElement key={index} x={element.info.x} y={element.info.y} text={element.info.text} />
+                                    case SceneType.IMAGE:
+                                        return <ImageElement key={index} x={element.info.x} y={element.info.y} src={element.info.src} />
+                                    default:
+                                        break;
+                                }
+                            })}
                         </Layer>
                     </Stage>
                 </div>
