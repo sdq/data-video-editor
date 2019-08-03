@@ -16,9 +16,13 @@
     "react-redux": "^7.1.0",
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.0.1",
+    "react-vega-lite": "^6.1.0",
     "redux": "^4.0.4",
     "redux-thunk": "^2.3.0",
-    "reselect": "^4.0.0"
+    "reselect": "^4.0.0",
+    "vega": "^5.4.0",
+    "vega-lib": "^4.4.0",
+    "vega-lite": "^3.4.0"
   },
   "scripts": {
     "start": "react-scripts start",

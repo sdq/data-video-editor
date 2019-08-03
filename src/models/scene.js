@@ -1,6 +1,6 @@
 export default class Scene {
-    constructor(images, duration) {
-        this.images = images;
+    constructor(elements, duration) {
+        this.elements = elements;
         this.duration = duration;
     }
 }

@@ -1,5 +1,5 @@
 import ActionType from '../constants/ActionType';
-import Scene from '../models/scene';
+import Scene from '../models/Scene';
 
 const blankScene = new Scene([], 5);
 
