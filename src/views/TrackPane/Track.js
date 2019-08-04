@@ -47,9 +47,10 @@ export default class Track extends Component {
                                 snapshot.isDragging,
                                 provided.draggableProps.style
                             )}
+                            onClick = {this.clickSceneBlock}
                             >
                             {/* {item.content} */}
-                                <SceneBlock type={SceneType.IMAGE} info={item.content}/>
+                                <SceneBlock type={SceneType.IMAGE} info={item.content} index={index} { ...this.props }/>
                             </div>
                         )}
                         </Draggable>

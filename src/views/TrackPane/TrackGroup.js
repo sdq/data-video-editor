@@ -86,8 +86,8 @@ export default class TrackGroup extends Component {
         return (
             <div>
                 <DragDropContext onDragEnd={this.onDragEnd}>
-                    <Track droppableId="droppable1" items={this.state.track1}/>
-                    <Track droppableId="droppable2" items={this.state.track2}/>
+                    <Track droppableId="droppable1" items={this.state.track1} { ...this.props }/>
+                    <Track droppableId="droppable2" items={this.state.track2} { ...this.props }/>
                 </DragDropContext>
                 {/* <Track/>
                 <Track/>

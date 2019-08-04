@@ -6,9 +6,9 @@ import SceneType from '../../constants/SceneType';
 import './editpane.css';
 
 export default class EditCanvas extends Component {
-    state = {
-        currentScene: this.props.currentScene
-    };
+    // state = {
+    //     currentScene: this.props.currentScene
+    // };
     render() {
         return (
             <div>
@@ -16,7 +16,7 @@ export default class EditCanvas extends Component {
                 <div id="canvasContainer">
                     <Stage width={640} height={360}>
                         <Layer>
-                            {this.state.currentScene.elements.map(function(element, index) {
+                            {this.props.currentScene.elements.map(function(element, index) {
                                 switch (element.type) {
                                     case SceneType.TEXT:
                                         return <TextElement key={index} x={element.info.x} y={element.info.y} text={element.info.text} />

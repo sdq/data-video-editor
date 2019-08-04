@@ -7,7 +7,7 @@ export default class TrackPane extends Component {
         return (
             <div className="trackpane">
                 TrackPane
-                <TrackGroup scenes={this.props.scenes}/>
+                <TrackGroup  { ...this.props }/>
             </div>
         )
     }

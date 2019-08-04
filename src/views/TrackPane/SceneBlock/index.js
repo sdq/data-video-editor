@@ -12,6 +12,12 @@ export default class SceneBlock extends Component {
 
     constructor(props) {
         super(props);
+        this.clickSceneBlock = this.clickSceneBlock.bind(this);
+    }
+
+    clickSceneBlock() {
+        //console.log("click!"+this.props.index);
+        this.props.selectScene(this.props.index);
     }
 
     chooseSceneBlock() {
@@ -33,7 +39,7 @@ export default class SceneBlock extends Component {
 
     render() {
         return (
-            <div>
+            <div onClick = {this.clickSceneBlock}>
                 {this.chooseSceneBlock()}
             </div>
         )

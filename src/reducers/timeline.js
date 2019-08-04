@@ -28,20 +28,31 @@ const initialState = {
 }
 
 export default (state = initialState, action) => {
+    const newState = Object.assign({},state);
+    var newScenes = newState.scenes;
     switch (action.type) {
+        case ActionType.SELECT_SCENE:
+            newState.index = action.index;
+            return newState;
+        case ActionType.ADD_SCENE:
+            newScenes.push(action.scene);
+            newState.scenes = newScenes;
+            newState.index = newScenes.length - 1;
+            return newState;
+        case ActionType.REMOVE_SCENE:
+            newScenes.splice(action.index, 1);
+            newState.scenes = newScenes;
+            newState.index = 0;
+            return newState
+        case ActionType.UPDATE_SCENE:
+            newScenes[action.index] = action.scene;
+            newState.scenes = newScenes;
+            return newState
+        case ActionType.REORDER_SCENE:
+            //TODO: reorder
+            return state
 
-    case ActionType.SELECT_SCENE:
-        return { ...state }
-    case ActionType.ADD_SCENE:
-        return { ...state }
-    case ActionType.REMOVE_SCENE:
-        return { ...state }
-    case ActionType.UPDATE_SCENE:
-        return { ...state }
-    case ActionType.REORDER_SCENE:
-        return { ...state }
-
-    default:
-        return state
+        default:
+            return state
     }
 }
