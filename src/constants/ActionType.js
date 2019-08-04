@@ -7,4 +7,7 @@ export default {
     REMOVE_SCENE : 'REMOVE_SCENE',
     UPDATE_SCENE : 'UPDATE_SCENE',
     REORDER_SCENE : 'REORDER_SCENES',
+    // Canvas Action
+    ADD_ELEMENT: 'ADD_ELEMENT',
+    MOVE_ELEMENT: 'MOVE_ELEMENT',
 }

@@ -1,15 +1,18 @@
 import { connect } from 'react-redux';
 import ResourcePane from './ResourcePane';
+import {currentScene, sceneIndex} from '../../selectors/timeline';
+import * as timelineActions from '../../actions/timelineAction';
 
 const mapStateToProps = state => {
     return {
-        
+        sceneIndex: sceneIndex(state),
+        currentScene: currentScene(state),
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        
+        updateScene: (index, scene) => dispatch(timelineActions.updateScene(index, scene)),
     }
 }
 

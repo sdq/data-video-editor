@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { List } from 'antd';
 import LazyLoad from 'react-lazyload';
+import ImageCard from '../../components/ImageCard';
 import './imagetab.css';
 
 const data = [
@@ -26,13 +27,7 @@ export default class ImageTab extends Component {
                     dataSource={data}
                     renderItem={item => (
                     <List.Item>
-                        {/* {item.title} */}
-                        {/* <Card title={item.title}>Card content</Card> */}
-                        <LazyLoad>
-                            <div className="imagecard" align="center">
-                                <img src={item.src} alt="" />
-                            </div>
-                        </LazyLoad>
+                        <LazyLoad><ImageCard info={item} {...this.props}/></LazyLoad>
                     </List.Item>
                     )}
                 />

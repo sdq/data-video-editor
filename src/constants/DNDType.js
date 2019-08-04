@@ -1,3 +1,3 @@
 export default {
-	IMAGE: 'image'
+	ADD_ELEMENT_TO_CANVAS: 'ADD_ELEMENT_TO_CANVAS'
 }

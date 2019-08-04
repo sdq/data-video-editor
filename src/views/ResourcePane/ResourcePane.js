@@ -15,7 +15,7 @@ export default class ResourcePane extends Component {
             <div className="card-container">
                 <Tabs type="card">
                     <TabPane tab="Image" key="Image">
-                        <ImageTab/>
+                        <ImageTab {...this.props}/>
                     </TabPane>
                     <TabPane tab="Chart" key="Chart">
                         <ChartTab/>

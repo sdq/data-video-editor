@@ -6,7 +6,7 @@ export class Element {
 }
 
 export class ImageInfo {
-    constructor(src, x, y, width, height, rotation, zIndex) {
+    constructor(src, x, y, width, height, rotation) {
         this.src = src;
         this.x = x;
         this.y = y;
@@ -17,7 +17,7 @@ export class ImageInfo {
 }
 
 export class TextInfo {
-    constructor(text, x, y, width, height, rotation, zIndex) {
+    constructor(text, x, y) {
         this.text = text;
         this.x = x;
         this.y = y;

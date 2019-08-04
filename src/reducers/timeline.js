@@ -1,7 +1,7 @@
 import ActionType from '../constants/ActionType';
 import Scene from '../models/Scene';
 import { Element, ImageInfo, TextInfo} from '../models/Element';
-import SceneType from '../constants/SceneType';
+import ElementType from '../constants/ElementType';
 
 const demoimage = new ImageInfo(
     "http://localhost:8080/images/man.png",
@@ -16,8 +16,8 @@ const demotext = new TextInfo(
     100,
     100,
 )
-const element1 = new Element(SceneType.IMAGE, demoimage);
-const element2 = new Element(SceneType.TEXT, demotext);
+const element1 = new Element(ElementType.IMAGE, demoimage);
+const element2 = new Element(ElementType.TEXT, demotext);
 const scene = new Scene([element1, element2], 5);
 
 const blankScene = new Scene([], 3);
@@ -29,7 +29,7 @@ const initialState = {
 
 export default (state = initialState, action) => {
     const newState = Object.assign({},state);
-    var newScenes = newState.scenes;
+    var newScenes = Object.assign({},newState.scenes);
     switch (action.type) {
         case ActionType.SELECT_SCENE:
             newState.index = action.index;
@@ -51,7 +51,10 @@ export default (state = initialState, action) => {
         case ActionType.REORDER_SCENE:
             //TODO: reorder
             return state
-
+        case ActionType.ADD_ELEMENT:
+            newScenes[action.index] = action.scene;
+            newState.scenes = newScenes;
+            return newState
         default:
             return state
     }

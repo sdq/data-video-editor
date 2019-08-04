@@ -1,10 +1,11 @@
 import { connect } from 'react-redux';
 import EditPane from './EditPane';
-import {currentScene, sceneIndex} from '../../selectors/timeline';
+import {currentScene, sceneIndex, scenes} from '../../selectors/timeline';
 import * as timelineActions from '../../actions/timelineAction';
 
 const mapStateToProps = state => {
     return {
+        scenes: scenes(state),
         sceneIndex: sceneIndex(state),
         currentScene: currentScene(state),
     }
