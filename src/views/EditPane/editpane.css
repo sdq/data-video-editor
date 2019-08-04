@@ -1,8 +1,17 @@
+#editpane {
+    border-right-style: solid;
+    border-right-width: 1px;
+    border-right-color: #FFC107;
+    border-left-style: solid;
+    border-left-width: 1px;
+    border-left-color: #FFC107;
+}
+
 #canvasContainer {
-    height: 360px;
-    width: 640px;
+    height: 450px;
+    width: 800px;
     border-style: solid;
-    border-color: black;
+    border-color: #FFC107;
     border-width: 1px;
     margin: 0 auto;
 }

@@ -10,6 +10,8 @@ import { DndProvider } from 'react-dnd'
 
 const { Sider, Content } = Layout;
 
+const contentHeight = '550px'
+
 export default class EditorView extends Component {
     render() {
         return (
@@ -19,17 +21,17 @@ export default class EditorView extends Component {
                     <Layout>
                         <Sider 
                         width={360} 
-                        style={{ background: '#fff', height: '500px' }} 
+                        style={{ background: '#fff', height: contentHeight }} 
                         // trigger={null} collapsible collapsedWidth={0} collapsed={this.props.isSidebarDisplayed}
                         >
                             <ResourcePane/>
                         </Sider>
-                        <Content style={{ background: '#fff', height: '500px' }}>
+                        <Content style={{ background: '#fff', height: contentHeight }}>
                             <EditPane/>
                         </Content>
                         <Sider 
                         width={300} 
-                        style={{ background: '#fff', height: '500px' }} 
+                        style={{ background: '#fff', height: contentHeight }} 
                         // trigger={null} collapsible collapsedWidth={0} collapsed={this.props.isSidebarDisplayed}
                         >
                             <ToolPane/>

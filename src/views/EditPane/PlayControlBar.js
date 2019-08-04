@@ -20,9 +20,9 @@ export default class PlayControlBar extends Component {
     render() {
         return (
             <Row>
-                <Button type="link" size="large" icon="step-backward" />
-                <Button type="link" size="large" icon={this.state.isPlaying?"pause-circle":"play-circle"} onClick={this.play}/>
-                <Button type="link" size="large" icon="step-forward" />
+                <Button icon="step-backward" />
+                <Button icon={this.state.isPlaying?"pause":"caret-right"} onClick={this.play}/>
+                <Button icon="step-forward" />
             </Row>
         )
     }

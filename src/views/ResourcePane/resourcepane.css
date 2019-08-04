@@ -1,5 +1,5 @@
 .card-container > .ant-tabs-card > .ant-tabs-content {
-    height: 450px;
+    height: 500px;
     margin-top: -16px;
 }
 
@@ -8,16 +8,16 @@
     padding: 16px;
 }
 
-.card-container > .ant-tabs-card > .ant-tabs-bar {
+/* .card-container > .ant-tabs-card > .ant-tabs-bar {
     border-color: #fff;
-}
+} */
 
 .card-container > .ant-tabs-card > .ant-tabs-bar .ant-tabs-tab {
     border-color: transparent;
     background: transparent;
 }
 
-.card-container > .ant-tabs-card > .ant-tabs-bar .ant-tabs-tab-active {
+/* .card-container > .ant-tabs-card > .ant-tabs-bar .ant-tabs-tab-active {
     border-color: #fff;
     background: #fff;
-}
+} */

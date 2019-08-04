@@ -39,26 +39,23 @@ class EditCanvas extends Component {
 			backgroundColor = '#c8e6c9';
 		}
         return connectDropTarget(
-            <div>
-                EditCanvas
-                <div id="canvasContainer" style={{ backgroundColor }}>
-                    <Stage width={640} height={360}>
-                        <Layer>
-                            {this.props.currentScene.elements.map(function(element, index) {
-                                console.log(element.info);
-                                switch (element.type) {
-                                    case ElementType.TEXT:
-                                        return <TextElement key={this.props.sceneIndex+"-"+index} edit={ele => this.editElement(index, ele)} element={element}/>
-                                    case ElementType.IMAGE:
-                                        return <ImageElement key={this.props.sceneIndex+"-"+index} edit={ele => this.editElement(index, ele)} element={element}/>
-                                    default:
-                                        //TODO: remove
-                                        return <div></div>;
-                                }
-                            }.bind(this))}
-                        </Layer>
-                    </Stage>
-                </div>
+            <div id="canvasContainer" style={{ backgroundColor }}>
+                <Stage width={800} height={450}>
+                    <Layer>
+                        {this.props.currentScene.elements.map(function(element, index) {
+                            console.log(element.info);
+                            switch (element.type) {
+                                case ElementType.TEXT:
+                                    return <TextElement key={this.props.sceneIndex+"-"+index} edit={ele => this.editElement(index, ele)} element={element}/>
+                                case ElementType.IMAGE:
+                                    return <ImageElement key={this.props.sceneIndex+"-"+index} edit={ele => this.editElement(index, ele)} element={element}/>
+                                default:
+                                    //TODO: remove
+                                    return <div></div>;
+                            }
+                        }.bind(this))}
+                    </Layer>
+                </Stage>
             </div>
         )
     }

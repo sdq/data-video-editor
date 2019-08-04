@@ -14,6 +14,21 @@ const data = [
         name: "leaf",
         style: "cartoon",
         src: "http://localhost:8080/images/leaf.png"
+    },
+    {
+        name: "chair",
+        style: "cartoon",
+        src: "http://localhost:8080/images/chair.png"
+    },
+    {
+        name: "light",
+        style: "cartoon",
+        src: "http://localhost:8080/images/light.png"
+    },
+    {
+        name: "list",
+        style: "cartoon",
+        src: "http://localhost:8080/images/list.png"
     }
 ];
 

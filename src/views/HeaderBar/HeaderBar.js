@@ -5,7 +5,7 @@ export default class HeaderBar extends Component {
     render() {
         return (
             <div className="headerbar">
-                My Bar
+                
             </div>
         )
     }
