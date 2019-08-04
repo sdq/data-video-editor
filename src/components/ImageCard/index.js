@@ -17,12 +17,14 @@ const imageSource = {
 		if (dropResult) {
             console.log(item);
             console.log(dropResult);
-            //add element to scene
-            const newScene = Object.assign({},dropResult.currentScene);
-            const newImage = new ImageInfo(item.src, 300, 150, 100, 100, 0);
-            const newElement = new Element(ElementType.IMAGE, newImage);
-            newScene.elements.push(newElement);
-            props.updateScene(dropResult.sceneIndex, newScene);
+            if (dropResult.target === "canvas") {
+                //add element to scene
+                const newScene = Object.assign({},dropResult.currentScene);
+                const newImage = new ImageInfo(item.src, 300, 150, 100, 100, 0);
+                const newElement = new Element(ElementType.IMAGE, newImage);
+                newScene.elements.push(newElement);
+                props.updateScene(dropResult.sceneIndex, newScene);
+            }
 		}
     },
 }
@@ -39,7 +41,7 @@ class ImageCard extends Component {
 }
 
 export default DragSource(
-    DNDType.ADD_ELEMENT_TO_CANVAS,
+    DNDType.DND_IMAGE,
     imageSource,
 	(connect, monitor) => ({
 		connectDragSource: connect.dragSource(),

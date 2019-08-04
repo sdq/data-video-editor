@@ -1,10 +1,17 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import { Input } from 'antd';
+const { TextArea } = Input;
 
 export default class TextTab extends Component {
+
+    constructor(props) {
+        super(props);
+    }
+
     render() {
         return (
             <div>
-                TextTab
+                <TextArea rows={4} />
             </div>
         )
     }

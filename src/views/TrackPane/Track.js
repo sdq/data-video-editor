@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
+import { DropTarget } from 'react-dnd';
+import DNDType from '../../constants/DNDType';
 import SceneBlock from './SceneBlock';
 import SceneType from '../../constants/SceneType';
 
@@ -19,46 +21,75 @@ const getItemStyle = (isDragging, draggableStyle) => ({
 });
 
 const getListStyle = isDraggingOver => ({
-    background: isDraggingOver ? 'lightblue' : 'lightgrey',
+    // background: isDraggingOver ? 'lightblue' : 'lightgrey',
     display: 'flex',
     padding: grid,
     overflow: 'auto',
 });
 
-export default class Track extends Component {
+const trackTarget = {
+	drop: (props) => ({ 
+        target: "track",
+        // sceneIndex: props.sceneIndex,
+        // currentScene: props.currentScene
+    })
+}
+
+class Track extends Component {
 
     render() {
-        return (
-            <Droppable droppableId={this.props.droppableId} direction="horizontal">
-                {(provided, snapshot) => (
-                    <div
-                    ref={provided.innerRef}
-                    style={getListStyle(snapshot.isDraggingOver)}
-                    {...provided.droppableProps}
-                    >
-                    {this.props.items.map((item, index) => (
-                        <Draggable key={item.id} draggableId={item.id} index={index}>
-                        {(provided, snapshot) => (
-                            <div
-                            ref={provided.innerRef}
-                            {...provided.draggableProps}
-                            {...provided.dragHandleProps}
-                            style={getItemStyle(
-                                snapshot.isDragging,
-                                provided.draggableProps.style
+        const { canDrop, isOver, connectDropTarget } = this.props;
+        const isActive = canDrop && isOver;
+        let backgroundColor = '#fff';
+        if (isActive) {
+			backgroundColor = 'darkgreen';
+		} 
+		else if (canDrop) {
+			backgroundColor = '#c8e6c9';
+		}
+        return connectDropTarget(
+            <div style={{ backgroundColor }}>
+                <Droppable droppableId={this.props.droppableId} direction="horizontal">
+                    {(provided, snapshot) => (
+                        <div
+                        ref={provided.innerRef}
+                        style={getListStyle(snapshot.isDraggingOver)}
+                        {...provided.droppableProps}
+                        >
+                        {this.props.items.map((item, index) => (
+                            <Draggable key={item.id} draggableId={item.id} index={index}>
+                            {(provided, snapshot) => (
+                                <div
+                                ref={provided.innerRef}
+                                {...provided.draggableProps}
+                                {...provided.dragHandleProps}
+                                style={getItemStyle(
+                                    snapshot.isDragging,
+                                    provided.draggableProps.style
+                                )}
+                                onClick = {this.clickSceneBlock}
+                                >
+                                {/* {item.content} */}
+                                    <SceneBlock type={SceneType.IMAGE} info={item.content} index={index} { ...this.props }/>
+                                </div>
                             )}
-                            onClick = {this.clickSceneBlock}
-                            >
-                            {/* {item.content} */}
-                                <SceneBlock type={SceneType.IMAGE} info={item.content} index={index} { ...this.props }/>
-                            </div>
-                        )}
-                        </Draggable>
-                    ))}
-                    {provided.placeholder}
-                    </div>
-                )}
-            </Droppable>
+                            </Draggable>
+                        ))}
+                        {provided.placeholder}
+                        </div>
+                    )}
+                </Droppable>
+            </div>
         )
     }
 }
+
+export default DropTarget(
+	[DNDType.DND_IMAGE],
+	trackTarget,
+	(connect, monitor) => ({
+		connectDropTarget: connect.dropTarget(),
+		isOver: monitor.isOver(),
+		canDrop: monitor.canDrop()
+	})
+)(Track);

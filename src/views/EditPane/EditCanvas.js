@@ -8,8 +8,8 @@ import DNDType from '../../constants/DNDType';
 import './editpane.css';
 
 const canvasTarget = {
-	// 当有对应的 drag source 放在当前组件区域时，会返回一个对象，可以在 monitor.getDropResult() 中获取到
 	drop: (props) => ({ 
+        target: "canvas",
         sceneIndex: props.sceneIndex,
         currentScene: props.currentScene
     })
@@ -64,7 +64,7 @@ class EditCanvas extends Component {
 }
 
 export default DropTarget(
-	DNDType.ADD_ELEMENT_TO_CANVAS,
+	[DNDType.DND_IMAGE],
 	canvasTarget,
 	(connect, monitor) => ({
 		connectDropTarget: connect.dropTarget(),
