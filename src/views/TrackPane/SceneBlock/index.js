@@ -7,6 +7,7 @@ import AudioBlock from './AudioBlock';
 import TextBlock from './TextBlock';
 import ImageBlock from './ImageBlock';
 import ChartBlock from './ChartBlock';
+import './sceneblock.css';
 
 export default class SceneBlock extends Component {
 
@@ -39,7 +40,7 @@ export default class SceneBlock extends Component {
 
     render() {
         return (
-            <div onClick = {this.clickSceneBlock}>
+            <div className="sceneblock" onClick = {this.clickSceneBlock}>
                 {this.chooseSceneBlock()}
             </div>
         )

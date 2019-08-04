@@ -1,5 +1,7 @@
-.imageblock {
-    padding: 16;
-    margin: 0px;
-    background: 'grey';
+.sceneblock {
+    height: '90px';
+    width: '160px';
+    border-style: solid;
+    border-width: 1px;
+    border-color: #D8D8D8;
 }
