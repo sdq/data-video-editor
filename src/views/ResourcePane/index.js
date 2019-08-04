@@ -12,6 +12,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
+        addScene: (scene) => dispatch(timelineActions.addScene(scene)),
         updateScene: (index, scene) => dispatch(timelineActions.updateScene(index, scene)),
     }
 }

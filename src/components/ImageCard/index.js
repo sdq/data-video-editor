@@ -3,6 +3,7 @@ import { DragSource } from 'react-dnd';
 import DNDType from '../../constants/DNDType';
 import ElementType from '../../constants/ElementType';
 import {Element, ImageInfo} from '../../models/Element';
+import Scene from '../../models/Scene';
 import './imagecard.css';
 
 const imageSource = {
@@ -20,10 +21,16 @@ const imageSource = {
             if (dropResult.target === "canvas") {
                 //add element to scene
                 const newScene = Object.assign({},dropResult.currentScene);
-                const newImage = new ImageInfo(item.src, 300, 150, 100, 100, 0);
+                const newImage = new ImageInfo(item.src, 240, 100, 100, 100, 0);
                 const newElement = new Element(ElementType.IMAGE, newImage);
                 newScene.elements.push(newElement);
                 props.updateScene(dropResult.sceneIndex, newScene);
+            } else if (dropResult.target === "track") {
+                //add new scene
+                const newImage = new ImageInfo(item.src, 240, 100, 100, 100, 0);
+                const newElement = new Element(ElementType.IMAGE, newImage);
+                const newScene = new Scene([newElement], 2);
+                props.addScene(newScene);
             }
 		}
     },

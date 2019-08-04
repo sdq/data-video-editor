@@ -5,36 +5,37 @@ import ElementType from '../constants/ElementType';
 
 const demoimage = new ImageInfo(
     "http://localhost:8080/images/man.png",
-    100,
-    100,
+    240,
+    30,
     100,
     100,
     0,
 )
 const demotext = new TextInfo(
-    "http://localhost:8080/images/man.png",
-    100,
-    100,
+    "这是一段字幕文本，这是一段字幕文本，这是一段字幕文本",
+    160,
+    320,
 )
 const element1 = new Element(ElementType.IMAGE, demoimage);
 const element2 = new Element(ElementType.TEXT, demotext);
-const scene = new Scene([element1, element2], 5);
+const scene = new Scene([element1, element2], 1);
 
-const blankScene = new Scene([], 3);
+const blankScene = new Scene([], 1);
 
 const initialState = {
-    scenes: [blankScene, scene],
-    index: 1,
+    scenes: [scene],
+    index: 0,
 }
 
 export default (state = initialState, action) => {
     const newState = Object.assign({},state);
-    var newScenes = Object.assign({},newState.scenes);
+    var newScenes = newState.scenes.slice();
     switch (action.type) {
         case ActionType.SELECT_SCENE:
             newState.index = action.index;
             return newState;
         case ActionType.ADD_SCENE:
+            console.log(newScenes);
             newScenes.push(action.scene);
             newState.scenes = newScenes;
             newState.index = newScenes.length - 1;

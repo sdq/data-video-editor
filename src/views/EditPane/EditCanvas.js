@@ -45,11 +45,12 @@ class EditCanvas extends Component {
                     <Stage width={640} height={360}>
                         <Layer>
                             {this.props.currentScene.elements.map(function(element, index) {
+                                console.log(element.info);
                                 switch (element.type) {
                                     case ElementType.TEXT:
-                                        return <TextElement key={index} edit={ele => this.editElement(index, ele)} element={element}/>
+                                        return <TextElement key={this.props.sceneIndex+"-"+index} edit={ele => this.editElement(index, ele)} element={element}/>
                                     case ElementType.IMAGE:
-                                        return <ImageElement key={index} edit={ele => this.editElement(index, ele)} element={element}/>
+                                        return <ImageElement key={this.props.sceneIndex+"-"+index} edit={ele => this.editElement(index, ele)} element={element}/>
                                     default:
                                         //TODO: remove
                                         return <div></div>;
