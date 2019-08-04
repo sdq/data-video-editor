@@ -5,16 +5,17 @@ export default class ImageElement extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            x: props.x,
-            y: props.y,
+            x: props.element.info.x,
+            y: props.element.info.y,
             image: null,
         };
+        this.dragend = this.dragend.bind(this);
     }
     componentDidMount() {
         this.loadImage();
     }
     componentDidUpdate(oldProps) {
-        if (oldProps.src !== this.props.src) {
+        if (oldProps.element.info.src !== this.props.element.info.src) {
             this.loadImage();
         }
     }
@@ -24,7 +25,7 @@ export default class ImageElement extends Component {
     loadImage() {
         // save to "this" to remove "load" handler on unmount
         this.image = new window.Image();
-        this.image.src = this.props.src;
+        this.image.src = this.props.element.info.src;
         this.image.addEventListener('load', this.handleLoad);
     }
     handleLoad = () => {
@@ -37,6 +38,12 @@ export default class ImageElement extends Component {
         // you will have to update layer manually:
         // this.imageNode.getLayer().batchDraw();
     };
+    dragend(x,y) {
+        var newEle = this.props.element;
+        newEle.info.x = x;
+        newEle.info.y = y;
+        this.props.edit(newEle);
+    };
     render() {
         return (
             <Image 
@@ -44,6 +51,20 @@ export default class ImageElement extends Component {
                 x={this.state.x}
                 y={this.state.y}
                 draggable
+                onDragStart={() => {
+                    // this.setState({
+                    //     isDragging: true
+                    // });
+                    console.log("begin")
+                }}
+                onDragEnd={e => {
+                    // this.setState({
+                    //     isDragging: false,
+                    //     x: e.target.x(),
+                    //     y: e.target.y()
+                    // });
+                    this.dragend(e.target.x(),e.target.y())
+                }}
             />
         )
     }

@@ -6,9 +6,18 @@ import SceneType from '../../constants/SceneType';
 import './editpane.css';
 
 export default class EditCanvas extends Component {
-    // state = {
-    //     currentScene: this.props.currentScene
-    // };
+
+    constructor(props) {
+        super(props);
+        this.editElement = this.editElement.bind(this);
+    }
+
+    editElement(eleIndex, element) {
+        const newScene = Object.assign({},this.props.currentScene);
+        newScene.elements[eleIndex] = element;
+        this.props.updateScene(this.props.sceneIndex, newScene);
+    }
+
     render() {
         return (
             <div>
@@ -19,13 +28,13 @@ export default class EditCanvas extends Component {
                             {this.props.currentScene.elements.map(function(element, index) {
                                 switch (element.type) {
                                     case SceneType.TEXT:
-                                        return <TextElement key={index} x={element.info.x} y={element.info.y} text={element.info.text} />
+                                        return <TextElement key={index} edit={ele => this.editElement(index, ele)} element={element}/>
                                     case SceneType.IMAGE:
-                                        return <ImageElement key={index} x={element.info.x} y={element.info.y} src={element.info.src} />
+                                        return <ImageElement key={index} edit={ele => this.editElement(index, ele)} element={element}/>
                                     default:
                                         return <div></div>;
                                 }
-                            })}
+                            }.bind(this))}
                         </Layer>
                     </Stage>
                 </div>
