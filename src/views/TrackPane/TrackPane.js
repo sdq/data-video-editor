@@ -6,7 +6,7 @@ export default class TrackPane extends Component {
     render() {
         return (
             <div className="trackpane">
-                TrackPane
+                <div style={{backgroundColor: "#FDC209", height: "40px"}}>TrackPane</div>
                 <TrackGroup  { ...this.props }/>
             </div>
         )

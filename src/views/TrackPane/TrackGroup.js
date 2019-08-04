@@ -31,9 +31,15 @@ export default class TrackGroup extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            //track1: this.props.scenes.map((scene,index) => ({id:index.toString(),content:scene})),
+            track1: this.props.scenes.map((scene,index) => ({id:index.toString(),content:scene})),
             track2: [{id:"2-1",content:"item212"}, {id:"2-2",content:"item22"}],
         }
+    }
+    componentWillReceiveProps(props) {
+        this.setState({
+            track1: props.scenes.map((scene,index) => ({id:index.toString(),content:scene})),
+            track2: [{id:"2-1",content:"item212"}, {id:"2-2",content:"item22"}],
+        })
     }
     /**
      * A semi-generic way to handle multiple lists. Matches
@@ -86,7 +92,7 @@ export default class TrackGroup extends Component {
         return (
             <div>
                 <DragDropContext onDragEnd={this.onDragEnd}>
-                    <Track droppableId="droppable1" items={this.props.scenes.map((scene,index) => ({id:index.toString(),content:scene}))} { ...this.props }/>
+                    <Track droppableId="droppable1" items={this.state.track1} { ...this.props }/>
                     <Track droppableId="droppable2" items={this.state.track2} { ...this.props }/>
                 </DragDropContext>
                 {/* <Track/>
