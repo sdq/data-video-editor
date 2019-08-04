@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import SceneType from '../../constants/SceneType';
+import SceneType from '../../../constants/SceneType';
 import AddSceneBlock from './AddSceneBlock';
 import BlankBlock from './BlankBlock';
 import VideoBlock from './VideoBlock';
@@ -10,18 +10,22 @@ import ChartBlock from './ChartBlock';
 
 export default class SceneBlock extends Component {
 
-    chooseSceneBlock(blockType) {
-        switch (blockType) {
+    constructor(props) {
+        super(props);
+    }
+
+    chooseSceneBlock() {
+        switch (this.props.type) {
             case SceneType.IMAGE:
-                return <ImageBlock />;
+                return <ImageBlock info={this.props.info}/>;
             case SceneType.VIDEO:
-                return <VideoBlock />;
+                return <VideoBlock info={this.props.info} />;
             case SceneType.AUDIO:
-                return <AudioBlock />;
+                return <AudioBlock info={this.props.info} />;
             case SceneType.CHART:
-                return <ChartBlock />;
+                return <ChartBlock info={this.props.info} />;
             case SceneType.Text:
-                return <TextBlock />;
+                return <TextBlock info={this.props.info} />;
             default:
                 return <BlankBlock />;
         }
@@ -30,7 +34,7 @@ export default class SceneBlock extends Component {
     render() {
         return (
             <div>
-                <chooseSceneBlock />
+                {this.chooseSceneBlock()}
             </div>
         )
     }

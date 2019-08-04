@@ -8,7 +8,7 @@ export default class EditPane extends Component {
         return (
             <div>
                 <div style={{ background: '#eee', height: '50px' }}><EditToolBar/></div>
-                <div style={{ background: '#fff', height: '400px' }}><EditCanvas/></div>
+                <div style={{ background: '#fff', height: '400px' }}><EditCanvas { ...this.props }/></div>
                 <div style={{ background: '#eee', height: '50px' }}><PlayControlBar/></div>
             </div>
         )

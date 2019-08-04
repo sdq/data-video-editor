@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
+import SceneBlock from './SceneBlock';
+import SceneType from '../../constants/SceneType';
 
 const grid = 8;
 
@@ -46,7 +48,8 @@ export default class Track extends Component {
                                 provided.draggableProps.style
                             )}
                             >
-                            {item.content}
+                            {/* {item.content} */}
+                                <SceneBlock type={SceneType.IMAGE} info={item.content}/>
                             </div>
                         )}
                         </Draggable>
