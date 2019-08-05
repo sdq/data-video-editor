@@ -27,7 +27,7 @@ export default class ResourcePane extends Component {
                         <AudioTab/>
                     </TabPane>
                     <TabPane tab="Text" key="Text">
-                        <TextTab/>
+                        <TextTab {...this.props}/>
                     </TabPane>
                 </Tabs>
             </div>

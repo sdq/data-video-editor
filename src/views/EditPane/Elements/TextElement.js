@@ -24,6 +24,7 @@ export default class TextElement extends Component {
                 text={this.state.text}
                 x={this.state.x}
                 y={this.state.y}
+                fontSize={18}
                 draggable
                 fill={this.state.isDragging ? 'green' : 'black'}
                 onDragStart={() => {

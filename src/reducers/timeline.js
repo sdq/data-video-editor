@@ -13,7 +13,7 @@ const demoimage = new ImageInfo(
 )
 const demotext = new TextInfo(
     "一个年轻的男子，坐在街道旁的椅子上发呆。他的身旁有一个路灯和灌木。",
-    200,
+    100,
     360,
 )
 const element1 = new Element(ElementType.IMAGE, demoimage);
