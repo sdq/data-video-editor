@@ -10,7 +10,7 @@ export default class EditPane extends Component {
             <div id="editpane">
                 <div style={{ background: '#FFFAEA', height: '50px' }}><EditToolBar/></div>
                 <div style={{ background: '#fff', height: '450px' }}><EditCanvas { ...this.props }/></div>
-                <div style={{ background: '#FFFAEA', height: '50px' }}><PlayControlBar/></div>
+                <div style={{ background: '#FFFAEA', height: '50px' }}><PlayControlBar { ...this.props }/></div>
             </div>
         )
     }

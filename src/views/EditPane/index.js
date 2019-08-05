@@ -13,6 +13,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
+        selectScene: (index) => dispatch(timelineActions.selectScene(index)),
         updateScene: (index, scene) => dispatch(timelineActions.updateScene(index, scene)),
     }
 }

@@ -10,14 +10,26 @@ export default class PlayControlBar extends Component {
             isPlaying: false,
         };
         this.play = this.play.bind(this);
-    }
+    };
 
     play() {
-        var newState = !this.state.isPlaying;
-        this.setState({
-            isPlaying: newState
-        });
-    }
+        if (this.state.isPlaying === false) {
+            this.setState({
+                isPlaying: true
+            });
+
+            for (let index = 0; index < this.props.scenes.length; index++) {
+                setTimeout(function () {
+                    this.props.selectScene(index);
+                    if (index===this.props.scenes.length-1) {
+                        this.setState({
+                            isPlaying: false
+                        });
+                    }
+                }.bind(this), index*1000);
+            }
+        }
+    };
 
     render() {
         return (
