@@ -5,16 +5,16 @@ import ElementType from '../constants/ElementType';
 
 const demoimage = new ImageInfo(
     "http://localhost:8080/images/man.png",
-    240,
-    30,
+    300,
+    60,
     100,
     100,
     0,
 )
 const demotext = new TextInfo(
-    "这是一段字幕文本，这是一段字幕文本，这是一段字幕文本",
-    160,
-    320,
+    "一个年轻的男子，坐在街道旁的椅子上发呆。他的身旁有一个路灯和灌木。",
+    200,
+    360,
 )
 const element1 = new Element(ElementType.IMAGE, demoimage);
 const element2 = new Element(ElementType.TEXT, demotext);
