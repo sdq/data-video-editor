@@ -8,6 +8,7 @@
     "lodash": "^4.17.14",
     "react": "^16.8.6",
     "react-beautiful-dnd": "^11.0.5",
+    "react-color": "^2.17.3",
     "react-dnd": "^9.3.2",
     "react-dnd-html5-backend": "^9.3.2",
     "react-dom": "^16.8.6",
