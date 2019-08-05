@@ -29,6 +29,21 @@ const data = [
         name: "list",
         style: "cartoon",
         src: "http://localhost:8080/images/list.png"
+    },
+    {
+        name: "woman",
+        style: "cartoon",
+        src: "http://localhost:8080/images/woman.png"
+    },
+    {
+        name: "work",
+        style: "cartoon",
+        src: "http://localhost:8080/images/work.png"
+    },
+    {
+        name: "sport",
+        style: "cartoon",
+        src: "http://localhost:8080/images/sport.png"
     }
 ];
 
