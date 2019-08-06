@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Text } from 'react-konva';
+import { Text, Group } from 'react-konva';
+import Color from '../../../constants/Color';
 
 export default class TextElement extends Component {
     constructor(props) {
@@ -20,13 +21,9 @@ export default class TextElement extends Component {
     };
     render() {
         return (
-            <Text
-                text={this.state.text}
+            <Group name={this.props.name} draggable
                 x={this.state.x}
                 y={this.state.y}
-                fontSize={18}
-                draggable
-                fill={this.state.isDragging ? 'green' : 'black'}
                 onDragStart={() => {
                     this.setState({
                         isDragging: true
@@ -40,7 +37,15 @@ export default class TextElement extends Component {
                     });
                     this.dragend(e.target.x(), e.target.y());
                 }}
-            />
+            >
+                <Text
+                    name={this.props.name}
+                    text={this.state.text}
+                    fontSize={18}
+                    //draggable
+                    fill={this.state.isDragging ? Color.DEEP_ORANGE : 'black'}
+                />
+            </Group>
         )
     }
 }

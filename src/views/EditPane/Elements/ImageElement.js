@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image } from 'react-konva';
+import { Image, Group } from 'react-konva';
 
 export default class ImageElement extends Component {
     constructor(props) {
@@ -46,11 +46,10 @@ export default class ImageElement extends Component {
     };
     render() {
         return (
-            <Image 
-                image={this.state.image} 
+            <Group name={this.props.name} draggable
                 x={this.state.x}
                 y={this.state.y}
-                draggable
+                //draggable
                 onDragStart={() => {
                     // this.setState({
                     //     isDragging: true
@@ -65,7 +64,12 @@ export default class ImageElement extends Component {
                     // });
                     this.dragend(e.target.x(),e.target.y())
                 }}
-            />
+            >
+                <Image 
+                    name={this.props.name}
+                    image={this.state.image} 
+                />
+            </Group>
         )
     }
 }

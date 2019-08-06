@@ -35,7 +35,6 @@ export default (state = initialState, action) => {
             newState.index = action.index;
             return newState;
         case ActionType.ADD_SCENE:
-            console.log(newScenes);
             newScenes.push(action.scene);
             newState.scenes = newScenes;
             newState.index = newScenes.length - 1;
