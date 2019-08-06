@@ -16,8 +16,8 @@ const imageSource = {
 		const item = monitor.getItem();
 		const dropResult = monitor.getDropResult();
 		if (dropResult) {
-            console.log(item);
-            console.log(dropResult);
+            // console.log(item);
+            // console.log(dropResult);
             if (dropResult.target === "canvas") {
                 //add element to scene
                 const newScene = Object.assign({},dropResult.currentScene);
