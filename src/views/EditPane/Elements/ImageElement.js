@@ -5,11 +5,10 @@ export default class ImageElement extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            x: props.element.info.x,
-            y: props.element.info.y,
             image: null,
         };
         this.dragend = this.dragend.bind(this);
+        this.onTransformEnd = this.onTransformEnd.bind(this);
     }
     componentDidMount() {
         this.loadImage();
@@ -44,11 +43,51 @@ export default class ImageElement extends Component {
         newEle.info.y = y;
         this.props.edit(newEle);
     };
+
+    onTransformStart() {
+        console.log("onTransformStart");
+    }
+    onTransform() {
+        console.log("onTransform");
+    }
+    onTransformEnd(e) {
+        console.log("end transform");
+        console.log(e.target);
+        console.log(e.target.x());
+        console.log(e.target.y());
+        console.log(e.target.width()*e.target.scaleX());
+        console.log(e.target.height()*e.target.scaleY());
+        var newEle = this.props.element;
+        newEle.info.x = e.target.x();
+        newEle.info.y = e.target.y();
+        newEle.info.width = e.target.width()*e.target.scaleX();
+        newEle.info.height = e.target.height()*e.target.scaleY();
+        newEle.info.rotation = e.target.rotation();
+        this.props.edit(newEle);
+        // const node = shapeRef.current;
+        // const scaleX = node.scaleX();
+        // const scaleY = node.scaleY();
+
+        // // we will reset it back
+        // node.scaleX(1);
+        // node.scaleY(1);
+        // onChange({
+        //   ...shapeProps,
+        //   x: node.x(),
+        //   y: node.y(),
+        //   width: node.width() * scaleX,
+        //   height: node.height() * scaleY
+        // });
+    }
+
     render() {
         return (
             <Group name={this.props.name} draggable
-                x={this.state.x}
-                y={this.state.y}
+                x={this.props.element.info.x}
+                y={this.props.element.info.y}
+                width={this.props.element.info.width}
+                height={this.props.element.info.height}
+                rotation={this.props.element.info.rotation}
                 //draggable
                 onDragStart={() => {
                     // this.setState({
@@ -64,6 +103,9 @@ export default class ImageElement extends Component {
                     // });
                     this.dragend(e.target.x(),e.target.y())
                 }}
+                onTransformStart={this.onTransformStart}
+                onTransform={this.onTransform}
+                onTransformEnd={this.onTransformEnd}
             >
                 <Image 
                     name={this.props.name}

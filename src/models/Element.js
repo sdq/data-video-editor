@@ -17,9 +17,10 @@ export class ImageInfo {
 }
 
 export class TextInfo {
-    constructor(text, x, y) {
+    constructor(text, x, y, rotation) {
         this.text = text;
         this.x = x;
         this.y = y;
+        this.rotation = rotation;
     }
 }

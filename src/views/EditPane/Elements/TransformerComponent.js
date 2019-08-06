@@ -11,18 +11,6 @@ export default class TransformerComponent extends Component {
         this.checkNode();
     }
 
-    onTransformStart() {
-        console.log("onTransformStart");
-    }
-
-    onTransform() {
-        console.log("onTransform");
-    }
-
-    onTransformEnd() {
-        console.log("end transform");
-    }
-
     checkNode() {
         // here we need to manually attach or detach Transformer node
         const stage = this.transformer.getStage();
@@ -52,14 +40,11 @@ export default class TransformerComponent extends Component {
         return (
             <Transformer
                 ref={node => {
-                this.transformer = node;
+                    this.transformer = node;
                 }}
                 borderStroke={Color.DEEP_ORANGE}
                 anchorStroke={Color.DEEP_ORANGE}
                 anchorFill={Color.LIGHT_ORANGE}
-                transformstart={this.onTransformStart}
-                transform={this.onTransform}
-                transformend={this.onTransformEnd}
             />
         )
     }

@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Tabs } from 'antd';
-import ImageTab from './ImageTab';
-import AudioTab from './AudioTab';
+import ImageTab from './ImageTab/ImageTab';
+import AudioTab from './AudioTab/AudioTab';
 import VideoTab from './VideoTab';
-import TextTab from './TextTab';
-import ChartTab from './ChartTab';
+import TextTab from './TextTab/TextTab';
+import ChartTab from './ChartTab/ChartTab';
 import './resourcepane.css';
 
 const { TabPane } = Tabs;
@@ -20,9 +20,9 @@ export default class ResourcePane extends Component {
                     <TabPane tab="Chart" key="Chart">
                         <ChartTab/>
                     </TabPane>
-                    <TabPane tab="Video" key="Video">
+                    {/* <TabPane tab="Video" key="Video">
                         <VideoTab/>
-                    </TabPane>
+                    </TabPane> */}
                     <TabPane tab="Audio" key="Audio">
                         <AudioTab/>
                     </TabPane>
