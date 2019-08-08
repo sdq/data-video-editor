@@ -45,18 +45,13 @@ export default class ImageElement extends Component {
     };
 
     onTransformStart() {
-        console.log("onTransformStart");
+        // console.log("onTransformStart");
     }
     onTransform() {
-        console.log("onTransform");
+        // console.log("onTransform");
     }
     onTransformEnd(e) {
-        console.log("end transform");
-        console.log(e.target);
-        console.log(e.target.x());
-        console.log(e.target.y());
-        console.log(e.target.width()*e.target.scaleX());
-        console.log(e.target.height()*e.target.scaleY());
+        // console.log("end transform");
         var newEle = this.props.element;
         newEle.info.x = e.target.x();
         newEle.info.y = e.target.y();
@@ -64,20 +59,6 @@ export default class ImageElement extends Component {
         newEle.info.height = e.target.height()*e.target.scaleY();
         newEle.info.rotation = e.target.rotation();
         this.props.edit(newEle);
-        // const node = shapeRef.current;
-        // const scaleX = node.scaleX();
-        // const scaleY = node.scaleY();
-
-        // // we will reset it back
-        // node.scaleX(1);
-        // node.scaleY(1);
-        // onChange({
-        //   ...shapeProps,
-        //   x: node.x(),
-        //   y: node.y(),
-        //   width: node.width() * scaleX,
-        //   height: node.height() * scaleY
-        // });
     }
 
     render() {

@@ -20,7 +20,7 @@ const element1 = new Element(ElementType.IMAGE, demoimage);
 const element2 = new Element(ElementType.TEXT, demotext);
 const scene = new Scene([element1, element2], 1);
 
-const blankScene = new Scene([], 1);
+//const blankScene = new Scene([], 1);
 
 const initialState = {
     scenes: [scene],

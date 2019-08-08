@@ -4,6 +4,7 @@ import { HotKeys } from "react-hotkeys";
 import TransformerComponent from './Elements/TransformerComponent';
 import ImageElement from './Elements/ImageElement';
 import TextElement from './Elements/TextElement';
+import VegaLiteChart from '../../charts/VegaLiteChart';
 import ElementType from '../../constants/ElementType';
 import { DropTarget } from 'react-dnd';
 import DNDType from '../../constants/DNDType';
@@ -141,6 +142,7 @@ class EditCanvas extends Component {
                 <HotKeys keyMap={keyMap} handlers={this.handlers}>
                     <Stage width={800} height={450} onMouseDown={this.handleStageMouseDown}>
                         <Layer>
+                            <VegaLiteChart />
                             {this.props.currentScene.elements.map(function(element, index) {
                                 //console.log(element.info);
                                 switch (element.type) {

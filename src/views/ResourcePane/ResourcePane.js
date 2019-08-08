@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Tabs } from 'antd';
 import ImageTab from './ImageTab/ImageTab';
 import AudioTab from './AudioTab/AudioTab';
-import VideoTab from './VideoTab';
+// import VideoTab from './VideoTab';
 import TextTab from './TextTab/TextTab';
 import ChartTab from './ChartTab/ChartTab';
 import './resourcepane.css';

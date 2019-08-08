@@ -23,7 +23,7 @@ export default class TransformerComponent extends Component {
         }
         if (selectedNode) {
             const type = selectedNode.getType();
-            if (type != "Group") {
+            if (type !== "Group") {
                 selectedNode = selectedNode.findAncestor("Group");
             }
             // attach to another node

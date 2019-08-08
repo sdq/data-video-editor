@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import EditorView from './views/EditorView';
 import ProjectView from './views/ProjectView';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
 class App extends Component {
   render() {
