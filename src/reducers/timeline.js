@@ -3,6 +3,7 @@ import Scene from '../models/Scene';
 import { Element, ImageInfo, ChartInfo, TextInfo} from '../models/Element';
 import URL from '../constants/URL';
 import ElementType from '../constants/ElementType';
+import ChartType from '../constants/ChartType';
 
 const demoimage = new ImageInfo(
     URL.OSS+'/images/man.png',
@@ -13,7 +14,8 @@ const demoimage = new ImageInfo(
     0,
 )
 const demochart = new ChartInfo(
-    'xxx/data.json',
+    '',
+    ChartType.BARCHART,
     '',
     10,
     10,

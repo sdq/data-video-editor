@@ -46,7 +46,7 @@ export default class VegaLiteChart extends Component {
                                 .renderer('canvas')
                                 .initialize('#view')
                                 .run();
-                this.view.toImageURL('png').then(function(url) {
+                this.view.toImageURL('png', 1).then(function(url) {
                     console.log(url);
                     this.chartImage = new window.Image();
                     //TODO: load image from vegalite spec

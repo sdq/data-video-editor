@@ -1,4 +1,6 @@
 .headerbar {
     background: #FDC209;
     height: 60px;
+    padding: 16px;
+    font-size: 20px;
 }

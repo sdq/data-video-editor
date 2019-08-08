@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import { Group } from 'react-konva';
+import ChartType from '../../../constants/ChartType';
 import BarChart from '../../../charts/BarChart';
+import LineChart from '../../../charts/LineChart';
+import Scatterplot from '../../../charts/Scatterplot';
+import AreaChart from '../../../charts/AreaChart';
+import Histogram from '../../../charts/Histogram';
 
 export default class ChartElement extends Component {
     constructor(props) {
@@ -35,6 +40,24 @@ export default class ChartElement extends Component {
         this.props.edit(newEle);
     }
 
+    chooseChart() {
+        switch (this.props.element.info.type) {
+            case ChartType.AREACHART:
+                return <AreaChart name={this.props.name}/>
+            case ChartType.BARCHART:
+                return <BarChart name={this.props.name}/>
+            case ChartType.LINECHART:
+                return <LineChart name={this.props.name}/>
+            case ChartType.SCATTERPLOT:
+                return <Scatterplot name={this.props.name}/>
+            case ChartType.HISTOGRAM:
+                return <Histogram name={this.props.name}/>
+        
+            default:
+                return <Histogram name={this.props.name}/>
+        }
+    }
+
     render() {
         return (
             <Group name={this.props.name} draggable
@@ -48,13 +71,11 @@ export default class ChartElement extends Component {
                     // this.setState({
                     //     isDragging: true
                     // });
-                    console.log("begin")
+                    // console.log("begin")
                 }}
                 onDragEnd={e => {
                     // this.setState({
                     //     isDragging: false,
-                    //     x: e.target.x(),
-                    //     y: e.target.y()
                     // });
                     this.dragend(e.target.x(),e.target.y())
                 }}
@@ -62,7 +83,7 @@ export default class ChartElement extends Component {
                 onTransform={this.onTransform}
                 onTransformEnd={this.onTransformEnd}
             >
-                <BarChart name={this.props.name}/>
+                {this.chooseChart()}
             </Group>
         )
     }

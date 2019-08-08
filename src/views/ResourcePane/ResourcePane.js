@@ -18,13 +18,13 @@ export default class ResourcePane extends Component {
                         <ImageTab {...this.props}/>
                     </TabPane>
                     <TabPane tab="Chart" key="Chart">
-                        <ChartTab/>
+                        <ChartTab {...this.props}/>
                     </TabPane>
                     {/* <TabPane tab="Video" key="Video">
                         <VideoTab/>
                     </TabPane> */}
                     <TabPane tab="Audio" key="Audio">
-                        <AudioTab/>
+                        <AudioTab {...this.props}/>
                     </TabPane>
                     <TabPane tab="Text" key="Text">
                         <TextTab {...this.props}/>

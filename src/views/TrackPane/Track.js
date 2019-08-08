@@ -90,7 +90,7 @@ class Track extends Component {
 }
 
 export default DropTarget(
-	[DNDType.DND_IMAGE],
+	[DNDType.DND_IMAGE, DNDType.DND_CHART],
 	trackTarget,
 	(connect, monitor) => ({
 		connectDropTarget: connect.dropTarget(),

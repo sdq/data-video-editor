@@ -171,7 +171,7 @@ class EditCanvas extends Component {
 }
 
 export default DropTarget(
-	[DNDType.DND_IMAGE],
+	[DNDType.DND_IMAGE, DNDType.DND_CHART],
 	canvasTarget,
 	(connect, monitor) => ({
 		connectDropTarget: connect.dropTarget(),
