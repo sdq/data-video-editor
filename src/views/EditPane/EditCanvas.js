@@ -41,6 +41,7 @@ class EditCanvas extends Component {
         const newScene = Object.assign({},this.props.currentScene);
         newScene.elements[eleIndex] = element;
         this.props.updateScene(this.props.sceneIndex, newScene);
+        this.props.updateElement(element, eleIndex);
     }
 
     handleStageMouseDown = e => {
@@ -67,10 +68,14 @@ class EditCanvas extends Component {
             this.setState({
                 selectedElementName: name
             });
+            console.log(name);
+            var eleIndex = Number(name.split('-')[1]);
+            this.props.selectElement(eleIndex);
         } else {
             this.setState({
                 selectedElementName: ""
             });
+            this.props.unselectElement();
         }
     };
 
