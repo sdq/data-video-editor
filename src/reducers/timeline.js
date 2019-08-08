@@ -1,12 +1,22 @@
 import ActionType from '../constants/ActionType';
 import Scene from '../models/Scene';
-import { Element, ImageInfo, TextInfo} from '../models/Element';
+import { Element, ImageInfo, ChartInfo, TextInfo} from '../models/Element';
+import URL from '../constants/URL';
 import ElementType from '../constants/ElementType';
 
 const demoimage = new ImageInfo(
-    "http://localhost:8080/images/man.png",
+    URL.OSS+'/images/man.png',
     300,
     60,
+    100,
+    100,
+    0,
+)
+const demochart = new ChartInfo(
+    'xxx/data.json',
+    '',
+    10,
+    10,
     100,
     100,
     0,
@@ -16,9 +26,10 @@ const demotext = new TextInfo(
     100,
     360,
 )
+const element0 = new Element(ElementType.CHART, demochart);
 const element1 = new Element(ElementType.IMAGE, demoimage);
 const element2 = new Element(ElementType.TEXT, demotext);
-const scene = new Scene([element1, element2], 1);
+const scene = new Scene([element0, element1, element2], 1);
 
 //const blankScene = new Scene([], 1);
 
