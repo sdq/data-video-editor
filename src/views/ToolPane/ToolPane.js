@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import { InputNumber, Row, Col, Divider, Button, Select, Slider } from 'antd';
+//import { InputNumber, Row, Col, Divider, Button, Select, Slider } from 'antd';
 import Color from '../../constants/Color';
 import ImageTool from './Tools/ImageTool';
-import AudioTool from './Tools/AudioTool';
-import ChartTool from './Tools/ChartTool';
-import Tool from './Tools/ImageTool';
+// import AudioTool from './Tools/AudioTool';
+// import ChartTool from './Tools/ChartTool';
+// import TextTool from './Tools/TextTool';
 
 export default class ToolPane extends Component {
 
