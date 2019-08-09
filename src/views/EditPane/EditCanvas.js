@@ -45,13 +45,14 @@ class EditCanvas extends Component {
     }
 
     handleStageMouseDown = e => {
-        console.log("click");
-        console.log(e.target);
+        // console.log("click");
+        // console.log(e.target);
         // clicked on stage - clear selection
         if (e.target === e.target.getStage()) {
             this.setState({
                 selectedElementName: ""
             });
+            this.props.unselectElement();
             return;
         }
         // clicked on transformer - do nothing
@@ -68,7 +69,6 @@ class EditCanvas extends Component {
             this.setState({
                 selectedElementName: name
             });
-            console.log(name);
             var eleIndex = Number(name.split('-')[1]);
             this.props.selectElement(eleIndex);
         } else {

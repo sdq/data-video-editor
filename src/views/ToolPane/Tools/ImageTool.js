@@ -40,10 +40,14 @@ export default class ImageTool extends Component {
                     <Col span={8}><InputNumber min={0} max={600} defaultValue={10} /></Col>
                 </Row>
                 <Row style={{margin: '10px 0px 0px 0px', fontSize: '14px'}}>
-                    <Col span={4} style={{textAlign:'center', padding: '5px 5px 0 5px'}}>width</Col>
+                    <Col span={4} style={{textAlign:'center', padding: '5px 5px 0 5px'}}>W</Col>
                     <Col span={8}><InputNumber min={0} max={600} defaultValue={100} /></Col>
-                    <Col span={4} style={{textAlign:'center', padding: '5px 5px 0 5px'}}>height</Col>
+                    <Col span={4} style={{textAlign:'center', padding: '5px 5px 0 5px'}}>H</Col>
                     <Col span={8}><InputNumber min={0} max={600} defaultValue={100} /></Col>
+                </Row>
+                <Row style={{margin: '10px 0px 0px 0px', fontSize: '14px'}}>
+                    <Col span={4} style={{textAlign:'center', padding: '5px 5px 0 5px'}}>R</Col>
+                    <Col span={8}><InputNumber min={-180} max={180} defaultValue={0} /></Col>
                 </Row>
                 <Divider>Style</Divider>
                 <Row style={{margin: '10px 0px 0px 0px', fontSize: '14px'}}>
@@ -70,7 +74,7 @@ export default class ImageTool extends Component {
                 <Row style={{margin: '10px 0px 0px 0px', fontSize: '14px'}}>
                     <Col span={4} style={{textAlign:'center', padding: '5px 5px 0 5px'}}>Time</Col>
                     <Col span={20}>
-                        <Slider range defaultValue={[0, 50]} />
+                        <Slider range defaultValue={[0, 100]} />
                     </Col>
                 </Row>
             </div>

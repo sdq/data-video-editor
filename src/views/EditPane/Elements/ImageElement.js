@@ -74,7 +74,7 @@ export default class ImageElement extends Component {
                     // this.setState({
                     //     isDragging: true
                     // });
-                    console.log("begin")
+                    // console.log("begin")
                 }}
                 onDragEnd={e => {
                     // this.setState({

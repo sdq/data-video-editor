@@ -10,5 +10,7 @@ export const currentElement = createSelector(
     scenes,
     sceneIndex,
     elementIndex,
-    (scenes, sceneIndex, elementIndex) => scenes[sceneIndex][elementIndex]
+    function(scenes, sceneIndex, elementIndex) {
+        return scenes[sceneIndex].elements[elementIndex];
+    }
 )
