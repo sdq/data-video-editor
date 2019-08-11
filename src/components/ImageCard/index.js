@@ -25,13 +25,14 @@ const imageSource = {
                 const newElement = new Element(ElementType.IMAGE, newImage);
                 newScene.elements.push(newElement);
                 props.updateScene(dropResult.sceneIndex, newScene);
-            } else if (dropResult.target === "track") {
-                //add new scene
-                const newImage = new ImageInfo(item.src, 240, 100, 100, 100, 0);
-                const newElement = new Element(ElementType.IMAGE, newImage);
-                const newScene = new Scene([newElement], 2);
-                props.addScene(newScene);
-            }
+            } 
+            // else if (dropResult.target === "track") {
+            //     //add new scene
+            //     const newImage = new ImageInfo(item.src, 240, 100, 100, 100, 0);
+            //     const newElement = new Element(ElementType.IMAGE, newImage);
+            //     const newScene = new Scene([newElement], 2);
+            //     props.addScene(newScene);
+            // }
 		}
     },
 }

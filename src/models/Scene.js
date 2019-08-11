@@ -1,5 +1,7 @@
 export default class Scene {
-    constructor(elements, duration) {
+    constructor(script, dataurl, elements, duration) {
+        this.script = script;
+        this.dataurl = dataurl;
         this.elements = elements;
         this.duration = duration;
     }

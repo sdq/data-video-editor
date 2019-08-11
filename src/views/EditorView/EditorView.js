@@ -4,7 +4,7 @@ import HeaderBar from '../HeaderBar';
 import EditPane from '../EditPane';
 import ResourcePane from '../ResourcePane';
 import ToolPane from '../ToolPane';
-import TrackPane from '../TrackPane';
+import TimelinePane from '../TimelinePane';
 import HTML5Backend from 'react-dnd-html5-backend'
 import { DndProvider } from 'react-dnd'
 
@@ -41,7 +41,7 @@ export default class EditorView extends Component {
                         <Content
                         style={{ background: '#eee', height: '300px' }} 
                         >
-                            <TrackPane/>
+                            <TimelinePane/>
                         </Content>
                     </Layout>
                 </Layout>

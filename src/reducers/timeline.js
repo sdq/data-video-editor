@@ -31,7 +31,7 @@ const demotext = new TextInfo(
 const element0 = new Element(ElementType.CHART, demochart);
 const element1 = new Element(ElementType.IMAGE, demoimage);
 const element2 = new Element(ElementType.TEXT, demotext);
-const scene = new Scene([element0, element1, element2], 1);
+const scene = new Scene("一个年轻的男子，坐在街道旁的椅子上发呆。他的身旁有一个路灯和灌木。", "", [element0, element1, element2], 1);
 
 //const blankScene = new Scene([], 1);
 

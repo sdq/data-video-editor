@@ -8,6 +8,7 @@ import ChartElement from './Elements/ChartElement';
 import ElementType from '../../constants/ElementType';
 import { DropTarget } from 'react-dnd';
 import DNDType from '../../constants/DNDType';
+import Color from '../../constants/Color';
 import { Element } from '../../models/Element';
 import './editpane.css';
 
@@ -137,10 +138,10 @@ class EditCanvas extends Component {
         const isActive = canDrop && isOver;
         let backgroundColor = '#fff';
         if (isActive) {
-			backgroundColor = 'darkgreen';
+			backgroundColor = Color.BLUE;
 		} 
 		else if (canDrop) {
-			backgroundColor = '#c8e6c9';
+			backgroundColor = Color.LIGHT_BLUE;
 		}
         return connectDropTarget(
             <div id="canvasContainer" style={{ backgroundColor }}>

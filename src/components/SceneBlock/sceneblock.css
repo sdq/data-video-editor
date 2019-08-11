@@ -1,0 +1,9 @@
+.sceneblock {
+    height: 250px;
+    width: 200px;
+    border-style: solid;
+    border-width: 1px;
+    background-color: #ffffff;
+    padding: 8px;
+    margin-left: 8px;
+}

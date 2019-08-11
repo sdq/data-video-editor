@@ -35,22 +35,23 @@ const chartSource = {
                 const newElement = new Element(ElementType.CHART, newChart);
                 newScene.elements.push(newElement);
                 props.updateScene(dropResult.sceneIndex, newScene);
-            } else if (dropResult.target === "track") {
-                //add new scene
-                const newChart = new ChartInfo(
-                    '',
-                    item.type, //type
-                    '', //spec
-                    260,
-                    100,
-                    100,
-                    100,
-                    0,
-                )
-                const newElement = new Element(ElementType.CHART, newChart);
-                const newScene = new Scene([newElement], 2);
-                props.addScene(newScene);
-            }
+            } 
+            // else if (dropResult.target === "track") {
+            //     //add new scene
+            //     const newChart = new ChartInfo(
+            //         '',
+            //         item.type, //type
+            //         '', //spec
+            //         260,
+            //         100,
+            //         100,
+            //         100,
+            //         0,
+            //     )
+            //     const newElement = new Element(ElementType.CHART, newChart);
+            //     const newScene = new Scene([newElement], 2);
+            //     props.addScene(newScene);
+            // }
 		}
     },
 }
