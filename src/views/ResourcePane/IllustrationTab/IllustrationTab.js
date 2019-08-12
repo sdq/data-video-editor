@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { List } from 'antd';
 import LazyLoad from 'react-lazyload';
 import ImageCard from '../../../components/ImageCard';
-import './imagetab.css';
+import './illustrationtab.css';
 import data from './data';
 
 export default class ImageTab extends Component {

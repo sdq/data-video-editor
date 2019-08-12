@@ -1,16 +1,39 @@
 import React, { Component } from 'react'
 import { InputNumber, Row, Col, Divider, Button, Select, Slider, Input } from 'antd';
-import { SketchPicker } from 'react-color';
+import ElementType from '../../../constants/ElementType';
+import {Element, TextInfo} from '../../../models/Element';
 
-const { Option } = Select;
 const { TextArea } = Input;
 
 export default class SceneTool extends Component {
 
-    state = {
-        displayColorPicker: false,
-        inputValue: 1,
-    };
+    constructor(props) {
+        super(props);
+        this.state = {
+            displayColorPicker: false,
+            value: "",
+            inputValue: 1,
+        };
+        this.handleChange = this.handleChange.bind(this);
+        this.addText = this.addText.bind(this);
+    }
+
+    handleChange(e) {
+        this.setState({value: e.target.value});
+    }
+
+    addText() {
+        //add text to scene
+        if (this.state.value === "") {
+            console.log("nothings")
+            return
+        }
+        const newScene = Object.assign({},this.props.currentScene);
+        const newText = new TextInfo(this.state.value, 200, 360);
+        const newElement = new Element(ElementType.TEXT, newText);
+        newScene.elements.push(newElement);
+        this.props.updateScene(this.props.sceneIndex, newScene);
+    }
 
     onChange = value => {
         this.setState({
@@ -18,43 +41,14 @@ export default class SceneTool extends Component {
         });
     };
 
-    handleClick = () => {
-        this.setState({ displayColorPicker: !this.state.displayColorPicker })
-    };
-
-    handleClose = () => {
-        this.setState({ displayColorPicker: false })
-    };
-
     render() {
-        const popover = {
-            position: 'absolute',
-            zIndex: '2',
-        }
-        const cover = {
-            position: 'fixed',
-            top: '0px',
-            right: '0px',
-            bottom: '0px',
-            left: '0px',
-        }
         return (
             <div style={{padding: '10px 10px 10px 10px', fontSize: '14px'}}>
                 <Divider>Script</Divider>
                 <Row style={{margin: '10px 0px 0px 0px', fontSize: '14px'}}>
-                    <TextArea style={{ padding: '5px 5px 0 5px'}} rows={3} />
+                    <TextArea style={{ padding: '5px 5px 0 5px'}} rows={5} onChange={this.handleChange}/>
+                    <Button style={{float: 'right', margin: "10px 0 0 0"}} onClick={this.addText}>Add</Button>
                 </Row>
-                {/* <Divider>Background</Divider>
-                <Row style={{margin: '10px 0px 0px 0px', fontSize: '14px'}}>
-                    <Col span={4} style={{textAlign:'center', padding: '5px 5px 0 5px'}}>color</Col>
-                    <Col span={8}>
-                        <Button onClick={ this.handleClick }>Pick Color</Button>
-                            { this.state.displayColorPicker ? <div style={ popover }>
-                            <div style={ cover } onClick={ this.handleClose }/>
-                            <SketchPicker />
-                            </div> : null }
-                    </Col>
-                </Row> */}
                 <Divider>Duration</Divider>
                 <Row style={{margin: '10px 0px 0px 10px', fontSize: '14px'}}>
                     <Col span={14}>

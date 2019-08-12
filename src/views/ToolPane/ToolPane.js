@@ -21,16 +21,16 @@ export default class ToolPane extends Component {
         if (this.props.isSelected && this.props.currentElement) {
             switch (this.props.currentElement.type) {
                 case ElementType.IMAGE:
-                    return <ImageTool />;
+                    return <ImageTool {...this.props}/>;
                 case ElementType.CHART:
-                    return <ChartTool />;
+                    return <ChartTool {...this.props}/>;
                 case ElementType.TEXT:
-                    return <TextTool />;
+                    return <TextTool {...this.props}/>;
                 default:
-                    return <SceneTool />
+                    return <SceneTool {...this.props}/>
             }
         } else {
-            return <SceneTool />
+            return <SceneTool {...this.props}/>
         }
     }
 

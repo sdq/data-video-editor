@@ -15,8 +15,9 @@ export default class AddSceneModal extends Component {
                 confirmLoading={this.props.confirmLoading}
                 onCancel={this.props.handleCancel}
             >
-                <p>Write script</p>
+                <p>Write script (optional)</p>
                 <TextArea rows={5} />
+                <p style={{marginTop: 8}}>Add dataset (optional)</p>
                 <Dragger>
                     <p className="ant-upload-drag-icon">
                     <Icon type="inbox" />
