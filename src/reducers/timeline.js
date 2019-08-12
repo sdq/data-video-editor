@@ -1,5 +1,6 @@
 import ActionType from '../constants/ActionType';
 import Scene from '../models/Scene';
+import Video from '../models/Video';
 import { Element, ImageInfo, ChartInfo, TextInfo} from '../models/Element';
 import URL from '../constants/URL';
 import ElementType from '../constants/ElementType';
@@ -62,7 +63,15 @@ const element12 = new Element(ElementType.IMAGE, demoimage2);
 const element22 = new Element(ElementType.TEXT, demotext2);
 const scene2 = new Scene("A woman is sitting on the ground and thinking about something.", "", [element02, element12, element22], 2);
 
+const video = new Video(1);
+console.log(video.id());
+video.id(2);
+video.add(scene1);
+video.add(scene2);
+console.log(video.scenes())
+
 const initialState = {
+    video: video,
     scenes: [scene1, scene2],
     index: 1,
 }
