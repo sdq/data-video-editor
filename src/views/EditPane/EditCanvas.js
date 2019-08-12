@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Stage, Layer } from 'react-konva';
 import { HotKeys } from "react-hotkeys";
-import TransformerComponent from './Elements/TransformerComponent';
-import ImageElement from './Elements/ImageElement';
-import TextElement from './Elements/TextElement';
-import ChartElement from './Elements/ChartElement';
+import TransformerComponent from '../../components/Elements/TransformerComponent';
+import ImageElement from '../../components/Elements/ImageElement';
+import TextElement from '../../components/Elements/TextElement';
+import ChartElement from '../../components/Elements/ChartElement';
 import ElementType from '../../constants/ElementType';
 import { DropTarget } from 'react-dnd';
 import DNDType from '../../constants/DNDType';
@@ -152,11 +152,11 @@ class EditCanvas extends Component {
                                 //console.log(element.info);
                                 switch (element.type) {
                                     case ElementType.TEXT:
-                                        return <TextElement key={this.props.sceneIndex+"-"+index} edit={ele => this.editElement(index, ele)} element={element} name={this.props.sceneIndex+"-"+index}/>
+                                        return <TextElement key={this.props.sceneIndex+"-"+index} edit={ele => this.editElement(index, ele)} element={element} name={this.props.sceneIndex+"-"+index} draggable={true}/>
                                     case ElementType.IMAGE:
-                                        return <ImageElement key={this.props.sceneIndex+"-"+index} edit={ele => this.editElement(index, ele)} element={element} name={this.props.sceneIndex+"-"+index}/>
+                                        return <ImageElement key={this.props.sceneIndex+"-"+index} edit={ele => this.editElement(index, ele)} element={element} name={this.props.sceneIndex+"-"+index} draggable={true}/>
                                     case ElementType.CHART:
-                                        return <ChartElement key={this.props.sceneIndex+"-"+index} edit={ele => this.editElement(index, ele)} element={element} name={this.props.sceneIndex+"-"+index}/>
+                                        return <ChartElement key={this.props.sceneIndex+"-"+index} edit={ele => this.editElement(index, ele)} element={element} name={this.props.sceneIndex+"-"+index} draggable={true}/>
                                     default:
                                         //TODO: remove
                                         console.log("wrong!!!!!!!");
