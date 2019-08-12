@@ -39,7 +39,7 @@ export default class EditorView extends Component {
                     </Layout>
                     <Layout>
                         <Content
-                        style={{ background: '#eee', height: '300px' }} 
+                        style={{ background: '#eee', height: '320px' }} 
                         >
                             <TimelinePane/>
                         </Content>

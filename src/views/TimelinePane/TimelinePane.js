@@ -25,12 +25,12 @@ export default class TimelinePane extends Component {
         });
     }
     
-    handleOk() {
+    handleOk(script) {
         this.setState({
             confirmLoading: true,
         });
         setTimeout(function(){
-            const newScene = new Scene("", "", [], 2);
+            const newScene = new Scene(script, "", [], 2);
             this.props.addScene(newScene);
             this.setState({
                 visible: false,
@@ -47,17 +47,20 @@ export default class TimelinePane extends Component {
 
     render() {
         return (
-            <div id="timeline">
-                {this.props.scenes.map(function(scene, index) {
-                    return <SceneBlock key={index} index={index} scene={scene} isSelected={this.props.sceneIndex===index} { ...this.props }/>
-                }.bind(this))}
-                <AddScene clickAddScene={this.clickAddScene}/>
-                <AddSceneModal 
-                    visible={this.state.visible}
-                    confirmLoading={this.state.confirmLoading}
-                    handleOk={this.handleOk}
-                    handleCancel={this.handleCancel}
-                />
+            <div>
+                <div style={{backgroundColor: "#FDC209", height: "40px"}}></div>
+                <div id="timeline">
+                    {this.props.scenes.map(function(scene, index) {
+                        return <SceneBlock key={index} index={index} scene={scene} isSelected={this.props.sceneIndex===index} { ...this.props }/>
+                    }.bind(this))}
+                    <AddScene clickAddScene={this.clickAddScene}/>
+                    <AddSceneModal 
+                        visible={this.state.visible}
+                        confirmLoading={this.state.confirmLoading}
+                        handleOk={this.handleOk}
+                        handleCancel={this.handleCancel}
+                    />
+                </div>
             </div>
         )
     }

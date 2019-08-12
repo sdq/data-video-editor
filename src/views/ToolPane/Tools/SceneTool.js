@@ -19,7 +19,9 @@ export default class SceneTool extends Component {
     }
 
     handleChange(e) {
-        this.setState({value: e.target.value});
+        const newScene = Object.assign({},this.props.currentScene);
+        newScene.script = e.target.value;
+        this.props.updateScene(this.props.sceneIndex, newScene);
     }
 
     addText() {
@@ -36,9 +38,9 @@ export default class SceneTool extends Component {
     }
 
     onChange = value => {
-        this.setState({
-            inputValue: value,
-        });
+        const newScene = Object.assign({},this.props.currentScene);
+        newScene.duration = value;
+        this.props.updateScene(this.props.sceneIndex, newScene);
     };
 
     render() {
@@ -46,7 +48,7 @@ export default class SceneTool extends Component {
             <div style={{padding: '10px 10px 10px 10px', fontSize: '14px'}}>
                 <Divider>Script</Divider>
                 <Row style={{margin: '10px 0px 0px 0px', fontSize: '14px'}}>
-                    <TextArea style={{ padding: '5px 5px 0 5px'}} rows={5} onChange={this.handleChange}/>
+                    <TextArea style={{ padding: '5px 5px 0 5px'}} rows={5} value={this.props.currentScene.script} onChange={this.handleChange}/>
                     <Button style={{float: 'right', margin: "10px 0 0 0"}} onClick={this.addText}>Add</Button>
                 </Row>
                 <Divider>Duration</Divider>
@@ -56,7 +58,7 @@ export default class SceneTool extends Component {
                             min={1}
                             max={20}
                             onChange={this.onChange}
-                            value={typeof this.state.inputValue === 'number' ? this.state.inputValue : 0}
+                            value={typeof this.props.currentScene.duration === 'number' ? this.props.currentScene.duration : 0}
                         />
                     </Col>
                     <Col span={10}>
@@ -64,7 +66,7 @@ export default class SceneTool extends Component {
                             min={1}
                             max={20}
                             style={{ marginLeft: 8 }}
-                            value={this.state.inputValue}
+                            value={this.props.currentScene.duration}
                             onChange={this.onChange}
                         />
                     </Col>

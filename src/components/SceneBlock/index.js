@@ -21,7 +21,7 @@ export default class SceneBlock extends Component {
     render() {
         return (
             <div className="sceneblock" onClick={this.clickSceneBlock} onDoubleClick={this.dbclickSceneBlock} style={{borderColor: this.props.isSelected?Color.DEEP_ORANGE:Color.GRAY}}>
-                Scene Block
+                {this.props.scene.script}
             </div>
         )
     }
