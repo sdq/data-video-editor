@@ -3,7 +3,7 @@ import { DragSource } from 'react-dnd';
 import DNDType from '../../constants/DNDType';
 import ElementType from '../../constants/ElementType';
 import {Element, ImageInfo} from '../../models/Element';
-import Scene from '../../models/Scene';
+// import Scene from '../../models/Scene';
 import './imagecard.css';
 
 const imageSource = {

@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
-import { Upload, Row, Col, Divider, Button, Select, Slider, Icon } from 'antd';
+import { Upload, Row, Col, Divider, Button, Slider, Icon } from 'antd';
 import { SketchPicker } from 'react-color';
 
-const { Option } = Select;
 const { Dragger } = Upload;
 
 export default class ChartTool extends Component {

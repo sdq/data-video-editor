@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Tabs } from 'antd';
 import IllustrationTab from './IllustrationTab/IllustrationTab';
-import AudioTab from './AudioTab/AudioTab';
 import PictographTab from './PictographTab/PictographTab';
-import TextTab from './TextTab/TextTab';
+// import TextTab from './TextTab/TextTab';
+// import AudioTab from './AudioTab/AudioTab';
 import ChartTab from './ChartTab/ChartTab';
 import './resourcepane.css';
 

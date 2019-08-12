@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { InputNumber, Row, Col, Divider, Button, Select, Slider, Input } from 'antd';
+import { InputNumber, Row, Col, Divider, Button, Slider, Input } from 'antd';
 import ElementType from '../../../constants/ElementType';
 import {Element, TextInfo} from '../../../models/Element';
 

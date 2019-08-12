@@ -1,3 +1,3 @@
 export default {
-    OSS : 'https://data-video-editor.oss-cn-shanghai.aliyuncs.com',
+    OSS : 'https://datavideo.idvxlab.com',
 }

@@ -4,7 +4,7 @@ import ElementType from '../../constants/ElementType';
 import Color from '../../constants/Color';
 import SceneTool from './Tools/SceneTool';
 import ImageTool from './Tools/ImageTool';
-import AudioTool from './Tools/AudioTool';
+// import AudioTool from './Tools/AudioTool';
 import ChartTool from './Tools/ChartTool';
 import TextTool from './Tools/TextTool';
 
