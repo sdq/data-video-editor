@@ -63,7 +63,8 @@ export default class ImageElement extends Component {
 
     render() {
         return (
-            <Group name={this.props.name} draggable
+            <Group name={this.props.name} 
+                draggable = {this.props.draggable}
                 x={this.props.element.info.x}
                 y={this.props.element.info.y}
                 width={this.props.element.info.width}

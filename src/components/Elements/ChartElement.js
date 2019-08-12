@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Group } from 'react-konva';
-import ChartType from '../../../constants/ChartType';
-import BarChart from '../../../charts/BarChart';
-import LineChart from '../../../charts/LineChart';
-import Scatterplot from '../../../charts/Scatterplot';
-import AreaChart from '../../../charts/AreaChart';
-import Histogram from '../../../charts/Histogram';
+import ChartType from '../../constants/ChartType';
+import BarChart from '../../charts/BarChart';
+import LineChart from '../../charts/LineChart';
+import Scatterplot from '../../charts/Scatterplot';
+import AreaChart from '../../charts/AreaChart';
+import Histogram from '../../charts/Histogram';
 
 export default class ChartElement extends Component {
     constructor(props) {
@@ -60,7 +60,8 @@ export default class ChartElement extends Component {
 
     render() {
         return (
-            <Group name={this.props.name} draggable
+            <Group name={this.props.name}
+                draggable = {this.props.draggable}
                 x={this.props.element.info.x}
                 y={this.props.element.info.y}
                 width={this.props.element.info.width}

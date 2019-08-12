@@ -1,9 +1,25 @@
 .sceneblock {
     height: 250px;
-    width: 200px;
+    width: 210px;
     border-style: solid;
     border-width: 1px;
     background-color: #ffffff;
     padding: 8px;
     margin-left: 8px;
+}
+
+.canvasPreview {
+    height: 108px;
+    width: 192px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #D8D8D8;
+}
+
+.scriptPreview {
+    margin-top: 8px;
+    height: 120px;
+    width: 192px;
+    overflow-x: hidden;
+    overflow-y: auto;
 }

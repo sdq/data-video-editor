@@ -1,6 +1,6 @@
 #timeline {
     display: flex;
     padding: 8px;
-    overflow-x: hidden;
-    overflow-y: auto;
+    overflow-x: auto;
+    overflow-y: hidden;
 }

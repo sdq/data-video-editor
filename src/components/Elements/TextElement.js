@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text, Group } from 'react-konva';
-import Color from '../../../constants/Color';
+import Color from '../../constants/Color';
 
 export default class TextElement extends Component {
     constructor(props) {
@@ -45,7 +45,8 @@ export default class TextElement extends Component {
     }
     render() {
         return (
-            <Group name={this.props.name} draggable
+            <Group name={this.props.name}
+                draggable = {this.props.draggable}
                 x={this.state.x}
                 y={this.state.y}
                 onDragStart={() => {
