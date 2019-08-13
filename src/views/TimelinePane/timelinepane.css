@@ -4,3 +4,11 @@
     overflow-x: auto;
     overflow-y: hidden;
 }
+
+#timelineHeader {
+    height: 40px;
+    background-color: #FDC209;
+    padding-left: 16px;
+    padding-top: 4px;
+    font-size: 20px;
+}

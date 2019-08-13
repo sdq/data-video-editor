@@ -1,6 +1,13 @@
 export default {
     // UI Action
     DISPLAY_SIDEBAR : 'SHOW_SIDEBAR',
+    // Play Control Action
+    PLAY_VIDEO : 'PLAY_VIDEO',
+    PAUSE_VIDEO : 'PAUSE_VIDEO',
+    STOP_VIDEO : 'STOP_VIDEO',
+    PLAY_SCENE : 'PLAY_SCENE',
+    PAUSE_SCENE : 'PAUSE_SCENE',
+    STOP_SCENE : 'STOP_SCENE',
     // Timeline Action
     SELECT_SCENE: 'SELECT_SCENE',
     ADD_SCENE : 'ADD_SCENE',

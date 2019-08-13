@@ -11,6 +11,7 @@ import DNDType from '../../constants/DNDType';
 import Color from '../../constants/Color';
 import { Element } from '../../models/Element';
 import './editpane.css';
+import { None } from 'vega';
 
 const keyMap = {
     COPY: "command+c",
@@ -134,6 +135,7 @@ class EditCanvas extends Component {
     }
 
     render() {
+        const editable = !this.props.isPerforming;
         const { canDrop, isOver, connectDropTarget } = this.props;
         const isActive = canDrop && isOver;
         let backgroundColor = '#fff';
@@ -146,17 +148,17 @@ class EditCanvas extends Component {
         return connectDropTarget(
             <div id="canvasContainer" style={{ backgroundColor }}>
                 <HotKeys keyMap={keyMap} handlers={this.handlers}>
-                    <Stage width={800} height={450} onMouseDown={this.handleStageMouseDown}>
+                    <Stage width={800} height={450} onMouseDown={editable?this.handleStageMouseDown:None}>
                         <Layer>
                             {this.props.currentScene.elements.map(function(element, index) {
                                 //console.log(element.info);
                                 switch (element.type) {
                                     case ElementType.TEXT:
-                                        return <TextElement key={this.props.sceneIndex+"-"+index} edit={ele => this.editElement(index, ele)} element={element} name={this.props.sceneIndex+"-"+index} draggable={true}/>
+                                        return <TextElement key={this.props.sceneIndex+"-"+index} edit={ele => this.editElement(index, ele)} element={element} name={this.props.sceneIndex+"-"+index} draggable={editable}/>
                                     case ElementType.IMAGE:
-                                        return <ImageElement key={this.props.sceneIndex+"-"+index} edit={ele => this.editElement(index, ele)} element={element} name={this.props.sceneIndex+"-"+index} draggable={true}/>
+                                        return <ImageElement key={this.props.sceneIndex+"-"+index} edit={ele => this.editElement(index, ele)} element={element} name={this.props.sceneIndex+"-"+index} draggable={editable}/>
                                     case ElementType.CHART:
-                                        return <ChartElement key={this.props.sceneIndex+"-"+index} edit={ele => this.editElement(index, ele)} element={element} name={this.props.sceneIndex+"-"+index} draggable={true}/>
+                                        return <ChartElement key={this.props.sceneIndex+"-"+index} edit={ele => this.editElement(index, ele)} element={element} name={this.props.sceneIndex+"-"+index} draggable={editable}/>
                                     default:
                                         //TODO: remove
                                         console.log("wrong!!!!!!!");

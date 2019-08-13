@@ -48,7 +48,9 @@ export default class TimelinePane extends Component {
     render() {
         return (
             <div>
-                <div style={{backgroundColor: "#FDC209", height: "40px"}}></div>
+                <div id="timelineHeader">
+                    <font color="white" weight="bold">Storyline</font>
+                </div>
                 <div id="timeline">
                     {this.props.scenes.map(function(scene, index) {
                         return <SceneBlock key={index} index={index} scene={scene} isSelected={this.props.sceneIndex===index} { ...this.props }/>
