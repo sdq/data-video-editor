@@ -3,7 +3,7 @@ import { Tabs } from 'antd';
 import IllustrationTab from './IllustrationTab/IllustrationTab';
 import PictographTab from './PictographTab/PictographTab';
 // import TextTab from './TextTab/TextTab';
-// import AudioTab from './AudioTab/AudioTab';
+import AudioTab from './AudioTab/AudioTab';
 import ChartTab from './ChartTab/ChartTab';
 import './resourcepane.css';
 
@@ -23,12 +23,12 @@ export default class ResourcePane extends Component {
                     <TabPane tab="Pictograph" key="Pictograph">
                         <PictographTab/>
                     </TabPane>
-                    {/* <TabPane tab="Audio" key="Audio">
+                    <TabPane tab="Audio" key="Audio">
                         <AudioTab {...this.props}/>
                     </TabPane>
-                    <TabPane tab="Text" key="Text">
+                    {/* <TabPane tab="Text" key="Text">
                         <TextTab {...this.props}/>
-                    </TabPane> */}
+                    </TabPane>  */}
                 </Tabs>
             </div>
         )
