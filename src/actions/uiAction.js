@@ -4,7 +4,6 @@ export const displayStoryline = () => ({
     type: ActionType.DISPLAY_STORYLINE,
 })
 
-export const displayTrackEditor = (sceneIndex) => ({
-    type: ActionType.DISPLAY_TRACK_EDITOR,
-    sceneIndex
+export const displayTrackEditor = () => ({
+    type: ActionType.DISPLAY_TRACK_EDITOR
 })

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 import { DropTarget } from 'react-dnd';
 import DNDType from '../../constants/DNDType';
-import SceneBlock from './SceneBlock';
+import TrackBlock from './TrackBlock';
 import SceneType from '../../constants/SceneType';
 
 const grid = 8;
@@ -75,7 +75,7 @@ class Track extends Component {
                                 onClick = {this.clickSceneBlock}
                                 >
                                 {/* {item.content} */}
-                                    <SceneBlock type={SceneType.IMAGE} info={item.content} index={index} { ...this.props }/>
+                                    <TrackBlock type={SceneType.IMAGE} info={item.content} index={index} { ...this.props }/>
                                 </div>
                             )}
                             </Draggable>

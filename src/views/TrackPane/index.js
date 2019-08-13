@@ -1,12 +1,14 @@
 import { connect } from 'react-redux';
 import TrackPane from './TrackPane';
-import {scenes, sceneIndex} from '../../selectors/timeline';
+import {scenes, sceneIndex, currentScene} from '../../selectors/timeline';
 import * as timelineActions from '../../actions/timelineAction';
+import * as uiActions from '../../actions/uiAction';
 
 const mapStateToProps = state => {
     return {
         scenes: scenes(state),
         sceneIndex: sceneIndex(state),
+        currentScene: currentScene(state),
     }
 }
 
@@ -17,6 +19,7 @@ const mapDispatchToProps = dispatch => {
         removeScene: (index) => dispatch(timelineActions.removeScene(index)),
         updateScene: (index, scene) => dispatch(timelineActions.updateScene(index, scene)),
         reorderScene: (scenes) => dispatch(timelineActions.reorderScene(scenes)),
+        displayStoryline: () => dispatch(uiActions.displayStoryline()),
     }
 }
 

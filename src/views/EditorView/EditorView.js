@@ -5,8 +5,10 @@ import EditPane from '../EditPane';
 import ResourcePane from '../ResourcePane';
 import ToolPane from '../ToolPane';
 import TimelinePane from '../TimelinePane';
+import TrackPane from '../TrackPane';
 import HTML5Backend from 'react-dnd-html5-backend'
 import { DndProvider } from 'react-dnd'
+import UIMode from '../../constants/UIMode';
 
 const { Sider, Content } = Layout;
 
@@ -41,7 +43,8 @@ export default class EditorView extends Component {
                         <Content
                         style={{ background: '#eee', height: '320px' }} 
                         >
-                            <TimelinePane/>
+                            {this.props.uimode === UIMode.TRACK_MODE?<TrackPane />:<TimelinePane />}
+                            
                         </Content>
                     </Layout>
                 </Layout>

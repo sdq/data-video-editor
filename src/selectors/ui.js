@@ -1,0 +1,1 @@
+export const uimode = state => state.ui.uimode;
