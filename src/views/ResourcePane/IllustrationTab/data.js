@@ -40,7 +40,12 @@ const data = [
         name: "sport",
         style: "cartoon",
         src: URL.OSS+"/images/sport.png"
-    }
+    },
+    // {
+    //     name: "pika",
+    //     style: "cartoon",
+    //     src: URL.OSS+"/images/pika.gif"
+    // }
 ];
 
 export default data;

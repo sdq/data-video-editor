@@ -1,6 +1,8 @@
 export default {
     // UI Action
     DISPLAY_SIDEBAR : 'SHOW_SIDEBAR',
+    DISPLAY_TRACK_EDITOR : 'DISPLAY_TRACK_EDITOR',
+    DISPLAY_STORYLINE : 'DISPLAY_STORYLINE',
     // Play Control Action
     PLAY_VIDEO : 'PLAY_VIDEO',
     PAUSE_VIDEO : 'PAUSE_VIDEO',

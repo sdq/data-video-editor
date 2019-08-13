@@ -27,7 +27,7 @@ export default class SceneBlock extends Component {
         return (
             <div className="sceneblock" onClick={this.clickSceneBlock} onDoubleClick={this.dbclickSceneBlock} style={{borderColor: this.props.isSelected?Color.DEEP_ORANGE:Color.GRAY}}>
                 <div className="canvasPreview">
-                    <Stage width={160} height={90} scale={{x: 192/800, y:192/800}}>
+                    <Stage width={192} height={108} scale={{x: 192/800, y:192/800}}>
                         <Layer>
                             {this.props.scene.elements.map(function(element, index) {
                                 console.log(element.info);
