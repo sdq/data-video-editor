@@ -14,7 +14,7 @@ export default class ImageElement extends Component {
         this.loadImage();
     }
     componentDidUpdate(oldProps) {
-        if (oldProps.element.info.src !== this.props.element.info.src) {
+        if (oldProps.element.info().src !== this.props.element.info().src) {
             this.loadImage();
         }
     }
@@ -24,7 +24,7 @@ export default class ImageElement extends Component {
     loadImage() {
         // save to "this" to remove "load" handler on unmount
         this.image = new window.Image();
-        this.image.src = this.props.element.info.src;
+        this.image.src = this.props.element.info().src;
         this.image.addEventListener('load', this.handleLoad);
     }
     handleLoad = () => {
@@ -65,11 +65,11 @@ export default class ImageElement extends Component {
         return (
             <Group name={this.props.name} 
                 draggable = {this.props.draggable}
-                x={this.props.element.info.x}
-                y={this.props.element.info.y}
-                width={this.props.element.info.width}
-                height={this.props.element.info.height}
-                rotation={this.props.element.info.rotation}
+                x={this.props.element.info().x}
+                y={this.props.element.info().y}
+                width={this.props.element.info().width}
+                height={this.props.element.info().height}
+                rotation={this.props.element.info().rotation}
                 //draggable
                 onDragStart={() => {
                     // this.setState({

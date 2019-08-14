@@ -41,7 +41,7 @@ export default class ChartElement extends Component {
     }
 
     chooseChart() {
-        switch (this.props.element.info.type) {
+        switch (this.props.element.info().type) {
             case ChartType.AREACHART:
                 return <AreaChart name={this.props.name}/>
             case ChartType.BARCHART:
@@ -62,11 +62,11 @@ export default class ChartElement extends Component {
         return (
             <Group name={this.props.name}
                 draggable = {this.props.draggable}
-                x={this.props.element.info.x}
-                y={this.props.element.info.y}
-                width={this.props.element.info.width}
-                height={this.props.element.info.height}
-                rotation={this.props.element.info.rotation}
+                x={this.props.element.info().x}
+                y={this.props.element.info().y}
+                width={this.props.element.info().width}
+                height={this.props.element.info().height}
+                rotation={this.props.element.info().rotation}
                 //draggable
                 onDragStart={() => {
                     // this.setState({

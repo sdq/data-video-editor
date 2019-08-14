@@ -37,8 +37,8 @@ export default class SceneBlock extends Component {
                     <Stage width={192} height={108} scale={{x: 192/800, y:192/800}}>
                         <Layer>
                             {this.props.scene.elements.map(function(element, index) {
-                                console.log(element.info);
-                                switch (element.type) {
+                                console.log(element.info());
+                                switch (element.type()) {
                                     case ElementType.TEXT:
                                         return <TextElement key={this.props.sceneIndex+"-"+index} element={element} name={this.props.sceneIndex+"-"+index} draggable = {false}/>
                                     case ElementType.IMAGE:
@@ -57,7 +57,7 @@ export default class SceneBlock extends Component {
                     </Stage>
                 </div>
                 <div className="scriptPreview">
-                    {this.props.scene.script}
+                    {this.props.scene.script()}
                 </div>
             </div>
         )

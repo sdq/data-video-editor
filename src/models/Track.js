@@ -19,8 +19,13 @@ export default class Track {
                 return this;
             }
         };
-        this.elements = function() {
-            return this._elements;
+        this.elements = function(elements) {
+            if (elements == null){
+                return this._elements;
+            } else {
+                this._elements = elements;
+                return this;
+            }
         };
         this.add = function(element) {
             this._elements.push(element);

@@ -19,7 +19,7 @@ export default class ToolPane extends Component {
 
     chooseTool() {
         if (this.props.isSelected && this.props.currentElement) {
-            switch (this.props.currentElement.type) {
+            switch (this.props.currentElement.type()) {
                 case ElementType.IMAGE:
                     return <ImageTool {...this.props}/>;
                 case ElementType.CHART:

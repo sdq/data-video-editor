@@ -7,9 +7,9 @@ export default class TextElement extends Component {
         super(props);
         this.state = {
             isDragging: false,
-            text: props.element.info.text,
-            x: props.element.info.x,
-            y: props.element.info.y,
+            text: props.element.info().text,
+            x: props.element.info().x,
+            y: props.element.info().y,
         };
         this.dragend = this.dragend.bind(this);
     }

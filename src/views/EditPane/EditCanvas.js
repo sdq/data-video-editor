@@ -116,8 +116,8 @@ class EditCanvas extends Component {
     pasteElement() {
         console.log("pasteElement")
         const newScene = Object.assign({},this.props.currentScene);
-        const newInfo = Object.assign({},this.state.copiedElement.info);
-        const type = this.state.copiedElement.type;
+        const newInfo = Object.assign({},this.state.copiedElement.info());
+        const type = this.state.copiedElement.type();
         const newElement = new Element(type, newInfo);
         newScene.elements.push(newElement);
         this.props.updateScene(this.props.sceneIndex, newScene);
@@ -152,7 +152,7 @@ class EditCanvas extends Component {
                         <Layer>
                             {this.props.currentScene.elements.map(function(element, index) {
                                 //console.log(element.info);
-                                switch (element.type) {
+                                switch (element.type()) {
                                     case ElementType.TEXT:
                                         return <TextElement key={this.props.sceneIndex+"-"+index} edit={ele => this.editElement(index, ele)} element={element} name={this.props.sceneIndex+"-"+index} draggable={editable}/>
                                     case ElementType.IMAGE:

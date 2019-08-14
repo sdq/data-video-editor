@@ -30,7 +30,7 @@ export default class TimelinePane extends Component {
             confirmLoading: true,
         });
         setTimeout(function(){
-            const newScene = new Scene(script, "", [], 2);
+            const newScene = new Scene(script, [], 2);
             this.props.addScene(newScene);
             this.setState({
                 visible: false,

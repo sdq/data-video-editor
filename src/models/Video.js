@@ -57,6 +57,10 @@ export default class Video {
             this._scenes.splice(index, 1);
             return this;
         }
+        this.update = function(index,scene) {
+            this._scenes[index] = scene;
+            return this;
+        }
         this.clear = function() {
             this._scenes = [];
             return this;

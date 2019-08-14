@@ -33,7 +33,7 @@ const demotext = new TextInfo(
 const element0 = new Element(ElementType.CHART, demochart);
 const element1 = new Element(ElementType.IMAGE, demoimage);
 const element2 = new Element(ElementType.TEXT, demotext);
-const scene1 = new Scene("A man is sitting on the chair and thinking about something.", "", [element0, element1, element2], 2);
+const scene1 = new Scene("A man is sitting on the chair and thinking about something.", [element0, element1, element2], 2);
 
 const demoimage2 = new ImageInfo(
     URL.OSS+'/images/woman.png',
@@ -61,7 +61,7 @@ const demotext2 = new TextInfo(
 const element02 = new Element(ElementType.CHART, demochart2);
 const element12 = new Element(ElementType.IMAGE, demoimage2);
 const element22 = new Element(ElementType.TEXT, demotext2);
-const scene2 = new Scene("A woman is sitting on the ground and thinking about something.", "", [element02, element12, element22], 2);
+const scene2 = new Scene("A woman is sitting on the ground and thinking about something.", [element02, element12, element22], 2);
 
 const video = new Video(1);
 console.log(video.id());
@@ -86,23 +86,27 @@ export default (state = initialState, action) => {
         case ActionType.ADD_SCENE:
             newScenes.push(action.scene);
             newState.scenes = newScenes;
+            // newState.video.add(action.scene)
             newState.index = newScenes.length - 1;
             return newState;
         case ActionType.REMOVE_SCENE:
             newScenes.splice(action.index, 1);
             newState.scenes = newScenes;
+            // newState.video.remove(action.index)
             newState.index = 0;
             return newState
         case ActionType.UPDATE_SCENE:
             newScenes[action.index] = action.scene;
             newState.scenes = newScenes;
+            //newState.video.update(action.index, action.scene);
             return newState
         case ActionType.REORDER_SCENE:
             //TODO: reorder
             return state
-        case ActionType.ADD_ELEMENT:
+        case ActionType.ADD_ELEMENT: //TODO: track information
             newScenes[action.index] = action.scene;
             newState.scenes = newScenes;
+            //newState.video.update(action.index, action.scene);
             return newState
         default:
             return state

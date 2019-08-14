@@ -20,7 +20,7 @@ export default class SceneTool extends Component {
 
     handleChange(e) {
         const newScene = Object.assign({},this.props.currentScene);
-        newScene.script = e.target.value;
+        newScene.script(e.target.value);
         this.props.updateScene(this.props.sceneIndex, newScene);
     }
 
@@ -48,7 +48,7 @@ export default class SceneTool extends Component {
             <div style={{padding: '10px 10px 10px 10px', fontSize: '14px'}}>
                 <Divider>Script</Divider>
                 <Row style={{margin: '10px 0px 0px 0px', fontSize: '14px'}}>
-                    <TextArea style={{ padding: '5px 5px 0 5px'}} rows={5} value={this.props.currentScene.script} onChange={this.handleChange}/>
+                    <TextArea style={{ padding: '5px 5px 0 5px'}} rows={5} value={this.props.currentScene.script()} onChange={this.handleChange}/>
                     <Button style={{float: 'right', margin: "10px 0 0 0"}} onClick={this.addText}>Add</Button>
                 </Row>
                 <Divider>Duration</Divider>
@@ -66,7 +66,7 @@ export default class SceneTool extends Component {
                             min={1}
                             max={20}
                             style={{ marginLeft: 8 }}
-                            value={this.props.currentScene.duration}
+                            value={this.props.currentScene.duration()}
                             onChange={this.onChange}
                         />
                     </Col>
