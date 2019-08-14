@@ -1,13 +1,20 @@
 import React, { Component } from 'react'
 import { Upload, Row, Col, Divider, Button, Slider, Icon } from 'antd';
+import DataPreview from '../../../components/DataPreview';
 import { SketchPicker } from 'react-color';
 
 const { Dragger } = Upload;
 
 export default class ChartTool extends Component {
 
-    state = {
-        displayColorPicker: false,
+    constructor(props) {
+        super(props);
+        this.state = {
+            datavisible: false,
+            displayColorPicker: false,
+        };
+        this.handleDataPreview = this.handleDataPreview.bind(this);
+        this.handleDataOk = this.handleDataOk.bind(this);
     };
 
     handleClick = () => {
@@ -17,6 +24,18 @@ export default class ChartTool extends Component {
     handleClose = () => {
         this.setState({ displayColorPicker: false })
     };
+
+    handleDataPreview = () => {
+        this.setState({
+            datavisible: true,
+        });
+    }
+
+    handleDataOk = () => {
+        this.setState({
+            datavisible: false,
+        });
+    }
 
     render() {
         const popover = {
@@ -42,6 +61,8 @@ export default class ChartTool extends Component {
                     Support for CSV file
                     </p>
                 </Dragger>
+                <Button block style={{marginTop: '8px'}} onClick={this.handleDataPreview}>Preview Data</Button>
+
                 <Divider>Encoding</Divider>
                 
                 <Divider>Style</Divider>
@@ -62,6 +83,10 @@ export default class ChartTool extends Component {
                         <Slider range defaultValue={[0, 100]} />
                     </Col>
                 </Row>
+                <DataPreview 
+                    visible={this.state.datavisible}
+                    handleOk={this.handleDataOk}
+                />
             </div>
         )
     }
