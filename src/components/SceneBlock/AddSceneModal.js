@@ -1,21 +1,28 @@
 import React, { Component } from 'react';
-import { Upload, Icon, Modal, Input } from 'antd';
+import { Modal, Input } from 'antd';
 
 const { TextArea } = Input;
-const { Dragger } = Upload;
+
+const defaultTitle = "New Scene";
 
 export default class AddSceneModal extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
+            title: defaultTitle,
             script: "",
         };
-        this.handleChange = this.handleChange.bind(this);
+        this.handleChangeTitle = this.handleChangeTitle.bind(this);
+        this.handleChangeScript = this.handleChangeScript.bind(this);
         this.handleOk = this.handleOk.bind(this);
     }
 
-    handleChange(e) {
+    handleChangeTitle(e) {
+        this.setState({title: e.target.value});
+    }
+
+    handleChangeScript(e) {
         this.setState({script: e.target.value});
     }
 
@@ -32,18 +39,10 @@ export default class AddSceneModal extends Component {
                 confirmLoading={this.props.confirmLoading}
                 onCancel={this.props.handleCancel}
             >
-                <p>Write script (optional)</p>
-                <TextArea rows={5} onChange={this.handleChange}/>
-                <p style={{marginTop: 8}}>Add dataset (optional)</p>
-                <Dragger>
-                    <p className="ant-upload-drag-icon">
-                    <Icon type="inbox" />
-                    </p>
-                    <p className="ant-upload-text">Click or drag file to this area to upload</p>
-                    <p className="ant-upload-hint">
-                        Support for csv file.
-                    </p>
-                </Dragger>
+                <p>Scene Title (optional)</p>
+                <TextArea rows={1} defaultValue={defaultTitle} onChange={this.handleChangeTitle}/>
+                <p style={{marginTop: 8}}>Write script (optional)</p>
+                <TextArea rows={5} onChange={this.handleChangeScript}/>
             </Modal>
         )
     }
