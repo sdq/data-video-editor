@@ -1,10 +1,16 @@
+import uuidv4 from 'uuid/v4';
+
 export default class Scene {
     constructor(script, elements, duration) {
+        this._id = uuidv4()
         this._script = script;
         this._duration = duration;
         this._tracks = [];
         // this.dataurl = dataurl;
         this.elements = elements; //TODO: move to track
+        this.id = function() {
+            return this._id;
+        }
         this.script = function(script) {
             //set animation duration
             if (script == null){

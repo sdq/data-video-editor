@@ -101,13 +101,16 @@ export default (state = initialState, action) => {
             //newState.video.update(action.index, action.scene);
             return newState
         case ActionType.REORDER_SCENE:
-            //TODO: reorder
-            return state
+            const [moved] = newScenes.splice(action.sourceIndex, 1);
+            newScenes.splice(action.destinationIndex, 0, moved);
+            newState.scenes = newScenes;
+            newState.index = action.destinationIndex;
+            return newState;
         case ActionType.ADD_ELEMENT: //TODO: track information
             newScenes[action.index] = action.scene;
             newState.scenes = newScenes;
             //newState.video.update(action.index, action.scene);
-            return newState
+            return newState;
         default:
             return state
     }

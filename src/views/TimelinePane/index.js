@@ -19,7 +19,7 @@ const mapDispatchToProps = dispatch => {
         addScene: (scene) => dispatch(timelineActions.addScene(scene)),
         removeScene: (index) => dispatch(timelineActions.removeScene(index)),
         updateScene: (index, scene) => dispatch(timelineActions.updateScene(index, scene)),
-        reorderScene: (scenes) => dispatch(timelineActions.reorderScene(scenes)),
+        reorderScene: (sourceIndex, destinationIndex) => dispatch(timelineActions.reorderScene(sourceIndex, destinationIndex)),
         displayTrackEditor: () => dispatch(uiActions.displayTrackEditor()),
     }
 }

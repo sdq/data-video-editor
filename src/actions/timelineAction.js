@@ -21,7 +21,8 @@ export const updateScene = (index, scene) => ({
     scene
 })
 
-export const reorderScene = (scenes) => ({
+export const reorderScene = (sourceIndex, destinationIndex) => ({
     type: ActionType.REORDER_SCENE,
-    scenes
+    sourceIndex,
+    destinationIndex,
 })
