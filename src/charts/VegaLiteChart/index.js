@@ -26,7 +26,8 @@ export default class VegaLiteChart extends Component {
         this.chartImage.removeEventListener('load', this.handleLoad);
     }
     loadChart() {
-        const {spec} = this.props;
+        const {spec, data} = this.props;
+        spec.data = data;
         if (spec) {
             let vegaSpec;
             try {
