@@ -1,0 +1,22 @@
+.shelf {
+    width: 240px;
+    height: 26px;
+    margin : 10px 10px 10px 10px;
+    box-shadow: 2px 2px 2px #dddddd;
+}
+
+.channelName {
+    width: 50px;
+    height: 26px;
+    background-color: rgba(55,65,92,.2);
+    text-align:center;
+}
+
+.channelSlot {
+    /* width: 190px; */
+    height: 26px;
+    background-color: #fff;
+    padding: 0px 12px;
+    /* text-align: left; */
+    text-align:center;
+}
