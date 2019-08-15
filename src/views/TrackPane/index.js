@@ -1,8 +1,8 @@
 import { connect } from 'react-redux';
 import TrackPane from './TrackPane';
-import {scenes, sceneIndex, currentScene} from '../../selectors/timeline';
-import * as timelineActions from '../../actions/timelineAction';
-import * as uiActions from '../../actions/uiAction';
+import {scenes, sceneIndex, currentScene} from '@/selectors/timeline';
+import * as timelineActions from '@/actions/timelineAction';
+import * as uiActions from '@/actions/uiAction';
 
 const mapStateToProps = state => {
     return {

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { List } from 'antd';
 import LazyLoad from 'react-lazyload';
-import ImageCard from '../../../components/ImageCard';
+import ImageCard from '@/components/ImageCard';
 import './illustrationtab.css';
 import data from './data';
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import SceneType from '../../../constants/SceneType';
+import SceneType from '@/constants/SceneType';
 // import AddSceneBlock from './AddSceneBlock';
 import BlankBlock from './BlankBlock';
 import VideoBlock from './VideoBlock';

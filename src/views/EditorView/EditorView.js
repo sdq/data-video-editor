@@ -8,7 +8,7 @@ import TimelinePane from '../TimelinePane';
 import TrackPane from '../TrackPane';
 import HTML5Backend from 'react-dnd-html5-backend'
 import { DndProvider } from 'react-dnd'
-import UIMode from '../../constants/UIMode';
+import UIMode from '@/constants/UIMode';
 
 const { Sider, Content } = Layout;
 

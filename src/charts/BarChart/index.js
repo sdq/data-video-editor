@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import VegaLiteChart from '../VegaLiteChart';
-import Color from '../../constants/Color';
+import Color from '@/constants/Color';
 import VegaLite from 'react-vega-lite';
 
 const data = {

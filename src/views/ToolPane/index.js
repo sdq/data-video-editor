@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
 import ToolPane from './ToolPane';
-import {currentScene, sceneIndex, scenes} from '../../selectors/timeline';
-import {currentElement, elementIndex, isSelected} from '../../selectors/canvas';
-import * as timelineActions from '../../actions/timelineAction';
-import * as canvasActions from '../../actions/canvasAction';
+import {currentScene, sceneIndex, scenes} from '@/selectors/timeline';
+import {currentElement, elementIndex, isSelected} from '@/selectors/canvas';
+import * as timelineActions from '@/actions/timelineAction';
+import * as canvasActions from '@/actions/canvasAction';
 
 const mapStateToProps = state => {
     return {

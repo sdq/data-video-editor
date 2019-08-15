@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 import { DropTarget } from 'react-dnd';
-import DNDType from '../../constants/DNDType';
+import DNDType from '@/constants/DNDType';
 import TrackBlock from './TrackBlock';
-import SceneType from '../../constants/SceneType';
+import SceneType from '@/constants/SceneType';
 
 const grid = 8;
 

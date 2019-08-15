@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Layout } from 'antd';
 import TrackGroup from './TrackGroup';
-import SceneBlock from '../../components/SceneBlock';
+import SceneBlock from '@/components/SceneBlock';
 import './trackpane.css';
 
 const { Sider, Content } = Layout;

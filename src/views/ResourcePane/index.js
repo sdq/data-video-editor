@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import ResourcePane from './ResourcePane';
-import {currentScene, sceneIndex} from '../../selectors/timeline';
-import * as timelineActions from '../../actions/timelineAction';
+import {currentScene, sceneIndex} from '@/selectors/timeline';
+import * as timelineActions from '@/actions/timelineAction';
 
 const mapStateToProps = state => {
     return {

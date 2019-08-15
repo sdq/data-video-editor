@@ -1,5 +1,5 @@
-import URL from '../../../constants/URL';
-import ChartType from '../../../constants/ChartType';
+import URL from '@/constants/URL';
+import ChartType from '@/constants/ChartType';
 
 const data = [
     {

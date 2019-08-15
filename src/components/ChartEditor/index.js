@@ -3,7 +3,7 @@ import { Modal, Layout } from 'antd';
 import ChartPanel from './ChartPanel';
 import MappingPanel from './MappingPanel';
 import './charteditor.css';
-import carsSchema from '../../datasets/carsSchema';
+import carsSchema from '@/datasets/carsSchema';
 
 const { Sider, Content } = Layout;
 

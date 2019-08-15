@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { Upload, Row, Col, Divider, Button, Slider, Icon, Select } from 'antd';
-import DataPreview from '../../../components/DataPreview';
-import ChartEditor from '../../../components/ChartEditor';
-import ChartContainer from '../../../charts/ChartContainer';
+import DataPreview from '@/components/DataPreview';
+import ChartEditor from '@/components/ChartEditor';
+import ChartContainer from '@/charts/ChartContainer';
 import { SketchPicker } from 'react-color';
 
 const { Dragger } = Upload;

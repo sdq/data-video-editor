@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { List } from 'antd';
 import LazyLoad from 'react-lazyload';
-import ChartCard from '../../../components/ChartCard';
+import ChartCard from '@/components/ChartCard';
 import './charttab.css';
 import data from './data';
 

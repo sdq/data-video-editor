@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text, Group } from 'react-konva';
-import Color from '../../constants/Color';
+import Color from '@/constants/Color';
 
 export default class TextElement extends Component {
     constructor(props) {

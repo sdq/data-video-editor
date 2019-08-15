@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import Color from '../../constants/Color';
+import Color from '@/constants/Color';
 import { Stage, Layer } from 'react-konva';
-import ImageElement from '../../components/Elements/ImageElement';
-import TextElement from '../../components/Elements/TextElement';
-import ChartElement from '../../components/Elements/ChartElement';
-import ElementType from '../../constants/ElementType';
-import UIMode from '../../constants/UIMode';
+import ImageElement from '@/components/Elements/ImageElement';
+import TextElement from '@/components/Elements/TextElement';
+import ChartElement from '@/components/Elements/ChartElement';
+import ElementType from '@/constants/ElementType';
+import UIMode from '@/constants/UIMode';
 import './sceneblock.css';
 
 export default class SceneBlock extends Component {

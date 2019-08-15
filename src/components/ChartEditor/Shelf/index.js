@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Row, Col, Button } from 'antd';
 import { DropTarget } from 'react-dnd';
-import DNDType from '../../../constants/DNDType';
-import Color from '../../../constants/Color';
+import DNDType from '@/constants/DNDType';
+import Color from '@/constants/Color';
 import './shelf.css';
 
 const boxTarget = {

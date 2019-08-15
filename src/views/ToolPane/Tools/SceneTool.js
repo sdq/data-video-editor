@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { InputNumber, Row, Col, Divider, Button, Slider, Input } from 'antd';
-import ElementType from '../../../constants/ElementType';
-import {Element, TextInfo} from '../../../models/Element';
+import ElementType from '@/constants/ElementType';
+import {Element, TextInfo} from '@/models/Element';
 
 const { TextArea } = Input;
 

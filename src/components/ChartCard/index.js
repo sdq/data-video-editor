@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { DragSource } from 'react-dnd';
-import DNDType from '../../constants/DNDType';
-import ElementType from '../../constants/ElementType';
-//import ChartType from '../../constants/ChartType';
-import {Element, ChartInfo} from '../../models/Element';
-// import Scene from '../../models/Scene';
+import DNDType from '@/constants/DNDType';
+import ElementType from '@/constants/ElementType';
+//import ChartType from '@/constants/ChartType';
+import {Element, ChartInfo} from '@/models/Element';
+// import Scene from '@/models/Scene';
 import './chartcard.css';
 
 const chartSource = {

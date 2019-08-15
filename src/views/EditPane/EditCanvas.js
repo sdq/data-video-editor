@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import { Stage, Layer } from 'react-konva';
 import { HotKeys } from "react-hotkeys";
-import TransformerComponent from '../../components/Elements/TransformerComponent';
-import ImageElement from '../../components/Elements/ImageElement';
-import TextElement from '../../components/Elements/TextElement';
-import ChartElement from '../../components/Elements/ChartElement';
-import ElementType from '../../constants/ElementType';
+import TransformerComponent from '@/components/Elements/TransformerComponent';
+import ImageElement from '@/components/Elements/ImageElement';
+import TextElement from '@/components/Elements/TextElement';
+import ChartElement from '@/components/Elements/ChartElement';
+import ElementType from '@/constants/ElementType';
 import { DropTarget } from 'react-dnd';
-import DNDType from '../../constants/DNDType';
-import Color from '../../constants/Color';
-import { Element } from '../../models/Element';
+import DNDType from '@/constants/DNDType';
+import Color from '@/constants/Color';
+import { Element } from '@/models/Element';
 import './editpane.css';
 import { None } from 'vega';
 

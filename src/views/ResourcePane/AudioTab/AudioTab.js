@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import AudioCard from '../../../components/AudioCard';
+import AudioCard from '@/components/AudioCard';
 import LazyLoad from 'react-lazyload';
 
 export default class AudioTab extends Component {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Modal, Table } from 'antd';
-import data from '../../datasets/cars';
+import data from '@/datasets/cars';
 
 const columns = [
     {

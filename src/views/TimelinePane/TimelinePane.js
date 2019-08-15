@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import SceneBlock from '../../components/SceneBlock';
-import AddScene from '../../components/SceneBlock/AddScene';
-import AddSceneModal from '../../components/SceneBlock/AddSceneModal';
-import Scene from '../../models/Scene';
+import SceneBlock from '@/components/SceneBlock';
+import AddScene from '@/components/SceneBlock/AddScene';
+import AddSceneModal from '@/components/SceneBlock/AddSceneModal';
+import Scene from '@/models/Scene';
 import './timelinepane.css';
 
 const getListStyle = isDraggingOver => ({

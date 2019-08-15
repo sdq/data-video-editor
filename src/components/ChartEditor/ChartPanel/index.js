@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ChartContainer from '../../../charts/ChartContainer';
+import ChartContainer from '@/charts/ChartContainer';
 import './chartpanel.css';
 
 export default class ChartPanel extends Component {

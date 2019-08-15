@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Input, Button } from 'antd';
-import ElementType from '../../../constants/ElementType';
-import {Element, TextInfo} from '../../../models/Element';
-//import Scene from '../../models/Scene';
+import ElementType from '@/constants/ElementType';
+import {Element, TextInfo} from '@/models/Element';
+//import Scene from '@/models/Scene';
 const { TextArea } = Input;
 
 export default class TextTab extends Component {

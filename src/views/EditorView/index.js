@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import EditorView from './EditorView';
-import {uimode} from '../../selectors/ui';
+import {uimode} from '@/selectors/ui';
 
 const mapStateToProps = state => {
     return {

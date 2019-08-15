@@ -1,11 +1,11 @@
 import { connect } from 'react-redux';
 import EditPane from './EditPane';
-import {currentScene, sceneIndex, scenes} from '../../selectors/timeline';
-import {currentElement, elementIndex, isSelected} from '../../selectors/canvas';
-import {isPerforming} from '../../selectors/player';
-import * as timelineActions from '../../actions/timelineAction';
-import * as canvasActions from '../../actions/canvasAction';
-import * as playerActions from '../../actions/playerAction';
+import {currentScene, sceneIndex, scenes} from '@/selectors/timeline';
+import {currentElement, elementIndex, isSelected} from '@/selectors/canvas';
+import {isPerforming} from '@/selectors/player';
+import * as timelineActions from '@/actions/timelineAction';
+import * as canvasActions from '@/actions/canvasAction';
+import * as playerActions from '@/actions/playerAction';
 
 const mapStateToProps = state => {
     return {

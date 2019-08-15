@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Transformer } from 'react-konva';
-import Color from '../../constants/Color';
+import Color from '@/constants/Color';
 
 export default class TransformerComponent extends Component {
 

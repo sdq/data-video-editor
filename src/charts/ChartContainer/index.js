@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ChartType from '../../constants/ChartType';
+import ChartType from '@/constants/ChartType';
 import BarChart from '../BarChart';
 import LineChart from '../LineChart';
 import Scatterplot from '../Scatterplot';

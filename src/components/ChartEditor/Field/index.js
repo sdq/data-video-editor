@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './field.css';
 import { DragSource } from 'react-dnd';
-import DNDType from '../../../constants/DNDType';
+import DNDType from '@/constants/DNDType';
 
 const boxSource = {
 

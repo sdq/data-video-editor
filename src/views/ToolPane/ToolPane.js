@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 //import { InputNumber, Row, Col, Divider, Button, Select, Slider } from 'antd';
-import ElementType from '../../constants/ElementType';
-import Color from '../../constants/Color';
+import ElementType from '@/constants/ElementType';
+import Color from '@/constants/Color';
 import SceneTool from './Tools/SceneTool';
 import ImageTool from './Tools/ImageTool';
 // import AudioTool from './Tools/AudioTool';

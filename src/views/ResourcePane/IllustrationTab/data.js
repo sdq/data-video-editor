@@ -1,4 +1,4 @@
-import URL from '../../../constants/URL';
+import URL from '@/constants/URL';
 
 const data = [
     {
