@@ -23,7 +23,7 @@ const scatterplot = {
 export default class ScatterPlot extends Component {
 
     get spec() {
-        var sizedSpec = scatterplot;
+        var sizedSpec = Object.assign({},scatterplot);
         sizedSpec.width = this.props.width;
         sizedSpec.height = this.props.height;
         return sizedSpec;

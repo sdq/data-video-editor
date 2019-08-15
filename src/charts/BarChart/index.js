@@ -23,7 +23,7 @@ const barchart = {
 export default class BarChart extends Component {
 
     get spec() {
-        var sizedSpec = barchart;
+        var sizedSpec = Object.assign({},barchart);
         sizedSpec.width = this.props.width;
         sizedSpec.height = this.props.height;
         return sizedSpec;

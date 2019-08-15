@@ -24,7 +24,7 @@ const linechart = {
 export default class LineChart extends Component {
 
     get spec() {
-        var sizedSpec = linechart;
+        var sizedSpec = Object.assign({},linechart);
         sizedSpec.width = this.props.width;
         sizedSpec.height = this.props.height;
         return sizedSpec;

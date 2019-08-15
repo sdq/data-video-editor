@@ -23,7 +23,7 @@ const areachart = {
 export default class AreaChart extends Component {
 
     get spec() {
-        var sizedSpec = areachart;
+        var sizedSpec = Object.assign({},areachart);
         sizedSpec.width = this.props.width;
         sizedSpec.height = this.props.height;
         return sizedSpec;

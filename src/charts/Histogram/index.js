@@ -39,7 +39,7 @@ const histogram = {
 export default class Histogram extends Component {
 
     get spec() {
-        var sizedSpec = histogram;
+        var sizedSpec = Object.assign({},histogram);
         sizedSpec.width = this.props.width;
         sizedSpec.height = this.props.height;
         return sizedSpec;

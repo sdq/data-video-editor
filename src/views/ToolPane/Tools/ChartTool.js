@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
-import { Upload, Row, Col, Divider, Button, Slider, Icon } from 'antd';
+import { Upload, Row, Col, Divider, Button, Slider, Icon, Select } from 'antd';
 import DataPreview from '../../../components/DataPreview';
 import ChartEditor from '../../../components/ChartEditor';
 import ChartContainer from '../../../charts/ChartContainer';
 import { SketchPicker } from 'react-color';
 
 const { Dragger } = Upload;
+const { Option, OptGroup } = Select;
 
 export default class ChartTool extends Component {
 
@@ -76,6 +77,19 @@ export default class ChartTool extends Component {
                 <Button block style={{marginTop: '8px'}} onClick={this.handleChartEditor}>Edit Chart</Button>
 
                 <Divider>Animation</Divider>
+                <Select defaultValue="None" style={{ width: 280 }}>
+                    <OptGroup label="None">
+                    <Option value="None">None</Option>
+                    </OptGroup>
+                    <OptGroup label="Appear">
+                        <Option value="Animation1">Animation1</Option>
+                        <Option value="Animation2">Animation2</Option>
+                    </OptGroup>
+                    <OptGroup label="Disappear">
+                        <Option value="Animation3">Animation3</Option>
+                        <Option value="Animation4">Animation4</Option>
+                    </OptGroup>
+                </Select>
                 
                 {/* <Divider>Style</Divider>
                 <Row style={{margin: '10px 0px 0px 0px', fontSize: '14px'}}>
