@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Upload, Row, Col, Divider, Button, Slider, Icon } from 'antd';
 import DataPreview from '../../../components/DataPreview';
 import ChartEditor from '../../../components/ChartEditor';
+import ChartContainer from '../../../charts/ChartContainer';
 import { SketchPicker } from 'react-color';
 
 const { Dragger } = Upload;
@@ -60,6 +61,8 @@ export default class ChartTool extends Component {
         }
         return (
             <div style={{padding: '10px 10px 10px 10px', fontSize: '14px'}}>
+                <Divider>Data</Divider>
+                <Button block style={{marginTop: '8px'}} onClick={this.handleDataPreview}>Preview Data</Button>
                 <Divider>Chart</Divider>
                 {/* <Dragger>
                     <p className="ant-upload-drag-icon">
@@ -70,10 +73,9 @@ export default class ChartTool extends Component {
                     Support for CSV file
                     </p>
                 </Dragger> */}
-                <Button block style={{marginTop: '8px'}} onClick={this.handleDataPreview}>Preview Data</Button>
                 <Button block style={{marginTop: '8px'}} onClick={this.handleChartEditor}>Edit Chart</Button>
 
-                {/* <Divider>Encoding</Divider> */}
+                <Divider>Animation</Divider>
                 
                 {/* <Divider>Style</Divider>
                 <Row style={{margin: '10px 0px 0px 0px', fontSize: '14px'}}>
@@ -93,6 +95,7 @@ export default class ChartTool extends Component {
                 <ChartEditor 
                     visible={this.state.chartvisible}
                     handleOk={this.handleDataOk}
+                    {...this.props}
                 />
             </div>
         )

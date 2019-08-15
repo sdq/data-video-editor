@@ -60,12 +60,12 @@ export default class ChartEditor extends Component {
                 onCancel={this.handleOk}
             >
                 <Layout style={{ height: '600px' }}>
-                    <Sider width={500} className="pane">
-                        <MappingPanel currentFields={carsSchema} slots={slots} isSlotAvailable={isSlotAvailable}/>
+                    <Sider width={420} className="pane">
+                        <MappingPanel currentFields={carsSchema} slots={slots} isSlotAvailable={isSlotAvailable}  {...this.props}/>
                     </Sider>
                     <Layout>
                     <Content className="pane">
-                        <ChartPanel/>
+                        <ChartPanel {...this.props}/>
                     </Content>
                     </Layout>
                 </Layout>

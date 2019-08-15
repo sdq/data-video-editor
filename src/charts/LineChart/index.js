@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import VegaLiteChart from '../VegaLiteChart';
 import Color from '../../constants/Color';
+import VegaLite from 'react-vega-lite';
+import { None } from 'vega';
 
 const data = {
   "values": [
@@ -11,15 +13,6 @@ const data = {
 };
 
 const linechart = {
-    "$schema": "https://vega.github.io/schema/vega-lite/v3.json",
-    "description": "A simple bar chart with embedded data.",
-    // "data": {
-    //   "values": [
-    //     {"a": "A", "b": 28}, {"a": "B", "b": 55}, {"a": "C", "b": 43},
-    //     {"a": "D", "b": 91}, {"a": "E", "b": 81}, {"a": "F", "b": 53},
-    //     {"a": "G", "b": 19}, {"a": "H", "b": 87}, {"a": "I", "b": 52}
-    //   ]
-    // },
     "mark": "line",
     "encoding": {
       "x": {"field": "a", "type": "ordinal"},
@@ -29,9 +22,19 @@ const linechart = {
 }
 
 export default class LineChart extends Component {
+
+    get spec() {
+        var sizedSpec = linechart;
+        sizedSpec.width = this.props.width;
+        sizedSpec.height = this.props.height;
+        return sizedSpec;
+    }
+
     render() {
-        return (
-            <VegaLiteChart name={this.props.name} spec={linechart} data={data}/>
-        )
+        if (this.props.onCanvas) {
+            return (<VegaLiteChart name={this.props.name} spec={linechart} data={data}/>);
+        } else {
+            return (<VegaLite data={data} spec={this.spec}/>);
+        }
     }
 }

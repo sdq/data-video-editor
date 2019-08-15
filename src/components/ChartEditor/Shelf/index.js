@@ -1,8 +1,18 @@
 import React, { Component } from 'react';
 import { Row, Col, Button } from 'antd';
+import { DropTarget } from 'react-dnd';
+import DNDType from '../../../constants/DNDType';
+import Color from '../../../constants/Color';
 import './shelf.css';
 
-export default class Shelf extends Component {
+const boxTarget = {
+	drop: (props) => ({ 
+        name: props.channel,
+        isEncoded: props.slot.isEncoded,
+    })
+}
+
+class Shelf extends Component {
 
     constructor(props) {
         super(props);
@@ -23,19 +33,31 @@ export default class Shelf extends Component {
             backgroundColor = 'darkgrey';
         }
 		else if (isActive) {
-			backgroundColor = 'darkgreen';
+			backgroundColor = Color.ORANGE;
 		} 
 		else if (canDrop) {
-			backgroundColor = '#c8e6c9';
+			backgroundColor = Color.LIGHT_ORANGE;
 		}
-        return (
-            <Row className="shelf">
-                <Col span={4} className="channelName">{this.props.channel}</Col>
-                <Col span={ this.props.slot.isEncoded ? 14 : 18} className="channelSlot" style={{ backgroundColor: backgroundColor, color: this.props.slot.isEncoded ? "#ffffff" : "#37415C" }}>{this.props.slot.isEncoded ? this.props.slot.name : 'drop field here'}</Col>
-                <Col span={ this.props.slot.isEncoded ? 4 : 0} className="channelSlot" style={{ backgroundColor }}>
-                    <Button shape="circle" type="link" size="small" icon="close" onClick={this.removeEncoding}/>
-                </Col>
-            </Row>
+        return connectDropTarget(
+            <div>
+                <Row className="shelf">
+                    <Col span={4} className="channelName">{this.props.channel}</Col>
+                    <Col span={ this.props.slot.isEncoded ? 14 : 18} className="channelSlot" style={{ backgroundColor: backgroundColor, color: this.props.slot.isEncoded ? "#ffffff" : "#37415C" }}>{this.props.slot.isEncoded ? this.props.slot.name : 'drop field here'}</Col>
+                    <Col span={ this.props.slot.isEncoded ? 4 : 0} className="channelSlot" style={{ backgroundColor }}>
+                        <Button shape="circle" type="link" size="small" icon="close" onClick={this.removeEncoding}/>
+                    </Col>
+                </Row>
+            </div>
         )
     }
 }
+
+export default DropTarget(
+	DNDType.DND_MAPPING,
+	boxTarget,
+	(connect, monitor) => ({
+		connectDropTarget: connect.dropTarget(),
+		isOver: monitor.isOver(),
+		canDrop: monitor.canDrop()
+	})
+)(Shelf);

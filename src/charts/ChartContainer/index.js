@@ -11,25 +11,25 @@ export default class ChartContainer extends Component {
     chooseChart() {
         switch (this.props.element.info().type) {
             case ChartType.AREACHART:
-                return <AreaChart name={this.props.name}/>
+                return <AreaChart name={this.props.name} {...this.props}/>
             case ChartType.BARCHART:
-                return <BarChart name={this.props.name}/>
+                return <BarChart name={this.props.name} {...this.props}/>
             case ChartType.LINECHART:
-                return <LineChart name={this.props.name}/>
+                return <LineChart name={this.props.name} {...this.props}/>
             case ChartType.SCATTERPLOT:
-                return <Scatterplot name={this.props.name}/>
+                return <Scatterplot name={this.props.name} {...this.props}/>
             case ChartType.HISTOGRAM:
-                return <Histogram name={this.props.name}/>
+                return <Histogram name={this.props.name} {...this.props}/>
         
             default:
-                return <Histogram name={this.props.name}/>
+                return <Histogram name={this.props.name} {...this.props}/>
         }
     }
 
     render() {
         return (
             <div>
-                {chooseChart()}
+                {this.chooseChart()}
             </div>
         )
     }

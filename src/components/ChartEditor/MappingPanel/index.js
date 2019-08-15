@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Row, Col, Divider } from 'antd';
-import { DndProvider } from 'react-dnd';
 import FieldList from '../FieldList';
 import Encoding from '../Encoding';
 import './mappingpanel.css';
@@ -11,11 +10,11 @@ export default class MappingPanel extends Component {
             <Row>
                 <Col span={11} className="dataPanel">
                     {/* <h3 style={{color:"#000000"}}>Data</h3> */}
-                    <Divider>Data Fields</Divider>
+                    <Divider>Fields</Divider>
                     <FieldList  { ...this.props }/>
                 </Col>
                 <Col span={13} className="encodingPanel">
-                    <Divider>Data Mappings</Divider>
+                    <Divider>Mappings</Divider>
                     <Encoding { ...this.props }/>
                 </Col>
             </Row>
