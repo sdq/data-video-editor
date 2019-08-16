@@ -43,18 +43,18 @@ export default class ChartElement extends Component {
     chooseChart() {
         switch (this.props.element.info().type) {
             case ChartType.AREACHART:
-                return <AreaChart name={this.props.name} onCanvas={true}/>
+                return <AreaChart name={this.props.name} data={this.props.element.info().data} spec={this.props.element.info().spec} width={this.props.width} height={this.props.height} onCanvas={true}/>
             case ChartType.BARCHART:
-                return <BarChart name={this.props.name} onCanvas={true}/>
+                return <BarChart name={this.props.name} data={this.props.element.info().data} spec={this.props.element.info().spec} width={this.props.width} height={this.props.height} onCanvas={true}/>
             case ChartType.LINECHART:
-                return <LineChart name={this.props.name} onCanvas={true}/>
+                return <LineChart name={this.props.name} data={this.props.element.info().data} spec={this.props.element.info().spec} width={this.props.width} height={this.props.height} onCanvas={true}/>
             case ChartType.SCATTERPLOT:
-                return <Scatterplot name={this.props.name} onCanvas={true}/>
+                return <Scatterplot name={this.props.name} data={this.props.element.info().data} spec={this.props.element.info().spec} width={this.props.width} height={this.props.height} onCanvas={true}/>
             case ChartType.HISTOGRAM:
-                return <Histogram name={this.props.name} onCanvas={true}/>
+                return <Histogram name={this.props.name} data={this.props.element.info().data} spec={this.props.element.info().spec} width={this.props.width} height={this.props.height} onCanvas={true}/>
         
             default:
-                return <Histogram name={this.props.name} onCanvas={true}/>
+                return <Histogram name={this.props.name} data={this.props.element.info().data} spec={this.props.element.info().spec} onCanvas={true}/>
         }
     }
 

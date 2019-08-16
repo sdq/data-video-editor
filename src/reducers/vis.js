@@ -1,17 +1,29 @@
-import * as VisActionType from '../constants/VisActionType';
+import VisActionType from '../constants/VisActionType';
+import ActionType from '../constants/ActionType';
+import cars from '@/datasets/cars';
+import carsSchema from '@/datasets/carsSchema';
+import Color from '@/constants/Color';
 
 const originSpec = {
-    "mark": "point",
-    "encoding": {}
+    "mark": "line",
+    "encoding": {
+        "color": {
+            "value": Color.ORANGE
+        }
+    }
 }
 
 const initialState = {
+    dataIndex: 0,
+    dataList: [cars],
+    fieldsList: [carsSchema],
     specIndex: 0,
     specHistory: [JSON.stringify(originSpec)],
     actionHistory: [{
         "type": "none",
         "description": "origin state",
     }],
+    displaySpec: {},
 }
 
 export default (state = initialState, action) => {
@@ -20,6 +32,13 @@ export default (state = initialState, action) => {
     var newSpecHistory = [];
     var newActionHistory = [];
     switch (action.type) {
+        // Select Chart
+        case VisActionType.OPEN_EDITOR:
+            console.log("open editor!");
+            newState.dataIndex = action.dataIndex;
+            newState.displaySpec = action.spec;
+            console.log(newState);
+            return newState;
     
         // Vis
         case VisActionType.ENCODING:
@@ -40,16 +59,16 @@ export default (state = initialState, action) => {
             newState.specHistory = newSpecHistory
             // action
             newActionHistory = newState.actionHistory.slice();
-            if (action.type === ActionType.ENCODING) {
+            if (action.type === VisActionType.ENCODING) {
                 newActionHistory.push({
-                    "type": ActionType.ENCODING,
+                    "type": VisActionType.ENCODING,
                     "channel": action.channel,
                     "field": action.field,
                     "description": "add field "+action.channel,
                 });
             } else {
                 newActionHistory.push({
-                    "type": ActionType.MODIFY_ENCODING,
+                    "type": VisActionType.MODIFY_ENCODING,
                     "channel": action.channel,
                     "field": action.field,
                     "description": "modify field "+action.channel,
@@ -57,6 +76,7 @@ export default (state = initialState, action) => {
             }
             newState.actionHistory = newActionHistory;
             newState.specIndex ++;
+            newState.displaySpec = newSpec;
             return newState
 
         case VisActionType.REMOVE_ENCODING:
@@ -72,13 +92,14 @@ export default (state = initialState, action) => {
             // action
             newActionHistory = newState.actionHistory.slice();
             newActionHistory.push({
-                "type": ActionType.REMOVE_ENCODING,
+                "type": VisActionType.REMOVE_ENCODING,
                 "channel": action.channel,
                 "field": action.field,
                 "description": "remove field "+action.channel,
             });
             newState.actionHistory = newActionHistory;
             newState.specIndex ++;
+            newState.displaySpec = newSpec;
             return newState
         
         // Meta

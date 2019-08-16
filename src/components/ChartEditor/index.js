@@ -7,36 +7,16 @@ import carsSchema from '@/datasets/carsSchema';
 
 const { Sider, Content } = Layout;
 
-const slots = {
-    x: {
-        isEncoded: false,
-        name: ""
-    },
-    y: {
-        isEncoded: false,
-        name: ""
-    },
-    color: {
-        isEncoded: false,
-        name: ""
-    },
-    size: {
-        isEncoded: false,
-        name: ""
-    },
-    shape: {
-        isEncoded: false,
-        name: ""
-    },
-}
-
-const isSlotAvailable = {
-    x: true,
-    y: true,
-    color: true,
-    size: true,
-    shape: false,
-}
+// const slots = {
+//     x: {
+//         isEncoded: false,
+//         name: ""
+//     },
+//     y: {
+//         isEncoded: false,
+//         name: ""
+//     },
+// }
 
 export default class ChartEditor extends Component {
 
@@ -61,11 +41,11 @@ export default class ChartEditor extends Component {
             >
                 <Layout style={{ height: '600px' }}>
                     <Sider width={420} className="pane">
-                        <MappingPanel currentFields={carsSchema} slots={slots} isSlotAvailable={isSlotAvailable}  {...this.props}/>
+                        <MappingPanel currentFields={carsSchema} slots={this.props.slots}  {...this.props}/>
                     </Sider>
                     <Layout>
                     <Content className="pane">
-                        <ChartPanel {...this.props}/>
+                        <ChartPanel data={this.props.currentData} spec={this.props.displaySpec} {...this.props}/>
                     </Content>
                     </Layout>
                 </Layout>

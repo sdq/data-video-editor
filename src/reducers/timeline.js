@@ -16,9 +16,12 @@ const demoimage = new ImageInfo(
     0,
 )
 const demochart = new ChartInfo(
-    '',
+    [],
     ChartType.BARCHART,
-    '',
+    {
+        "mark": "bar",
+        "encoding": {},
+    },
     10,
     10,
     100,
@@ -44,9 +47,12 @@ const demoimage2 = new ImageInfo(
     0,
 )
 const demochart2 = new ChartInfo(
-    '',
+    [],
     ChartType.LINECHART,
-    '',
+    {
+        "mark": "line",
+        "encoding": {},
+    },
     400,
     80,
     100,

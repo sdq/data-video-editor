@@ -107,8 +107,8 @@ export class ImageInfo {
 }
 
 export class ChartInfo {
-    constructor(dataurl, type, spec, x, y, width, height, rotation) {
-        this.dataurl = dataurl;
+    constructor(data, type, spec, x, y, width, height, rotation) {
+        this.data = data;
         this.type = type; // chart type
         this.spec = spec; // chart spec
         this.x = x;

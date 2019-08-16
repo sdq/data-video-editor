@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import VegaLiteChart from '../VegaLiteChart';
 import Color from '@/constants/Color';
 import VegaLite from 'react-vega-lite';
+import _ from 'lodash';
 
-const data = {
+const demodata = {
     "values": [
       {"bin_start": 8, "bin_end": 10, "count": 7},
       {"bin_start": 10, "bin_end": 12, "count": 29},
@@ -39,17 +40,30 @@ const histogram = {
 export default class Histogram extends Component {
 
     get spec() {
-        var sizedSpec = Object.assign({},histogram);
+        var sizedSpec;
+        if (_.isEmpty(this.props.spec) || _.isEmpty(this.props.spec.encoding)) {
+            sizedSpec = Object.assign({},histogram);
+        } else {
+            sizedSpec = Object.assign({},this.props.spec);
+        }
         sizedSpec.width = this.props.width;
         sizedSpec.height = this.props.height;
         return sizedSpec;
     }
 
+    get data() {
+        if (_.isEmpty(this.props.data)) {
+            return demodata;
+        } else {
+            return this.props.data;
+        }
+    }
+
     render() {
         if (this.props.onCanvas) {
-            return (<VegaLiteChart name={this.props.name} spec={histogram} data={data}/>);
+            return (<VegaLiteChart name={this.props.name} spec={this.spec} data={this.data}/>);
         } else {
-            return (<VegaLite data={data} spec={this.spec}/>);
+            return (<VegaLite data={this.data} spec={this.spec}/>);
         }
     }
 }

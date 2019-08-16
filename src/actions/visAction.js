@@ -1,5 +1,12 @@
 import VisActionType from '../constants/VisActionType';
 
+export const openEditor = (dataIndex, slots, spec) => ({
+    type: VisActionType.OPEN_EDITOR,
+    dataIndex,
+    slots,
+    spec,
+})
+
 // Data
 export const uploadData = (csvfile) => ({
     type: VisActionType.UPLOAD_DATA,

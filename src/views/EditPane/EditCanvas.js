@@ -158,7 +158,7 @@ class EditCanvas extends Component {
                                     case ElementType.IMAGE:
                                         return <ImageElement key={this.props.sceneIndex+"-"+index} edit={ele => this.editElement(index, ele)} element={element} name={this.props.sceneIndex+"-"+index} draggable={editable}/>
                                     case ElementType.CHART:
-                                        return <ChartElement key={this.props.sceneIndex+"-"+index} edit={ele => this.editElement(index, ele)} element={element} name={this.props.sceneIndex+"-"+index} draggable={editable}/>
+                                        return <ChartElement key={this.props.sceneIndex+"-"+index} edit={ele => this.editElement(index, ele)} element={element} name={this.props.sceneIndex+"-"+index} width={200} height={200} draggable={editable}/>
                                     default:
                                         //TODO: remove
                                         console.log("wrong!!!!!!!");

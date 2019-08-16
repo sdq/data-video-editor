@@ -44,7 +44,7 @@ export default class SceneBlock extends Component {
                                     case ElementType.IMAGE:
                                         return <ImageElement key={this.props.sceneIndex+"-"+index} element={element} name={this.props.sceneIndex+"-"+index} draggable = {false}/>
                                     case ElementType.CHART:
-                                        return <ChartElement key={this.props.sceneIndex+"-"+index} element={element} name={this.props.sceneIndex+"-"+index} draggable = {false}/>
+                                        return <ChartElement key={this.props.sceneIndex+"-"+index} element={element} name={this.props.sceneIndex+"-"+index}  width={200} height={200} draggable = {false}/>
                                     default:
                                         //TODO: remove
                                         console.log("wrong!!!!!!!");
