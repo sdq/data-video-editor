@@ -63,17 +63,39 @@ export default class ChartTool extends Component {
         return (
             <div style={{padding: '10px 10px 10px 10px', fontSize: '14px'}}>
                 <Divider>Data</Divider>
+                <Row style={{ width: 280, fontSize: '14px' }}>
+                    {/* <Col span={4} style={{textAlign:'center', marginTop: '12px'}}>Data</Col> */}
+                    <Col span={16}><Select defaultValue="cars" style={{ marginTop: '8px', width: 182 }}>
+                        {/* <Option value="none">no data</Option> */}
+                        <Option value="cars">cars.csv</Option>
+                    </Select></Col>
+                    <Col span={8}>
+                        <Upload
+                            accept=".csv"
+                            showUploadList={false}
+                            beforeUpload={file => {
+                                console.log("get file");
+                                const reader = new FileReader();
+                                reader.onload = e => {
+                                    console.log(e.target.result);
+                                };
+                                reader.readAsText(file);
+                                // Prevent upload
+                                return false;
+                            }}
+                            style={{height: 20}}
+                        >
+                            <Button style={{ marginTop: '8px', width: 93 }}>
+                            <Icon type="upload" /> add
+                            </Button>
+                        </Upload>
+                    </Col>
+                </Row>
+                
                 <Button block style={{marginTop: '8px'}} onClick={this.handleDataPreview}>Preview Data</Button>
+
                 <Divider>Chart</Divider>
-                {/* <Dragger>
-                    <p className="ant-upload-drag-icon">
-                    <Icon type="database" />
-                    </p>
-                    <p className="ant-upload-text">Click or drag data to this area</p>
-                    <p className="ant-upload-hint">
-                    Support for CSV file
-                    </p>
-                </Dragger> */}
+
                 <Button block style={{marginTop: '8px'}} onClick={this.handleChartEditor}>Edit Chart</Button>
 
                 <Divider>Animation</Divider>
