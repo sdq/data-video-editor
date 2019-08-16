@@ -5,6 +5,7 @@ import { Element, ImageInfo, ChartInfo, TextInfo} from '../models/Element';
 import URL from '../constants/URL';
 import ElementType from '../constants/ElementType';
 import ChartType from '../constants/ChartType';
+import Color from '../constants/Color';
 
 // Demo
 const demoimage = new ImageInfo(
@@ -20,7 +21,7 @@ const demochart = new ChartInfo(
     ChartType.BARCHART,
     {
         "mark": "bar",
-        "encoding": {},
+        "encoding": {}
     },
     10,
     10,
@@ -51,7 +52,7 @@ const demochart2 = new ChartInfo(
     ChartType.LINECHART,
     {
         "mark": "line",
-        "encoding": {},
+        "encoding": {}
     },
     400,
     80,
