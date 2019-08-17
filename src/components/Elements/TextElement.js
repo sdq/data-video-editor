@@ -15,8 +15,8 @@ export default class TextElement extends Component {
     }
     dragend(x,y) {
         var newEle = this.props.element;
-        newEle.info.x = x;
-        newEle.info.y = y;
+        newEle.info().x = x;
+        newEle.info().y = y;
         this.props.edit(newEle);
     };
     onTransformStart() {
