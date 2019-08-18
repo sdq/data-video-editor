@@ -1,9 +1,8 @@
 import VisActionType from '../constants/VisActionType';
 
-export const openEditor = (dataIndex, slots, spec) => ({
+export const openEditor = (dataIndex, spec) => ({
     type: VisActionType.OPEN_EDITOR,
     dataIndex,
-    slots,
     spec,
 })
 

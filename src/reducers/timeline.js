@@ -17,14 +17,18 @@ const demoimage = new ImageInfo(
     0,
 )
 const demochart = new ChartInfo(
-    [],
+    0,
     ChartType.BARCHART,
     {
         "mark": "bar",
-        "encoding": {}
+        "encoding": {
+          "x": {"field": "Origin", "type": "ordinal"},
+          "y": {"field": "Horsepower", "type": "quantitative"},
+          "color": {"value": Color.DEEP_ORANGE},
+        }
     },
-    10,
-    10,
+    100,
+    40,
     100,
     100,
     0,
@@ -48,11 +52,15 @@ const demoimage2 = new ImageInfo(
     0,
 )
 const demochart2 = new ChartInfo(
-    [],
+    0,
     ChartType.LINECHART,
     {
         "mark": "line",
-        "encoding": {}
+        "encoding": {
+          "x": {"field": "Displacement", "type": "quantitative"},
+          "y": {"field": "Acceleration", "type": "quantitative"},
+          "color": {"value": Color.DEEP_ORANGE},
+        }
     },
     400,
     80,

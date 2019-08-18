@@ -33,7 +33,7 @@ const mapDispatchToProps = dispatch => {
         removeElement: (elementIndex) => dispatch(canvasActions.selectElement(elementIndex)),
         updateElement: (element, elementIndex) => dispatch(canvasActions.updateElement(element, elementIndex)),
         // vis
-        openEditor: (dataIndex, slots, spec) => dispatch(visActions.openEditor(dataIndex, slots, spec)),
+        openEditor: (dataIndex, spec) => dispatch(visActions.openEditor(dataIndex, spec)),
         uploadData: (file) => dispatch(visActions.uploadData(file)),
         changeData: (file) => dispatch(visActions.changeData(file)),
         encoding: (channel, field, isEncoded) => {

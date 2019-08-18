@@ -30,6 +30,8 @@ export default class ChartEditor extends Component {
     }
 
     render() {
+        console.log("currentData");
+        console.log(this.props.currentData);
         return (
             <Modal
                 title="Chart Editor"

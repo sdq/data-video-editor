@@ -144,7 +144,9 @@ class EditCanvas extends Component {
 		} 
 		else if (canDrop) {
 			backgroundColor = Color.LIGHT_BLUE;
-		}
+        }
+        console.log("dataList");
+        console.log(this.props.dataList);
         return connectDropTarget(
             <div id="canvasContainer" style={{ backgroundColor }}>
                 <HotKeys keyMap={keyMap} handlers={this.handlers}>
@@ -154,11 +156,11 @@ class EditCanvas extends Component {
                                 //console.log(element.info);
                                 switch (element.type()) {
                                     case ElementType.TEXT:
-                                        return <TextElement key={this.props.sceneIndex+"-"+index} edit={ele => this.editElement(index, ele)} element={element} name={this.props.sceneIndex+"-"+index} draggable={editable}/>
+                                        return <TextElement key={this.props.sceneIndex+"-"+index} edit={ele => this.editElement(index, ele)} element={element} name={this.props.sceneIndex+"-"+index} draggable={editable} {...this.props}/>
                                     case ElementType.IMAGE:
-                                        return <ImageElement key={this.props.sceneIndex+"-"+index} edit={ele => this.editElement(index, ele)} element={element} name={this.props.sceneIndex+"-"+index} draggable={editable}/>
+                                        return <ImageElement key={this.props.sceneIndex+"-"+index} edit={ele => this.editElement(index, ele)} element={element} name={this.props.sceneIndex+"-"+index} draggable={editable} {...this.props}/>
                                     case ElementType.CHART:
-                                        return <ChartElement key={this.props.sceneIndex+"-"+index} edit={ele => this.editElement(index, ele)} element={element} name={this.props.sceneIndex+"-"+index} width={200} height={200} draggable={editable}/>
+                                        return <ChartElement key={this.props.sceneIndex+"-"+index} edit={ele => this.editElement(index, ele)} element={element} name={this.props.sceneIndex+"-"+index} width={200} height={200} draggable={editable} {...this.props}/>
                                     default:
                                         //TODO: remove
                                         console.log("wrong!!!!!!!");

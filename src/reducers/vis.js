@@ -38,12 +38,23 @@ export default (state = initialState, action) => {
             newState.dataIndex = action.dataIndex;
             newState.displaySpec = action.spec;
             newState.displaySpec.encoding.color = {
-                    "value": Color.DEEP_ORANGE
+                "value": Color.DEEP_ORANGE
             };
             newState.specIndex = 0;
             newState.specHistory = [JSON.stringify(action.spec)];
             console.log(newState);
             return newState;
+
+        // Data
+        case VisActionType.UPLOAD_DATA:
+            // TODO: upload data and process field type
+
+            return state
+
+        case VisActionType.CHANGE_DATA:
+            // TODO: switch dataIndex
+
+            return state
     
         // Vis
         case VisActionType.ENCODING:

@@ -36,21 +36,24 @@ export default class ChartTool extends Component {
     }
 
     handleChartEditor = () => {
-        console.log(this.props.currentVis.spec);
-        this.props.openEditor(0, [], this.props.currentVis.spec);
+        console.log(this.props.currentVis);
+        this.props.openEditor(this.props.currentVis.dataIndex, this.props.currentVis.spec);
         this.setState({
             chartvisible: true,
         });
     }
 
     handleDataOk = () => {
+        // Update chart on canvas
         const newScene = Object.assign({},this.props.currentScene);
         var newEle = Object.assign({},this.props.currentElement);
-        newEle.info().data = this.props.currentData;
         newEle.info().spec = this.props.displaySpec;
+        console.log("new element");
+        console.log(newEle);
         newScene.elements[this.props.elementIndex] = newEle;
         this.props.updateScene(this.props.sceneIndex, newScene);
         this.props.updateElement(newEle, this.props.elementIndex);
+        // Disable editor
         this.setState({
             datavisible: false,
             chartvisible: false,

@@ -40,11 +40,11 @@ export default class SceneBlock extends Component {
                                 //console.log(element.info());
                                 switch (element.type()) {
                                     case ElementType.TEXT:
-                                        return <TextElement key={this.props.sceneIndex+"-"+index} element={element} name={this.props.sceneIndex+"-"+index} draggable = {false}/>
+                                        return <TextElement key={this.props.sceneIndex+"-"+index} element={element} name={this.props.sceneIndex+"-"+index} draggable = {false} {...this.props}/>
                                     case ElementType.IMAGE:
-                                        return <ImageElement key={this.props.sceneIndex+"-"+index} element={element} name={this.props.sceneIndex+"-"+index} draggable = {false}/>
+                                        return <ImageElement key={this.props.sceneIndex+"-"+index} element={element} name={this.props.sceneIndex+"-"+index} draggable = {false} {...this.props}/>
                                     case ElementType.CHART:
-                                        return <ChartElement key={this.props.sceneIndex+"-"+index} element={element} name={this.props.sceneIndex+"-"+index}  width={200} height={200} draggable = {false}/>
+                                        return <ChartElement key={this.props.sceneIndex+"-"+index} element={element} name={this.props.sceneIndex+"-"+index}  width={200} height={200} draggable = {false} {...this.props}/>
                                     default:
                                         //TODO: remove
                                         console.log("wrong!!!!!!!");

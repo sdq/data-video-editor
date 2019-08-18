@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import TimelinePane from './TimelinePane';
 import {scenes, sceneIndex} from '@/selectors/timeline';
 import {uimode} from '@/selectors/ui';
+import { dataList } from '@/selectors/vis';
 import * as timelineActions from '@/actions/timelineAction';
 import * as uiActions from '@/actions/uiAction';
 
@@ -10,6 +11,8 @@ const mapStateToProps = state => {
         scenes: scenes(state),
         sceneIndex: sceneIndex(state),
         uimode: uimode(state),
+        // vis
+        dataList: dataList(state),
     }
 }
 

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Group } from 'react-konva';
+import _ from 'lodash';
 import ChartType from '@/constants/ChartType';
 import BarChart from '@/charts/BarChart';
 import LineChart from '@/charts/LineChart';
@@ -41,20 +42,26 @@ export default class ChartElement extends Component {
     }
 
     chooseChart() {
+        console.log("current data");
+        console.log(this.props.dataList);
+        var data = {};
+        if (!_.isEmpty(this.props.dataList)) {
+            data = this.props.dataList[this.props.element.info().dataIndex];
+        }
         switch (this.props.element.info().type) {
             case ChartType.AREACHART:
-                return <AreaChart name={this.props.name} data={this.props.element.info().data} spec={this.props.element.info().spec} width={this.props.width} height={this.props.height} onCanvas={true}/>
+                return <AreaChart name={this.props.name} data={data} spec={this.props.element.info().spec} width={this.props.width} height={this.props.height} onCanvas={true}/>
             case ChartType.BARCHART:
-                return <BarChart name={this.props.name} data={this.props.element.info().data} spec={this.props.element.info().spec} width={this.props.width} height={this.props.height} onCanvas={true}/>
+                return <BarChart name={this.props.name} data={data} spec={this.props.element.info().spec} width={this.props.width} height={this.props.height} onCanvas={true}/>
             case ChartType.LINECHART:
-                return <LineChart name={this.props.name} data={this.props.element.info().data} spec={this.props.element.info().spec} width={this.props.width} height={this.props.height} onCanvas={true}/>
+                return <LineChart name={this.props.name} data={data} spec={this.props.element.info().spec} width={this.props.width} height={this.props.height} onCanvas={true}/>
             case ChartType.SCATTERPLOT:
-                return <Scatterplot name={this.props.name} data={this.props.element.info().data} spec={this.props.element.info().spec} width={this.props.width} height={this.props.height} onCanvas={true}/>
+                return <Scatterplot name={this.props.name} data={data} spec={this.props.element.info().spec} width={this.props.width} height={this.props.height} onCanvas={true}/>
             case ChartType.HISTOGRAM:
-                return <Histogram name={this.props.name} data={this.props.element.info().data} spec={this.props.element.info().spec} width={this.props.width} height={this.props.height} onCanvas={true}/>
+                return <Histogram name={this.props.name} data={data} spec={this.props.element.info().spec} width={this.props.width} height={this.props.height} onCanvas={true}/>
         
             default:
-                return <Histogram name={this.props.name} data={this.props.element.info().data} spec={this.props.element.info().spec} onCanvas={true}/>
+                return <Histogram name={this.props.name} data={data} spec={this.props.element.info().spec} onCanvas={true}/>
         }
     }
 

@@ -3,7 +3,7 @@ import ElementType from '@/constants/ElementType';
 import _ from 'lodash';
 
 // Data
-const dataList = state => state.vis.dataList;
+export const dataList = state => state.vis.dataList;
 const fieldsList = state => state.vis.fieldsList;
 const dataIndex = state => state.vis.dataIndex;
 
@@ -17,9 +17,7 @@ export const getCurrentData = createSelector(
     dataList,
     dataIndex,
     (dataList, dataIndex) => {
-        return {
-            values: dataList[dataIndex]
-        };
+        return dataList[dataIndex];
     }
 )
 

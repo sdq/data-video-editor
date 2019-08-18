@@ -10,7 +10,6 @@ export default (state = initialState, action) => {
     const newState = Object.assign({},state);
     switch (action.type) {
         case ActionType.SELECT_ELEMENT:
-            console.log("change chart1!")
             newState.isSelected = true;
             newState.elementIndex = action.elementIndex;
             return newState;
