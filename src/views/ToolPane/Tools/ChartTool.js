@@ -93,40 +93,38 @@ export default class ChartTool extends Component {
         return (
             <div style={{padding: '10px 10px 10px 10px', fontSize: '14px'}}>
                 <Divider>Data</Divider>
-                <Row style={{ width: 280, fontSize: '14px' }}>
-                    {/* <Col span={4} style={{textAlign:'center', marginTop: '12px'}}>Data</Col> */}
-                    <Col span={16}><Select defaultValue="cars" style={{ marginTop: '8px', width: 182 }}>
-                        {/* <Option value="none">no data</Option> */}
-                        <Option value="cars">cars.csv</Option>
-                    </Select></Col>
-                    <Col span={8}>
-                        <Upload
-                            accept=".csv"
-                            showUploadList={false}
-                            beforeUpload={file => {
-                                console.log("get file");
-                                const reader = new FileReader();
-                                reader.onload = e => {
-                                    console.log(e.target.result);
-                                };
-                                reader.readAsText(file);
-                                // Prevent upload
-                                return false;
-                            }}
-                            style={{height: 20}}
-                        >
-                            <Button style={{ marginTop: '8px', width: 93 }}>
-                            <Icon type="upload" /> add
-                            </Button>
-                        </Upload>
-                    </Col>
-                </Row>
+                <Dragger
+                    accept=".csv"
+                    showUploadList={false}
+                    beforeUpload={file => {
+                        console.log("get file");
+                        const reader = new FileReader();
+                        reader.onload = e => {
+                            console.log(e.target.result);
+                        };
+                        reader.readAsText(file);
+                        // Prevent upload
+                        return false;
+                    }}
+                >
+                    <p className="ant-upload-drag-icon">
+                    <Icon type="inbox" />
+                    </p>
+                    {/* <p className="ant-upload-text">Click or drag csv file to this area</p> */}
+                    <p className="ant-upload-hint">
+                    Click or drag csv file to this area
+                    </p>
+                </Dragger>
+
+                <Select defaultValue="cars" style={{ marginTop: '8px', width: 280 }}>
+                    <Option value="cars">cars.csv</Option>
+                </Select>
                 
-                <Button block style={{marginTop: '8px'}} onClick={this.handleDataPreview}>Preview Data</Button>
+                <Button block style={{marginTop: '8px'}} onClick={this.handleDataPreview}>Preview & Edit Data</Button>
 
                 <Divider>Chart</Divider>
 
-                <Button block style={{marginTop: '8px'}} onClick={this.handleChartEditor}>Edit Chart</Button>
+                <Button block style={{marginTop: '8px'}} onClick={this.handleChartEditor} type="primary">Open Chart Editor</Button>
 
                 <Divider>Animation</Divider>
                 <Select defaultValue="None" style={{ width: 280 }}>
