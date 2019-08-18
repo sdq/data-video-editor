@@ -19,6 +19,8 @@ export default class ChartTool extends Component {
         };
         this.handleDataPreview = this.handleDataPreview.bind(this);
         this.handleDataOk = this.handleDataOk.bind(this);
+        this.handleChartOk = this.handleChartOk.bind(this);
+        this.handleCancel = this.handleCancel.bind(this);
     };
 
     handleClick = () => {
@@ -36,7 +38,6 @@ export default class ChartTool extends Component {
     }
 
     handleChartEditor = () => {
-        console.log(this.props.currentVis);
         this.props.openEditor(this.props.currentVis.dataIndex, this.props.currentVis.spec);
         this.setState({
             chartvisible: true,
@@ -44,6 +45,16 @@ export default class ChartTool extends Component {
     }
 
     handleDataOk = () => {
+        // Todo: Update Data
+
+        // Disable editor
+        this.setState({
+            datavisible: false,
+            chartvisible: false,
+        });
+    }
+
+    handleChartOk = () => {
         // Update chart on canvas
         const newScene = Object.assign({},this.props.currentScene);
         var newEle = Object.assign({},this.props.currentElement);
@@ -59,6 +70,13 @@ export default class ChartTool extends Component {
             chartvisible: false,
         });
     }
+
+    handleCancel() {
+        this.setState({
+            datavisible: false,
+            chartvisible: false,
+        });
+    };
 
     render() {
         const popover = {
@@ -139,10 +157,13 @@ export default class ChartTool extends Component {
                 <DataPreview 
                     visible={this.state.datavisible}
                     handleOk={this.handleDataOk}
+                    handleCancel={this.handleCancel}
+                    {...this.props}
                 />
                 <ChartEditor 
                     visible={this.state.chartvisible}
-                    handleOk={this.handleDataOk}
+                    handleOk={this.handleChartOk}
+                    handleCancel={this.handleCancel}
                     {...this.props}
                 />
             </div>

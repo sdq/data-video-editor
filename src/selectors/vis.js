@@ -45,8 +45,8 @@ export const getCurrentVis = createSelector(
 )
 
 export const getSlots = createSelector(
-    getCurrentVis,
-    (getCurrentVis) => {
+    displaySpec,
+    (displaySpec) => {
         const slots = {
             x: {
                 isEncoded: false,
@@ -57,14 +57,10 @@ export const getSlots = createSelector(
                 name: ""
             },
         }
-        if (_.isEmpty(getCurrentVis)) {
+        if (_.isEmpty(displaySpec) || displaySpec === "") {
             return slots;
         }
-        if (getCurrentVis.spec === "") {
-            return slots;
-        }
-        const currentSpec = getCurrentVis.spec;
-        const encoding = currentSpec["encoding"];
+        const encoding = displaySpec["encoding"];
         if ("x" in encoding && "field" in encoding["x"]) {
             slots.x.isEncoded = true;
             slots.x.name = encoding["x"]["field"];

@@ -7,27 +7,7 @@ import carsSchema from '@/datasets/carsSchema';
 
 const { Sider, Content } = Layout;
 
-// const slots = {
-//     x: {
-//         isEncoded: false,
-//         name: ""
-//     },
-//     y: {
-//         isEncoded: false,
-//         name: ""
-//     },
-// }
-
 export default class ChartEditor extends Component {
-
-    constructor(props) {
-        super(props);
-        this.handleOk = this.handleOk.bind(this);
-    }
-
-    handleOk() {
-        this.props.handleOk();
-    }
 
     render() {
         console.log("currentData");
@@ -36,10 +16,10 @@ export default class ChartEditor extends Component {
             <Modal
                 title="Chart Editor"
                 visible={this.props.visible}
-                onOk={this.handleOk}
+                onOk={this.props.handleOk}
                 width={1200}
                 bodyStyle={{height: 600, padding: 0}}
-                onCancel={this.handleOk}
+                onCancel={this.props.handleCancel}
             >
                 <Layout style={{ height: '600px' }}>
                     <Sider width={420} className="pane">
