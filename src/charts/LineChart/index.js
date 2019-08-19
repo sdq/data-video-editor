@@ -24,6 +24,7 @@ export default class LineChart extends Component {
         } else {
             sizedSpec = Object.assign({},this.props.spec);
         }
+        sizedSpec.mark = "line";
         sizedSpec.width = this.props.width;
         sizedSpec.height = this.props.height;
         return sizedSpec;

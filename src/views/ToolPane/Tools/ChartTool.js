@@ -39,6 +39,8 @@ export default class ChartTool extends Component {
     }
 
     handleChartEditor = () => {
+        console.log("handleChartEditor");
+        console.log(this.props.currentVis);
         this.props.openEditor(this.props.currentVis.dataIndex, this.props.currentVis.spec);
         this.setState({
             chartvisible: true,
@@ -46,7 +48,7 @@ export default class ChartTool extends Component {
     }
 
     handleDataOk = () => {
-        // Todo: Update Data
+        // TODO: Update Data
 
         // Disable editor
         this.setState({

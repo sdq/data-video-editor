@@ -23,9 +23,9 @@ const chartSource = {
                 //add element to scene
                 const newScene = Object.assign({},dropResult.currentScene);
                 const newChart = new ChartInfo(
-                    '',
+                    0,
                     item.type, //type
-                    '', //spec
+                    {}, //spec
                     260,
                     100,
                     100,

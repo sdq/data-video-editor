@@ -10,6 +10,9 @@ const { Sider, Content } = Layout;
 export default class ChartEditor extends Component {
 
     render() {
+        console.log("chart editor modal");
+        console.log(this.props.currentData);
+        console.log(this.props.displaySpec);
         return (
             <Modal
                 title="Chart Editor"

@@ -46,6 +46,7 @@ export default class Histogram extends Component {
         } else {
             sizedSpec = Object.assign({},this.props.spec);
         }
+        sizedSpec.mark = "bar";
         sizedSpec.width = this.props.width;
         sizedSpec.height = this.props.height;
         return sizedSpec;

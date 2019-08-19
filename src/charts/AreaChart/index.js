@@ -24,6 +24,7 @@ export default class AreaChart extends Component {
         } else {
             sizedSpec = Object.assign({},this.props.spec);
         }
+        sizedSpec.mark = "area";
         sizedSpec.width = this.props.width;
         sizedSpec.height = this.props.height;
         return sizedSpec;

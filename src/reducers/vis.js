@@ -37,6 +37,11 @@ export default (state = initialState, action) => {
             console.log("open editor!");
             newState.dataIndex = action.dataIndex;
             newState.displaySpec = action.spec;
+            console.log(action);
+            console.log(newState.displaySpec);
+            if (!("encoding" in newState.displaySpec)) {
+                newState.displaySpec.encoding = {}
+            }
             newState.displaySpec.encoding.color = {
                 "value": Color.DEEP_ORANGE
             };

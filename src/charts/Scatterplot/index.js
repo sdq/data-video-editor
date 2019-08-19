@@ -26,6 +26,7 @@ export default class ScatterPlot extends Component {
         } else {
             sizedSpec = Object.assign({},this.props.spec);
         }
+        sizedSpec.mark = "point";
         sizedSpec.width = this.props.width;
         sizedSpec.height = this.props.height;
         return sizedSpec;
