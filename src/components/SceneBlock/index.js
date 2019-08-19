@@ -17,6 +17,7 @@ export default class SceneBlock extends Component {
     }
 
     clickSceneBlock() {
+        this.props.unselectElement();
         this.props.selectScene(this.props.index);
     }
 
