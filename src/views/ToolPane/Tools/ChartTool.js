@@ -4,6 +4,7 @@ import DataPreview from '@/components/DataPreview';
 import ChartEditor from '@/components/ChartEditor';
 import ChartContainer from '@/charts/ChartContainer';
 import { SketchPicker } from 'react-color';
+import * as d3 from 'd3';
 
 const { Dragger } = Upload;
 const { Option, OptGroup } = Select;
@@ -97,13 +98,13 @@ export default class ChartTool extends Component {
                     accept=".csv"
                     showUploadList={false}
                     beforeUpload={file => {
-                        console.log("get file");
-                        const reader = new FileReader();
-                        reader.onload = e => {
-                            console.log(e.target.result);
-                        };
-                        reader.readAsText(file);
-                        // Prevent upload
+                        console.log(file.name);
+                        const fileURL = URL.createObjectURL(file);
+                        console.log(fileURL);
+                        d3.csv(fileURL, function(data) {
+                            console.log(data);
+                            //TODO: deal with data
+                        })
                         return false;
                     }}
                 >

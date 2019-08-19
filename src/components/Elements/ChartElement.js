@@ -42,8 +42,6 @@ export default class ChartElement extends Component {
     }
 
     chooseChart() {
-        console.log("current data");
-        console.log(this.props.dataList);
         var data = {};
         if (!_.isEmpty(this.props.dataList)) {
             data = this.props.dataList[this.props.element.info().dataIndex];
