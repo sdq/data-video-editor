@@ -8,6 +8,8 @@ const initialState = {
 
 export default (state = initialState, action) => {
     const newState = Object.assign({},state);
+    newState.actionHistory = state.actionHistory.slice();
+    newState.actionHistory.push(action);
     switch (action.type) {
         case ActionType.SELECT_ELEMENT:
             newState.isSelected = true;
@@ -27,7 +29,9 @@ export default (state = initialState, action) => {
             return newState
         case ActionType.UPDATE_ELEMENT:
             //TODO: add action detail
-            return state
+            newState.isSelected = true;
+            newState.elementIndex = action.elementIndex;
+            return newState
         case ActionType.UNDO_CANVAS:
             //TODO: reorder
             return state

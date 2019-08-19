@@ -1,0 +1,12 @@
+.actionCard {
+    flex: 0 0 auto;
+    border-style: solid;
+    border-color: #d8d8d8;
+    border-width: 1px;
+    height: 30px;
+    line-height: 30px;
+    width: 120px;
+    margin: 5px;
+    text-align: center;
+    font-size: 12px;
+}

@@ -24,6 +24,7 @@ const imageSource = {
                 const newImage = new ImageInfo(item.src, 240, 100, 100, 100, 0);
                 const newElement = new Element(ElementType.IMAGE, newImage);
                 newScene.elements.push(newElement);
+                props.addElement(newElement);
                 props.updateScene(dropResult.sceneIndex, newScene);
             } 
             // else if (dropResult.target === "track") {
