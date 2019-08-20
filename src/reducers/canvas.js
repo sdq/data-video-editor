@@ -33,10 +33,10 @@ export default (state = initialState, action) => {
             newState.elementIndex = action.elementIndex;
             return newState
         case ActionType.UNDO_CANVAS:
-            //TODO: reorder
+            //TODO: undo
             return state
         case ActionType.REDO_CANVAS:
-            //TODO: reorder
+            //TODO: redo
             return state
         default:
             return state

@@ -6,7 +6,7 @@ import ResourcePane from '../ResourcePane';
 import ToolPane from '../ToolPane';
 import TimelinePane from '../TimelinePane';
 import TrackPane from '../TrackPane';
-import ActionTracker from '../ActionTracker';
+// import ActionTracker from '../ActionTracker';
 import HTML5Backend from 'react-dnd-html5-backend'
 import { DndProvider } from 'react-dnd'
 import UIMode from '@/constants/UIMode';
@@ -48,13 +48,13 @@ export default class EditorView extends Component {
                             
                         </Content>
                     </Layout>
-                    <Layout>
+                    {/* <Layout>
                         <Content
                         style={{ background: '#eee', height: '30px' }} 
                         >
                             <ActionTracker />
                         </Content>
-                    </Layout>
+                    </Layout> */}
                 </Layout>
             </DndProvider>
         )

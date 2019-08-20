@@ -1,3 +1,18 @@
 .trackscene {
     background-color: #FDC209;
 }
+
+.scenetracks {
+    padding-left: 8px;
+    padding-top: 8px;
+}
+
+.trackgroup {
+    height: 250px;
+    margin-left: 8px;
+    margin-right: 8px;
+    background-color: #ffffff;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #e8e8e8
+}

@@ -1,5 +1,4 @@
-import VisActionType from '../constants/VisActionType';
-import ActionType from '../constants/ActionType';
+import VisActionType from '@/constants/VisActionType';
 import cars from '@/datasets/cars';
 import carsSchema from '@/datasets/carsSchema';
 import Color from '@/constants/Color';

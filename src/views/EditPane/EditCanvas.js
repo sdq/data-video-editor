@@ -47,8 +47,6 @@ class EditCanvas extends Component {
     }
 
     handleStageMouseDown = e => {
-        // console.log("click");
-        // console.log(e.target);
         // clicked on stage - clear selection
         if (e.target === e.target.getStage()) {
             this.setState({
@@ -78,6 +76,10 @@ class EditCanvas extends Component {
                 selectedElementName: ""
             });
             this.props.unselectElement();
+        }
+
+        if (e.evt.button === 2) {
+            // TODO: right click
         }
     };
 
@@ -145,8 +147,7 @@ class EditCanvas extends Component {
 		else if (canDrop) {
 			backgroundColor = Color.LIGHT_BLUE;
         }
-        console.log("dataList");
-        console.log(this.props.dataList);
+        console.log("render-----");
         return connectDropTarget(
             <div id="canvasContainer" style={{ backgroundColor }}>
                 <HotKeys keyMap={keyMap} handlers={this.handlers}>

@@ -90,14 +90,11 @@ export default class TrackGroup extends Component {
     };
     render() {
         return (
-            <div>
+            <div className="trackgroup">
                 <DragDropContext onDragEnd={this.onDragEnd}>
                     <Track droppableId="droppable1" items={this.state.track1} { ...this.props }/>
                     <Track droppableId="droppable2" items={this.state.track2} { ...this.props }/>
                 </DragDropContext>
-                {/* <Track/>
-                <Track/>
-                <Track/> */}
             </div>
         )
     }

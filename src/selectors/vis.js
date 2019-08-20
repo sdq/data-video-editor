@@ -32,7 +32,6 @@ export const getCurrentVis = createSelector(
     sceneIndex,
     elementIndex,
     function(scenes, sceneIndex, elementIndex) {
-        console.log(elementIndex);
         if (elementIndex === -1) {
             return {}
         }

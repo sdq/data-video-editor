@@ -5,5 +5,5 @@ export default {
     BLUE: '#0561FE',
     LIGHT_BLUE: '#B6D1EC',
     DEEP_BLUE: '#0C2086',
-    GRAY: "#D8D8D8",
+    GRAY: "#EEEEEE",
 }

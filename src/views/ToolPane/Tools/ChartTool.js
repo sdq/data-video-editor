@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import { Upload, Row, Col, Divider, Button, Slider, Icon, Select } from 'antd';
+import { Upload, Divider, Button, Icon, Select } from 'antd';
 import DataPreview from '@/components/DataPreview';
 import ChartEditor from '@/components/ChartEditor';
-import ChartContainer from '@/charts/ChartContainer';
-import { SketchPicker } from 'react-color';
+// import ChartContainer from '@/charts/ChartContainer';
+// import { SketchPicker } from 'react-color';
 import * as d3 from 'd3';
 
 const { Dragger } = Upload;
@@ -82,17 +82,6 @@ export default class ChartTool extends Component {
     };
 
     render() {
-        const popover = {
-            position: 'absolute',
-            zIndex: '2',
-        }
-        const cover = {
-            position: 'fixed',
-            top: '0px',
-            right: '0px',
-            bottom: '0px',
-            left: '0px',
-        }
         return (
             <div style={{padding: '10px 10px 10px 10px', fontSize: '14px'}}>
                 <Divider>Data</Divider>

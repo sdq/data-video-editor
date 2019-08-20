@@ -7,16 +7,16 @@ import AudioBlock from './AudioBlock';
 import TextBlock from './TextBlock';
 import ImageBlock from './ImageBlock';
 import ChartBlock from './ChartBlock';
-import './sceneblock.css';
+import './clipblock.css';
 
-export default class SceneBlock extends Component {
+export default class ClipBlock extends Component {
 
     constructor(props) {
         super(props);
-        this.clickSceneBlock = this.clickSceneBlock.bind(this);
+        this.clickClipBlock = this.clickClipBlock.bind(this);
     }
 
-    clickSceneBlock() {
+    clickClipBlock() {
         //console.log("click!"+this.props.index);
         this.props.selectScene(this.props.index);
     }
@@ -40,7 +40,7 @@ export default class SceneBlock extends Component {
 
     render() {
         return (
-            <div className="sceneblock" onClick = {this.clickSceneBlock}>
+            <div className="clipblock" onClick = {this.clickClipBlock}>
                 {this.chooseSceneBlock()}
             </div>
         )
