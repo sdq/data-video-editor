@@ -14,9 +14,9 @@ import './editpane.css';
 import { None } from 'vega';
 
 const keyMap = {
-    COPY: "command+c",
-    CUT: "command+x",
-    PASTE: "command+v",
+    COPY: ["command+c", "ctrl+c"],
+    CUT: ["command+x", "ctrl+x"],
+    PASTE: ["command+v", "ctrl+v"],
     DELETE: ["del", "backspace"]
 };
 
