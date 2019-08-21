@@ -8,17 +8,6 @@ import './usertab.css';
 const { Panel } = Collapse;
 const { Dragger } = Upload;
 
-//Image Process
-function getBase64(file) {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        console.log(file);
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = error => reject(error);
-    });
-}
-
 export default class UserTab extends Component {
 
     constructor(props) {
