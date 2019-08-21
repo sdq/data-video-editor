@@ -1,11 +1,11 @@
-#timeline {
+#storyline {
     display: flex;
     padding: 8px;
     overflow-x: auto;
     overflow-y: hidden;
 }
 
-#timelineHeader {
+#storylineHeader {
     height: 40px;
     background-color: #FDC209;
     padding-left: 16px;

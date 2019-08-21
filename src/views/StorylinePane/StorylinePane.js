@@ -4,7 +4,7 @@ import SceneBlock from '@/components/SceneBlock';
 import AddScene from '@/components/SceneBlock/AddScene';
 import AddSceneModal from '@/components/SceneBlock/AddSceneModal';
 import Scene from '@/models/Scene';
-import './timelinepane.css';
+import './storylinepane.css';
 
 const getListStyle = isDraggingOver => ({
     // background: isDraggingOver ? 'lightblue' : 'lightgrey',
@@ -12,7 +12,7 @@ const getListStyle = isDraggingOver => ({
     overflow: 'auto',
 });
 
-export default class TimelinePane extends Component {
+export default class StorylinePane extends Component {
 
     constructor(props) {
         super(props);
@@ -70,10 +70,10 @@ export default class TimelinePane extends Component {
     render() {
         return (
             <div>
-                <div id="timelineHeader">
+                <div id="storylineHeader">
                     <font color="white" weight="bold">Storyline</font>
                 </div>
-                <div id="timeline">
+                <div id="storyline">
                     <DragDropContext onDragStart={this.onDragStart} onDragEnd={this.onDragEnd}>
                         <Droppable droppableId="droppable" direction="horizontal">
                             {(provided, snapshot) => (

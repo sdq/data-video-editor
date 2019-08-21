@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import TimelinePane from './TimelinePane';
+import StorylinePane from './StorylinePane';
 import {scenes, sceneIndex} from '@/selectors/timeline';
 import {uimode} from '@/selectors/ui';
 import { dataList } from '@/selectors/vis';
@@ -29,4 +29,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(TimelinePane)
+export default connect(mapStateToProps,mapDispatchToProps)(StorylinePane)

@@ -7,12 +7,10 @@
     padding-top: 8px;
 }
 
-.trackgroup {
-    height: 250px;
-    margin-left: 8px;
-    margin-right: 8px;
-    background-color: #ffffff;
-    border-style: solid;
-    border-width: 1px;
-    border-color: #e8e8e8
+#track-editor-header {
+    height: 40px;
+    background-color: #FDC209;
+    padding-left: 16px;
+    padding-top: 4px;
+    font-size: 20px;
 }

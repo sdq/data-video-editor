@@ -1,0 +1,16 @@
+.track {
+    height: 36px;
+    background-color: #eeeeee;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #d8d8d8
+}
+
+.trackinfo {
+    background-color: #ffffff;
+    height: 36px;
+    width: 200px;
+    border-bottom-color: #d8d8d8;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+}
