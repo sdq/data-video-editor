@@ -1,0 +1,15 @@
+.usertab {
+    height: 500px;
+}
+
+.user-upload-list {
+    overflow: auto;
+    height: 400px;
+}
+
+.collaspe-panel {
+    /* background-color: #f7f7f7; */
+    margin-bottom: 10px;
+    border-style: none;
+    overflow: 'hidden';
+}

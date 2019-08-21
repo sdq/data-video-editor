@@ -5,12 +5,7 @@
 
 .card-container > .ant-tabs-card > .ant-tabs-content > .ant-tabs-tabpane {
     background: #fff;
-    padding: 16px;
 }
-
-/* .card-container > .ant-tabs-card > .ant-tabs-bar {
-    border-color: #fff;
-} */
 
 .card-container > .ant-tabs-card > .ant-tabs-bar .ant-tabs-tab {
     border-color: transparent;

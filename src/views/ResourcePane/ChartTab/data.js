@@ -1,26 +1,26 @@
-import URL from '@/constants/URL';
+import MyURL from '@/constants/MyURL';
 import ChartType from '@/constants/ChartType';
 
 const data = [
     {
         chart: ChartType.AREACHART,
-        src: URL.OSS+"/charts/areachart.png"
+        src: MyURL.OSS+"/charts/areachart.png"
     },
     {
         chart: ChartType.BARCHART,
-        src: URL.OSS+"/charts/barchart.png"
+        src: MyURL.OSS+"/charts/barchart.png"
     },
     {
         chart: ChartType.HISTOGRAM,
-        src: URL.OSS+"/charts/histogram.png"
+        src: MyURL.OSS+"/charts/histogram.png"
     },
     {
         chart: ChartType.LINECHART,
-        src: URL.OSS+"/charts/linechart.png"
+        src: MyURL.OSS+"/charts/linechart.png"
     },
     {
         chart: ChartType.SCATTERPLOT,
-        src: URL.OSS+"/charts/scatterplot.png"
+        src: MyURL.OSS+"/charts/scatterplot.png"
     },
 ];
 
