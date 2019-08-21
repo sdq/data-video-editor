@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Modal, Table } from 'antd';
+import FieldType from '@/constants/FieldType';
 import data from '@/datasets/cars';
-import columns from './mockcolumns';
+import columns from '@/datasets/carsSchema';
 
 export default class DataPreview extends Component {
 
@@ -16,8 +17,12 @@ export default class DataPreview extends Component {
 
     render() {
         const customizedColumns = columns.map((column)=> {
+            column.title = column.name;
+            column.dataIndex = column.name;
+            if (column.type === FieldType.QUANTITATIVE) {
+                column.sorter = (a, b) => a[column.name] - b[column.name]
+            }
             column.width = 150;
-            column.dataIndex = column.title;
             return column;
         });
         return (

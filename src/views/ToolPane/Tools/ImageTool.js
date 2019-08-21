@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { InputNumber, Row, Col, Divider, Button, Select, Slider } from 'antd';
+import { InputNumber, Row, Col, Divider, Button, Select } from 'antd';
 import { SketchPicker } from 'react-color';
 
 const { Option } = Select;
@@ -69,13 +69,6 @@ export default class ImageTool extends Component {
                         </Select>
                     </Col>
                     <Col span={8}><InputNumber min={0} max={50} defaultValue={16} /></Col>
-                </Row>
-                <Divider>Time</Divider>
-                <Row style={{margin: '10px 0px 0px 0px', fontSize: '14px'}}>
-                    <Col span={4} style={{textAlign:'center', padding: '5px 5px 0 5px'}}>Time</Col>
-                    <Col span={20}>
-                        <Slider range defaultValue={[0, 100]} />
-                    </Col>
                 </Row>
             </div>
         )

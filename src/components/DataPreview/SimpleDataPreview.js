@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Table } from 'antd';
-import columns from './mockcolumns';
 import data from '@/datasets/cars';
+import columns from '@/datasets/carsSchema';
 import './datapreview.css';
 
 const width = 280;
@@ -10,8 +10,9 @@ const height = 200;
 export default class SimpleDataPreview extends Component {
     render() {
         const customizedColumns = columns.map((column)=> {
+            column.title = column.name;
+            column.dataIndex = column.name;
             column.width = 150;
-            column.dataIndex = column.title;
             delete column.sorter;
             return column;
         });
@@ -24,6 +25,7 @@ export default class SimpleDataPreview extends Component {
                     scroll={{ x: width, y: height}}
                     pagination={false}
                     rowKey={customizedColumns[0].title}
+                    size="small"
                 />
             </div>
         )
