@@ -37,7 +37,7 @@ export default class EditorView extends Component {
                         style={{ background: '#fff', height: contentHeight }} 
                         // trigger={null} collapsible collapsedWidth={0} collapsed={this.props.isSidebarDisplayed}
                         >
-                            <ToolPane/>
+                            <ToolPane />
                         </Sider>
                     </Layout>
                     <Layout>

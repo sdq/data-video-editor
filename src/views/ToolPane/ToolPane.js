@@ -68,7 +68,7 @@ export default class ToolPane extends Component {
 
     render() {
         return (
-            <div className="card-container">
+            <div className="card-container" style={{position:'absolute', zIndex: 20, width: 300}}>
                 {this.chooseTool()}
             </div>
         )

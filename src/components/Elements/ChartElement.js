@@ -14,9 +14,16 @@ export default class ChartElement extends Component {
         this.state = {
             image: null,
         };
+        this.dragstart = this.dragstart.bind(this);
         this.dragend = this.dragend.bind(this);
+        this.onTransformStart = this.onTransformStart.bind(this);
         this.onTransformEnd = this.onTransformEnd.bind(this);
     }
+
+    dragstart() {
+        this.props.editStart();
+    };
+
     dragend(x,y) {
         var newEle = this.props.element;
         newEle.info().x = x;
@@ -25,7 +32,7 @@ export default class ChartElement extends Component {
     };
 
     onTransformStart() {
-        // console.log("onTransformStart");
+        this.props.editStart();
     }
     onTransform() {
         // console.log("onTransform");
@@ -73,16 +80,8 @@ export default class ChartElement extends Component {
                 height={this.props.element.info().height}
                 rotation={this.props.element.info().rotation}
                 //draggable
-                onDragStart={() => {
-                    // this.setState({
-                    //     isDragging: true
-                    // });
-                    // console.log("begin")
-                }}
+                onDragStart={this.dragstart}
                 onDragEnd={e => {
-                    // this.setState({
-                    //     isDragging: false,
-                    // });
                     this.dragend(e.target.x(),e.target.y())
                 }}
                 onTransformStart={this.onTransformStart}

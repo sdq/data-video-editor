@@ -11,8 +11,16 @@ export default class TextElement extends Component {
             x: props.element.info().x,
             y: props.element.info().y,
         };
+        this.dragstart = this.dragstart.bind(this);
         this.dragend = this.dragend.bind(this);
+        this.onTransformStart = this.onTransformStart.bind(this);
+        this.onTransformEnd = this.onTransformEnd.bind(this);
     }
+
+    dragstart() {
+        this.props.editStart();
+    };
+
     dragend(x,y) {
         var newEle = this.props.element;
         newEle.info().x = x;
@@ -20,28 +28,19 @@ export default class TextElement extends Component {
         this.props.edit(newEle);
     };
     onTransformStart() {
-        console.log("onTransformStart");
+        this.props.editStart();
     }
     onTransform() {
-        console.log("onTransform");
+        //console.log("onTransform");
     }
     onTransformEnd(e) {
-        console.log("end transform");
-        console.log(e.target);
-        // const node = shapeRef.current;
-        // const scaleX = node.scaleX();
-        // const scaleY = node.scaleY();
-
-        // // we will reset it back
-        // node.scaleX(1);
-        // node.scaleY(1);
-        // onChange({
-        //   ...shapeProps,
-        //   x: node.x(),
-        //   y: node.y(),
-        //   width: node.width() * scaleX,
-        //   height: node.height() * scaleY
-        // });
+        var newEle = this.props.element;
+        newEle.info().x = e.target.x();
+        newEle.info().y = e.target.y();
+        newEle.info().width = e.target.width()*e.target.scaleX();
+        newEle.info().height = e.target.height()*e.target.scaleY();
+        newEle.info().rotation = e.target.rotation();
+        this.props.edit(newEle);
     }
     render() {
         return (
@@ -50,6 +49,7 @@ export default class TextElement extends Component {
                 x={this.state.x}
                 y={this.state.y}
                 onDragStart={() => {
+                    this.dragstart();
                     this.setState({
                         isDragging: true
                     });

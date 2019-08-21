@@ -10,6 +10,7 @@ import { DropTarget } from 'react-dnd';
 import DNDType from '@/constants/DNDType';
 import Color from '@/constants/Color';
 import { Element } from '@/models/Element';
+import AssistLines from './AssistLines';
 import './editpane.css';
 import { None } from 'vega';
 
@@ -35,11 +36,22 @@ class EditCanvas extends Component {
         this.state = {
             selectedElementName: "",
             copiedElement: null,
+            showAssistLines: false,
         };
+        this.editStart = this.editStart.bind(this);
         this.editElement = this.editElement.bind(this);
     }
 
+    editStart() {
+        this.setState({
+            showAssistLines: true
+        })
+    }
+
     editElement(eleIndex, element) {
+        this.setState({
+            showAssistLines: false
+        })
         const newScene = Object.assign({},this.props.currentScene);
         newScene.elements[eleIndex] = element;
         this.props.updateScene(this.props.sceneIndex, newScene);
@@ -152,17 +164,18 @@ class EditCanvas extends Component {
         return connectDropTarget(
             <div id="canvasContainer" style={{ backgroundColor }}>
                 <HotKeys keyMap={keyMap} handlers={this.handlers}>
+                    { this.state.showAssistLines ? <AssistLines /> : null }
                     <Stage width={800} height={450} onMouseDown={editable?this.handleStageMouseDown:None}>
                         <Layer>
                             {this.props.currentScene.elements.map(function(element, index) {
                                 //console.log(element.info);
                                 switch (element.type()) {
                                     case ElementType.TEXT:
-                                        return <TextElement key={this.props.sceneIndex+"-"+index} edit={ele => this.editElement(index, ele)} element={element} name={this.props.sceneIndex+"-"+index} draggable={editable} {...this.props}/>
+                                        return <TextElement key={this.props.sceneIndex+"-"+index} edit={ele => this.editElement(index, ele)} editStart={this.editStart} element={element} name={this.props.sceneIndex+"-"+index} draggable={editable} {...this.props}/>
                                     case ElementType.IMAGE:
-                                        return <ImageElement key={this.props.sceneIndex+"-"+index} edit={ele => this.editElement(index, ele)} element={element} name={this.props.sceneIndex+"-"+index} draggable={editable} {...this.props}/>
+                                        return <ImageElement key={this.props.sceneIndex+"-"+index} edit={ele => this.editElement(index, ele)} editStart={this.editStart} element={element} name={this.props.sceneIndex+"-"+index} draggable={editable} {...this.props}/>
                                     case ElementType.CHART:
-                                        return <ChartElement key={this.props.sceneIndex+"-"+index} edit={ele => this.editElement(index, ele)} element={element} name={this.props.sceneIndex+"-"+index} width={200} height={200} draggable={editable} {...this.props}/>
+                                        return <ChartElement key={this.props.sceneIndex+"-"+index} edit={ele => this.editElement(index, ele)} editStart={this.editStart} element={element} name={this.props.sceneIndex+"-"+index} width={200} height={200} draggable={editable} {...this.props}/>
                                     default:
                                         //TODO: remove
                                         console.log("wrong!!!!!!!");

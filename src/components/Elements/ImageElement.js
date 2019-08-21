@@ -7,7 +7,9 @@ export default class ImageElement extends Component {
         this.state = {
             image: null,
         };
+        this.dragstart = this.dragstart.bind(this);
         this.dragend = this.dragend.bind(this);
+        this.onTransformStart = this.onTransformStart.bind(this);
         this.onTransformEnd = this.onTransformEnd.bind(this);
     }
     componentDidMount() {
@@ -37,6 +39,11 @@ export default class ImageElement extends Component {
         // you will have to update layer manually:
         // this.imageNode.getLayer().batchDraw();
     };
+
+    dragstart() {
+        this.props.editStart();
+    };
+
     dragend(x,y) {
         var newEle = this.props.element;
         newEle.info().x = x;
@@ -45,7 +52,7 @@ export default class ImageElement extends Component {
     };
 
     onTransformStart() {
-        // console.log("onTransformStart");
+        this.props.editStart();
     }
     onTransform() {
         // console.log("onTransform");
@@ -71,18 +78,8 @@ export default class ImageElement extends Component {
                 height={this.props.element.info().height}
                 rotation={this.props.element.info().rotation}
                 //draggable
-                onDragStart={() => {
-                    // this.setState({
-                    //     isDragging: true
-                    // });
-                    // console.log("begin")
-                }}
+                onDragStart={this.dragstart}
                 onDragEnd={e => {
-                    // this.setState({
-                    //     isDragging: false,
-                    //     x: e.target.x(),
-                    //     y: e.target.y()
-                    // });
                     this.dragend(e.target.x(),e.target.y())
                 }}
                 onTransformStart={this.onTransformStart}
