@@ -7,10 +7,11 @@ import './track.css';
 const { Sider, Content } = Layout;
 
 export default class Track extends Component {
+
     render() {
         return (
             <div className="track">
-                <Layout>
+                <Layout style={{ background: '#eee', height: '36px' }}>
                     <Sider width="200px">
                         <TrackInfo />
                     </Sider>
