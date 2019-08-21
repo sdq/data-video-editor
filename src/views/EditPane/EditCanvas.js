@@ -91,7 +91,7 @@ class EditCanvas extends Component {
     };
 
     copyElement() {
-        console.log("copy")
+        this.props.unselectElement();
         if (this.state.selectedElementName==="") {
             return
         }
@@ -102,7 +102,7 @@ class EditCanvas extends Component {
     }
 
     cutElement() {
-        console.log("cut")
+        this.props.unselectElement();
         if (this.state.selectedElementName==="") {
             return
         }
@@ -117,6 +117,7 @@ class EditCanvas extends Component {
 
     pasteElement() {
         console.log("pasteElement")
+        // TODO: select pasted element
         const newScene = Object.assign({},this.props.currentScene);
         const newInfo = Object.assign({},this.state.copiedElement.info());
         const type = this.state.copiedElement.type();
@@ -126,7 +127,7 @@ class EditCanvas extends Component {
     }
 
     deleteElement() {
-        //console.log("delete element")
+        this.props.unselectElement();
         if (this.state.selectedElementName==="") {
             return
         }

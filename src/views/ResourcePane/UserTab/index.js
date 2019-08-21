@@ -33,11 +33,7 @@ export default class UserTab extends Component {
                     url: "https://datavideo.idvxlab.com/audios/column-anon.mp3"
                 },
             ],
-            previewVisible: false,
-            previewImage: {},
         }
-        this.handlePreview = this.handlePreview.bind(this);
-        this.handleCancelPreview = this.handleCancelPreview.bind(this);
     }
 
     uploadFile = (file) => {
@@ -95,24 +91,8 @@ export default class UserTab extends Component {
         }
     };
 
-    handlePreview = async file => {
-        if (!file.url && !file.preview) {
-            file.preview = await getBase64(file.originFileObj);
-        }
-        this.setState({
-            previewImage: file.url || file.preview,
-            previewVisible: true,
-        });
-    };
-
-    handleCancelPreview() {
-        this.setState({ 
-            previewVisible: false 
-        });
-    }
-
     render() {
-        const { previewVisible, previewImage, imageList, audioList } = this.state;
+        const { imageList, audioList } = this.state;
         return (
             <div className="usertab">
                 <div style={{height: "120px", margin: "8px"}}>
@@ -141,7 +121,6 @@ export default class UserTab extends Component {
                                         <Button style={{marginLeft: '36px'}} key={item.uid} type="link" icon="delete" size="small"
                                             onClick={() => this.onDeleteImage(item.uid)}
                                         />
-                                        {/* <Button type="link" icon="eye" size="small"  onClick={this.handlePreview}/> */}
                                     </List.Item>
                                 )}
                             />
@@ -169,9 +148,6 @@ export default class UserTab extends Component {
                         </Panel>
                     </Collapse>
                 </div>
-                <Modal visible={previewVisible} footer={null} onCancel={this.handleCancelPreview}>
-                    <img alt="example" style={{ width: '100%' }} src={previewImage} />
-                </Modal>
             </div>
         )
     }
