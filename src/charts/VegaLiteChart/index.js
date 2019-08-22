@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Image } from 'react-konva';
 import * as vega from 'vega';
 import * as vegalite from 'vega-lite';
+import _ from 'lodash';
 
 export default class VegaLiteChart extends Component {
 
@@ -23,7 +24,9 @@ export default class VegaLiteChart extends Component {
         }
     }
     componentWillUnmount() {
-        this.chartImage.removeEventListener('load', this.handleLoad);
+        if (!_.isEmpty(this.chartImage)) {
+            this.chartImage.removeEventListener('load', this.handleLoad);
+        }
     }
     loadChart() {
         const {spec, data} = this.props;

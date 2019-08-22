@@ -4,6 +4,7 @@ import {currentScene, sceneIndex, scenes} from '@/selectors/timeline';
 import {currentElement, elementIndex, isSelected} from '@/selectors/canvas';
 import { dataList } from '@/selectors/vis';
 import {isPerforming} from '@/selectors/player';
+import * as uiActions from '@/actions/uiAction';
 import * as timelineActions from '@/actions/timelineAction';
 import * as canvasActions from '@/actions/canvasAction';
 import * as playerActions from '@/actions/playerAction';
@@ -24,6 +25,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
+        displayTrackEditor: () => dispatch(uiActions.displayTrackEditor()),
         selectScene: (index) => dispatch(timelineActions.selectScene(index)),
         updateScene: (index, scene) => dispatch(timelineActions.updateScene(index, scene)),
         selectElement: (elementIndex) => dispatch(canvasActions.selectElement(elementIndex)),

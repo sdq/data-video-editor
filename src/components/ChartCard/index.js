@@ -34,7 +34,9 @@ const chartSource = {
                 )
                 const newElement = new Element(ElementType.CHART, newChart);
                 newScene.elements.push(newElement);
+                props.addElement(newElement);
                 props.updateScene(dropResult.sceneIndex, newScene);
+                props.displayTrackEditor();
             } 
             // else if (dropResult.target === "track") {
             //     //add new scene

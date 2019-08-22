@@ -22,7 +22,6 @@ export default class SceneBlock extends Component {
     }
 
     dbclickSceneBlock() {
-        console.log("double click!"+this.props.index);
         this.props.selectScene(this.props.index);
         if (this.props.uimode === UIMode.STORYLINE_MODE) {
             this.props.displayTrackEditor();
