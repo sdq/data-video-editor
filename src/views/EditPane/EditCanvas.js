@@ -42,6 +42,15 @@ class EditCanvas extends Component {
         this.editElement = this.editElement.bind(this);
     }
 
+    componentWillReceiveProps(props) {
+        console.log("===select===");
+        console.log(this.props.sceneIndex);
+        const name = this.props.sceneIndex+"-"+props.elementIndex;
+        this.setState({
+            selectedElementName: name
+        });
+    }
+
     editStart() {
         this.setState({
             showAssistLines: true
@@ -60,6 +69,7 @@ class EditCanvas extends Component {
 
     handleStageMouseDown = e => {
         // clicked on stage - clear selection
+        console.log('click----')
         if (e.target === e.target.getStage()) {
             this.setState({
                 selectedElementName: ""
@@ -76,7 +86,8 @@ class EditCanvas extends Component {
     
         // find clicked rect by its name
         const name = e.target.name();
-        // const rect = this.state.rectangles.find(r => r.name === name);
+        console.log("==name==")
+        console.log(name);
         if (name) {
             this.setState({
                 selectedElementName: name

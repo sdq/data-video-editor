@@ -21,7 +21,7 @@ const imageSource = {
             if (dropResult.target === "canvas") {
                 //add element to scene
                 const newScene = Object.assign({},dropResult.currentScene);
-                const newImage = new ImageInfo(item.src, 240, 100, 100, 100, 0);
+                const newImage = new ImageInfo(item.name,item.src, 240, 100, 100, 100, 0);
                 const newElement = new Element(ElementType.IMAGE, newImage);
                 newScene.elements.push(newElement);
                 props.addElement(newElement);

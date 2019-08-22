@@ -1,7 +1,7 @@
 import ActionType from '../constants/ActionType';
 
 const initialState = {
-    isSelected: false,
+    isElementSelected: false,
     elementIndex: -1,
     actionHistory: [],
 }
@@ -12,24 +12,24 @@ export default (state = initialState, action) => {
     newState.actionHistory.push(action);
     switch (action.type) {
         case ActionType.SELECT_ELEMENT:
-            newState.isSelected = true;
+            newState.isElementSelected = true;
             newState.elementIndex = action.elementIndex;
             return newState;
         case ActionType.UNSELECT_ELEMENT:
-            newState.isSelected = false;
+            newState.isElementSelected = false;
             newState.elementIndex = -1;
             return newState;
         case ActionType.ADD_ELEMENT:
-            newState.isSelected = false;
+            newState.isElementSelected = false;
             newState.elementIndex = -1;
             return newState;
         case ActionType.REMOVE_ELEMENT:
-            newState.isSelected = false;
+            newState.isElementSelected = false;
             newState.elementIndex = -1;
             return newState
         case ActionType.UPDATE_ELEMENT:
             //TODO: add action detail
-            newState.isSelected = true;
+            newState.isElementSelected = true;
             newState.elementIndex = action.elementIndex;
             return newState
         case ActionType.UNDO_CANVAS:

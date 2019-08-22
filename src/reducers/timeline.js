@@ -9,6 +9,7 @@ import Color from '../constants/Color';
 
 // Demo
 const demoimage = new ImageInfo(
+    'man.png',
     MyURL.OSS+'/images/man.png',
     300,
     60,
@@ -44,6 +45,7 @@ const element2 = new Element(ElementType.TEXT, demotext);
 const scene1 = new Scene("A man is sitting on the chair and thinking about something.", [element0, element1, element2], 2);
 
 const demoimage2 = new ImageInfo(
+    'woman.png',
     MyURL.OSS+'/images/woman.png',
     120,
     80,

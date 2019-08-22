@@ -5,5 +5,11 @@ export default {
     BLUE: '#0561FE',
     LIGHT_BLUE: '#B6D1EC',
     DEEP_BLUE: '#0C2086',
+    CLEAR_BLUE: '#EDF3FE',
     GRAY: "#EEEEEE",
+    // TrackBar Color
+    ILLUSTRATION_BAR: '#FB99A4',
+    CHART_BAR: '#8BA1F9',
+    AUDIO_BAR: '#F8BE8C',
+    TEXT_BAR: '#BB96F7',
 }

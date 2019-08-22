@@ -22,7 +22,7 @@ export default class ToolPane extends Component {
     // }
 
     chooseTool() {
-        if (this.props.isSelected && this.props.currentElement) {
+        if (this.props.isElementSelected && this.props.currentElement) {
             switch (this.props.currentElement.type()) {
                 case ElementType.IMAGE:
                     return <Tabs type="card">

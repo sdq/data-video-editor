@@ -11,9 +11,9 @@ export default class TrackEditor extends Component {
     render() {
         return (
             <div className="trackeditor">
-                <TimelineHeader />
-                <TrackHeader />
-                <TrackGroup />
+                <TimelineHeader {...this.props}/>
+                <TrackHeader {...this.props}/>
+                <TrackGroup {...this.props}/>
             </div>
         )
     }

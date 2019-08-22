@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import ToolPane from './ToolPane';
 import {currentScene, sceneIndex, scenes} from '@/selectors/timeline';
-import {currentElement, elementIndex, isSelected} from '@/selectors/canvas';
+import {currentElement, elementIndex, isElementSelected} from '@/selectors/canvas';
 import { displaySpec, getCurrentData, getCurrentVis, getCurrentFields, getSlots } from '@/selectors/vis';
 import * as timelineActions from '@/actions/timelineAction';
 import * as canvasActions from '@/actions/canvasAction';
@@ -14,7 +14,7 @@ const mapStateToProps = state => {
         currentScene: currentScene(state),
         elementIndex: elementIndex(state),
         currentElement: currentElement(state),
-        isSelected: isSelected(state),
+        isElementSelected: isElementSelected(state),
         // vis
         displaySpec: displaySpec(state),
         currentData: getCurrentData(state),

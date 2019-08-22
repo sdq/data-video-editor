@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 
-export const isSelected = state => state.canvas.isSelected;
+export const isElementSelected = state => state.canvas.isElementSelected;
 export const elementIndex = state => state.canvas.elementIndex;
 export const actionHistory = state => state.canvas.actionHistory;
 

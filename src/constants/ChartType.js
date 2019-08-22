@@ -1,7 +1,7 @@
 export default {
-    SCATTERPLOT : 'SCATTERPLOT',
-    LINECHART : 'LINECHART',
-    BARCHART : 'BARCHART',
-    AREACHART : 'AREACHART',
-    HISTOGRAM : 'HISTOGRAM',
+    SCATTERPLOT : 'scatterplot',
+    LINECHART : 'line chart',
+    BARCHART : 'bar chart',
+    AREACHART : 'area chart',
+    HISTOGRAM : 'histogram',
 }

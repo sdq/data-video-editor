@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import { Upload, message, Button, Icon, Row, Col, Collapse, Modal, List } from 'antd';
-import LazyLoad from 'react-lazyload';
+import { Upload, Button, Row, Col, Collapse, Modal, List } from 'antd';
 import ImageCard from '@/components/ImageCard';
 import AudioCard from '@/components/AudioCard';
 import './usertab.css';

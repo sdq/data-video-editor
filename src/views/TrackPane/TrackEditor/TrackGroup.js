@@ -16,9 +16,6 @@ export default class TrackGroup extends Component {
     
     constructor(props) {
         super(props);
-        this.state = {
-            items: [1,2,3,4,5,6],
-        }
         this.onDragEnd = this.onDragEnd.bind(this);
     }
 
@@ -27,6 +24,9 @@ export default class TrackGroup extends Component {
     }
 
     render() {
+        let { currentScene } = this.props;
+        let elements = currentScene.elements;
+        console.log(elements);
         return (
             <div className="track-group">
                 <DragDropContext onDragEnd={this.onDragEnd}>
@@ -37,8 +37,8 @@ export default class TrackGroup extends Component {
                             ref={provided.innerRef}
                             style={getListStyle(snapshot.isDraggingOver)}
                             >
-                            {this.state.items.map((item, index) => (
-                                <Draggable key={item} draggableId={item} index={index}>
+                            {elements.map((element, index) => (
+                                <Draggable key={element.id()} draggableId={element.id()} index={index}>
                                 {(provided, snapshot) => (
                                     <div
                                     ref={provided.innerRef}
@@ -49,7 +49,7 @@ export default class TrackGroup extends Component {
                                         provided.draggableProps.style
                                     )}
                                     >
-                                    <Track />
+                                    <Track element={element} isSelected={this.props.isElementSelected && (this.props.elementIndex===index)} index={index} {...this.props}/>
                                     </div>
                                 )}
                                 </Draggable>

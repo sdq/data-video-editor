@@ -1,5 +1,8 @@
+import uuidv4 from 'uuid/v4';
+
 export class Element {
     constructor(type, info) {
+        this._id = uuidv4();
         this._type = type;
         this._info = info;
         this._duration = 0;
@@ -8,6 +11,9 @@ export class Element {
         this._index = 0;
         this._sstart = 0;
         this._sduration = 0;
+        this.id = function() {
+            return this._id;
+        };
         this.type = function(type) {
             //element type
             if (type == null){
@@ -96,7 +102,8 @@ export class Element {
 }
 
 export class ImageInfo {
-    constructor(src, x, y, width, height, rotation) {
+    constructor(name, src, x, y, width, height, rotation) {
+        this.name = name;
         this.src = src;
         this.x = x;
         this.y = y;
