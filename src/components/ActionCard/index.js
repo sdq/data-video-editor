@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './actioncard.css'
+import './actioncard.css';
 
 export default class ActionCard extends Component {
     render() {

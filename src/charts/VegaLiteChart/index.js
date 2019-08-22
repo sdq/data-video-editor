@@ -23,11 +23,10 @@ export default class VegaLiteChart extends Component {
             this.loadChart();
         }
     }
-    componentWillUnmount() {
-        if (!_.isEmpty(this.chartImage)) {
-            this.chartImage.removeEventListener('load', this.handleLoad);
-        }
-    }
+    // TODO: unmount remove listener
+    // componentWillUnmount() {
+    //     this.chartImage.removeEventListener('load', this.handleLoad);
+    // }
     loadChart() {
         const {spec, data} = this.props;
         spec.data = data;

@@ -185,12 +185,13 @@ class EditCanvas extends Component {
                                         return <ImageElement key={this.props.sceneIndex+"-"+index} edit={ele => this.editElement(index, ele)} editStart={this.editStart} element={element} name={this.props.sceneIndex+"-"+index} draggable={editable} {...this.props}/>
                                     case ElementType.CHART:
                                         return <ChartElement key={this.props.sceneIndex+"-"+index} edit={ele => this.editElement(index, ele)} editStart={this.editStart} element={element} name={this.props.sceneIndex+"-"+index} width={200} height={200} draggable={editable} {...this.props}/>
+                                    case ElementType.AUDIO:
+                                        return null;
                                     default:
                                         //TODO: remove
                                         console.log("wrong!!!!!!!");
-                                        console.log(this.props.currentScene.elements);
                                         console.log(element);
-                                        return;
+                                        return null;
                                 }
                             }.bind(this))}
                             <TransformerComponent
@@ -205,7 +206,7 @@ class EditCanvas extends Component {
 }
 
 export default DropTarget(
-	[DNDType.DND_IMAGE, DNDType.DND_CHART],
+	[DNDType.DND_IMAGE, DNDType.DND_CHART, DNDType.DND_AUDIO],
 	canvasTarget,
 	(connect, monitor) => ({
 		connectDropTarget: connect.dropTarget(),

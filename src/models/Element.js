@@ -113,6 +113,13 @@ export class ImageInfo {
     }
 }
 
+export class AudioInfo {
+    constructor(name, src) {
+        this.name = name;
+        this.src = src;
+    }
+}
+
 export class ChartInfo {
     constructor(dataIndex, type, spec, x, y, width, height, rotation) {
         this.dataIndex = dataIndex;

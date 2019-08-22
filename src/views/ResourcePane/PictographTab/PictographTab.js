@@ -4,8 +4,8 @@ import './pictographtab.css';
 export default class PictographTab extends Component {
     render() {
         return (
-            <div>
-                PictographTab
+            <div style={{padding: 16}}>
+                Coming soon ...
             </div>
         )
     }

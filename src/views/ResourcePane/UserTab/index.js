@@ -17,8 +17,7 @@ export default class UserTab extends Component {
                 {
                     uid: '-1',
                     name: "column-anon",
-                    status: 'done',
-                    url: "https://datavideo.idvxlab.com/audios/column-anon.mp3"
+                    src: "https://datavideo.idvxlab.com/audios/column-anon.mp3"
                 },
             ],
         }
@@ -29,11 +28,11 @@ export default class UserTab extends Component {
         newFile.uid = file.uid;
         newFile.name = file.name;
         const fileURL = URL.createObjectURL(file);
+        newFile.src = fileURL;
         let fileType = newFile.name.split(".").slice(-1).pop()
         let newList = [];
         switch (fileType) {
             case 'png':
-                newFile.src = fileURL;
                 newList = this.state.imageList;
                 newList.push(newFile);
                 this.setState({ 
@@ -41,7 +40,6 @@ export default class UserTab extends Component {
                 });
                 break;
             case 'mp3':
-                newFile.url = fileURL;
                 newList = this.state.audioList;
                 newList.push(newFile);
                 this.setState({ 
@@ -123,7 +121,7 @@ export default class UserTab extends Component {
                                     <List.Item>
                                         <Row>
                                             <Col span={20} >
-                                                <AudioCard name={item.name} soundurl={item.url} {...this.musicprops} />
+                                                <AudioCard info={item} {...this.props}/>
                                             </Col>
                                             <Col offset={16}>
                                                 <Button key={item.uid} type="link" icon="delete" size="small"
