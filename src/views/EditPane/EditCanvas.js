@@ -43,8 +43,6 @@ class EditCanvas extends Component {
     }
 
     componentWillReceiveProps(props) {
-        console.log("===select===");
-        console.log(this.props.sceneIndex);
         const name = this.props.sceneIndex+"-"+props.elementIndex;
         this.setState({
             selectedElementName: name
@@ -172,7 +170,6 @@ class EditCanvas extends Component {
 		else if (canDrop) {
 			backgroundColor = Color.LIGHT_BLUE;
         }
-        console.log("render-----");
         return connectDropTarget(
             <div id="canvasContainer" style={{ backgroundColor }}>
                 <HotKeys keyMap={keyMap} handlers={this.handlers}>

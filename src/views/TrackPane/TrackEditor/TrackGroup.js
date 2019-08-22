@@ -26,7 +26,6 @@ export default class TrackGroup extends Component {
     render() {
         let { currentScene } = this.props;
         let elements = currentScene.elements;
-        console.log(elements);
         return (
             <div className="track-group">
                 <DragDropContext onDragEnd={this.onDragEnd}>

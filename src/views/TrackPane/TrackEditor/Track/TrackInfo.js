@@ -8,11 +8,11 @@ export default class TrackInfo extends Component {
 
     constructor(props) {
         super(props);
-        this.showAnimations = this.showAnimations.bind(this);
+        this.setShowAnimations = this.setShowAnimations.bind(this);
     }
 
-    showAnimations() {
-        console.log("showAnimation");
+    setShowAnimations() {
+        this.props.setShowAnimations(!this.props.showAnimations);
     }
 
     render() {
@@ -41,12 +41,12 @@ export default class TrackInfo extends Component {
                 break;
         }
         return (
-            <div className="trackinfo" style={{backgroundColor: this.props.isSelected?Color.CLEAR_BLUE:'#ffffff'}}>
+            <div className="trackinfo" onClick={this.setShowAnimations} style={{backgroundColor: this.props.isSelected?Color.CLEAR_BLUE:'#ffffff'}}>
                 <div style={{float: 'left'}}>
                     {icon}
                 </div>
-                <div onClick={this.showAnimations} style={{float: 'left', marginLeft: 8}}>
-                    <Icon type="caret-right" />
+                <div style={{float: 'left', marginLeft: 8}}>
+                    {this.props.showAnimations?<Icon type="caret-down" />:<Icon type="caret-right" />}
                 </div>
                 <p style={{float: 'left', marginLeft: 8, width: 140, whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis'}}>
                     {name}
