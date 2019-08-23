@@ -41,11 +41,11 @@ export default class TrackInfo extends Component {
                 break;
         }
         return (
-            <div className="trackinfo" onClick={this.setShowAnimations} style={{backgroundColor: this.props.isSelected?Color.CLEAR_BLUE:'#ffffff'}}>
-                <div style={{float: 'left'}}>
+            <div className="trackinfo" style={{backgroundColor: this.props.isSelected?Color.CLEAR_BLUE:'#ffffff'}}>
+                <div style={{float: 'left'}} onClick={this.setShowAnimations}>
                     {icon}
                 </div>
-                <div style={{float: 'left', marginLeft: 8}}>
+                <div style={{float: 'left', marginLeft: 8}} onClick={this.setShowAnimations}>
                     {this.props.showAnimations?<Icon type="caret-down" />:<Icon type="caret-right" />}
                 </div>
                 <p style={{float: 'left', marginLeft: 8, width: 140, whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis'}}>

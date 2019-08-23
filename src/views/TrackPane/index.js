@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import TrackPane from './TrackPane';
 import {scenes, sceneIndex, currentScene} from '@/selectors/timeline';
-import {currentElement, elementIndex, isElementSelected} from '@/selectors/canvas';
+import {currentElements, currentElement, elementIndex, isElementSelected} from '@/selectors/canvas';
 import * as timelineActions from '@/actions/timelineAction';
 import * as uiActions from '@/actions/uiAction';
 import * as canvasActions from '@/actions/canvasAction';
@@ -12,6 +12,7 @@ const mapStateToProps = state => {
         scenes: scenes(state),
         sceneIndex: sceneIndex(state),
         currentScene: currentScene(state),
+        currentElements: currentElements(state),
         currentElement: currentElement(state),
         elementIndex: elementIndex(state),
         isElementSelected: isElementSelected(state),

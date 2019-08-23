@@ -7,11 +7,18 @@ export const actionHistory = state => state.canvas.actionHistory;
 const scenes = state => state.timeline.scenes;
 const sceneIndex = state => state.timeline.index;
 
-export const currentElement = createSelector(
+export const currentElements = createSelector(
     scenes,
     sceneIndex,
+    function(scenes, sceneIndex) {
+        return scenes[sceneIndex].elements;
+    }
+)
+
+export const currentElement = createSelector(
+    currentElements,
     elementIndex,
-    function(scenes, sceneIndex, elementIndex) {
-        return scenes[sceneIndex].elements[elementIndex];
+    function(currentElements, elementIndex) {
+        return currentElements[elementIndex];
     }
 )
