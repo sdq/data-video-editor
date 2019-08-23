@@ -32,6 +32,10 @@ export default (state = initialState, action) => {
             newState.isElementSelected = true;
             newState.elementIndex = action.elementIndex;
             return newState
+        case ActionType.REORDER_ELEMENT:
+            newState.isElementSelected = true;
+            newState.elementIndex = action.destinationIndex;
+            return newState
         case ActionType.UNDO_CANVAS:
             //TODO: undo
             return state

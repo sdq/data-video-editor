@@ -4,15 +4,16 @@ import Color from '@/constants/Color';
 import ElementType from '@/constants/ElementType';
 import _ from 'lodash';
 
+const y = 0;
+const height = 24
+
 export default class TrackBar extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            width: 300,
-            height: 24,
+            width: 500,
             x: 0,
-            y: 0,
         };
         this.clickBar = this.clickBar.bind(this);
     }
@@ -47,8 +48,8 @@ export default class TrackBar extends Component {
                 id={"bar-"+this.props.element.id()}
                 ref={c => { this.rnd = c; }}
                 style={{backgroundColor: color}}
-                size={{ width: this.state.width, height: this.state.height }}
-                position={{ x: this.state.x, y: this.state.y }}
+                size={{ width: this.state.width, height: height }}
+                position={{ x: this.state.x, y: y }}
                 bounds='parent'
                 enableResizing={{
                     left: true,
@@ -56,17 +57,12 @@ export default class TrackBar extends Component {
                 }}
                 enableUserSelectHack={false}
                 onDragStop={(e, d) => {
-                    console.log(d);
-                    this.setState({ x: d.x, y: d.y });
+                    this.setState({ x: d.x });
                 }}
                 onResizeStop={(e, direction, ref, delta, position) => {
-                    console.log(delta);
-                    console.log(position);
                     this.setState({
                         x: position.x,
-                        y: 0,
                         width: ref.style.width,
-                        height: ref.style.height,
                     });
                 }}
             />
@@ -75,7 +71,7 @@ export default class TrackBar extends Component {
         }
         return (
             <div style={{padding: 6}}>
-                <div id={"bar-container-"+this.props.element.id()} style={{height: 24, width: 900}}>
+                <div id={"bar-container-"+this.props.element.id()} style={{height: 24, width: 700, backgroundColor:'#fff'}}>
                     {bar}
                 </div>
             </div>

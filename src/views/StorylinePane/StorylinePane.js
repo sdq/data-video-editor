@@ -75,7 +75,7 @@ export default class StorylinePane extends Component {
                 </div>
                 <div id="storyline">
                     <DragDropContext onDragStart={this.onDragStart} onDragEnd={this.onDragEnd}>
-                        <Droppable droppableId="droppable" direction="horizontal">
+                        <Droppable droppableId="storyline" direction="horizontal">
                             {(provided, snapshot) => (
                                 <div
                                 ref={provided.innerRef}

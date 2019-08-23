@@ -26,3 +26,9 @@ export const removeElement = (element, elementIndex) => ({
     element,
     elementIndex,
 })
+
+export const reorderElement = (sourceIndex, destinationIndex) => ({
+    type: ActionType.REORDER_ELEMENT,
+    sourceIndex,
+    destinationIndex,
+})
