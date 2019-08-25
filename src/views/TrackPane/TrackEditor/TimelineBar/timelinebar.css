@@ -1,4 +1,14 @@
 .timeline-bar {
     height: 34px;
+    background-color: #d8d8d8;
+}
+
+.play-controller {
+    background-color: #ffffff;
+    height: 34px;
+    width: 60px;
+}
+
+.timeline-ruler {
     background-color: #ffffff;
 }
