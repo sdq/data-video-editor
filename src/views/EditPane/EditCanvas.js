@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Konva from "konva";
 import { Stage, Layer } from 'react-konva';
 import { HotKeys } from "react-hotkeys";
 import TransformerComponent from '@/components/Elements/TransformerComponent';
@@ -13,6 +14,7 @@ import { Element } from '@/models/Element';
 import AssistLines from './AssistLines';
 import './editpane.css';
 import { None } from 'vega';
+import _ from 'lodash';
 
 const keyMap = {
     COPY: ["command+c", "ctrl+c"],
@@ -34,19 +36,31 @@ class EditCanvas extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            editable: false,
             selectedElementName: "",
             copiedElement: null,
             showAssistLines: false,
         };
+        this.elementNodes = new Array(props.currentElements.length).fill({});
+        this.animations = new Array(props.currentElements.length).fill({});
         this.editStart = this.editStart.bind(this);
         this.editElement = this.editElement.bind(this);
     }
 
     componentWillReceiveProps(props) {
         const name = this.props.sceneIndex+"-"+props.elementIndex;
+        const editable = !this.props.isPerforming;
         this.setState({
-            selectedElementName: name
+            selectedElementName: name,
+            editable: editable,
         });
+
+        // this.animationStart()
+        
+    }
+
+    componentWillUnmount() {
+        this.animationStop()
     }
 
     editStart() {
@@ -67,7 +81,7 @@ class EditCanvas extends Component {
 
     handleStageMouseDown = e => {
         // clicked on stage - clear selection
-        console.log('click----')
+        // console.log('click----')
         if (e.target === e.target.getStage()) {
             this.setState({
                 selectedElementName: ""
@@ -84,8 +98,7 @@ class EditCanvas extends Component {
     
         // find clicked rect by its name
         const name = e.target.name();
-        console.log("==name==")
-        console.log(name);
+        // console.log(name);
         if (name) {
             this.setState({
                 selectedElementName: name
@@ -104,6 +117,35 @@ class EditCanvas extends Component {
             // TODO: right click
         }
     };
+
+    animationStart() {
+        // TODO: animation test
+        var period = 3000;
+        for (let index = 0; index < this.props.currentElements.length; index++) {
+            if (_.isEmpty(this.elementNodes[index])) {
+                continue;
+            }
+            // this.animations[index] = new Konva.Animation(frame => {
+            //     var angleDiff = (frame.timeDiff * angularSpeed) / 1000;
+            //     this.elementNodes[index].rotate(angleDiff);
+            // }, this.animationLayer);
+            console.log(this.elementNodes);
+            this.animations[index] = new Konva.Animation(function(frame) {
+                var scale = Math.abs(Math.sin((frame.time * 2 * Math.PI) / period)) + 0.001;
+                this.elementNodes[index].scale({ x: scale, y: scale });
+            }.bind(this), this.animationLayer);
+            this.animations[index].start();
+        }
+    }
+
+    animationStop() {
+        for (let index = 0; index < this.props.currentElements.length; index++) {
+            if (_.isEmpty(this.animation[index])) {
+                continue;
+            }
+            this.animations[index].stop();
+        }
+    }
 
     handlers = {
         COPY: this.copyElement.bind(this),
@@ -160,7 +202,7 @@ class EditCanvas extends Component {
     }
 
     render() {
-        const editable = !this.props.isPerforming;
+        const { editable } = this.state;
         const { canDrop, isOver, connectDropTarget } = this.props;
         const isActive = canDrop && isOver;
         let backgroundColor = '#fff';
@@ -175,16 +217,43 @@ class EditCanvas extends Component {
                 <HotKeys keyMap={keyMap} handlers={this.handlers}>
                     { this.state.showAssistLines ? <AssistLines /> : null }
                     <Stage width={800} height={450} onMouseDown={editable?this.handleStageMouseDown:None}>
-                        <Layer>
+                        <Layer ref={node => (this.animationLayer = node)}>
                             {this.props.currentScene.elements.map(function(element, index) {
                                 //console.log(element.info);
                                 switch (element.type()) {
                                     case ElementType.TEXT:
-                                        return <TextElement key={this.props.sceneIndex+"-"+index} edit={ele => this.editElement(index, ele)} editStart={this.editStart} element={element} name={this.props.sceneIndex+"-"+index} draggable={editable} {...this.props}/>
+                                        return <TextElement
+                                            key={this.props.sceneIndex+"-"+index} 
+                                            edit={ele => this.editElement(index, ele)} 
+                                            editStart={this.editStart} 
+                                            element={element} 
+                                            name={this.props.sceneIndex+"-"+index} 
+                                            draggable={editable} 
+                                            {...this.props}
+                                         />
                                     case ElementType.IMAGE:
-                                        return <ImageElement key={this.props.sceneIndex+"-"+index} edit={ele => this.editElement(index, ele)} editStart={this.editStart} element={element} name={this.props.sceneIndex+"-"+index} draggable={editable} {...this.props}/>
+                                        return <ImageElement 
+                                            ref={node => (this.elementNodes[index] = node)}
+                                            key={this.props.sceneIndex+"-"+index} 
+                                            edit={ele => this.editElement(index, ele)} 
+                                            editStart={this.editStart} 
+                                            element={element} 
+                                            name={this.props.sceneIndex+"-"+index} 
+                                            draggable={editable} 
+                                            {...this.props}
+                                        />
                                     case ElementType.CHART:
-                                        return <ChartElement key={this.props.sceneIndex+"-"+index} edit={ele => this.editElement(index, ele)} editStart={this.editStart} element={element} name={this.props.sceneIndex+"-"+index} width={200} height={200} draggable={editable} {...this.props}/>
+                                        return <ChartElement 
+                                            key={this.props.sceneIndex+"-"+index} 
+                                            edit={ele => this.editElement(index, ele)} 
+                                            editStart={this.editStart} 
+                                            element={element} 
+                                            name={this.props.sceneIndex+"-"+index} 
+                                            width={200} 
+                                            height={200} 
+                                            draggable={editable} 
+                                            {...this.props}
+                                        />
                                     case ElementType.AUDIO:
                                         return null;
                                     default:

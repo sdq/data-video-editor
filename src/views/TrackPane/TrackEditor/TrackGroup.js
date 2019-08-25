@@ -65,7 +65,7 @@ export default class TrackGroup extends Component {
                             style={getListStyle(snapshot.isDraggingOver)}
                             >
                             {elements.map((element, index) => (
-                                <Track key={element.id()} element={element} isBarActive={barActiveList[index]} setBarActive={this.setBarActive} index={index} isSelected={this.props.isElementSelected && (this.props.elementIndex===index)} index={index} {...this.props}/>
+                                <Track key={element.id()} index={index} element={element} isBarActive={barActiveList[index]} setBarActive={this.setBarActive}  isSelected={this.props.isElementSelected && (this.props.elementIndex===index)} {...this.props}/>
                             ))}
                             {provided.placeholder}
                             </div>

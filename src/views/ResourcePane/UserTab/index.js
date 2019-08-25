@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Upload, Button, Row, Col, Collapse, Modal, List } from 'antd';
+import { Upload, Button, Row, Col, Collapse, List } from 'antd';
 import ImageCard from '@/components/ImageCard';
 import AudioCard from '@/components/AudioCard';
 import './usertab.css';

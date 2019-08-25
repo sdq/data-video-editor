@@ -40,6 +40,7 @@ export default class ImageElement extends Component {
         // this.imageNode.getLayer().batchDraw();
     };
 
+    // Edit
     dragstart() {
         this.props.editStart();
     };
@@ -68,6 +69,19 @@ export default class ImageElement extends Component {
         this.props.edit(newEle);
     }
 
+    // Animation
+    rotate(degree) {
+        this.imageref.offsetX(this.imageref.width() / 2);
+        this.imageref.offsetY(this.imageref.height() / 2);
+        this.imageref.rotate(degree);
+    }
+
+    scale(scaleX, scaleY) {
+        this.imageref.offsetX(this.imageref.width() / 2);
+        this.imageref.offsetY(this.imageref.height() / 2);
+        this.imageref.scale(scaleX, scaleY);
+    }
+
     render() {
         return (
             <Group name={this.props.name} 
@@ -87,6 +101,7 @@ export default class ImageElement extends Component {
                 onTransformEnd={this.onTransformEnd}
             >
                 <Image 
+                    ref={node=>this.imageref=node}
                     name={this.props.name}
                     image={this.state.image} 
                 />

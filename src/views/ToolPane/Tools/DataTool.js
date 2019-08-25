@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Upload, Divider, Button, Icon, Select } from 'antd';
+import { Upload, Button, Icon, Select } from 'antd';
 import DataPreview from '@/components/DataPreview';
 import SimpleDataPreview from '@/components/DataPreview/SimpleDataPreview';
 import * as d3 from 'd3';

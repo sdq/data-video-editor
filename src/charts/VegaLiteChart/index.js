@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Image } from 'react-konva';
 import * as vega from 'vega';
 import * as vegalite from 'vega-lite';
-import _ from 'lodash';
 
 export default class VegaLiteChart extends Component {
 

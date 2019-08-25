@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import EditPane from './EditPane';
 import {currentScene, sceneIndex, scenes} from '@/selectors/timeline';
-import {currentElement, elementIndex, isElementSelected} from '@/selectors/canvas';
+import {currentElement, currentElements, elementIndex, isElementSelected} from '@/selectors/canvas';
 import { dataList } from '@/selectors/vis';
 import {isPerforming} from '@/selectors/player';
 import * as uiActions from '@/actions/uiAction';
@@ -16,6 +16,7 @@ const mapStateToProps = state => {
         currentScene: currentScene(state),
         elementIndex: elementIndex(state),
         currentElement: currentElement(state),
+        currentElements: currentElements(state),
         isElementSelected: isElementSelected(state),
         isPerforming: isPerforming(state),
         // vis

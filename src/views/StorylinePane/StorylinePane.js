@@ -39,7 +39,7 @@ export default class StorylinePane extends Component {
             confirmLoading: true,
         });
         setTimeout(function(){
-            const newScene = new Scene(script, [], 2);
+            const newScene = new Scene(script, [], 700);
             this.props.addScene(newScene);
             this.setState({
                 visible: false,

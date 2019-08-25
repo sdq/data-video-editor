@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Rnd } from "react-rnd";
 import Color from '@/constants/Color';
 import ElementType from '@/constants/ElementType';
-import _ from 'lodash';
 
 const y = 0;
 const height = 24
@@ -12,10 +11,29 @@ export default class TrackBar extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            width: 500,
+            sceneWidth: props.currentScene.duration(),
+            width: props.currentScene.duration(),
             x: 0,
         };
         this.clickBar = this.clickBar.bind(this);
+    }
+
+    componentWillReceiveProps(props) {
+        const sceneDuration = props.currentScene.duration();
+        const sceneWidth = sceneDuration
+        var newWidth = this.state.width;
+        var newX = this.state.x;
+        if (sceneWidth < this.state.x) {
+            newWidth = sceneWidth;
+            newX = 0;
+        } else if (sceneWidth < this.state.x + this.state.width) {
+            newWidth = sceneWidth - newX;
+        }
+        this.setState({
+            sceneWidth: sceneDuration,
+            width: newWidth,
+            x: newX,
+        })
     }
 
     clickBar() {
@@ -46,7 +64,6 @@ export default class TrackBar extends Component {
         if (isBarActive) {
             bar = <Rnd
                 id={"bar-"+this.props.element.id()}
-                ref={c => { this.rnd = c; }}
                 style={{backgroundColor: color}}
                 size={{ width: this.state.width, height: height }}
                 position={{ x: this.state.x, y: y }}
@@ -62,7 +79,7 @@ export default class TrackBar extends Component {
                 onResizeStop={(e, direction, ref, delta, position) => {
                     this.setState({
                         x: position.x,
-                        width: ref.style.width,
+                        width: parseInt(ref.style.width),
                     });
                 }}
             />
@@ -71,7 +88,7 @@ export default class TrackBar extends Component {
         }
         return (
             <div style={{padding: 6}}>
-                <div id={"bar-container-"+this.props.element.id()} style={{height: 24, width: 700, backgroundColor:'#fff'}}>
+                <div id={"bar-container-"+this.props.element.id()} style={{height: 24, width: this.state.sceneWidth, backgroundColor:'#fff'}}>
                     {bar}
                 </div>
             </div>

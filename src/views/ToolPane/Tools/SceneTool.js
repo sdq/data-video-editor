@@ -39,7 +39,7 @@ export default class SceneTool extends Component {
 
     onChange = value => {
         const newScene = Object.assign({},this.props.currentScene);
-        newScene.duration = value;
+        newScene.duration(value);
         this.props.updateScene(this.props.sceneIndex, newScene);
     };
 
@@ -58,7 +58,7 @@ export default class SceneTool extends Component {
                             min={1}
                             max={20}
                             onChange={this.onChange}
-                            value={typeof this.props.currentScene.duration === 'number' ? this.props.currentScene.duration : 0}
+                            value={typeof this.props.currentScene.duration() === 'number' ? this.props.currentScene.duration() : 0}
                         />
                     </Col>
                     <Col span={10}>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Collapse, Input, List } from 'antd';
+import { Collapse, Input } from 'antd';
 
 const { Panel } = Collapse;
 const { Search } = Input;
