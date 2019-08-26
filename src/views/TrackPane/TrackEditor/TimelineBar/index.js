@@ -10,8 +10,8 @@ export default class TimelineBar extends Component {
     render() {
         return (
             <div className="timeline-bar">
-                <Layout style={{ background: '#eeeeee', height: '34px' }}>
-                    <Sider width="200px" style={{ background: '#ffffff', height: '34px' }}>
+                <Layout style={{ background: '#eee', height: '34px' }}>
+                    <Sider width="200px" style={{ background: '#eee', height: '34px' }}>
                         <PlayController {...this.props}/>
                     </Sider>
                     <Content>

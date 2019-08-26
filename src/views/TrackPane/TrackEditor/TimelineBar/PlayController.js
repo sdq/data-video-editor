@@ -22,7 +22,7 @@ export default class PlayController extends Component {
         const {isPerforming} = this.state;
         return (
             <div className="play-controller">
-                <div style={{height: 34, width: 80, float: 'left', backgroundColor: 'black'}} onClick={this.playScene}>
+                <div style={{height: 34, width: 80, float: 'left', backgroundColor: 'black' }} onClick={this.playScene}>
                     <Icon type={isPerforming?'pause':'caret-right'} style={{color: 'white', fontSize: 20, marginTop: 7, marginLeft:32}}/>
                 </div>
             </div>

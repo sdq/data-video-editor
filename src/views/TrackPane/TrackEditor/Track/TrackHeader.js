@@ -8,7 +8,7 @@ const { Search } = Input;
 
 const x = 0
 const y = 0;
-const height = 30
+const height = 36
 
 export default class TrackHeader extends Component {
 
@@ -61,13 +61,13 @@ export default class TrackHeader extends Component {
                     this.changeDuration(parseInt(newWidth))
                 }}
             >
-                <div style={{backgroundColor: 'black', width: 6, height: 30, marginLeft: 0, marginTop: 0, float: 'left'}}/>
-                <div style={{backgroundColor: 'black', width: 6, height: 30, marginRight: 0, marginTop: 0, float: 'right'}}/>
+                <div style={{backgroundColor: 'black', width: 6, height: 36, marginLeft: 0, marginTop: 0, float: 'left'}}/>
+                <div style={{backgroundColor: 'black', width: 6, height: 36, marginRight: 0, marginTop: 0, float: 'right'}}/>
             </Rnd>
         } else {
             bar = <div style={{marginLeft: 0, height: height, width: this.state.width + 12 ,backgroundColor: 'white'}} onClick = {this.clickBar} onMouseOver = {this.clickBar}>
-                <div style={{backgroundColor: 'black', width: 6, height: 30, marginLeft: 0, marginTop: 0, float: 'left'}}/>
-                <div style={{backgroundColor: 'black', width: 6, height: 30, marginRight: 0, marginTop: 0, float: 'right'}}/>
+                <div style={{backgroundColor: 'black', width: 6, height: 36, marginLeft: 0, marginTop: 0, float: 'left'}}/>
+                <div style={{backgroundColor: 'black', width: 6, height: 36, marginRight: 0, marginTop: 0, float: 'right'}}/>
             </div>
         }
         return (
