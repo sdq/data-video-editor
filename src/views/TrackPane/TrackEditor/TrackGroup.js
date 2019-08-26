@@ -17,13 +17,11 @@ export default class TrackGroup extends Component {
         this.onDragStart = this.onDragStart.bind(this);
         this.onDragEnd = this.onDragEnd.bind(this);
         this.setBarActive = this.setBarActive.bind(this);
+        this.setBarUnactive = this.setBarUnactive.bind(this);
     }
 
     onDragStart(result) {
-        let barActiveList = new Array(this.props.currentElements.length).fill(false);
-        this.setState({
-            barActiveList: barActiveList
-        })
+        this.setBarUnactive();
     }
 
     onDragEnd(result) {
@@ -36,15 +34,18 @@ export default class TrackGroup extends Component {
         newScene.elements().splice(destinationIndex, 0, moved);
         this.props.updateScene(this.props.sceneIndex, newScene);
         this.props.reorderElement(sourceIndex, destinationIndex);
-        // const newScene = Object.assign({},this.props.currentScene);
-        // newScene.elements[eleIndex] = element;
-        // this.props.updateScene(this.props.sceneIndex, newScene);
-        // this.props.updateElement(element, eleIndex);
     }
 
     setBarActive(index) {
         let barActiveList = new Array(this.props.currentElements.length).fill(false);
         barActiveList[index] = true;
+        this.setState({
+            barActiveList: barActiveList
+        })
+    }
+
+    setBarUnactive() {
+        let barActiveList = new Array(this.props.currentElements.length).fill(false);
         this.setState({
             barActiveList: barActiveList
         })
@@ -65,7 +66,7 @@ export default class TrackGroup extends Component {
                             style={getListStyle(snapshot.isDraggingOver)}
                             >
                             {elements.map((element, index) => (
-                                <Track key={element.id()} index={index} element={element} isBarActive={barActiveList[index]} setBarActive={this.setBarActive}  isSelected={this.props.isElementSelected && (this.props.elementIndex===index)} {...this.props}/>
+                                <Track key={element.id()} index={index} element={element} isBarActive={barActiveList[index]} setBarActive={this.setBarActive} setBarUnactive={this.setBarUnactive} isSelected={this.props.isElementSelected && (this.props.elementIndex===index)} {...this.props}/>
                             ))}
                             {provided.placeholder}
                             </div>

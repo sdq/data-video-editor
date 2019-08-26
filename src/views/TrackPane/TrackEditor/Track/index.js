@@ -23,6 +23,7 @@ export default class Track extends Component {
         }
         this.clickTrack = this.clickTrack.bind(this);
         this.clickBar = this.clickBar.bind(this);
+        this.leaveBar = this.leaveBar.bind(this);
         this.setShowAnimations = this.setShowAnimations.bind(this);
     }
 
@@ -32,6 +33,10 @@ export default class Track extends Component {
 
     clickBar() {
         this.props.setBarActive(this.props.index);
+    }
+
+    leaveBar() {
+        this.props.setBarUnactive()
     }
 
     setShowAnimations(showAnimations) {
@@ -64,7 +69,7 @@ export default class Track extends Component {
                                         <TrackInfo {...this.props} showAnimations={this.state.showAnimations} setShowAnimations={this.setShowAnimations}/>
                                     </Sider>
                                     <Content>
-                                        <TrackBar clickBar={this.clickBar} {...this.props}/>
+                                        <TrackBar clickBar={this.clickBar} leaveBar={this.leaveBar} {...this.props}/>
                                     </Content>
                                 </Layout>
                             </div>

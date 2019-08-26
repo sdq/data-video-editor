@@ -16,6 +16,7 @@ export default class TrackBar extends Component {
             x: props.element.sstart(),
         };
         this.clickBar = this.clickBar.bind(this);
+        this.leaveBar = this.leaveBar.bind(this);
         this.dragBar = this.dragBar.bind(this);
         this.resizeBar = this.resizeBar.bind(this);
     }
@@ -43,6 +44,10 @@ export default class TrackBar extends Component {
 
     clickBar() {
         this.props.clickBar();
+    }
+
+    leaveBar() {
+        this.props.leaveBar();
     }
 
     dragBar(x) {
@@ -115,7 +120,7 @@ export default class TrackBar extends Component {
                 }}
             />
         } else {
-            bar = <div style={{marginLeft: this.state.x, height: 24, width: this.state.width ,backgroundColor: color}} onClick = {this.clickBar} onMouseOver = {this.clickBar}/>
+            bar = <div style={{marginLeft: this.state.x, height: 24, width: this.state.width ,backgroundColor: color}} onClick = {this.clickBar} onMouseOver = {this.clickBar} onMouseOver = {this.leaveBar}/>
         }
         return (
             <div style={{padding: 6}}>
