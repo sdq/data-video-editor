@@ -33,7 +33,7 @@ export default class TrackGroup extends Component {
         let destinationIndex = result.destination.index;
         const newScene = Object.assign({},this.props.currentScene);
         const [moved] = newScene.elements().splice(sourceIndex, 1);
-        newScene.elements.splice(destinationIndex, 0, moved);
+        newScene.elements().splice(destinationIndex, 0, moved);
         this.props.updateScene(this.props.sceneIndex, newScene);
         this.props.reorderElement(sourceIndex, destinationIndex);
         // const newScene = Object.assign({},this.props.currentScene);
