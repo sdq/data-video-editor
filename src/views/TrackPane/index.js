@@ -25,6 +25,7 @@ const mapDispatchToProps = dispatch => {
     return {
         selectElement: (index) => dispatch(canvasActions.selectElement(index)),
         unselectElement: () => dispatch(canvasActions.unselectElement()),
+        updateElement: (element, elementIndex) => dispatch(canvasActions.updateElement(element, elementIndex)),
         reorderElement: (sourceIndex, destinationIndex) => dispatch(canvasActions.reorderElement(sourceIndex, destinationIndex)),
         selectScene: (index) => dispatch(timelineActions.selectScene(index)),
         addScene: (scene) => dispatch(timelineActions.addScene(scene)),

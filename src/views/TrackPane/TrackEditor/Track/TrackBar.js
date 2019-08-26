@@ -12,22 +12,27 @@ export default class TrackBar extends Component {
         super(props);
         this.state = {
             sceneWidth: props.currentScene.duration(),
-            width: props.currentScene.duration(),
-            x: 0,
+            width: props.element.sduration(),
+            x: props.element.sstart(),
         };
         this.clickBar = this.clickBar.bind(this);
+        this.dragBar = this.dragBar.bind(this);
+        this.resizeBar = this.resizeBar.bind(this);
     }
 
     componentWillReceiveProps(props) {
         const sceneDuration = props.currentScene.duration();
-        const sceneWidth = sceneDuration
+        console.log(sceneDuration);
+        const sceneWidth = sceneDuration;
         var newWidth = this.state.width;
         var newX = this.state.x;
         if (sceneWidth < this.state.x) {
             newWidth = sceneWidth;
             newX = 0;
+            this.updateElement(newX, newWidth, sceneDuration);
         } else if (sceneWidth < this.state.x + this.state.width) {
             newWidth = sceneWidth - newX;
+            this.updateElement(this.state.x, newWidth, sceneDuration);
         }
         this.setState({
             sceneWidth: sceneDuration,
@@ -38,6 +43,30 @@ export default class TrackBar extends Component {
 
     clickBar() {
         this.props.clickBar();
+    }
+
+    dragBar(x) {
+        this.updateElement(x, this.props.element.sduration(), this.props.currentScene.duration());
+        this.setState({ x: x });
+    }
+
+    resizeBar(x, duration) {
+        this.updateElement(x, duration, this.props.currentScene.duration());
+        this.setState({
+            x: x,
+            width: duration,
+        });
+    }
+
+    updateElement(x, duration, sceneDuration) {
+        const newScene = Object.assign({},this.props.currentScene);
+        newScene.duration(sceneDuration);
+        var newEle = Object.assign({},this.props.element);
+        newEle.sstart(x);
+        newEle.sduration(duration);
+        newScene.updateElement(newEle, this.props.index);
+        this.props.updateScene(this.props.sceneIndex, newScene);
+        this.props.updateElement(newEle, this.props.index);
     }
 
     render() {
@@ -74,13 +103,15 @@ export default class TrackBar extends Component {
                 }}
                 enableUserSelectHack={false}
                 onDragStop={(e, d) => {
-                    this.setState({ x: d.x });
+                    //this.setState({ x: d.x });
+                    this.dragBar(d.x);
                 }}
                 onResizeStop={(e, direction, ref, delta, position) => {
-                    this.setState({
-                        x: position.x,
-                        width: parseInt(ref.style.width),
-                    });
+                    // this.setState({
+                    //     x: position.x,
+                    //     width: parseInt(ref.style.width),
+                    // });
+                    this.resizeBar(position.x, parseInt(ref.style.width));
                 }}
             />
         } else {

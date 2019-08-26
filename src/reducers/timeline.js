@@ -42,7 +42,7 @@ const demotext = new TextInfo(
 const element0 = new Element(ElementType.CHART, demochart);
 const element1 = new Element(ElementType.IMAGE, demoimage);
 const element2 = new Element(ElementType.TEXT, demotext);
-const scene1 = new Scene("A man is sitting on the chair and thinking about something.", [element0, element1, element2], 700);
+const scene1 = new Scene("A man is sitting on the chair and thinking about something.", 700);
 scene1.addElement(element0);
 scene1.addElement(element1);
 scene1.addElement(element2);
