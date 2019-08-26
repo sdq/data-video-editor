@@ -5,6 +5,7 @@ import {currentElements, currentElement, elementIndex, isElementSelected} from '
 import * as timelineActions from '@/actions/timelineAction';
 import * as uiActions from '@/actions/uiAction';
 import * as canvasActions from '@/actions/canvasAction';
+import * as sceneActions from '@/actions/sceneAction';
 import { dataList } from '@/selectors/vis';
 
 const mapStateToProps = state => {
@@ -32,6 +33,7 @@ const mapDispatchToProps = dispatch => {
         removeScene: (index) => dispatch(timelineActions.removeScene(index)),
         updateScene: (index, scene) => dispatch(timelineActions.updateScene(index, scene)),
         reorderScene: (scenes) => dispatch(timelineActions.reorderScene(scenes)),
+        setPosition: (position) => dispatch(sceneActions.setPosition(position)),
         displayStoryline: () => dispatch(uiActions.displayStoryline()),
     }
 }

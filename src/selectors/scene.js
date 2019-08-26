@@ -1,0 +1,1 @@
+export const scenePosition = state => state.scene.position;

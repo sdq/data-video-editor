@@ -3,6 +3,7 @@ import EditPane from './EditPane';
 import {currentScene, sceneIndex, scenes} from '@/selectors/timeline';
 import {currentElement, currentElements, elementIndex, isElementSelected} from '@/selectors/canvas';
 import { dataList } from '@/selectors/vis';
+import { scenePosition } from '@/selectors/scene';
 import {isPerforming} from '@/selectors/player';
 import * as uiActions from '@/actions/uiAction';
 import * as timelineActions from '@/actions/timelineAction';
@@ -19,6 +20,7 @@ const mapStateToProps = state => {
         currentElements: currentElements(state),
         isElementSelected: isElementSelected(state),
         isPerforming: isPerforming(state),
+        scenePosition: scenePosition(state),
         // vis
         dataList: dataList(state),
     }

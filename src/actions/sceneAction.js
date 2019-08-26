@@ -5,3 +5,8 @@ export const setDuration = (sceneIndex, duration) => ({
     sceneIndex,
     duration,
 })
+
+export const setPosition = (position) => ({
+    type: ActionType.SET_POSITION,
+    position,
+})

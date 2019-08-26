@@ -10,6 +10,7 @@ export default class TimelineRuler extends Component {
 
     constructor(props) {
         super(props);
+        this.props.setPosition(0);
         this.state = {
             isNeedleActive: false,
             sceneWidth: props.currentScene.duration(),
@@ -52,6 +53,7 @@ export default class TimelineRuler extends Component {
     }
 
     changeNeedlePlace(x) {
+        this.props.setPosition(x);
         this.setState({
             x: x
         })

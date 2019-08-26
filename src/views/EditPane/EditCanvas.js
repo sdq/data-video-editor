@@ -201,6 +201,14 @@ class EditCanvas extends Component {
         this.props.updateScene(this.props.sceneIndex, newScene);
     }
 
+    isElementDisplay(element) {
+        if (this.props.scenePosition >= element.sstart() && this.props.scenePosition <= element.sstart()+element.sduration()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     render() {
         const { editable } = this.state;
         const { canDrop, isOver, connectDropTarget } = this.props;
@@ -222,38 +230,53 @@ class EditCanvas extends Component {
                                 //console.log(element.info);
                                 switch (element.type()) {
                                     case ElementType.TEXT:
-                                        return <TextElement
-                                            key={this.props.sceneIndex+"-"+index} 
-                                            edit={ele => this.editElement(index, ele)} 
-                                            editStart={this.editStart} 
-                                            element={element} 
-                                            name={this.props.sceneIndex+"-"+index} 
-                                            draggable={editable} 
-                                            {...this.props}
-                                         />
+                                        if (this.isElementDisplay(element)) {
+                                            return <TextElement
+                                                key={this.props.sceneIndex+"-"+index} 
+                                                edit={ele => this.editElement(index, ele)} 
+                                                editStart={this.editStart} 
+                                                element={element} 
+                                                name={this.props.sceneIndex+"-"+index} 
+                                                draggable={editable} 
+                                                {...this.props}
+                                            />
+                                        } else {
+                                            return null;
+                                        }
+                                        
                                     case ElementType.IMAGE:
-                                        return <ImageElement 
-                                            ref={node => (this.elementNodes[index] = node)}
-                                            key={this.props.sceneIndex+"-"+index} 
-                                            edit={ele => this.editElement(index, ele)} 
-                                            editStart={this.editStart} 
-                                            element={element} 
-                                            name={this.props.sceneIndex+"-"+index} 
-                                            draggable={editable} 
-                                            {...this.props}
-                                        />
+                                        if (this.isElementDisplay(element)) {
+                                            return <ImageElement 
+                                                ref={node => (this.elementNodes[index] = node)}
+                                                key={this.props.sceneIndex+"-"+index} 
+                                                edit={ele => this.editElement(index, ele)} 
+                                                editStart={this.editStart} 
+                                                element={element} 
+                                                name={this.props.sceneIndex+"-"+index} 
+                                                draggable={editable} 
+                                                {...this.props}
+                                            />
+                                        } else {
+                                            return null;
+                                        }
+                                        
                                     case ElementType.CHART:
-                                        return <ChartElement 
-                                            key={this.props.sceneIndex+"-"+index} 
-                                            edit={ele => this.editElement(index, ele)} 
-                                            editStart={this.editStart} 
-                                            element={element} 
-                                            name={this.props.sceneIndex+"-"+index} 
-                                            width={200} 
-                                            height={200} 
-                                            draggable={editable} 
-                                            {...this.props}
-                                        />
+                                        if (this.isElementDisplay(element)) {
+                                            return <ChartElement 
+                                                key={this.props.sceneIndex+"-"+index} 
+                                                edit={ele => this.editElement(index, ele)} 
+                                                editStart={this.editStart} 
+                                                element={element} 
+                                                name={this.props.sceneIndex+"-"+index} 
+                                                width={200} 
+                                                height={200} 
+                                                draggable={editable} 
+                                                {...this.props}
+                                            />
+                                        } else {
+                                            return null;
+                                        }
+                                        
                                     case ElementType.AUDIO:
                                         return null;
                                     default:

@@ -25,6 +25,7 @@ export default {
     REORDER_ELEMENT: 'REORDER_ELEMENT',
     // Scene Action
     SET_DURATION: 'SET_DURATION',
+    SET_POSITION: 'SET_POSITION',
     // Meta Action
     UNDO_CANVAS: 'UNDO_CANVAS',
     REDO_CANVAS: 'REDO_CANVAS',
