@@ -36,9 +36,9 @@ export const getCurrentVis = createSelector(
             return {}
         }
         console.log(elementIndex);
-        const currentElement = scenes[sceneIndex].elements[elementIndex];
+        const currentElement = scenes[sceneIndex].elements()[elementIndex];
         if (currentElement.type()===ElementType.CHART) {
-            return scenes[sceneIndex].elements[elementIndex].info();
+            return scenes[sceneIndex].elements()[elementIndex].info();
         } else {
             return {}
         }

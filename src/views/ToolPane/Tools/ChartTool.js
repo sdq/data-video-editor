@@ -50,7 +50,7 @@ export default class ChartTool extends Component {
         newEle.info().spec = this.props.displaySpec;
         console.log("new element");
         console.log(newEle);
-        newScene.elements[this.props.elementIndex] = newEle;
+        newScene.updateElement(newEle, this.props.elementIndex);
         this.props.updateScene(this.props.sceneIndex, newScene);
         this.props.updateElement(newEle, this.props.elementIndex);
         // Disable editor

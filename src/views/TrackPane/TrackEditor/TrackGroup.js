@@ -32,7 +32,7 @@ export default class TrackGroup extends Component {
         let sourceIndex = result.source.index;
         let destinationIndex = result.destination.index;
         const newScene = Object.assign({},this.props.currentScene);
-        const [moved] = newScene.elements.splice(sourceIndex, 1);
+        const [moved] = newScene.elements().splice(sourceIndex, 1);
         newScene.elements.splice(destinationIndex, 0, moved);
         this.props.updateScene(this.props.sceneIndex, newScene);
         this.props.reorderElement(sourceIndex, destinationIndex);
@@ -53,7 +53,7 @@ export default class TrackGroup extends Component {
     render() {
         let { currentScene } = this.props;
         let { barActiveList } = this.state;
-        let elements = currentScene.elements;
+        let elements = currentScene.elements();
         return (
             <div className="track-group">
                 <DragDropContext onDragEnd={this.onDragEnd} onDragStart={this.onDragStart}>

@@ -38,8 +38,17 @@ export default class TimelineRuler extends Component {
         })
     }
 
-    clickRuler() {
-
+    clickRuler(e) {
+        const clickPosition = e.nativeEvent.offsetX;
+        var newX = clickPosition - offset;
+        if (newX < 0) {
+            newX = 0
+        } else if ( newX > this.state.sceneWidth) {
+            newX = this.state.sceneWidth;
+        }
+        this.setState({
+            x: newX
+        })
     }
 
     changeNeedlePlace(x) {
@@ -60,7 +69,7 @@ export default class TimelineRuler extends Component {
                 enableResizing={{}}
                 enableUserSelectHack={false}
                 onDragStop={(e, d) => {
-                    this.setState({ x: d.x });
+                    this.changeNeedlePlace(d.x);
                 }}
             >
                 <div style={{width: 12, height: 18}}/>
@@ -79,7 +88,11 @@ export default class TimelineRuler extends Component {
 
         return (
             <div className='timeline-ruler'>
-                <div id={"timeline-ruler"} style={{height: height, width: offset + this.state.sceneWidth + offset, backgroundColor:'#fff'}}>
+                <div 
+                    id={"timeline-ruler"} 
+                    style={{height: height, width: offset + this.state.sceneWidth + offset, backgroundColor:'#fff'}} 
+                    // onClick={e=>this.clickRuler(e)}
+                >
                     {needle}
                 </div>
             </div>

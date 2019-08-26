@@ -36,7 +36,7 @@ export default class SceneBlock extends Component {
                 <div className="canvasPreview">
                     <Stage width={192} height={108} scale={{x: 192/800, y:192/800}}>
                         <Layer>
-                            {this.props.scene.elements.map(function(element, index) {
+                            {this.props.scene.elements().map(function(element, index) {
                                 //console.log(element.info());
                                 switch (element.type()) {
                                     case ElementType.TEXT:
@@ -50,7 +50,7 @@ export default class SceneBlock extends Component {
                                     default:
                                         //TODO: remove
                                         console.log("wrong!!!!!!!");
-                                        console.log(this.props.currentScene.elements);
+                                        console.log(this.props.currentScene.elements());
                                         console.log(element);
                                         return;
                                 }

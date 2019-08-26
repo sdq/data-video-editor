@@ -23,7 +23,7 @@ const imageSource = {
                 const newScene = Object.assign({},dropResult.currentScene);
                 const newImage = new ImageInfo(item.name,item.src, 240, 100, 100, 100, 0);
                 const newElement = new Element(ElementType.IMAGE, newImage);
-                newScene.elements.push(newElement);
+                newScene.addElement(newElement);
                 props.addElement(newElement);
                 props.updateScene(dropResult.sceneIndex, newScene);
                 props.displayTrackEditor();

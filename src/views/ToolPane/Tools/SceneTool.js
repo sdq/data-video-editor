@@ -33,7 +33,7 @@ export default class SceneTool extends Component {
         const newScene = Object.assign({},this.props.currentScene);
         const newText = new TextInfo(this.state.value, 200, 360);
         const newElement = new Element(ElementType.TEXT, newText);
-        newScene.elements.push(newElement);
+        newScene.addElement(newElement);
         this.props.updateScene(this.props.sceneIndex, newScene);
     }
 

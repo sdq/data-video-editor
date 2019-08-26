@@ -1,13 +1,13 @@
 import uuidv4 from 'uuid/v4';
 
 export default class Scene {
-    constructor(script, elements, duration) {
+    constructor(script, duration) {
         this._id = uuidv4();
         this._script = script;
         this._duration = duration;
         this._tracks = [];
         // this.dataurl = dataurl;
-        this.elements = elements; //TODO: move to track
+        this._elements = []; //TODO: move to track
         this.id = function() {
             return this._id;
         }
@@ -67,10 +67,23 @@ export default class Scene {
                 return this;
             }
         };
+        this.elements = function() {
+            return this._elements;
+        }
         this.add = function(track) {
             this._tracks.push(track);
             return this;
-        }
+        };
+        this.addElement = function(element) {
+            element.sstart(0);
+            element.sduration(this.duration());
+            this._elements.push(element);
+            return this;
+        };
+        this.updateElement = function(element, index) {
+            this._elements[index] = element;
+            return this;
+        };
         this.remove = function(index) {
             this._tracks.splice(index, 1);
             return this;

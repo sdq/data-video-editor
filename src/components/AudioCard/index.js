@@ -23,7 +23,7 @@ const audioSource = {
                 const newScene = Object.assign({},dropResult.currentScene);
                 const newAudio = new AudioInfo(item.name,item.src);
                 const newElement = new Element(ElementType.AUDIO, newAudio);
-                newScene.elements.push(newElement);
+                newScene.addElement(newElement);
                 props.addElement(newElement);
                 props.updateScene(dropResult.sceneIndex, newScene);
                 props.displayTrackEditor();

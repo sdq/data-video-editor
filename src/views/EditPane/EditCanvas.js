@@ -74,7 +74,7 @@ class EditCanvas extends Component {
             showAssistLines: false
         })
         const newScene = Object.assign({},this.props.currentScene);
-        newScene.elements[eleIndex] = element;
+        newScene.updateElement(element, eleIndex);
         this.props.updateScene(this.props.sceneIndex, newScene);
         this.props.updateElement(element, eleIndex);
     }
@@ -161,7 +161,7 @@ class EditCanvas extends Component {
         }
         const copyIndex = this.state.selectedElementName.split('-')[1];
         this.setState({
-            copiedElement: this.props.currentScene.elements[copyIndex]
+            copiedElement: this.props.currentScene.elements()[copyIndex]
         });
     }
 
@@ -172,10 +172,10 @@ class EditCanvas extends Component {
         }
         const cutIndex = this.state.selectedElementName.split('-')[1];
         this.setState({
-            copiedElement: this.props.currentScene.elements[cutIndex]
+            copiedElement: this.props.currentScene.elements()[cutIndex]
         });
         const newScene = Object.assign({},this.props.currentScene);
-        newScene.elements.splice(cutIndex, 1);
+        newScene.elements().splice(cutIndex, 1);
         this.props.updateScene(this.props.sceneIndex, newScene);
     }
 
@@ -186,7 +186,7 @@ class EditCanvas extends Component {
         const newInfo = Object.assign({},this.state.copiedElement.info());
         const type = this.state.copiedElement.type();
         const newElement = new Element(type, newInfo);
-        newScene.elements.push(newElement);
+        newScene.addElement(newElement);
         this.props.updateScene(this.props.sceneIndex, newScene);
     }
 
@@ -197,7 +197,7 @@ class EditCanvas extends Component {
         }
         const deleteIndex = this.state.selectedElementName.split('-')[1];
         const newScene = Object.assign({},this.props.currentScene);
-        newScene.elements.splice(deleteIndex, 1);
+        newScene.elements().splice(deleteIndex, 1);
         this.props.updateScene(this.props.sceneIndex, newScene);
     }
 
@@ -218,7 +218,7 @@ class EditCanvas extends Component {
                     { this.state.showAssistLines ? <AssistLines /> : null }
                     <Stage width={800} height={450} onMouseDown={editable?this.handleStageMouseDown:None}>
                         <Layer ref={node => (this.animationLayer = node)}>
-                            {this.props.currentScene.elements.map(function(element, index) {
+                            {this.props.currentScene.elements().map(function(element, index) {
                                 //console.log(element.info);
                                 switch (element.type()) {
                                     case ElementType.TEXT:
