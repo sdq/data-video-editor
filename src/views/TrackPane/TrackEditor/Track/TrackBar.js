@@ -120,7 +120,7 @@ export default class TrackBar extends Component {
                 }}
             />
         } else {
-            bar = <div style={{marginLeft: this.state.x, height: 24, width: this.state.width ,backgroundColor: color}} onClick = {this.clickBar} onMouseOver = {this.clickBar} onMouseOver = {this.leaveBar}/>
+            bar = <div style={{marginLeft: this.state.x, height: 24, width: this.state.width ,backgroundColor: color}} onClick = {this.clickBar} onMouseOver = {this.clickBar} onMouseOut = {this.leaveBar}/>
         }
         return (
             <div style={{padding: 6}}>

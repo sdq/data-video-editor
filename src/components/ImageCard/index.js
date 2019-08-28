@@ -26,7 +26,7 @@ const imageSource = {
                 newScene.addElement(newElement);
                 props.addElement(newElement);
                 props.updateScene(dropResult.sceneIndex, newScene);
-                props.displayTrackEditor();
+                // props.displayTrackEditor();
             } 
             // else if (dropResult.target === "track") {
             //     //add new scene
