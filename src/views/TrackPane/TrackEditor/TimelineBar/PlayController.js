@@ -8,29 +8,45 @@ export default class PlayController extends Component {
         super(props);
         this.state = {
             isPerforming: false
-        }
+        };
+        this.timeouts = [];
         this.playScene = this.playScene.bind(this);
         this.lastScene = this.lastScene.bind(this);
         this.nextScene = this.nextScene.bind(this);
     }
 
     playScene() {
+        if (this.state.isPerforming === false) {
+            // play
+            this.setState({
+                isPerforming: true
+            })
+            const current = this.props.scenePosition;
+            const end = this.props.currentScene.duration();
+            const n = (end - current) + 1;
+            for (let index = 0; index < n; index++) {
+                this.timeouts.push(setTimeout(function () {
+                    this.props.setPosition(current+index);
+                    if (index===(n-1)) {
+                        this.setState({
+                            isPerforming: false
+                        });
+                        this.props.setPosition(0);
+                    }
+                }.bind(this), index*60));
+            }
+        } else {
+            // pause
+            this.pauseScene();
+        }
+    }
+
+    pauseScene() {
         this.setState({
-            isPerforming: true
-        })
-        const current = this.props.scenePosition;
-        const end = this.props.currentScene.duration();
-        const n = (end - current) + 1;
-        for (let index = 0; index < n; index++) {
-            setTimeout(function () {
-                this.props.setPosition(current+index);
-                if (index===(n-1)) {
-                    this.setState({
-                        isPerforming: false
-                    });
-                    this.props.setPosition(0);
-                }
-            }.bind(this), index*60);
+            isPerforming: false
+        });
+        for (var i = 0; i < this.timeouts.length; i++) {
+            clearTimeout(this.timeouts[i]);
         }
     }
 
@@ -38,6 +54,7 @@ export default class PlayController extends Component {
         if (this.props.sceneIndex === this.props.scenes.length-1) {
             return
         }
+        this.pauseScene();
         this.props.selectScene(this.props.sceneIndex+1);
         this.props.setPosition(0);
     }
@@ -46,6 +63,7 @@ export default class PlayController extends Component {
         if (this.props.sceneIndex === 0) {
             return
         }
+        this.pauseScene();
         this.props.selectScene(this.props.sceneIndex-1);
         this.props.setPosition(0);
     }
