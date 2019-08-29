@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import TrackPane from './TrackPane';
 import {scenes, sceneIndex, currentScene} from '@/selectors/timeline';
 import {currentElements, currentElement, elementIndex, isElementSelected} from '@/selectors/canvas';
+import { scenePosition } from '@/selectors/scene';
 import * as timelineActions from '@/actions/timelineAction';
 import * as uiActions from '@/actions/uiAction';
 import * as canvasActions from '@/actions/canvasAction';
@@ -17,6 +18,7 @@ const mapStateToProps = state => {
         currentElement: currentElement(state),
         elementIndex: elementIndex(state),
         isElementSelected: isElementSelected(state),
+        scenePosition: scenePosition(state),
         // vis
         dataList: dataList(state),
     }

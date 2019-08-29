@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Rnd } from "react-rnd";
+import Needle from './Needle';
 import './timelinebar.css';
 
 const height = 34;
@@ -14,7 +15,6 @@ export default class TimelineRuler extends Component {
         this.state = {
             isNeedleActive: false,
             sceneWidth: props.currentScene.duration(),
-            x: 0,
         };
         this.clickNeedle = this.clickNeedle.bind(this);
         this.clickRuler = this.clickRuler.bind(this);
@@ -23,13 +23,11 @@ export default class TimelineRuler extends Component {
     componentWillReceiveProps(props) {
         const sceneDuration = props.currentScene.duration();
         const sceneWidth = sceneDuration
-        var newX = this.state.x;
-        if (sceneWidth < this.state.x) {
-            newX = 0;
+        if (sceneWidth < props.scenePosition) {
+            props.setPosition(0);
         }
         this.setState({
             sceneWidth: sceneDuration,
-            x: newX,
         })
     }
 
@@ -47,44 +45,48 @@ export default class TimelineRuler extends Component {
         } else if ( newX > this.state.sceneWidth) {
             newX = this.state.sceneWidth;
         }
-        this.setState({
-            x: newX
-        })
+        this.props.setPosition(newX);
     }
 
     changeNeedlePlace(x) {
         this.props.setPosition(x);
-        this.setState({
-            x: x
-        })
+    }
+
+    ruler() {
+        const n = this.state.sceneWidth / 20 - 1;
+        let rulings = [<div key={-1} style={{height: 2, width: 2, float: 'left', backgroundColor: 'black'}}/>];
+        for (let index = 0; index < n; index++) {
+            rulings.push(
+                <div key={index} style={{height: 2, width: 20, float: 'left', backgroundColor: 'white'}}>
+                    <div style={{height: 2, width: 18, float: 'left', opacity: 0}}/>
+                    <div style={{height: 2, width: 2, float: 'left', backgroundColor: 'black'}}/>
+                </div>
+            )   
+        }
+        return rulings;
     }
 
     render() {
-
+        const {scenePosition} = this.props;
         var needle;
         if (this.state.isNeedleActive) {
             needle = <Rnd
                 style={{zIndex: 2}}
                 size={{ width: width, height: height }}
-                position={{ x: this.state.x, y: 0 }}
+                position={{ x: scenePosition, y: 0 }}
                 bounds='parent'
                 enableResizing={{}}
                 enableUserSelectHack={false}
                 onDragStop={(e, d) => {
+                    console.log('drag end');
                     this.changeNeedlePlace(d.x);
                 }}
             >
-                <div style={{width: 12, height: 18}}/>
-                <div style={{width: 12, height: 10,backgroundColor: 'black'}}/>
-                <div id='triangle-down'/>
-                <div style={{width: 2, height: 214,backgroundColor: 'black', marginLeft: 5}}/>
+                <Needle/>
             </Rnd>
         } else {
-            needle = <div style={{marginLeft: this.state.x, height: height, width: width}} onClick = {this.clickNeedle} onMouseOver = {this.clickNeedle}>
-                <div style={{width: 12, height: 18}}/>
-                <div style={{width: 12, height: 10,backgroundColor: 'black'}}/>
-                <div id='triangle-down'/>
-                <div style={{width: 2, height: 216,backgroundColor: 'black', marginLeft: 5, zIndex: 2}}/>
+            needle = <div style={{marginLeft: scenePosition, height: height, width: width, position:'absolute', zIndex: 2}} onClick = {this.clickNeedle} onMouseOver = {this.clickNeedle}>
+                <Needle/>
             </div>
         }
 
@@ -93,8 +95,16 @@ export default class TimelineRuler extends Component {
                 <div 
                     id={"timeline-ruler"} 
                     style={{height: height, width: offset + this.state.sceneWidth + offset, backgroundColor:'#fff'}} 
-                    // onClick={e=>this.clickRuler(e)}
+                    
                 >
+                    <div style={{marginLeft: offset-1, marginTop: 16, backgroundColor: 'black', position:'absolute', zIndex: 0}}>
+                        {this.ruler()}
+                    </div>
+                    <div
+                        id={'timeline-ruler-clickable-area'} 
+                        style={{height: height, width: offset + this.state.sceneWidth + offset, position:'absolute', zIndex: 1, opacity: 0}}
+                        onClick={e=>this.clickRuler(e)}
+                    />
                     {needle}
                 </div>
             </div>
