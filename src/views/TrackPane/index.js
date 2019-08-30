@@ -3,10 +3,12 @@ import TrackPane from './TrackPane';
 import {scenes, sceneIndex, currentScene} from '@/selectors/timeline';
 import {currentElements, currentElement, elementIndex, isElementSelected} from '@/selectors/canvas';
 import { scenePosition } from '@/selectors/scene';
+import {isPerforming} from '@/selectors/player';
 import * as timelineActions from '@/actions/timelineAction';
 import * as uiActions from '@/actions/uiAction';
 import * as canvasActions from '@/actions/canvasAction';
 import * as sceneActions from '@/actions/sceneAction';
+import * as playerActions from '@/actions/playerAction';
 import { dataList } from '@/selectors/vis';
 
 const mapStateToProps = state => {
@@ -19,6 +21,7 @@ const mapStateToProps = state => {
         elementIndex: elementIndex(state),
         isElementSelected: isElementSelected(state),
         scenePosition: scenePosition(state),
+        isPerforming: isPerforming(state),
         // vis
         dataList: dataList(state),
     }
@@ -37,6 +40,8 @@ const mapDispatchToProps = dispatch => {
         reorderScene: (scenes) => dispatch(timelineActions.reorderScene(scenes)),
         setPosition: (position) => dispatch(sceneActions.setPosition(position)),
         displayStoryline: () => dispatch(uiActions.displayStoryline()),
+        playScene: (sceneIndex) => dispatch(playerActions.playScene(sceneIndex)),
+        stopScene: (sceneIndex) => dispatch(playerActions.stopScene(sceneIndex)),
     }
 }
 

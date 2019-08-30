@@ -52,9 +52,9 @@ export default class TextTool extends Component {
                             </div> : null }
                     </Col>
                     <Col span={120}  style={{margin: '0px 0px 0px 30px'}} >
-                        <Button shape="circle" size="small" icon="plus" style={{margin: '0px 0px 0px 15px'}} theme="twoTone" twoToneColor="#f4c444" />
+                        <Button shape="circle" size="small" icon="plus" style={{margin: '0px 0px 0px 15px'}}/>
                         <Input size="small" style={{margin: '0px 10px 0px 10px', width: 70, textAlign: 'center' }} placeholder="16" />
-                        <Button shape="circle" size="small" icon="minus" style={{margin: '0px 0px 0px 0px'}} theme="twoTone" twoToneColor="#f4c444"  />
+                        <Button shape="circle" size="small" icon="minus" style={{margin: '0px 0px 0px 0px'}}/>
                     </Col>
                   
 

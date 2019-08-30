@@ -13,6 +13,12 @@ export default (state = initialState, action) => {
         case ActionType.STOP_VIDEO:
             newState.isPerforming = false
             return newState
+        case ActionType.PLAY_SCENE:
+            newState.isPerforming = true
+            return newState
+        case ActionType.STOP_SCENE:
+            newState.isPerforming = false
+            return newState
         default:
             return state
     }

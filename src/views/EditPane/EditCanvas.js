@@ -36,7 +36,6 @@ class EditCanvas extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            editable: false,
             selectedElementName: "",
             copiedElement: null,
             showAssistLines: false,
@@ -49,10 +48,8 @@ class EditCanvas extends Component {
 
     componentWillReceiveProps(props) {
         const name = this.props.sceneIndex+"-"+props.elementIndex;
-        const editable = !this.props.isPerforming;
         this.setState({
             selectedElementName: name,
-            editable: editable,
         });
 
         // this.animationStart()
@@ -210,8 +207,8 @@ class EditCanvas extends Component {
     }
 
     render() {
-        const { editable } = this.state;
-        const { canDrop, isOver, connectDropTarget } = this.props;
+        const { canDrop, isOver, connectDropTarget, isPerforming } = this.props;
+        const editable = !isPerforming;
         const isActive = canDrop && isOver;
         let backgroundColor = '#fff';
         if (isActive) {

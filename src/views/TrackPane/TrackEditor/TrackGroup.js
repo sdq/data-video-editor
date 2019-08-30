@@ -11,9 +11,6 @@ export default class TrackGroup extends Component {
     
     constructor(props) {
         super(props);
-        this.state = {
-            barActiveList: new Array(props.currentElements.length).fill(false)
-        }
         this.onDragStart = this.onDragStart.bind(this);
         this.onDragEnd = this.onDragEnd.bind(this);
         this.setBarActive = this.setBarActive.bind(this);
@@ -25,8 +22,6 @@ export default class TrackGroup extends Component {
     }
 
     onDragEnd(result) {
-        console.log("end drag")
-        console.log(result)
         let sourceIndex = result.source.index;
         let destinationIndex = result.destination.index;
         const newScene = Object.assign({},this.props.currentScene);
@@ -37,23 +32,15 @@ export default class TrackGroup extends Component {
     }
 
     setBarActive(index) {
-        let barActiveList = new Array(this.props.currentElements.length).fill(false);
-        barActiveList[index] = true;
-        this.setState({
-            barActiveList: barActiveList
-        })
+        this.props.setBarActive(index);
     }
 
     setBarUnactive() {
-        let barActiveList = new Array(this.props.currentElements.length).fill(false);
-        this.setState({
-            barActiveList: barActiveList
-        })
+        this.props.setBarUnactive();
     }
 
     render() {
-        let { currentScene } = this.props;
-        let { barActiveList } = this.state;
+        let { currentScene, barActiveList } = this.props;
         let elements = currentScene.elements();
         return (
             <div className="track-group">
