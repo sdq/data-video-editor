@@ -1,8 +1,17 @@
 import React, { Component } from 'react'
-import { InputNumber, Row, Col, Divider, Button, Select } from 'antd';
-import { SketchPicker } from 'react-color';
+import { InputNumber, Row, Col, Divider, Slider } from 'antd';
 
-const { Option } = Select;
+function onSliderChange(value) {
+    console.log('onChange: ', value);
+}
+  
+function onAfterSliderChange(value) {
+    console.log('onAfterChange: ', value);
+}
+
+function formatter(value) {
+    return `${value}%`;
+}
 
 export default class ImageTool extends Component {
 
@@ -19,57 +28,38 @@ export default class ImageTool extends Component {
     };
 
     render() {
-        const popover = {
-            position: 'absolute',
-            zIndex: '2',
-        }
-        const cover = {
-            position: 'fixed',
-            top: '0px',
-            right: '0px',
-            bottom: '0px',
-            left: '0px',
-        }
+  
         return (
             <div style={{padding: '10px 10px 10px 10px', fontSize: '14px'}}>
-                <Divider>Position</Divider>
-                <Row style={{margin: '10px 0px 0px 0px', fontSize: '14px'}}>
-                    <Col span={4} style={{textAlign:'center', padding: '5px 5px 0 5px'}}>X</Col>
-                    <Col span={8}><InputNumber min={0} max={600} defaultValue={10} /></Col>
-                    <Col span={4} style={{textAlign:'center', padding: '5px 5px 0 5px'}}>Y</Col>
-                    <Col span={8}><InputNumber min={0} max={600} defaultValue={10} /></Col>
-                </Row>
-                <Row style={{margin: '10px 0px 0px 0px', fontSize: '14px'}}>
-                    <Col span={4} style={{textAlign:'center', padding: '5px 5px 0 5px'}}>W</Col>
-                    <Col span={8}><InputNumber min={0} max={600} defaultValue={100} /></Col>
-                    <Col span={4} style={{textAlign:'center', padding: '5px 5px 0 5px'}}>H</Col>
-                    <Col span={8}><InputNumber min={0} max={600} defaultValue={100} /></Col>
-                </Row>
-                <Row style={{margin: '10px 0px 0px 0px', fontSize: '14px'}}>
-                    <Col span={4} style={{textAlign:'center', padding: '5px 5px 0 5px'}}>R</Col>
-                    <Col span={8}><InputNumber min={-180} max={180} defaultValue={0} /></Col>
-                </Row>
                 <Divider>Style</Divider>
-                <Row style={{margin: '10px 0px 0px 0px', fontSize: '14px'}}>
-                    <Col span={4} style={{textAlign:'center', padding: '5px 5px 0 5px'}}>color</Col>
-                    <Col span={8}>
-                        <Button onClick={ this.handleClick }>Pick Color</Button>
-                            { this.state.displayColorPicker ? <div style={ popover }>
-                            <div style={ cover } onClick={ this.handleClose }/>
-                            <SketchPicker />
-                            </div> : null }
-                    </Col>
+                <Row style={{margin: '0px 10px 0px 15px', fontSize: '14px'}}>
+                <Col span={8} style={{ padding: '10px 0px 0 0px'}}>Transparency</Col>
+                <Col span={16} style={{textAlign:'center', padding: '2px 0px 0 10px'}}>
+                   <Slider 
+                   max={99}
+                   min={0}
+                   defaultValue={0} 
+                   tipFormatter={formatter} 
+                   onChange={onSliderChange} 
+                   onAfterChange={onAfterSliderChange} /> 
+                </Col>      
                 </Row>
-                <Row style={{margin: '10px 0px 0px 0px', fontSize: '14px'}}>
-                    <Col span={4} style={{textAlign:'center', padding: '5px 5px 0 5px'}}>font</Col>
-                    <Col span={11}>
-                        <Select defaultValue="Helvetica" style={{ width: 120 }}>
-                            <Option value="Helvetica">Helvetica</Option>
-                            <Option value="Pingfang">Pingfang SC</Option>
-                        </Select>
-                    </Col>
-                    <Col span={8}><InputNumber min={0} max={50} defaultValue={16} /></Col>
+
+                <Divider>Position</Divider>
+                <Row style={{margin: '15px 15px 0px 15px', fontSize: '14px'}}>
+                    <Col span={2}  style={{textAlign:'center', padding: '0px 0px 0px 0px'}}>X</Col>
+                    <Col span={10}><InputNumber min={0} max={600} defaultValue={10} size="small" style={{width: '100%',padding: '0px 0px 0px 0px'}} /></Col>
+                    <Col span={2} style={{textAlign:'center', padding: '0px 0px 0px 0px'}}>Y</Col>
+                    <Col span={10}><InputNumber min={0} max={600} defaultValue={10} size="small"  style={{width: '100%',padding: '0px 0px 0px 0px'}}/></Col>
+                   
                 </Row>
+                <Row style={{margin: '15px 15px 0px 15px', fontSize: '14px'}}>
+                    <Col span={2} style={{textAlign:'center', padding: '0px 0px 0px 0px'}}>W</Col>
+                    <Col span={10}><InputNumber min={0} max={600} defaultValue={100} size="small" style={{width: '100%',padding: '0px 0px 0px 0px'}}/></Col>
+                    <Col span={2} style={{textAlign:'center', padding: '0px 0px 0px 0px'}}>H</Col>
+                    <Col span={10}><InputNumber min={0} max={600} defaultValue={100} size="small" style={{width: '100%',padding: '0px 0px 0px 0px'}}/></Col>
+                </Row>
+                
             </div>
         )
     }

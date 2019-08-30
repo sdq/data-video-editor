@@ -45,8 +45,8 @@ export default class PlayControlBar extends Component {
         for (var i = 0; i < this.videoTimeouts.length; i++) {
             clearTimeout(this.videoTimeouts[i]);
         }
-        for (var i = 0; i < this.sceneTimeouts.length; i++) {
-            clearTimeout(this.sceneTimeouts[i]);
+        for (var j = 0; j < this.sceneTimeouts.length; j++) {
+            clearTimeout(this.sceneTimeouts[j]);
         }
         this.props.stopVideo();
     }
