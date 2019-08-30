@@ -8,7 +8,12 @@ export default class TrackInfo extends Component {
 
     constructor(props) {
         super(props);
+        this.onOver = this.onOver.bind(this);
         this.setShowAnimations = this.setShowAnimations.bind(this);
+    }
+
+    onOver() {
+        this.props.onOver();
     }
 
     setShowAnimations() {
@@ -41,7 +46,7 @@ export default class TrackInfo extends Component {
                 break;
         }
         return (
-            <div className="trackinfo" style={{backgroundColor: this.props.isSelected?Color.CLEAR_BLUE:'#ffffff'}}>
+            <div className="trackinfo" style={{backgroundColor: this.props.isSelected?Color.CLEAR_BLUE:'#ffffff'}} onMouseOver={this.onOver}>
                 <div style={{float: 'left'}} onClick={this.setShowAnimations}>
                     {icon}
                 </div>

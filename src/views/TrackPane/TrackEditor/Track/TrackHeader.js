@@ -39,6 +39,7 @@ export default class TrackHeader extends Component {
     }
 
     render() {
+        const {isPerforming} = this.props;
         const width = this.props.currentScene.duration();
         var bar;
         if (this.state.isBarActive) {
@@ -50,7 +51,7 @@ export default class TrackHeader extends Component {
                 bounds='parent'
                 disableDragging={true}
                 enableResizing={{
-                    right: true
+                    right: isPerforming?false:true
                 }}
                 enableUserSelectHack={false}
                 onResizeStop={(e, direction, ref, delta, position) => {

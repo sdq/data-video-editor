@@ -23,7 +23,7 @@ export default class Track extends Component {
         }
         this.clickTrack = this.clickTrack.bind(this);
         this.clickBar = this.clickBar.bind(this);
-        this.leaveBar = this.leaveBar.bind(this);
+        this.unactiveBars = this.unactiveBars.bind(this);
         this.setShowAnimations = this.setShowAnimations.bind(this);
     }
 
@@ -35,7 +35,7 @@ export default class Track extends Component {
         this.props.setBarActive(this.props.index);
     }
 
-    leaveBar() {
+    unactiveBars() {
         this.props.setBarUnactive()
     }
 
@@ -50,9 +50,14 @@ export default class Track extends Component {
         if (this.state.showAnimations) {
             height += rowHeight * ( animations.length + 1 )
         }
-        let {element, index} = this.props;
+        let {element, index, isPerforming} = this.props;
         return (
-            <Draggable key={element.id()} draggableId={element.id()} index={index}>
+            <Draggable 
+                key={element.id()} 
+                draggableId={element.id()} 
+                index={index}
+                isDragDisabled={isPerforming}
+            >
                 {(provided, snapshot) => (
                     <div
                     ref={provided.innerRef}
@@ -65,11 +70,22 @@ export default class Track extends Component {
                         <div style={{height: height, backgroundColor: '#fff'}}>
                             <div className="track">
                                 <Layout style={{ background: '#eee', height: '36px' }}>
-                                    <Sider width="200px" {...provided.dragHandleProps} onClick={this.clickTrack}>
-                                        <TrackInfo {...this.props} showAnimations={this.state.showAnimations} setShowAnimations={this.setShowAnimations}/>
+                                    <Sider width="200px" {...provided.dragHandleProps} onClick={this.clickTrack}
+                                    >
+                                        <TrackInfo 
+                                            showAnimations={this.state.showAnimations} 
+                                            setShowAnimations={this.setShowAnimations}
+                                            onOver={this.unactiveBars}
+                                            {...this.props}
+                                        />
                                     </Sider>
                                     <Content>
-                                        <TrackBar clickBar={this.clickBar} leaveBar={this.leaveBar} {...this.props}/>
+                                        <TrackBar 
+                                            clickBar={this.clickBar} 
+                                            leaveBar={this.unactiveBars}
+                                            showAnimations={this.state.showAnimations} 
+                                            {...this.props}
+                                        />
                                     </Content>
                                 </Layout>
                             </div>
