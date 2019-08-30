@@ -24,7 +24,7 @@ export default class PlayController extends Component {
                 this.timeouts.push(setTimeout(function () {
                     this.props.setPosition(current+index);
                     if (index===(n-1)) {
-                        this.props.stopScene(this.props.sceneIndex);
+                        this.pauseScene();
                         this.props.setPosition(0);
                     }
                 }.bind(this), index*60));
@@ -32,23 +32,20 @@ export default class PlayController extends Component {
         } else {
             // pause
             this.pauseScene();
-            this.props.stopScene(this.props.sceneIndex);
         }
     }
 
     pauseScene() {
         this.props.setBarUnactive();
-        this.setState({
-            isPerforming: false
-        });
         for (var i = 0; i < this.timeouts.length; i++) {
             clearTimeout(this.timeouts[i]);
         }
+        this.props.stopScene(this.props.sceneIndex);
     }
 
     nextScene() {
         this.props.setBarUnactive();
-        if (this.props.sceneIndex === this.props.scenes.length-1) {
+        if (this.props.isLastScene) {
             return
         }
         this.pauseScene();
@@ -58,7 +55,7 @@ export default class PlayController extends Component {
     }
 
     lastScene() {
-        if (this.props.sceneIndex === 0) {
+        if (this.props.isFirstScene) {
             return
         }
         this.pauseScene();
@@ -81,20 +78,23 @@ export default class PlayController extends Component {
     }
 
     render() {
-        const {scenePosition, isPerforming} = this.props;
+        const {scenePosition, isScenePerforming, isVideoPerforming, isFirstScene, isLastScene} = this.props;
         // TODO: time
         const ms = scenePosition * 60;
         return (
             <div className="play-controller">
-                <div style={{height: 34, width: 60, float: 'left', backgroundColor: 'black' }} onClick={this.playScene}>
-                    <Icon type={isPerforming?'pause':'caret-right'} style={{color: 'white', fontSize: 20, marginTop: 7, marginLeft:22}}/>
+                <div style={{height: 34, width: 60, float: 'left', backgroundColor: 'black', opacity: isVideoPerforming?0.6:1 }} onClick={isVideoPerforming?null:this.playScene}>
+                    <Icon type={isScenePerforming?'pause':'caret-right'} style={{color: 'white', fontSize: 20, marginTop: 7, marginLeft:22}}/>
                 </div>
-                <div style={{height: 34, width: 32, float: 'left', backgroundColor: 'white' }} onClick={this.lastScene}>
-                    <Icon type={'step-backward'} style={{color: 'black', fontSize: 20, marginTop: 7, marginLeft:6}}/>
+
+                <div style={{height: 34, width: 32, float: 'left', backgroundColor: 'white' }} onClick={(isFirstScene || isVideoPerforming)?null:this.lastScene}>
+                    <Icon type={'step-backward'} style={{color: (isFirstScene || isVideoPerforming)?'lightgray':'black', fontSize: 20, marginTop: 7, marginLeft:6}}/>
                 </div>
+                
                 <div style={{height: 34, width: 76, float: 'left', backgroundColor: 'white', textAlign: 'center', paddingTop: 6 }}>{this.ms2time(ms)}</div>
-                <div style={{height: 34, width: 32, float: 'left', backgroundColor: 'white' }} onClick={this.nextScene}>
-                    <Icon type={'step-forward'} style={{color: 'black', fontSize: 20, marginTop: 7, marginLeft:6}}/>
+
+                <div style={{height: 34, width: 32, float: 'left', backgroundColor: 'white' }} onClick={(isLastScene || isVideoPerforming)?null:this.nextScene}>
+                    <Icon type={'step-forward'} style={{color: (isLastScene || isVideoPerforming)?'lightgray':'black', fontSize: 20, marginTop: 7, marginLeft:6}}/>
                 </div>
             </div>
         )

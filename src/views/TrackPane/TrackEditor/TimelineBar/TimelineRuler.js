@@ -46,10 +46,12 @@ export default class TimelineRuler extends Component {
             newX = this.state.sceneWidth;
         }
         this.props.setPosition(newX);
+        this.props.unselectElement();
     }
 
     changeNeedlePlace(x) {
         this.props.setPosition(x);
+        this.props.unselectElement();
     }
 
     ruler() {
@@ -67,7 +69,7 @@ export default class TimelineRuler extends Component {
     }
 
     render() {
-        const {scenePosition} = this.props;
+        const {scenePosition, isPerforming} = this.props;
         var needle;
         if (this.state.isNeedleActive) {
             needle = <Rnd
@@ -75,6 +77,7 @@ export default class TimelineRuler extends Component {
                 size={{ width: width, height: height }}
                 position={{ x: scenePosition, y: 0 }}
                 bounds='parent'
+                disableDragging={isPerforming}
                 enableResizing={{}}
                 enableUserSelectHack={false}
                 onDragStop={(e, d) => {
@@ -103,7 +106,7 @@ export default class TimelineRuler extends Component {
                     <div
                         id={'timeline-ruler-clickable-area'} 
                         style={{height: height, width: offset + this.state.sceneWidth + offset, position:'absolute', zIndex: 1, opacity: 0}}
-                        onClick={e=>this.clickRuler(e)}
+                        onClick={isPerforming?null:e=>this.clickRuler(e)}
                     />
                     {needle}
                 </div>

@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
 import TrackPane from './TrackPane';
-import {scenes, sceneIndex, currentScene} from '@/selectors/timeline';
+import {scenes, sceneIndex, currentScene, isLastScene, isFirstScene} from '@/selectors/timeline';
 import {currentElements, currentElement, elementIndex, isElementSelected} from '@/selectors/canvas';
 import { scenePosition } from '@/selectors/scene';
-import {isPerforming} from '@/selectors/player';
+import { isPerforming, isScenePerforming, isVideoPerforming } from '@/selectors/player';
 import * as timelineActions from '@/actions/timelineAction';
 import * as uiActions from '@/actions/uiAction';
 import * as canvasActions from '@/actions/canvasAction';
@@ -15,6 +15,8 @@ const mapStateToProps = state => {
     return {
         scenes: scenes(state),
         sceneIndex: sceneIndex(state),
+        isFirstScene: isFirstScene(state),
+        isLastScene: isLastScene(state),
         currentScene: currentScene(state),
         currentElements: currentElements(state),
         currentElement: currentElement(state),
@@ -22,6 +24,8 @@ const mapStateToProps = state => {
         isElementSelected: isElementSelected(state),
         scenePosition: scenePosition(state),
         isPerforming: isPerforming(state),
+        isScenePerforming: isScenePerforming(state),
+        isVideoPerforming: isVideoPerforming(state),
         // vis
         dataList: dataList(state),
     }

@@ -74,7 +74,7 @@ export default class TrackBar extends Component {
     }
 
     render() {
-        let {element, isBarActive} = this.props;
+        let {element, isBarActive, isPerforming} = this.props;
         var color = Color.LIGHT_ORANGE;
         switch (element.type()) {
             case ElementType.IMAGE:
@@ -94,7 +94,7 @@ export default class TrackBar extends Component {
                 break;
         }
         var bar;
-        if (isBarActive) {
+        if (isBarActive && !isPerforming) {
             bar = <Rnd
                 id={"bar-"+this.props.element.id()}
                 style={{backgroundColor: color}}

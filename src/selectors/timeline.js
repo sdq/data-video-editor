@@ -8,3 +8,14 @@ export const currentScene = createSelector(
     sceneIndex,
     (scenes, sceneIndex) => scenes[sceneIndex]
 )
+
+export const isFirstScene = createSelector(
+    sceneIndex,
+    (sceneIndex) => sceneIndex === 0
+)
+
+export const isLastScene = createSelector(
+    scenes,
+    sceneIndex,
+    (scenes, sceneIndex) => sceneIndex === scenes.length-1
+)
