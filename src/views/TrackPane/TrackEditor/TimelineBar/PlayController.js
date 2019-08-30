@@ -68,19 +68,35 @@ export default class PlayController extends Component {
         this.props.setPosition(0);
     }
 
+    ms2time(ms) {
+        var minutes   = Math.floor(ms / 60000);
+        var seconds = Math.floor((ms - (minutes * 60000)) / 1000);
+        var milliseconds = ms - (minutes * 60000) - (seconds * 1000);
+
+        if (minutes >= 100) {minutes = minutes%100;}
+        if (minutes < 10) {minutes = "0"+minutes;}
+        if (seconds < 10) {seconds = "0"+seconds;}
+        if (milliseconds < 10) {milliseconds = "00"+milliseconds;}
+        else if (milliseconds < 100) {milliseconds = "0"+milliseconds;}
+        return minutes+':'+seconds+'.'+milliseconds;
+    }
+
     render() {
         const {isPerforming} = this.state;
+        const {scenePosition} = this.props;
+        // TODO: time
+        const ms = scenePosition * 60;
         return (
             <div className="play-controller">
                 <div style={{height: 34, width: 60, float: 'left', backgroundColor: 'black' }} onClick={this.playScene}>
                     <Icon type={isPerforming?'pause':'caret-right'} style={{color: 'white', fontSize: 20, marginTop: 7, marginLeft:22}}/>
                 </div>
-                <div style={{height: 34, width: 38, float: 'left', backgroundColor: 'white' }} onClick={this.lastScene}>
-                    <Icon type={'step-backward'} style={{color: 'black', fontSize: 20, marginTop: 7, marginLeft:9}}/>
+                <div style={{height: 34, width: 32, float: 'left', backgroundColor: 'white' }} onClick={this.lastScene}>
+                    <Icon type={'step-backward'} style={{color: 'black', fontSize: 20, marginTop: 7, marginLeft:6}}/>
                 </div>
-                <div style={{height: 34, width: 64, float: 'left', backgroundColor: 'white', textAlign: 'center', paddingTop: 6 }}>00:00:00</div>
-                <div style={{height: 34, width: 38, float: 'left', backgroundColor: 'white' }} onClick={this.nextScene}>
-                    <Icon type={'step-forward'} style={{color: 'black', fontSize: 20, marginTop: 7, marginLeft:9}}/>
+                <div style={{height: 34, width: 76, float: 'left', backgroundColor: 'white', textAlign: 'center', paddingTop: 6 }}>{this.ms2time(ms)}</div>
+                <div style={{height: 34, width: 32, float: 'left', backgroundColor: 'white' }} onClick={this.nextScene}>
+                    <Icon type={'step-forward'} style={{color: 'black', fontSize: 20, marginTop: 7, marginLeft:6}}/>
                 </div>
             </div>
         )

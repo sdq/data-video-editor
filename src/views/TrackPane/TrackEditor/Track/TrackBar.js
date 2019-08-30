@@ -23,7 +23,6 @@ export default class TrackBar extends Component {
 
     componentWillReceiveProps(props) {
         const sceneDuration = props.currentScene.duration();
-        console.log(sceneDuration);
         const sceneWidth = sceneDuration;
         var newWidth = this.state.width;
         var newX = this.state.x;
