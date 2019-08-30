@@ -5,7 +5,7 @@ export default class HeaderBar extends Component {
     render() {
         return (
             <div className="headerbar">
-                <font color="white" weight="bold">Data Video Editor</font>
+                <font color="white"><b>Data Video Editor</b></font>
             </div>
         )
     }

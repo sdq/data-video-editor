@@ -1,10 +1,10 @@
 import { connect } from 'react-redux';
 import TrackPane from './TrackPane';
-import {scenes, sceneIndex, currentScene, isLastScene, isFirstScene} from '@/selectors/timeline';
+import {scenes, sceneIndex, currentScene, isLastScene, isFirstScene} from '@/selectors/video';
 import {currentElements, currentElement, elementIndex, isElementSelected} from '@/selectors/canvas';
 import { scenePosition } from '@/selectors/scene';
 import { isPerforming, isScenePerforming, isVideoPerforming } from '@/selectors/player';
-import * as timelineActions from '@/actions/timelineAction';
+import * as videoActions from '@/actions/videoAction';
 import * as uiActions from '@/actions/uiAction';
 import * as canvasActions from '@/actions/canvasAction';
 import * as sceneActions from '@/actions/sceneAction';
@@ -33,15 +33,15 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        selectElement: (index) => dispatch(canvasActions.selectElement(index)),
+        selectElement: (elementIndex, elementName) => dispatch(canvasActions.selectElement(elementIndex, elementName)),
         unselectElement: () => dispatch(canvasActions.unselectElement()),
-        updateElement: (element, elementIndex) => dispatch(canvasActions.updateElement(element, elementIndex)),
+        updateElement: (element, elementIndex, elementName) => dispatch(canvasActions.updateElement(element, elementIndex, elementName)),
         reorderElement: (sourceIndex, destinationIndex) => dispatch(canvasActions.reorderElement(sourceIndex, destinationIndex)),
-        selectScene: (index) => dispatch(timelineActions.selectScene(index)),
-        addScene: (scene) => dispatch(timelineActions.addScene(scene)),
-        removeScene: (index) => dispatch(timelineActions.removeScene(index)),
-        updateScene: (index, scene) => dispatch(timelineActions.updateScene(index, scene)),
-        reorderScene: (scenes) => dispatch(timelineActions.reorderScene(scenes)),
+        selectScene: (index) => dispatch(videoActions.selectScene(index)),
+        addScene: (scene) => dispatch(videoActions.addScene(scene)),
+        removeScene: (index) => dispatch(videoActions.removeScene(index)),
+        updateScene: (index, scene) => dispatch(videoActions.updateScene(index, scene)),
+        reorderScene: (scenes) => dispatch(videoActions.reorderScene(scenes)),
         setPosition: (position) => dispatch(sceneActions.setPosition(position)),
         displayStoryline: () => dispatch(uiActions.displayStoryline()),
         playScene: (sceneIndex) => dispatch(playerActions.playScene(sceneIndex)),

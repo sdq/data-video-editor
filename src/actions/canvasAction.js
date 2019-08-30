@@ -1,8 +1,9 @@
 import ActionType from '../constants/ActionType';
 
-export const selectElement = (elementIndex) => ({
+export const selectElement = (elementIndex, elementName) => ({
     type: ActionType.SELECT_ELEMENT,
     elementIndex,
+    elementName,
 })
 
 export const unselectElement = () => ({
@@ -14,10 +15,11 @@ export const addElement = (element) => ({
     element,
 })
 
-export const updateElement = (element, elementIndex, updateInfo) => ({
+export const updateElement = (element, elementIndex, elementName, updateInfo) => ({
     type: ActionType.UPDATE_ELEMENT,
     element,
     elementIndex,
+    elementName,
     updateInfo,
 })
 

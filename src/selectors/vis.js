@@ -9,8 +9,8 @@ const dataIndex = state => state.vis.dataIndex;
 
 // Chart
 const elementIndex = state => state.canvas.elementIndex;
-const scenes = state => state.timeline.scenes;
-const sceneIndex = state => state.timeline.index;
+const scenes = state => state.video.scenes;
+const sceneIndex = state => state.video.index;
 export const displaySpec = state => state.vis.displaySpec;
 
 export const getCurrentData = createSelector(

@@ -52,7 +52,8 @@ export default class ChartTool extends Component {
         console.log(newEle);
         newScene.updateElement(newEle, this.props.elementIndex);
         this.props.updateScene(this.props.sceneIndex, newScene);
-        this.props.updateElement(newEle, this.props.elementIndex);
+        const elementName = this.props.sceneIndex + '-' + this.props.elementIndex;
+        this.props.updateElement(newEle, this.props.elementIndex, elementName);
         // Disable editor
         this.setState({
             chartvisible: false,

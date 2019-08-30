@@ -70,7 +70,8 @@ export default class TrackBar extends Component {
         newEle.sduration(duration);
         newScene.updateElement(newEle, this.props.index);
         this.props.updateScene(this.props.sceneIndex, newScene);
-        this.props.updateElement(newEle, this.props.index);
+        const elementName = this.props.sceneIndex + '-' + this.props.index;
+        this.props.updateElement(newEle, this.props.index, elementName);
     }
 
     render() {

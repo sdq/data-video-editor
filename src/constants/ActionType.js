@@ -10,7 +10,7 @@ export default {
     PLAY_SCENE : 'PLAY_SCENE',
     PAUSE_SCENE : 'PAUSE_SCENE',
     STOP_SCENE : 'STOP_SCENE',
-    // Timeline Action
+    // Video Action
     SELECT_SCENE: 'SELECT_SCENE',
     ADD_SCENE : 'ADD_SCENE',
     REMOVE_SCENE : 'REMOVE_SCENE',

@@ -3,6 +3,7 @@ import ActionType from '../constants/ActionType';
 const initialState = {
     isElementSelected: false,
     elementIndex: -1,
+    elementName: '',
     actionHistory: [],
 }
 
@@ -14,23 +15,28 @@ export default (state = initialState, action) => {
         case ActionType.SELECT_ELEMENT:
             newState.isElementSelected = true;
             newState.elementIndex = action.elementIndex;
+            newState.elementName = action.elementName;
             return newState;
         case ActionType.UNSELECT_ELEMENT:
             newState.isElementSelected = false;
             newState.elementIndex = -1;
+            newState.elementName = '';
             return newState;
         case ActionType.ADD_ELEMENT:
             newState.isElementSelected = false;
             newState.elementIndex = -1;
+            newState.elementName = '';
             return newState;
         case ActionType.REMOVE_ELEMENT:
             newState.isElementSelected = false;
             newState.elementIndex = -1;
+            newState.elementName = '';
             return newState
         case ActionType.UPDATE_ELEMENT:
             //TODO: add action detail
             newState.isElementSelected = true;
             newState.elementIndex = action.elementIndex;
+            newState.elementName = action.elementName;
             return newState
         case ActionType.REORDER_ELEMENT:
             newState.isElementSelected = true;

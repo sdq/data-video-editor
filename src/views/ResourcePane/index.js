@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import ResourcePane from './ResourcePane';
-import {currentScene, sceneIndex} from '@/selectors/timeline';
-import * as timelineActions from '@/actions/timelineAction';
+import {currentScene, sceneIndex} from '@/selectors/video';
+import * as videoActions from '@/actions/videoAction';
 import * as canvasActions from '@/actions/canvasAction';
 import * as uiActions from '@/actions/uiAction';
 
@@ -15,8 +15,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         addElement: (element) => dispatch(canvasActions.addElement(element)),
-        addScene: (scene) => dispatch(timelineActions.addScene(scene)),
-        updateScene: (index, scene) => dispatch(timelineActions.updateScene(index, scene)),
+        addScene: (scene) => dispatch(videoActions.addScene(scene)),
+        updateScene: (index, scene) => dispatch(videoActions.updateScene(index, scene)),
         displayTrackEditor: () => dispatch(uiActions.displayTrackEditor()),
     }
 }

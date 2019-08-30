@@ -28,7 +28,8 @@ export default class Track extends Component {
     }
 
     clickTrack() {
-        this.props.selectElement(this.props.index);
+        const elementName = this.props.sceneIndex + '-' + this.props.index;
+        this.props.selectElement(this.props.index, elementName);
     }
 
     clickBar() {
