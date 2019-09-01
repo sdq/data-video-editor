@@ -35,6 +35,10 @@ class EditCanvas extends Component {
         this.editElement = this.editElement.bind(this);
     }
 
+    componentDidMount() {
+        console.log(this.stageRef);
+    }
+
     componentWillReceiveProps(props) {
 
         // this.animationStart()
@@ -42,9 +46,8 @@ class EditCanvas extends Component {
     }
 
     componentWillUnmount() {
-        this.animationStop()
+        // this.animationStop()
     }
-
     editStart() {
         this.setState({
             showAssistLines: true
@@ -143,7 +146,11 @@ class EditCanvas extends Component {
         return connectDropTarget(
             <div id="canvasContainer" style={{ backgroundColor }}>
                 { this.state.showAssistLines ? <AssistLines /> : null }
-                <Stage width={800} height={450} onMouseDown={editable?this.handleStageMouseDown:None}>
+                <Stage 
+                    ref={ref => { this.stageRef = ref; }}
+                    width={800} height={450} 
+                    onMouseDown={editable?this.handleStageMouseDown:None}
+                >
                     <Layer ref={node => (this.animationLayer = node)}>
                         {this.props.currentScene.elements().map(function(element, index) {
                             //console.log(element.info);

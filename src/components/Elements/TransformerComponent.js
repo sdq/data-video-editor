@@ -45,6 +45,7 @@ export default class TransformerComponent extends Component {
                 borderStroke={Color.DEEP_ORANGE}
                 anchorStroke={Color.DEEP_ORANGE}
                 anchorFill={Color.LIGHT_ORANGE}
+                enabledAnchors= {['top-left', 'top-right', 'bottom-left', 'bottom-right']}
             />
         )
     }

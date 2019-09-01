@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import TrackPane from './TrackPane';
 import {scenes, sceneIndex, currentScene, isLastScene, isFirstScene} from '@/selectors/video';
 import {currentElements, currentElement, elementIndex, isElementSelected} from '@/selectors/canvas';
-import { scenePosition } from '@/selectors/scene';
+import { scenePosition, sceneScale } from '@/selectors/scene';
 import { isPerforming, isScenePerforming, isVideoPerforming } from '@/selectors/player';
 import * as videoActions from '@/actions/videoAction';
 import * as uiActions from '@/actions/uiAction';
@@ -23,6 +23,7 @@ const mapStateToProps = state => {
         elementIndex: elementIndex(state),
         isElementSelected: isElementSelected(state),
         scenePosition: scenePosition(state),
+        sceneScale: sceneScale(state),
         isPerforming: isPerforming(state),
         isScenePerforming: isScenePerforming(state),
         isVideoPerforming: isVideoPerforming(state),
@@ -43,6 +44,7 @@ const mapDispatchToProps = dispatch => {
         updateScene: (index, scene) => dispatch(videoActions.updateScene(index, scene)),
         reorderScene: (scenes) => dispatch(videoActions.reorderScene(scenes)),
         setPosition: (position) => dispatch(sceneActions.setPosition(position)),
+        setSceneScale: (scale) => dispatch(sceneActions.setSceneScale(scale)),
         displayStoryline: () => dispatch(uiActions.displayStoryline()),
         playScene: (sceneIndex) => dispatch(playerActions.playScene(sceneIndex)),
         stopScene: (sceneIndex) => dispatch(playerActions.stopScene(sceneIndex)),

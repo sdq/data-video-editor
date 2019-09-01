@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
-import { Layout, Input } from 'antd';
+import { Layout, Slider, Icon } from 'antd';
 import { Rnd } from "react-rnd";
 import './track.css';
 
 const { Sider, Content } = Layout;
-const { Search } = Input;
 
 const x = 0
 const y = 0;
 const height = 36
 const offset = 12
+const min = 1;
+const max = 10;
 
 export default class TrackHeader extends Component {
 
@@ -20,6 +21,17 @@ export default class TrackHeader extends Component {
         };
         this.changeDuration = this.changeDuration.bind(this);
         this.clickBar = this.clickBar.bind(this);
+        this.handleScaleChange = this.handleScaleChange.bind(this);
+    }
+
+    handleScaleChange(value) {
+        this.props.setSceneScale(value);
+    }
+
+    clickBar() {
+        this.setState({
+            isBarActive: true,
+        })
     }
 
     changeDuration(value) {
@@ -32,14 +44,8 @@ export default class TrackHeader extends Component {
 
     }
 
-    clickBar() {
-        this.setState({
-            isBarActive: true,
-        })
-    }
-
     render() {
-        const {isPerforming} = this.props;
+        const {isPerforming, sceneScale} = this.props;
         const width = this.props.currentScene.duration();
         var bar;
         if (this.state.isBarActive) {
@@ -73,12 +79,17 @@ export default class TrackHeader extends Component {
                 <Layout>
                     <Sider width="200px">
                         <div className="track-header-info">
-                            <Search
+                            {/* <Search
                                 placeholder="search"
                                 onSearch={value => console.log(value)}
                                 style={{ width: 190, float: 'left' }}
                                 size="small"
-                            />
+                            /> */}
+                            <div className="icon-wrapper">
+                                <Icon type="minus" />
+                                <Slider onChange={this.handleScaleChange} value={sceneScale} min={min} max={max}/>
+                                <Icon type="plus" />
+                            </div>
                         </div>
                     </Sider>
                     <Content>

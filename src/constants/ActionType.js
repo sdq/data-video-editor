@@ -26,6 +26,7 @@ export default {
     // Scene Action
     SET_DURATION: 'SET_DURATION',
     SET_POSITION: 'SET_POSITION',
+    SET_SCENE_SCALE: 'SET_SCENE_SCALE',
     // Meta Action
     UNDO_CANVAS: 'UNDO_CANVAS',
     REDO_CANVAS: 'REDO_CANVAS',
