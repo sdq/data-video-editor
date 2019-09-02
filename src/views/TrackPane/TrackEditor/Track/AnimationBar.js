@@ -34,7 +34,7 @@ export default class AnimationBar extends Component {
     }
     
     render() {
-        let {element, isPerforming} = this.props;
+        let {element} = this.props;
         var color = Color.LIGHT_ORANGE;
         switch (element.type()) {
             case ElementType.IMAGE:

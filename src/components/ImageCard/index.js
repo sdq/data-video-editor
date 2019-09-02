@@ -41,7 +41,7 @@ const imageSource = {
 
 class ImageCard extends Component {
     render() {
-        const { connectDragSource, displayAnimationTargetArea } = this.props;
+        const { connectDragSource } = this.props;
         return connectDragSource(
             <div className="imagecard" align="center">
                 <img src={this.props.info.src} alt={this.props.info.name} />

@@ -16,8 +16,7 @@ const animationTarget = {
 class AnimationTargetArea extends Component {
 
     render() {
-        const { canDrop, isOver, connectDropTarget, isPerforming, isElementSelected, currentElement } = this.props;
-        const editable = !isPerforming;
+        const { canDrop, isOver, connectDropTarget, currentElement } = this.props;
         const isActive = canDrop && isOver;
         let backgroundColor = 'white';
         if (isActive) {

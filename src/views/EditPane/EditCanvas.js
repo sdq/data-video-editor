@@ -147,7 +147,7 @@ class EditCanvas extends Component {
     }
 
     render() {
-        const { canDrop, isOver, connectDropTarget, isPerforming, isElementSelected } = this.props;
+        const { canDrop, isOver, connectDropTarget, isPerforming } = this.props;
         const editable = !isPerforming;
         const isActive = canDrop && isOver;
         let backgroundColor = '#fff';
