@@ -63,9 +63,23 @@ export default class TimelineRuler extends Component {
                     <div style={{height: 2, width: 18, float: 'left', opacity: 0}}/>
                     <div style={{height: 2, width: 2, float: 'left', backgroundColor: 'black'}}/>
                 </div>
-            )   
+            ) 
         }
         return rulings;
+    }
+
+    timeMarks() {
+        const n = this.state.sceneWidth / 100;
+        let timeMarks = [];
+        for (let index = 0; index < n; index++) {
+            timeMarks.push(
+                <div key={index} style={{height: 2, width: 100, float: 'left', backgroundColor: 'transparent'}}>
+                    <div style={{height: 2, width: 98, float: 'left', opacity: 0}}/>
+                    <p style={{marginTop: -5, marginLeft: -6, float: 'left', fontSize: '10px'}}>{index*6}s</p>
+                </div>
+            )
+        }
+        return timeMarks;
     }
 
     render() {
@@ -100,7 +114,10 @@ export default class TimelineRuler extends Component {
                     style={{height: height, width: offset + this.state.sceneWidth + offset, backgroundColor:'#fff'}} 
                     
                 >
-                    <div style={{marginLeft: offset-1, marginTop: 16, backgroundColor: 'black', position:'absolute', zIndex: 0}}>
+                    <div style={{marginLeft: offset-1, marginTop: 2, backgroundColor: 'transparent', position:'absolute', zIndex: 0}}>
+                        {this.timeMarks()}
+                    </div>
+                    <div style={{marginLeft: offset-1, marginTop: 16, backgroundColor: 'transparent', position:'absolute', zIndex: 0}}>
                         {this.ruler()}
                     </div>
                     <div
