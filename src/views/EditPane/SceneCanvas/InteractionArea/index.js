@@ -6,7 +6,6 @@ import AssistLines from './AssistLines';
 export default class InteractionArea extends Component {
     render() {
         const { showAnimationTargetArea, showResourceTargetArea, showAssistLines } = this.props;
-        console.log(showAssistLines);
         return (
             <div style={{position:'absolute', zIndex:1}}>
                 {showAnimationTargetArea?<AnimationTargetArea {...this.props}/>:null}

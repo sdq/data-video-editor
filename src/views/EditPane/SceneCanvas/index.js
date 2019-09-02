@@ -38,7 +38,6 @@ export default class EditCanvas extends Component {
 
     handleStageMouseDown = e => {
         // clicked on stage - clear selection
-        console.log('click----')
         if (e.target === e.target.getStage()) {
             this.props.unselectElement();
             return;
