@@ -1,9 +1,9 @@
-export class Animation {
-    constructor(type, start, duration) {
+export default class Animation {
+    constructor(type, name) {
         this._type = type;
         this._name = name;
-        this._start = start;
-        this._duration = duration;
+        this._start = 0;
+        this._duration = 0;
 
         this.type = function(type) {
             if (type == null){

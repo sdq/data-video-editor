@@ -5,11 +5,12 @@ import TransformerComponent from '@/components/Elements/TransformerComponent';
 import ImageElement from '@/components/Elements/ImageElement';
 import TextElement from '@/components/Elements/TextElement';
 import ChartElement from '@/components/Elements/ChartElement';
+import InteractionArea from './InteractionArea';
 import ElementType from '@/constants/ElementType';
 import { DropTarget } from 'react-dnd';
 import DNDType from '@/constants/DNDType';
 import Color from '@/constants/Color';
-import AssistLines from './AssistLines';
+import AssistLines from './InteractionArea/AssistLines';
 import './editpane.css';
 import { None } from 'vega';
 import _ from 'lodash';
@@ -28,6 +29,10 @@ class EditCanvas extends Component {
         super(props);
         this.state = {
             showAssistLines: false,
+            canvasPosition: {
+                left: 0,
+                top: 0
+            }
         };
         this.elementNodes = new Array(props.currentElements.length).fill({});
         this.animations = new Array(props.currentElements.length).fill({});
@@ -36,18 +41,27 @@ class EditCanvas extends Component {
     }
 
     componentDidMount() {
-        console.log(this.stageRef);
+        
     }
 
     componentWillReceiveProps(props) {
-
         // this.animationStart()
-        
     }
 
     componentWillUnmount() {
         // this.animationStop()
     }
+
+    checkCanvasPosition() {
+        var stageBox = this.stageRef.container().getBoundingClientRect();
+        this.setState({
+            canvasPosition: {
+                left: stageBox.left,
+                top: stageBox.top
+            }
+        })
+    }
+
     editStart() {
         this.setState({
             showAssistLines: true
@@ -85,7 +99,7 @@ class EditCanvas extends Component {
         if (name) {
             var eleIndex = Number(name.split('-')[1]);
             this.props.selectElement(eleIndex, name);
-            // this.props.displayTrackEditor();
+            this.checkCanvasPosition();
         } else {
             this.props.unselectElement();
         }
@@ -133,7 +147,7 @@ class EditCanvas extends Component {
     }
 
     render() {
-        const { canDrop, isOver, connectDropTarget, isPerforming } = this.props;
+        const { canDrop, isOver, connectDropTarget, isPerforming, isElementSelected } = this.props;
         const editable = !isPerforming;
         const isActive = canDrop && isOver;
         let backgroundColor = '#fff';
@@ -145,6 +159,7 @@ class EditCanvas extends Component {
         }
         return connectDropTarget(
             <div id="canvasContainer" style={{ backgroundColor }}>
+                <InteractionArea {...this.props}/>
                 { this.state.showAssistLines ? <AssistLines /> : null }
                 <Stage 
                     ref={ref => { this.stageRef = ref; }}

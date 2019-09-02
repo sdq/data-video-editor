@@ -28,6 +28,7 @@ export default class TransformerComponent extends Component {
             }
             // attach to another node
             this.transformer.attachTo(selectedNode);
+            console.log(this.transformer);
         } else {
             // remove transformer
             this.transformer.detach();

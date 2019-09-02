@@ -6,6 +6,7 @@ import { displaySpec, getCurrentData, getCurrentVis, getCurrentFields, getSlots 
 import * as videoActions from '@/actions/videoAction';
 import * as canvasActions from '@/actions/canvasAction';
 import * as visActions from '@/actions/visAction';
+import * as uiActions from '@/actions/uiAction';
 
 const mapStateToProps = state => {
     return {
@@ -32,6 +33,7 @@ const mapDispatchToProps = dispatch => {
         addElement: (element) => dispatch(canvasActions.addElement(element)),
         removeElement: (elementIndex) => dispatch(canvasActions.selectElement(elementIndex)),
         updateElement: (element, elementIndex, selectElement) => dispatch(canvasActions.updateElement(element, elementIndex, selectElement)),
+        displayAnimationTargetArea: (isActive) => dispatch(uiActions.displayAnimationTargetArea(isActive)),
         // vis
         openEditor: (dataIndex, spec) => dispatch(visActions.openEditor(dataIndex, spec)),
         uploadData: (file) => dispatch(visActions.uploadData(file)),

@@ -3,6 +3,7 @@ import ActionType from '../constants/ActionType';
 
 const initialState = {
     uimode: UIMode.STORYLINE_MODE,
+    displayAnimationTargetArea: false,
 }
 
 export default (state = initialState, action) => {
@@ -22,6 +23,14 @@ export default (state = initialState, action) => {
                 return state
             } else {
                 newState.uimode = UIMode.TRACK_MODE;
+                return newState;
+            }
+
+        case ActionType.DISPLAY_ANIMATION_TARGET_AREA:
+            if (state.displayAnimationTargetArea === action.isActive) {
+                return state
+            } else {
+                newState.displayAnimationTargetArea = action.isActive;
                 return newState;
             }
 

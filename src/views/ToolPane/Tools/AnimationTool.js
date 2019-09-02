@@ -1,14 +1,10 @@
 import React, { Component } from 'react';
 import { Collapse, Input } from 'antd';
+import animations from '@/constants/Animations';
+import AnimationCard from '@/components/AnimationCard';
 
 const { Panel } = Collapse;
 const { Search } = Input;
-
-const animations = {
-    "Presentation": ["Appear", "Fly in", "Fade in", "Zoom", "Fly out", "Disappear", "Fade out", "Shrink"],
-    "Interpretation" : ["Flicker", "Zoom in"],
-    "Reasoning" : ["Emphasis", "Annotation", "Relocation"],
-}
 
 export default class AnimationTool extends Component {
 
@@ -33,22 +29,22 @@ export default class AnimationTool extends Component {
                 <Collapse defaultActiveKey={['Presentation']} bordered={false} accordion>
                     <Panel header="Presentation" key="Presentation">
                         <div style={{height: 300}}>
-                            {animations['Presentation'].map((animation, index) =>
-                                <div key={index}>{animation}</div>
+                            {animations.presentation.map((animation, index) =>
+                                <AnimationCard key={index} animation={animation} {...this.props}/>
                             )}
                         </div>
                     </Panel>
                     <Panel header="Interpretation" key="Interpretation">
                         <div style={{height: 300}}>
-                            {animations['Interpretation'].map((animation, index) =>
-                                <div key={index}>{animation}</div>
+                            {animations.interpretation.map((animation, index) =>
+                                <AnimationCard key={index} animation={animation} {...this.props}/>
                             )}
                         </div>
                     </Panel>
                     <Panel header="Reasoning" key="Reasoning">
                         <div style={{height: 300}}>
-                            {animations['Reasoning'].map((animation, index) =>
-                                <div key={index}>{animation}</div>
+                            {animations.reasoning.map((animation, index) =>
+                                <AnimationCard key={index} animation={animation} {...this.props}/>
                             )}
                         </div>
                     </Panel>
