@@ -11,6 +11,7 @@ export class Element {
         this._index = 0;
         this._sstart = 0;
         this._sduration = 0;
+        this._animations = [];
         this.id = function() {
             return this._id;
         };
@@ -97,6 +98,22 @@ export class Element {
                 this._sduration = sduration;
                 return this;
             }
+        };
+        // animation
+        this.animations = function() {
+            return this._animations;
+        };
+        this.add = function(animation) {
+            this._animations.push(animation);
+            return this;
+        };
+        this.update = function(animation, index) {
+            this._animations[index] = animation;
+            return this;
+        };
+        this.remove = function(index) {
+            this._animations.splice(index, 1);
+            return this;
         };
     }
 }

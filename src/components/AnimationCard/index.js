@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { DragSource } from 'react-dnd';
 import DNDType from '@/constants/DNDType';
+import Animation from '@/models/Animation';
 import './animationcard.css';
 
 const animationSource = {
@@ -20,9 +21,14 @@ const animationSource = {
 		const item = monitor.getItem();
 		const dropResult = monitor.getDropResult();
 		if (dropResult) {
-            console.log(item);
-            console.log(dropResult);
-            // TODO: drop
+            const newScene = Object.assign({},dropResult.currentScene);
+            const newEle = Object.assign({},dropResult.currentElement);
+            const animation = new Animation(item.type, item.name);
+            newEle.add(animation);
+            newScene.updateElement(newEle, dropResult.elementIndex);
+            props.updateScene(dropResult.sceneIndex, newScene);
+            const elementName = dropResult.sceneIndex + '-' + dropResult.elementIndex;
+            props.updateElement(newEle, dropResult.elementIndex, elementName);
 		}
     },
 }
@@ -31,7 +37,7 @@ class AnimationCard extends Component {
     render() {
         const { connectDragSource, animation } = this.props;
         return connectDragSource(
-            <div>
+            <div className='animationcard'>
                 {animation.name()}
             </div>
         )

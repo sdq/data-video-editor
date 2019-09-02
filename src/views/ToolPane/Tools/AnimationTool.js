@@ -6,6 +6,8 @@ import AnimationCard from '@/components/AnimationCard';
 const { Panel } = Collapse;
 const { Search } = Input;
 
+const paneHeight = 290;
+
 export default class AnimationTool extends Component {
 
     constructor(props) {
@@ -28,21 +30,21 @@ export default class AnimationTool extends Component {
                 <div style={{height:1, width: 300, backgroundColor: '#d8d8d8'}}/>
                 <Collapse defaultActiveKey={['Presentation']} bordered={false} accordion>
                     <Panel header="Presentation" key="Presentation">
-                        <div style={{height: 300}}>
+                        <div style={{height: paneHeight}}>
                             {animations.presentation.map((animation, index) =>
                                 <AnimationCard key={index} animation={animation} {...this.props}/>
                             )}
                         </div>
                     </Panel>
                     <Panel header="Interpretation" key="Interpretation">
-                        <div style={{height: 300}}>
+                        <div style={{height: paneHeight}}>
                             {animations.interpretation.map((animation, index) =>
                                 <AnimationCard key={index} animation={animation} {...this.props}/>
                             )}
                         </div>
                     </Panel>
                     <Panel header="Reasoning" key="Reasoning">
-                        <div style={{height: 300}}>
+                        <div style={{height: paneHeight}}>
                             {animations.reasoning.map((animation, index) =>
                                 <AnimationCard key={index} animation={animation} {...this.props}/>
                             )}

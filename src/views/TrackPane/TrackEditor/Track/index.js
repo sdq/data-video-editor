@@ -3,11 +3,11 @@ import { Draggable } from "react-beautiful-dnd";
 import { Layout } from 'antd';
 import TrackInfo from './TrackInfo';
 import TrackBar from './TrackBar';
+import AnimationTrack from './AnimationTrack';
 import './track.css';
 
 const { Sider, Content } = Layout;
 
-const animations = [];
 const rowHeight = 36;
 const getItemStyle = (isDragging, draggableStyle) => ({
     background: isDragging ? "lightgreen" : "grey",
@@ -48,10 +48,13 @@ export default class Track extends Component {
 
     render() {
         var height = rowHeight;
-        if (this.state.showAnimations) {
-            height += rowHeight * ( animations.length + 1 )
-        }
         let {element, index, isPerforming} = this.props;
+        let animations = element.animations();
+        var animationTracks = null;
+        if (this.state.showAnimations) {
+            height += rowHeight * animations.length
+            animationTracks = animations.map((animation, index) => <AnimationTrack key={index} animation={animation} {...this.props}/>)
+        }
         return (
             <Draggable 
                 key={element.id()} 
@@ -90,6 +93,7 @@ export default class Track extends Component {
                                     </Content>
                                 </Layout>
                             </div>
+                            {animationTracks}
                         </div>
                     </div>
                 )}
