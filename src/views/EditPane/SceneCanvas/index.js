@@ -3,6 +3,7 @@ import Konva from "konva";
 import { Stage } from 'react-konva';
 import InteractionArea from './InteractionArea';
 import EditableLayer from './EditableLayer';
+import BackgroundLayer from './BackgroundLayer';
 import './scenecanvas.css';
 import { None } from 'vega';
 import _ from 'lodash';
@@ -105,6 +106,9 @@ export default class EditCanvas extends Component {
                     width={800} height={450} 
                     onMouseDown={editable?this.handleStageMouseDown:None}
                 >
+                    <BackgroundLayer 
+                        {...this.props}
+                    />
                     <EditableLayer 
                         displayAssistLines={(active) => this.displayAssistLines(active)} 
                         {...this.props}

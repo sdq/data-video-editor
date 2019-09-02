@@ -8,6 +8,8 @@ export default class Scene {
         this._tracks = [];
         // this.dataurl = dataurl;
         this._elements = []; //TODO: move to track
+        this._backgroundColor = '#ffffff';
+        this._backgroundImage = '';
         this.id = function() {
             return this._id;
         }
@@ -92,5 +94,21 @@ export default class Scene {
             this._tracks = [];
             return this;
         }
+        this.backgroundColor = function(backgroundColor) {
+            if (backgroundColor == null){
+                return this._backgroundColor;
+            } else {
+                this._backgroundColor = backgroundColor;
+                return this;
+            }
+        };
+        this.backgroundImage = function(backgroundImage) {
+            if (backgroundImage == null){
+                return this._backgroundImage;
+            } else {
+                this._backgroundImage = backgroundImage;
+                return this;
+            }
+        };
     }
 }
