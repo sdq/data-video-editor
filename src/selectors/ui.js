@@ -1,3 +1,3 @@
 export const uimode = state => state.ui.uimode;
-
-export const displayAnimationTargetArea = state => state.ui.displayAnimationTargetArea;
+export const showAnimationTargetArea = state => state.ui.showAnimationTargetArea;
+export const showResourceTargetArea = state => state.ui.showResourceTargetArea;

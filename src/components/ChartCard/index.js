@@ -10,10 +10,12 @@ import './chartcard.css';
 const chartSource = {
 
 	beginDrag(props) {
+        props.displayResourceTargetArea(true);
 		return {type: props.charttype};
 	},
 
 	endDrag(props, monitor) {
+        props.displayResourceTargetArea(false);
 		const item = monitor.getItem();
 		const dropResult = monitor.getDropResult();
 		if (dropResult) {

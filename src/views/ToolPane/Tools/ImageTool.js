@@ -30,7 +30,7 @@ export default class ImageTool extends Component {
     render() {
   
         return (
-            <div style={{padding: '10px 10px 10px 10px', fontSize: '14px'}}>
+            <div style={{padding: '10px 10px 10px 10px', fontSize: '14px', backgroundColor: 'white'}}>
                 <Divider>Style</Divider>
                 <Row style={{margin: '0px 10px 0px 15px', fontSize: '14px'}}>
                 <Col span={8} style={{ padding: '10px 0px 0 0px'}}>Transparency</Col>

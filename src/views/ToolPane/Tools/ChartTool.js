@@ -79,7 +79,7 @@ export default class ChartTool extends Component {
             left: '0px',
         }
         return (
-            <div style={{padding: '10px 10px 10px 10px', fontSize: '14px'}}>
+            <div style={{padding: '10px 10px 10px 10px', fontSize: '14px', backgroundColor: 'white'}}>
                 <Divider>Position</Divider>
                 <Row style={{margin: '10px 0px 0px 0px', fontSize: '14px'}}>
                     <Col span={4} style={{textAlign:'center', padding: '5px 5px 0 5px'}}>X</Col>

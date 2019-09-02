@@ -3,7 +3,8 @@ import ActionType from '../constants/ActionType';
 
 const initialState = {
     uimode: UIMode.STORYLINE_MODE,
-    displayAnimationTargetArea: false,
+    showAnimationTargetArea: false,
+    showResourceTargetArea: false,
 }
 
 export default (state = initialState, action) => {
@@ -27,10 +28,18 @@ export default (state = initialState, action) => {
             }
 
         case ActionType.DISPLAY_ANIMATION_TARGET_AREA:
-            if (state.displayAnimationTargetArea === action.isActive) {
-                return state
+            if (state.showAnimationTargetArea === action.isActive) {
+                return state;
             } else {
-                newState.displayAnimationTargetArea = action.isActive;
+                newState.showAnimationTargetArea = action.isActive;
+                return newState;
+            }
+
+        case ActionType.DISPLAY_RESOURCE_TARGET_AREA:
+            if (state.showResourceTargetArea === action.isActive) {
+                return state;
+            } else {
+                newState.showResourceTargetArea = action.isActive;
                 return newState;
             }
 

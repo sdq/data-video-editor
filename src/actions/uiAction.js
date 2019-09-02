@@ -12,3 +12,8 @@ export const displayAnimationTargetArea = (isActive) => ({
     type: ActionType.DISPLAY_ANIMATION_TARGET_AREA,
     isActive
 })
+
+export const displayResourceTargetArea = (isActive) => ({
+    type: ActionType.DISPLAY_RESOURCE_TARGET_AREA,
+    isActive
+})

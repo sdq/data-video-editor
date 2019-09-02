@@ -45,7 +45,7 @@ export default class SceneTool extends Component {
 
     render() {
         return (
-            <div style={{padding: '10px 10px 10px 10px', fontSize: '14px'}}>
+            <div style={{padding: '10px 10px 10px 10px', fontSize: '14px', backgroundColor: 'white'}}>
                 <Divider>Script</Divider>
                 <Row style={{margin: '10px 0px 0px 0px', fontSize: '14px'}}>
                     <TextArea style={{ padding: '5px 5px 0 5px'}} rows={5} value={this.props.currentScene.script()} onChange={this.handleChange}/>

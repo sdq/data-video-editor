@@ -3,7 +3,7 @@ import { HotKeys } from "react-hotkeys";
 import shortcuts from '@/constants/Shortcuts';
 import EditToolBar from './EditToolBar';
 import PlayControlBar from './PlayControlBar';
-import EditCanvas from './EditCanvas';
+import SceneCanvas from './SceneCanvas';
 import { Element } from '@/models/Element';
 import './editpane.css';
 
@@ -90,7 +90,7 @@ export default class EditPane extends Component {
                         />
                     </div>
                     <div style={{ background: '#fff', height: '450px' }}>
-                        <EditCanvas 
+                        <SceneCanvas 
                             { ...this.props }
                         />
                     </div>

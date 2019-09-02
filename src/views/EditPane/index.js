@@ -5,7 +5,7 @@ import {currentElement, currentElements, elementIndex, elementName, isElementSel
 import { dataList } from '@/selectors/vis';
 import { scenePosition } from '@/selectors/scene';
 import { isPerforming, isScenePerforming, isVideoPerforming } from '@/selectors/player';
-import { displayAnimationTargetArea } from '@/selectors/ui';
+import { showAnimationTargetArea, showResourceTargetArea } from '@/selectors/ui';
 import * as uiActions from '@/actions/uiAction';
 import * as videoActions from '@/actions/videoAction';
 import * as canvasActions from '@/actions/canvasAction';
@@ -28,7 +28,8 @@ const mapStateToProps = state => {
         isScenePerforming: isScenePerforming(state),
         isVideoPerforming: isVideoPerforming(state),
         scenePosition: scenePosition(state),
-        displayAnimationTargetArea: displayAnimationTargetArea(state),
+        showAnimationTargetArea: showAnimationTargetArea(state),
+        showResourceTargetArea: showResourceTargetArea(state),
         // vis
         dataList: dataList(state),
     }

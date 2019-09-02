@@ -41,7 +41,7 @@ export default class DataTool extends Component {
 
     render() {
         return (
-            <div style={{padding: '10px 10px 10px 10px', fontSize: '14px'}}>
+            <div style={{padding: '10px 10px 10px 10px', fontSize: '14px', backgroundColor: 'white'}}>
                 <Dragger
                     accept=".csv"
                     showUploadList={false}

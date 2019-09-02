@@ -18,6 +18,7 @@ const mapDispatchToProps = dispatch => {
         addScene: (scene) => dispatch(videoActions.addScene(scene)),
         updateScene: (index, scene) => dispatch(videoActions.updateScene(index, scene)),
         displayTrackEditor: () => dispatch(uiActions.displayTrackEditor()),
+        displayResourceTargetArea: (isActive) => dispatch(uiActions.displayResourceTargetArea(isActive))
     }
 }
 

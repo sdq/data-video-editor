@@ -52,7 +52,7 @@ export default class TextTool extends Component {
 
         return (
 
-            <div style={{padding: '5px 10px 10px 10px', fontSize: '14px'}}>
+            <div style={{padding: '5px 10px 10px 10px', fontSize: '14px', backgroundColor: 'white'}}>
 
                 <Divider>Style</Divider>
                 <Row style={{margin: '0px 15px 0px 15px', fontSize: '14px'}}>

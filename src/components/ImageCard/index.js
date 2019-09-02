@@ -9,10 +9,12 @@ import './imagecard.css';
 const imageSource = {
 
 	beginDrag(props) {
-		return props.info
+        props.displayResourceTargetArea(true);
+		return props.info;
 	},
 
 	endDrag(props, monitor) {
+        props.displayResourceTargetArea(false);
 		const item = monitor.getItem();
 		const dropResult = monitor.getDropResult();
 		if (dropResult) {
