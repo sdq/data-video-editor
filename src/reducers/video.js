@@ -1,7 +1,10 @@
 import ActionType from '../constants/ActionType';
-import demo from './demo';
+import scenes from './demo';
 
-const initialState = demo;
+const initialState = {
+    scenes: scenes,
+    index: 1,
+};
 
 export default (state = initialState, action) => {
     const newState = Object.assign({},state);

@@ -2,18 +2,15 @@ import ActionType from '../constants/ActionType';
 
 const initialState = {
     position: 0,
-    scale: 5,
+    scale: 100,
 }
 
 export default (state = initialState, action) => {
-    const newState = Object.assign({},state);
     switch (action.type) {
         case ActionType.SET_POSITION:
-            newState.position = action.position;
-            return newState;
+            return {...state, position: action.position};
         case ActionType.SET_SCENE_SCALE:
-            newState.scale = action.scale;
-            return newState;
+            return {...state, scale: action.scale};
         default:
             return state;
     }

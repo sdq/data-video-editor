@@ -70,12 +70,15 @@ export default class TimelineRuler extends Component {
 
     timeMarks() {
         const n = this.state.sceneWidth / 100;
-        let timeMarks = [];
-        for (let index = 0; index < n; index++) {
+        let timeMarks = [<div key={0} style={{height: 2, width: 100, float: 'left', backgroundColor: 'transparent'}}>
+            <div style={{height: 2, width: 98, float: 'left', opacity: 0}}/>
+            <p style={{marginTop: -5, marginLeft: -6, float: 'left', fontSize: '10px'}}>0s</p>
+        </div>];
+        for (let index = 1; index < n; index++) {
             timeMarks.push(
                 <div key={index} style={{height: 2, width: 100, float: 'left', backgroundColor: 'transparent'}}>
                     <div style={{height: 2, width: 98, float: 'left', opacity: 0}}/>
-                    <p style={{marginTop: -5, marginLeft: -6, float: 'left', fontSize: '10px'}}>{index*6}s</p>
+                    <p style={{marginTop: -5, marginLeft: -10, float: 'left', fontSize: '10px'}}>{index*10}s</p>
                 </div>
             )
         }

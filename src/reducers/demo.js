@@ -90,10 +90,12 @@ video.id(2);
 video.add(scene1);
 video.add(scene2);
 
-const demo = {
-    video: video,
-    scenes: [scene1, scene2],
-    index: 1,
-}
+// const demo = {
+//     video: video,
+//     scenes: [scene1, scene2],
+//     index: 1,
+// }
 
-export default demo;
+const scenes = [scene1, scene2];
+
+export default scenes;

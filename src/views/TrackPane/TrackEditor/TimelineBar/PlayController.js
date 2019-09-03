@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Icon } from 'antd';
 import './timelinebar.css';
 
+const scale = 100;
+
 export default class PlayController extends Component {
 
     constructor(props) {
@@ -27,7 +29,7 @@ export default class PlayController extends Component {
                         this.pauseScene();
                         this.props.setPosition(0);
                     }
-                }.bind(this), index*60));
+                }.bind(this), index*scale));
             }
         } else {
             // pause
@@ -72,15 +74,16 @@ export default class PlayController extends Component {
         if (minutes >= 100) {minutes = minutes%100;}
         if (minutes < 10) {minutes = "0"+minutes;}
         if (seconds < 10) {seconds = "0"+seconds;}
-        if (milliseconds < 10) {milliseconds = "00"+milliseconds;}
-        else if (milliseconds < 100) {milliseconds = "0"+milliseconds;}
+        milliseconds = milliseconds / 100;
+        // if (milliseconds < 10) {milliseconds = "00"+milliseconds;}
+        // else if (milliseconds < 100) {milliseconds = "0"+milliseconds;}
         return minutes+':'+seconds+'.'+milliseconds;
     }
 
     render() {
         const {scenePosition, isScenePerforming, isVideoPerforming, isFirstScene, isLastScene} = this.props;
         // TODO: time
-        const ms = scenePosition * 60;
+        const ms = scenePosition * scale;
         return (
             <div className="play-controller">
                 <div style={{height: 34, width: 60, float: 'left', backgroundColor: 'black', opacity: isVideoPerforming?0.6:1 }} onClick={isVideoPerforming?null:this.playScene}>
