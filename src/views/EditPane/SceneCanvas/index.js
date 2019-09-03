@@ -57,7 +57,6 @@ export default class EditCanvas extends Component {
             var eleIndex = Number(name.split('-')[1]);
             this.props.selectElement(eleIndex, name);
         } else {
-            console.log('unselect')
             this.props.unselectElement();
         }
 

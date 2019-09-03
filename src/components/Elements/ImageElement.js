@@ -59,12 +59,13 @@ export default class ImageElement extends Component {
         // console.log("onTransform");
     }
     onTransformEnd(e) {
-        // console.log("end transform");
         var newEle = this.props.element;
+        console.log("end transform");
+        console.log(e.target.attrs);
         newEle.info().x = e.target.x();
         newEle.info().y = e.target.y();
-        newEle.info().width = e.target.width()*e.target.scaleX();
-        newEle.info().height = e.target.height()*e.target.scaleY();
+        newEle.info().width = newEle.info().width*e.target.scaleX(); //*e.target.scaleX()
+        newEle.info().height = newEle.info().height*e.target.scaleY(); //*e.target.scaleY()
         newEle.info().rotation = e.target.rotation();
         this.props.edit(newEle);
     }
@@ -88,8 +89,6 @@ export default class ImageElement extends Component {
                 draggable = {this.props.draggable}
                 x={this.props.element.info().x}
                 y={this.props.element.info().y}
-                width={this.props.element.info().width}
-                height={this.props.element.info().height}
                 rotation={this.props.element.info().rotation}
                 //draggable
                 onDragStart={this.dragstart}
@@ -102,6 +101,8 @@ export default class ImageElement extends Component {
             >
                 <Image 
                     ref={node=>this.imageref=node}
+                    // width={this.props.element.info().width}
+                    // height={this.props.element.info().height}
                     name={this.props.name}
                     image={this.state.image} 
                 />

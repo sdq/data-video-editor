@@ -45,6 +45,7 @@ const scene1 = new Scene("A man is sitting on the chair and thinking about somet
 scene1.addElement(element0);
 scene1.addElement(element1);
 scene1.addElement(element2);
+scene1.backgroundColor(Color.CLEAR_BLUE);
 
 const demoimage2 = new ImageInfo(
     'woman.png',
@@ -84,6 +85,7 @@ const scene2 = new Scene("A woman is sitting on the ground and thinking about so
 scene2.addElement(element02);
 scene2.addElement(element12);
 scene2.addElement(element22);
+scene2.backgroundImage(MyURL.OSS+"/backgroundImages/starnight.png");
 
 const video = new Video(1);
 video.id(2);

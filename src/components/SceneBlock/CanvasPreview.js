@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import Color from '@/constants/Color';
-import { Stage, Layer, Rect } from 'react-konva';
+import { Stage, Layer } from 'react-konva';
 import ImageElement from '@/components/Elements/ImageElement';
 import TextElement from '@/components/Elements/TextElement';
 import ChartElement from '@/components/Elements/ChartElement';
@@ -11,7 +10,7 @@ export default class CanvasPreview extends Component {
         return (
             <div>
                 <Stage width={192} height={108} scale={{x: 192/800, y:192/800}}>
-                    <Layer>
+                    {/* <Layer>
                         <Rect
                             x={0}
                             y={0}
@@ -19,7 +18,7 @@ export default class CanvasPreview extends Component {
                             height={450}
                             fill={this.props.scene.backgroundColor()}
                         />
-                    </Layer>
+                    </Layer> */}
                     <Layer>
                         {this.props.scene.elements().map(function(element, index) {
                             //console.log(element.info());
