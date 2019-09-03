@@ -1,4 +1,4 @@
-import ActionType from '../constants/ActionType';
+import ActionType from './types';
 
 export const displayStoryline = () => ({
     type: ActionType.DISPLAY_STORYLINE,
@@ -15,5 +15,15 @@ export const displayAnimationTargetArea = (isActive) => ({
 
 export const displayResourceTargetArea = (isActive) => ({
     type: ActionType.DISPLAY_RESOURCE_TARGET_AREA,
+    isActive
+})
+
+export const displayResourcePane = (isActive) => ({
+    type: ActionType.DISPLAY_RESOURCE_PANE,
+    isActive
+})
+
+export const displayToolPane = (isActive) => ({
+    type: ActionType.DISPLAY_TOOL_PANE,
     isActive
 })

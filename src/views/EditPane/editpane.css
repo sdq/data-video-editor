@@ -1,7 +1,4 @@
 #editpane {
-    border-right-style: solid;
-    border-right-width: 1px;
-    border-right-color: #FFC107;
     border-left-style: solid;
     border-left-width: 1px;
     border-left-color: #FFC107;
@@ -10,8 +7,23 @@
 #canvasContainer {
     height: 450px;
     width: 800px;
-    border-style: solid;
+    /* border-style: solid;
     border-color: #FFC107;
-    border-width: 1px;
+    border-width: 1px; */
     margin: 0 auto;
+}
+
+#edittoolbar {
+    height: 50px;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-bottom-color: #FFC107;
+}
+
+#playcontrol {
+    height: 50px;
+    text-align: center;
+    border-top-style: solid;
+    border-top-width: 1px;
+    border-top-color: #FFC107;
 }

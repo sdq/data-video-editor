@@ -79,24 +79,20 @@ export default class EditPane extends Component {
         return (
             <div id="editpane">
                 <HotKeys keyMap={shortcuts} handlers={this.handlers}>
-                    <div style={{ background: '#FFFAEA', height: '50px' }}>
-                        <EditToolBar
-                            copyElement = {this.copyElement}
-                            cutElement = {this.cutElement}
-                            pasteElement = {this.pasteElement}
-                            deleteElement = {this.deleteElement}
-                            copiedElement = {this.state.copiedElement}
-                            { ...this.props }
-                        />
-                    </div>
-                    <div style={{ background: '#fff', height: '450px' }}>
+                    <EditToolBar
+                        copyElement = {this.copyElement}
+                        cutElement = {this.cutElement}
+                        pasteElement = {this.pasteElement}
+                        deleteElement = {this.deleteElement}
+                        copiedElement = {this.state.copiedElement}
+                        { ...this.props }
+                    />
+                    <div style={{ background: '#eee', height: '450px' }}>
                         <SceneCanvas 
                             { ...this.props }
                         />
                     </div>
-                    <div style={{ background: '#FFFAEA', height: '50px' }}>
-                        <PlayControlBar { ...this.props }/>
-                    </div>
+                    <PlayControlBar { ...this.props }/>
                 </HotKeys>
             </div>
         )

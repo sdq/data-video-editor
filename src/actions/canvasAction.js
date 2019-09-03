@@ -1,4 +1,4 @@
-import ActionType from '../constants/ActionType';
+import ActionType from './types';
 
 export const selectElement = (elementIndex, elementName) => ({
     type: ActionType.SELECT_ELEMENT,

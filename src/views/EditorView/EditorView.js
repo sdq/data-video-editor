@@ -17,15 +17,19 @@ const contentHeight = '550px'
 
 export default class EditorView extends Component {
     render() {
+        const {showResourcePane, showToolPane} = this.props;
         return (
             <DndProvider backend={HTML5Backend}>
                 <HeaderBar/>
                 <Layout>
                     <Layout>
                         <Sider 
-                        width={360} 
-                        style={{ background: '#fff', height: contentHeight }} 
-                        // trigger={null} collapsible collapsedWidth={0} collapsed={this.props.isSidebarDisplayed}
+                            width={360} 
+                            style={{ background: '#fff', height: contentHeight }} 
+                            // trigger={null} 
+                            // collapsible 
+                            collapsedWidth={0} 
+                            collapsed={!showResourcePane}
                         >
                             <ResourcePane/>
                         </Sider>
@@ -33,9 +37,12 @@ export default class EditorView extends Component {
                             <EditPane/>
                         </Content>
                         <Sider 
-                        width={300} 
-                        style={{ background: '#fff', height: contentHeight }} 
-                        // trigger={null} collapsible collapsedWidth={0} collapsed={this.props.isSidebarDisplayed}
+                            width={300} 
+                            style={{ background: '#fff', height: contentHeight }} 
+                            // trigger={null} 
+                            // collapsible 
+                            collapsedWidth={0} 
+                            collapsed={!showToolPane}
                         >
                             <ToolPane />
                         </Sider>

@@ -1,4 +1,4 @@
-import ActionType from '../constants/ActionType';
+import ActionType from './types';
 
 export const selectScene = (index) => ({
     type: ActionType.SELECT_SCENE,

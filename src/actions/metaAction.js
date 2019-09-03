@@ -1,4 +1,4 @@
-import ActionType from '../constants/ActionType';
+import ActionType from '@/actions/types';
 
 export const undoCanvas = () => ({
     type: ActionType.UNDO_CANVAS,

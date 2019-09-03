@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import Color from '@/constants/Color';
 import {Button} from 'antd';
+import './editpane.css';
 
 const ButtonGroup = Button.Group;
 
@@ -68,7 +70,7 @@ export default class PlayControlBar extends Component {
     render() {
         const { isVideoPerforming, isPerforming, isLastScene, isFirstScene } = this.props;
         return (
-            <div style = { {textAlign: 'center'} }>
+            <div id='playcontrol' style = { { background: Color.LIGHT_ORANGE} }>
                 <ButtonGroup style = { {margin: '10px 0 0 0'}}>
                     <Button icon="step-backward" style = { {padding: '0 20px 0 20px'} } disabled = {isFirstScene || isPerforming} onClick={this.lastScene}/>
                     <Button icon={isVideoPerforming?"pause":"caret-right"} disabled = {this.props.isScenePerforming} onClick={this.play} style = { {padding: '0 20px 0 20px'} }/>

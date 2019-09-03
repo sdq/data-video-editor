@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Layer, Rect } from 'react-konva';
-import Color from '@/constants/Color';
 
 export default class BackgroundLayer extends Component {
     render() {

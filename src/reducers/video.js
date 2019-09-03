@@ -1,4 +1,4 @@
-import ActionType from '../constants/ActionType';
+import ActionType from '../actions/types';
 import scenes from './demo';
 
 const initialState = {

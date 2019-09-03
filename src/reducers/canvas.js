@@ -1,4 +1,4 @@
-import ActionType from '../constants/ActionType';
+import ActionType from '../actions/types';
 
 const initialState = {
     isElementSelected: false,

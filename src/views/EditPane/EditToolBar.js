@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import {Button} from 'antd';
+import Color from '@/constants/Color';
+import './editpane.css';
 
 const ButtonGroup = Button.Group;
 
@@ -32,7 +34,7 @@ export default class EditToolBar extends Component {
     render() {
         const { isElementSelected, copiedElement, isPerforming } = this.props;
         return (
-            <div> 
+            <div id='edittoolbar' style={{ background: Color.LIGHT_ORANGE }}> 
                 <ButtonGroup style = { {margin: '10px 0px 0px 20px', float:'left'} }>
                     <Button icon="copy" style = { {padding: '0 20px 0 20px'} } onClick={this.copyElement} disabled={!isElementSelected || isPerforming}/>
                     <Button icon="scissor" style = { {padding: '0 20px 0 20px'} } onClick={this.cutElement} disabled={!isElementSelected || isPerforming}/>

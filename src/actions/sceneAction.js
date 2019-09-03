@@ -1,4 +1,4 @@
-import ActionType from '../constants/ActionType';
+import ActionType from './types';
 
 export const setDuration = (sceneIndex, duration) => ({
     type: ActionType.SET_DURATION,

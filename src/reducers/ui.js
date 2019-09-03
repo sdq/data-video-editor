@@ -1,8 +1,10 @@
 import UIMode from '../constants/UIMode';
-import ActionType from '../constants/ActionType';
+import ActionType from '../actions/types';
 
 const initialState = {
     uimode: UIMode.STORYLINE_MODE,
+    showResourcePane: true,
+    showToolPane: true,
     showAnimationTargetArea: false,
     showResourceTargetArea: false,
 }
@@ -40,6 +42,22 @@ export default (state = initialState, action) => {
                 return state;
             } else {
                 newState.showResourceTargetArea = action.isActive;
+                return newState;
+            }
+
+        case ActionType.DISPLAY_RESOURCE_PANE:
+            if (state.showResourcePane === action.isActive) {
+                return state;
+            } else {
+                newState.showResourcePane = action.isActive;
+                return newState;
+            }
+
+        case ActionType.DISPLAY_TOOL_PANE:
+            if (state.showToolPane === action.isActive) {
+                return state;
+            } else {
+                newState.showToolPane = action.isActive;
                 return newState;
             }
 
