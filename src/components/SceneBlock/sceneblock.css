@@ -8,7 +8,7 @@
     margin-left: 8px;
 }
 
-.canvasPreview {
+.canvas-preview {
     height: 108px;
     width: 192px;
     border-style: solid;
@@ -16,7 +16,7 @@
     border-color: #D8D8D8;
 }
 
-.scriptPreview {
+.script-preview {
     margin-top: 8px;
     height: 120px;
     width: 192px;
