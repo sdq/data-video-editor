@@ -46,7 +46,6 @@ export default class TimelineRuler extends Component {
             newX = this.state.sceneWidth;
         }
         const changedPosition = this.keepOneDecimalPoint(newX / this.props.sceneScale);
-        console.log(changedPosition);
         this.props.setPosition(changedPosition);
         this.props.unselectElement();
     }

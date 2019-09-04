@@ -62,8 +62,20 @@ export default class EditCanvas extends Component {
 
         if (e.evt.button === 2) {
             // TODO: right click
+            console.log(name);
         }
     };
+
+    handleStageDblClick(e) {
+        // console.log('dbclick');
+        const name = e.target.name();
+
+        // console.log(name);
+        if (name) {
+            // var eleIndex = Number(name.split('-')[1]);
+            // TODO: show animation
+        }
+    }
 
     animationStart() {
         // TODO: animation test
@@ -104,6 +116,7 @@ export default class EditCanvas extends Component {
                     ref={ref => { this.stageRef = ref; }}
                     width={800} height={450} 
                     onMouseDown={editable?this.handleStageMouseDown:None}
+                    onDblClick={editable?this.handleStageDblClick:None}
                 >
                     <BackgroundLayer 
                         {...this.props}

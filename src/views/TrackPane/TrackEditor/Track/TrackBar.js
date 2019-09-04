@@ -78,7 +78,7 @@ export default class TrackBar extends Component {
     }
 
     render() {
-        let {element, isBarActive, isPerforming, showAnimations, sceneScale} = this.props;
+        let {element, isBarActive, isPerforming, showAnimations} = this.props;
         var color = Color.LIGHT_ORANGE;
         switch (element.type()) {
             case ElementType.IMAGE:
