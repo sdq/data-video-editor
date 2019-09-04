@@ -50,8 +50,8 @@ scene1.backgroundColor(Color.CLEAR_BLUE);
 const demoimage2 = new ImageInfo(
     'woman.png',
     MyURL.OSS+'/images/woman.png',
-    120,
-    80,
+    230,
+    240,
     100,
     100,
     0,
@@ -67,16 +67,16 @@ const demochart2 = new ChartInfo(
           "color": {"value": Color.DEEP_ORANGE},
         }
     },
-    400,
-    80,
+    240,
+    40,
     100,
     100,
     0,
 )
 const demotext2 = new TextInfo(
     "一位女士坐在地上正在思考问题。",
-    260,
-    360,
+    500,
+    380,
 )
 const element02 = new Element(ElementType.CHART, demochart2);
 const element12 = new Element(ElementType.IMAGE, demoimage2);
@@ -85,7 +85,7 @@ const scene2 = new Scene("A woman is sitting on the ground and thinking about so
 scene2.addElement(element02);
 scene2.addElement(element12);
 scene2.addElement(element22);
-scene2.backgroundImage(MyURL.OSS+"/backgroundImages/starnight.png");
+scene2.backgroundImage(MyURL.OSS+"/backgroundImages/s-classroom.png");
 
 const video = new Video(1);
 video.id(2);
