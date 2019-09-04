@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { Icon } from 'antd';
 import './timelinebar.css';
 
-const scale = 100;
-
 export default class PlayController extends Component {
 
     constructor(props) {
@@ -21,15 +19,18 @@ export default class PlayController extends Component {
             this.props.playScene(this.props.sceneIndex);
             const current = this.props.scenePosition;
             const end = this.props.currentScene.duration();
-            const n = (end - current) + 1;
+            const msOffset = (end - current) * 1000;
+            // const widthOffset = (end - current) * this.props.sceneScale;
+            const n = msOffset / 100 + 1; // 100ms 切换一次
             for (let index = 0; index < n; index++) {
                 this.timeouts.push(setTimeout(function () {
-                    this.props.setPosition(current+index);
-                    if (index===(n-1)) {
+                    const position = current + index / 10 ;
+                    this.props.setPosition(position);
+                    if (index === (n-1)) {
                         this.pauseScene();
                         this.props.setPosition(0);
                     }
-                }.bind(this), index*scale));
+                }.bind(this), index * 100));
             }
         } else {
             // pause
@@ -69,7 +70,7 @@ export default class PlayController extends Component {
     ms2time(ms) {
         var minutes   = Math.floor(ms / 60000);
         var seconds = Math.floor((ms - (minutes * 60000)) / 1000);
-        var milliseconds = ms - (minutes * 60000) - (seconds * 1000);
+        var milliseconds = Math.round(ms - (minutes * 60000) - (seconds * 1000));
 
         if (minutes >= 100) {minutes = minutes%100;}
         if (minutes < 10) {minutes = "0"+minutes;}
@@ -83,7 +84,8 @@ export default class PlayController extends Component {
     render() {
         const {scenePosition, isScenePerforming, isVideoPerforming, isFirstScene, isLastScene} = this.props;
         // TODO: time
-        const ms = scenePosition * scale;
+        const ms = scenePosition * 1000;
+        //console.log(scenePosition);
         return (
             <div className="play-controller">
                 <div style={{height: 34, width: 60, float: 'left', backgroundColor: 'black', opacity: isVideoPerforming?0.6:1 }} onClick={isVideoPerforming?null:this.playScene}>

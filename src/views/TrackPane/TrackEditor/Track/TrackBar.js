@@ -11,9 +11,9 @@ export default class TrackBar extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            sceneWidth: props.currentScene.duration(),
-            width: props.element.sduration(),
-            x: props.element.sstart(),
+            sceneWidth: props.currentScene.duration() * props.sceneScale,
+            width: props.element.sduration() * props.sceneScale,
+            x: props.element.sstart() * this.props.sceneScale,
         };
         this.clickBar = this.clickBar.bind(this);
         this.leaveBar = this.leaveBar.bind(this);
@@ -23,7 +23,7 @@ export default class TrackBar extends Component {
 
     componentWillReceiveProps(props) {
         const sceneDuration = props.currentScene.duration();
-        const sceneWidth = sceneDuration;
+        const sceneWidth = sceneDuration * props.sceneScale;
         var newWidth = this.state.width;
         var newX = this.state.x;
         if (sceneWidth < this.state.x) {
@@ -35,7 +35,7 @@ export default class TrackBar extends Component {
             this.updateElement(this.state.x, newWidth, sceneDuration);
         }
         this.setState({
-            sceneWidth: sceneDuration,
+            sceneWidth: sceneWidth,
             width: newWidth,
             x: newX,
         })
@@ -50,15 +50,18 @@ export default class TrackBar extends Component {
     }
 
     dragBar(x) {
-        this.updateElement(x, this.props.element.sduration(), this.props.currentScene.duration());
+        const newX = x / this.props.sceneScale;
+        this.updateElement(newX, this.props.element.sduration(), this.props.currentScene.duration());
         this.setState({ x: x });
     }
 
-    resizeBar(x, duration) {
-        this.updateElement(x, duration, this.props.currentScene.duration());
+    resizeBar(x, width) {
+        const newX = x / this.props.sceneScale;
+        const duration = width / this.props.sceneScale;
+        this.updateElement(newX, duration, this.props.currentScene.duration());
         this.setState({
             x: x,
-            width: duration,
+            width: width,
         });
     }
 
@@ -75,7 +78,7 @@ export default class TrackBar extends Component {
     }
 
     render() {
-        let {element, isBarActive, isPerforming, showAnimations} = this.props;
+        let {element, isBarActive, isPerforming, showAnimations, sceneScale} = this.props;
         var color = Color.LIGHT_ORANGE;
         switch (element.type()) {
             case ElementType.IMAGE:
@@ -116,7 +119,7 @@ export default class TrackBar extends Component {
                     //     x: position.x,
                     //     width: parseInt(ref.style.width),
                     // });
-                    this.resizeBar(position.x, parseInt(ref.style.width));
+                    this.resizeBar(position.x, parseFloat(ref.style.width));
                 }}
             />
         } else {

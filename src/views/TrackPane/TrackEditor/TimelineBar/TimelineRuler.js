@@ -14,7 +14,7 @@ export default class TimelineRuler extends Component {
         this.props.setPosition(0);
         this.state = {
             isNeedleActive: false,
-            sceneWidth: props.currentScene.duration(),
+            sceneWidth: props.currentScene.duration() * props.sceneScale,
         };
         this.clickNeedle = this.clickNeedle.bind(this);
         this.clickRuler = this.clickRuler.bind(this);
@@ -22,12 +22,12 @@ export default class TimelineRuler extends Component {
 
     componentWillReceiveProps(props) {
         const sceneDuration = props.currentScene.duration();
-        const sceneWidth = sceneDuration
+        const sceneWidth = sceneDuration * props.sceneScale;
         if (sceneWidth < props.scenePosition) {
             props.setPosition(0);
         }
         this.setState({
-            sceneWidth: sceneDuration,
+            sceneWidth: sceneWidth,
         })
     }
 
@@ -45,22 +45,34 @@ export default class TimelineRuler extends Component {
         } else if ( newX > this.state.sceneWidth) {
             newX = this.state.sceneWidth;
         }
-        this.props.setPosition(newX);
+        const changedPosition = this.keepOneDecimalPoint(newX / this.props.sceneScale);
+        console.log(changedPosition);
+        this.props.setPosition(changedPosition);
         this.props.unselectElement();
     }
 
     changeNeedlePlace(x) {
-        this.props.setPosition(x);
+        const changedPosition = this.keepOneDecimalPoint(x / this.props.sceneScale);
+        this.props.setPosition(changedPosition);
         this.props.unselectElement();
     }
 
+    keepOneDecimalPoint(x) {
+        return Math.floor(x * 10) / 10;
+    }
+
     ruler() {
-        const n = this.state.sceneWidth / 20 - 1;
+        var step = this.props.sceneScale;
+        var gap = 10;
+        if (this.props.sceneScale <= 10) {
+            step = step * gap;
+        }
+        const n = (this.state.sceneWidth / step) * 5 - 1;
         let rulings = [<div key={-1} style={{height: 2, width: 2, float: 'left', backgroundColor: 'black'}}/>];
         for (let index = 0; index < n; index++) {
             rulings.push(
-                <div key={index} style={{height: 2, width: 20, float: 'left', backgroundColor: 'white'}}>
-                    <div style={{height: 2, width: 18, float: 'left', opacity: 0}}/>
+                <div key={index} style={{height: 2, width: step / 5, float: 'left', backgroundColor: 'white'}}>
+                    <div style={{height: 2, width: (step / 5) - 2, float: 'left', opacity: 0}}/>
                     <div style={{height: 2, width: 2, float: 'left', backgroundColor: 'black'}}/>
                 </div>
             ) 
@@ -69,16 +81,21 @@ export default class TimelineRuler extends Component {
     }
 
     timeMarks() {
-        const n = this.state.sceneWidth / 100;
-        let timeMarks = [<div key={0} style={{height: 2, width: 100, float: 'left', backgroundColor: 'transparent'}}>
-            <div style={{height: 2, width: 98, float: 'left', opacity: 0}}/>
+        var step = this.props.sceneScale;
+        var gap = 10;
+        if (this.props.sceneScale <= 10) {
+            step = step * gap;
+        }
+        const n = this.state.sceneWidth / step;
+        let timeMarks = [<div key={0} style={{height: 2, width: step, float: 'left', backgroundColor: 'transparent'}}>
+            <div style={{height: 2, width: step - 2, float: 'left', opacity: 0}}/>
             <p style={{marginTop: -5, marginLeft: -6, float: 'left', fontSize: '10px'}}>0s</p>
         </div>];
         for (let index = 1; index < n; index++) {
             timeMarks.push(
-                <div key={index} style={{height: 2, width: 100, float: 'left', backgroundColor: 'transparent'}}>
-                    <div style={{height: 2, width: 98, float: 'left', opacity: 0}}/>
-                    <p style={{marginTop: -5, marginLeft: -10, float: 'left', fontSize: '10px'}}>{index*10}s</p>
+                <div key={index} style={{height: 2, width: step, float: 'left', backgroundColor: 'transparent'}}>
+                    <div style={{height: 2, width: step - 2, float: 'left', opacity: 0}}/>
+                    <p style={{marginTop: -5, marginLeft: -10, float: 'left', fontSize: '10px'}}>{index * gap}s</p>
                 </div>
             )
         }
@@ -86,13 +103,14 @@ export default class TimelineRuler extends Component {
     }
 
     render() {
-        const {scenePosition, isPerforming} = this.props;
+        const {scenePosition, isPerforming, sceneScale} = this.props;
         var needle;
+        const scenePositionWithScale = scenePosition * sceneScale;
         if (this.state.isNeedleActive) {
             needle = <Rnd
                 style={{zIndex: 2}}
                 size={{ width: width, height: height }}
-                position={{ x: scenePosition, y: 0 }}
+                position={{ x: scenePositionWithScale, y: 0 }}
                 bounds='parent'
                 disableDragging={isPerforming}
                 enableResizing={{}}
@@ -105,7 +123,7 @@ export default class TimelineRuler extends Component {
                 <Needle/>
             </Rnd>
         } else {
-            needle = <div style={{marginLeft: scenePosition, height: height, width: width, position:'absolute', zIndex: 2}} onClick = {this.clickNeedle} onMouseOver = {this.clickNeedle}>
+            needle = <div style={{marginLeft: scenePositionWithScale, height: height, width: width, position:'absolute', zIndex: 2}} onClick = {this.clickNeedle} onMouseOver = {this.clickNeedle}>
                 <Needle/>
             </div>
         }

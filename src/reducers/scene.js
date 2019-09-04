@@ -2,7 +2,7 @@ import ActionType from '../actions/types';
 
 const initialState = {
     position: 0,
-    scale: 100,
+    scale: 10,
 }
 
 export default (state = initialState, action) => {

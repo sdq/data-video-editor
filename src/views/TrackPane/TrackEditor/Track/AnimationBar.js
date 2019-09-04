@@ -7,7 +7,7 @@ export default class AnimationBar extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            sceneWidth: props.currentScene.duration(),
+            sceneWidth: props.currentScene.duration() * props.sceneScale,
             width: props.element.sduration(),
             x: props.element.sstart(),
         };
@@ -15,7 +15,7 @@ export default class AnimationBar extends Component {
 
     componentWillReceiveProps(props) {
         const sceneDuration = props.currentScene.duration();
-        const sceneWidth = sceneDuration;
+        const sceneWidth = sceneDuration * props.sceneScale;
         var newWidth = this.state.width;
         var newX = this.state.x;
         if (sceneWidth < this.state.x) {

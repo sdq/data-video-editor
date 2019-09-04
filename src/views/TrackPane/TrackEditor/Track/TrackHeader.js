@@ -46,7 +46,7 @@ export default class TrackHeader extends Component {
 
     render() {
         const {isPerforming, sceneScale} = this.props;
-        const width = this.props.currentScene.duration();
+        const width = this.props.currentScene.duration() * sceneScale;
         var bar;
         if (this.state.isBarActive) {
             bar = <Rnd
@@ -61,8 +61,8 @@ export default class TrackHeader extends Component {
                 }}
                 enableUserSelectHack={false}
                 onResizeStop={(e, direction, ref, delta, position) => {
-                    const newWidth = parseInt(ref.style.width)-offset
-                    this.changeDuration(parseInt(newWidth))
+                    const newWidth = parseFloat(ref.style.width)-offset;
+                    this.changeDuration(parseFloat(newWidth) / sceneScale);
                 }}
             >
                 <div style={{backgroundColor: 'black', width: 6, height: 36, marginLeft: 0, marginTop: 0, float: 'left'}}/>

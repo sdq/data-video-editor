@@ -51,26 +51,6 @@ export default class SceneTool extends Component {
                     <TextArea style={{ padding: '5px 5px 0 5px'}} rows={5} value={this.props.currentScene.script()} onChange={this.handleChange}/>
                     <Button style={{float: 'right', margin: "10px 0 0 0"}} onClick={this.addText}>Add</Button>
                 </Row>
-                <Divider>Duration</Divider>
-                <Row style={{margin: '10px 0px 0px 10px', fontSize: '14px'}}>
-                    <Col span={14}>
-                        <Slider
-                            min={1}
-                            max={20}
-                            onChange={this.onChange}
-                            value={typeof this.props.currentScene.duration() === 'number' ? this.props.currentScene.duration() : 0}
-                        />
-                    </Col>
-                    <Col span={10}>
-                        <InputNumber
-                            min={1}
-                            max={20}
-                            style={{ marginLeft: 8 }}
-                            value={this.props.currentScene.duration()}
-                            onChange={this.onChange}
-                        />
-                    </Col>
-                </Row>
             </div>
         )
     }
