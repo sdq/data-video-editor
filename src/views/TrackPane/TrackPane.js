@@ -32,7 +32,10 @@ export default class TrackPane extends Component {
                             <SceneBlock index={this.props.sceneIndex} scene={this.props.currentScene} isSelected={true} { ...this.props }/>
                         </Sider>
                         <Content style={{backgroundColor: Color.GRAY, height: 280, paddingLeft: '8px', paddingTop: '8px'}}>
-                            <TrackEditor {...this.props}/>
+                            <TrackEditor 
+                                sceneWidth={this.props.currentScene.duration() * this.props.sceneScale}
+                                {...this.props}
+                            />
                         </Content>
                     </Layout>
                 </div> 

@@ -36,7 +36,7 @@ export default class EditableLayer extends Component {
     }
 
     isElementDisplay(element) {
-        if (this.props.scenePosition >= element.sstart() && this.props.scenePosition <= element.sstart()+element.sduration()) {
+        if (this.props.scenePosition >= element.start() && this.props.scenePosition <= element.start()+element.duration()) {
             return true;
         } else {
             return false;

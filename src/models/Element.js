@@ -9,8 +9,8 @@ export class Element {
         this._style = "";
         this._loop = "loop";
         this._index = 0;
-        this._sstart = 0;
-        this._sduration = 0;
+        this._start = 0;
+        this._duration = 0;
         this._animations = [];
         this.id = function() {
             return this._id;
@@ -81,21 +81,19 @@ export class Element {
                 return this;
             }
         };
-        this.sstart = function(sstart) {
-            //set scene start time
-            if (sstart == null){
-                return this._sstart;
+        this.start = function(start) {
+            if (start == null){
+                return this._start;
             } else {
-                this._sstart = sstart;
+                this._start = start;
                 return this;
             }
         };
-        this.sduration = function(sduration) {
-            //set scene duration
-            if (sduration == null){
-                return this._sduration;
+        this.duration = function(duration) {
+            if (duration == null){
+                return this._duration;
             } else {
-                this._sduration = sduration;
+                this._duration = duration;
                 return this;
             }
         };
@@ -104,6 +102,8 @@ export class Element {
             return this._animations;
         };
         this.add = function(animation) {
+            animation.start(0);
+            animation.duration(this.duration());
             this._animations.push(animation);
             return this;
         };

@@ -7,30 +7,25 @@ export default class AnimationBar extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            sceneWidth: props.currentScene.duration() * props.sceneScale,
-            width: props.element.sduration(),
-            x: props.element.sstart(),
+            elementWidth: props.element.duration() * props.sceneScale,
+            width: props.animation.duration() * props.sceneScale,
+            x: props.animation.start() * props.sceneScale,
         };
     }
 
-    componentWillReceiveProps(props) {
-        const sceneDuration = props.currentScene.duration();
-        const sceneWidth = sceneDuration * props.sceneScale;
-        var newWidth = this.state.width;
-        var newX = this.state.x;
-        if (sceneWidth < this.state.x) {
-            newWidth = sceneWidth;
-            newX = 0;
-            this.updateElement(newX, newWidth, sceneDuration);
-        } else if (sceneWidth < this.state.x + this.state.width) {
-            newWidth = sceneWidth - newX;
-            this.updateElement(this.state.x, newWidth, sceneDuration);
-        }
-        this.setState({
-            sceneWidth: sceneDuration,
-            width: newWidth,
-            x: newX,
-        })
+    adjustAnimationDuration(x, duration, elementStart, elementDuration) {
+        const newScene = Object.assign({},this.props.currentScene);
+        const newElement = Object.assign({},this.props.element);
+        newElement.start(elementStart);
+        newElement.duration(elementDuration);
+        var newAnimation = Object.assign({},this.props.animation);
+        newAnimation.start(x);
+        newAnimation.duration(duration);
+        newElement.update(newAnimation, this.props.animationIndex);
+        newScene.updateElement(newElement, this.props.index);
+        this.props.updateScene(this.props.sceneIndex, newScene);
+        const elementName = this.props.sceneIndex + '-' + this.props.index;
+        this.props.updateElement(newElement, this.props.index, elementName);
     }
     
     render() {

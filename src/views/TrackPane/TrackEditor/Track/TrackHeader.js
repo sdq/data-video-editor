@@ -35,10 +35,26 @@ export default class TrackHeader extends Component {
     }
 
     changeDuration(value) {
-        //TODO: transfer from width to duration
         const duration = value;
         const newScene = Object.assign({},this.props.currentScene);
         newScene.duration(duration);
+        const elements = newScene.elements();
+        for (let index = 0; index < elements.length; index++) {
+            const element = Object.assign({},elements[index]);
+            var newStart = element.start();
+            var newDuration;
+            if (duration < element.start()) {
+                newDuration = duration;
+                newStart = 0;
+                element.start(newStart);
+                element.duration(newDuration);
+                newScene.updateElement(element, index);
+            } else if (duration < element.start() + element.duration()) {
+                newDuration = duration - newStart;
+                element.duration(newDuration);
+                newScene.updateElement(element, index);
+            }
+        }
         this.props.updateScene(this.props.sceneIndex, newScene);
         // TODO: setDuration Action
 

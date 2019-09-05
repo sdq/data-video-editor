@@ -48,12 +48,12 @@ export default class Track extends Component {
 
     render() {
         var height = rowHeight;
-        let {element, index, isPerforming} = this.props;
+        let {element, index, isPerforming, sceneScale} = this.props;
         let animations = element.animations();
         var animationTracks = null;
         if (this.state.showAnimations) {
             height += rowHeight * animations.length
-            animationTracks = animations.map((animation, index) => <AnimationTrack key={index} animation={animation} {...this.props}/>)
+            animationTracks = animations.map((animation, index) => <AnimationTrack key={index} animationIndex={index} animation={animation} {...this.props}/>)
         }
         return (
             <Draggable 
@@ -87,7 +87,8 @@ export default class Track extends Component {
                                         <TrackBar 
                                             clickBar={this.clickBar} 
                                             leaveBar={this.unactiveBars}
-                                            showAnimations={this.state.showAnimations} 
+                                            x={element.start() * sceneScale}
+                                            width={element.duration() * sceneScale}
                                             {...this.props}
                                         />
                                     </Content>
