@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
-import { Layout, Slider, Icon } from 'antd';
+import { Layout, Input } from 'antd';
 import { Rnd } from "react-rnd";
 import './track.css';
 
 const { Sider, Content } = Layout;
+const { Search } = Input;
 
 const x = 0
 const y = 0;
 const height = 36
 const offset = 12
-const min = 1;
-const max = 10;
 
 export default class TrackHeader extends Component {
 
@@ -81,13 +80,13 @@ export default class TrackHeader extends Component {
                     this.changeDuration(parseFloat(newWidth) / sceneScale);
                 }}
             >
-                <div style={{backgroundColor: 'black', width: 6, height: 36, marginLeft: 0, marginTop: 0, float: 'left'}}/>
-                <div style={{backgroundColor: 'black', width: 6, height: 36, marginRight: 0, marginTop: 0, float: 'right'}}/>
+                <div style={{backgroundColor: 'black', borderTopLeftRadius: 4, borderBottomLeftRadius: 4, width: 6, height: 36, marginLeft: 0, marginTop: 0, float: 'left'}}/>
+                <div style={{backgroundColor: 'black', width: 6, borderTopRightRadius: 4, borderBottomRightRadius: 4, height: 36, marginRight: 0, marginTop: 0, float: 'right'}}/>
             </Rnd>
         } else {
             bar = <div style={{marginLeft: 0, height: height, width: width + offset ,backgroundColor: 'white'}} onClick = {this.clickBar} onMouseOver = {this.clickBar}>
-                <div style={{backgroundColor: 'black', width: 6, height: 36, marginLeft: 0, marginTop: 0, float: 'left'}}/>
-                <div style={{backgroundColor: 'black', width: 6, height: 36, marginRight: 0, marginTop: 0, float: 'right'}}/>
+                <div style={{backgroundColor: 'black', width: 6, borderTopLeftRadius: 4, borderBottomLeftRadius: 4, height: 36, marginLeft: 0, marginTop: 0, float: 'left'}}/>
+                <div style={{backgroundColor: 'black', width: 6, height: 36, borderTopRightRadius: 4, borderBottomRightRadius: 4, marginRight: 0, marginTop: 0, float: 'right'}}/>
             </div>
         }
         return (
@@ -95,17 +94,12 @@ export default class TrackHeader extends Component {
                 <Layout>
                     <Sider width="200px">
                         <div className="track-header-info">
-                            {/* <Search
+                            <Search
                                 placeholder="search"
                                 onSearch={value => console.log(value)}
                                 style={{ width: 190, float: 'left' }}
                                 size="small"
-                            /> */}
-                            <div className="icon-wrapper">
-                                <Icon type="minus" />
-                                <Slider onChange={this.handleScaleChange} value={sceneScale} min={min} max={max}/>
-                                <Icon type="plus" />
-                            </div>
+                            />
                         </div>
                     </Sider>
                     <Content>
