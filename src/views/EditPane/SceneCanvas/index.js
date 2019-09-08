@@ -16,20 +16,6 @@ export default class EditCanvas extends Component {
         this.state = {
             showAssistLines: false,
         };
-        this.elementNodes = new Array(props.currentElements.length).fill({});
-        this.animations = new Array(props.currentElements.length).fill({});
-    }
-
-    componentDidMount() {
-        
-    }
-
-    componentWillReceiveProps(props) {
-        // this.animationStart()
-    }
-
-    componentWillUnmount() {
-        // this.animationStop()
     }
 
     displayAssistLines(active) {
