@@ -4,15 +4,6 @@ import ElementType from '@/constants/ElementType';
 
 export default class AnimationBar extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            elementWidth: props.element.duration() * props.sceneScale,
-            width: props.animation.duration() * props.sceneScale,
-            x: props.animation.start() * props.sceneScale,
-        };
-    }
-
     adjustAnimationDuration(x, duration, elementStart, elementDuration) {
         const newScene = Object.assign({},this.props.currentScene);
         const newElement = Object.assign({},this.props.element);
@@ -29,7 +20,7 @@ export default class AnimationBar extends Component {
     }
     
     render() {
-        let {element} = this.props;
+        let {element, elementX, elementWidth, x, width} = this.props;
         var color = Color.LIGHT_ORANGE;
         switch (element.type()) {
             case ElementType.IMAGE:
@@ -48,12 +39,16 @@ export default class AnimationBar extends Component {
             default:
                 break;
         }
-        var bar = <div style={{marginLeft: this.state.x, height: 24, width: this.state.width ,backgroundColor: color}} onClick = {this.clickBar} onMouseOver = {this.clickBar}/>
+        var bar = <div 
+            style={{marginLeft: x, height: 24, width: width ,backgroundColor: color}} 
+            // onClick = {this.clickBar} 
+            // onMouseOver = {this.clickBar}
+            />
         return (
             <div 
                 style={{padding: 6}}
             >
-                <div id={"bar-container-"+this.props.element.id()} style={{height: 24, width: this.state.sceneWidth, backgroundColor:'#fff'}}>
+                <div id={"bar-container-"+this.props.element.id()} style={{height: 24, marginLeft: elementX, width: elementWidth, backgroundColor:'#fff'}}>
                     {bar}
                 </div>
             </div>

@@ -22,7 +22,7 @@ export default class Animation {
             }
         };
         this.start = function(start) {
-            if (type == null){
+            if (start == null){
                 return this._start;
             } else {
                 this._start = start;
@@ -30,7 +30,7 @@ export default class Animation {
             }
         };
         this.duration = function(duration) {
-            if (type == null){
+            if (duration == null){
                 return this._duration;
             } else {
                 this._duration = duration;

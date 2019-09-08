@@ -104,6 +104,7 @@ export class Element {
         this.add = function(animation) {
             animation.start(0);
             animation.duration(this.duration());
+            console.log(animation)
             this._animations.push(animation);
             return this;
         };

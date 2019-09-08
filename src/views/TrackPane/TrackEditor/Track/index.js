@@ -53,7 +53,16 @@ export default class Track extends Component {
         var animationTracks = null;
         if (this.state.showAnimations) {
             height += rowHeight * animations.length
-            animationTracks = animations.map((animation, index) => <AnimationTrack key={index} animationIndex={index} animation={animation} {...this.props}/>)
+            animationTracks = animations.map((animation, index) => <AnimationTrack 
+                key={index} 
+                animationIndex={index} 
+                animation={animation} 
+                elementWidth={element.duration()*sceneScale}
+                elementX={element.start()*sceneScale}
+                width={animation.duration()*sceneScale}
+                x={animation.start()*sceneScale}
+                {...this.props}
+            />)
         }
         return (
             <Draggable 
