@@ -4,6 +4,7 @@ import { Stage } from 'react-konva';
 import InteractionArea from './InteractionArea';
 import EditableLayer from './EditableLayer';
 import BackgroundLayer from './BackgroundLayer';
+import AnimationLayer from './AnimationLayer';
 import './scenecanvas.css';
 import { None } from 'vega';
 import _ from 'lodash';
@@ -77,35 +78,6 @@ export default class EditCanvas extends Component {
         }
     }
 
-    animationStart() {
-        // TODO: animation test
-        var period = 3000;
-        for (let index = 0; index < this.props.currentElements.length; index++) {
-            if (_.isEmpty(this.elementNodes[index])) {
-                continue;
-            }
-            // this.animations[index] = new Konva.Animation(frame => {
-            //     var angleDiff = (frame.timeDiff * angularSpeed) / 1000;
-            //     this.elementNodes[index].rotate(angleDiff);
-            // }, this.animationLayer);
-            console.log(this.elementNodes);
-            this.animations[index] = new Konva.Animation(function(frame) {
-                var scale = Math.abs(Math.sin((frame.time * 2 * Math.PI) / period)) + 0.001;
-                this.elementNodes[index].scale({ x: scale, y: scale });
-            }.bind(this), this.animationLayer);
-            this.animations[index].start();
-        }
-    }
-
-    animationStop() {
-        for (let index = 0; index < this.props.currentElements.length; index++) {
-            if (_.isEmpty(this.animation[index])) {
-                continue;
-            }
-            this.animations[index].stop();
-        }
-    }
-
     render() {
         const { isPerforming } = this.props;
         const editable = !isPerforming;
@@ -125,6 +97,9 @@ export default class EditCanvas extends Component {
                         displayAssistLines={(active) => this.displayAssistLines(active)} 
                         {...this.props}
                     />
+                    {/* <AnimationLayer
+                        {...this.props}
+                    /> */}
                 </Stage>
             </div>
         )
