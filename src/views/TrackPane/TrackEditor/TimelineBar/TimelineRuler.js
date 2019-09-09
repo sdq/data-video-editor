@@ -3,7 +3,7 @@ import { Rnd } from "react-rnd";
 import Needle from './Needle';
 import './timelinebar.css';
 
-const height = 34;
+const height = 24;
 const width = 12;
 const offset = 6;
 
@@ -58,13 +58,13 @@ export default class TimelineRuler extends Component {
             step = step * gap;
         }
         const n = (this.props.screenWidth / step - 1) * 5;
-        let rulings = [<div key={-1} style={{height: 10, width: 2, float: 'left', backgroundColor: 'gray'}}/>];
+        let rulings = [<div key={-1} style={{marginTop: 4, height: 6, width: 2, float: 'left', backgroundColor: 'gray'}}/>];
         for (let index = 0; index < n; index++) {
             if ((index+1) % 5 === 0) {
                 rulings.push(
                     <div key={index} style={{height: 4, width: step / 5, float: 'left', backgroundColor: 'white'}}>
                         <div style={{height: 10, width: (step / 5) - 2, float: 'left', opacity: 0}}/>
-                        <div style={{height: 10, width: 2, float: 'left', backgroundColor: 'gray'}}/>
+                        <div style={{marginTop: 4, height: 6, width: 2, float: 'left', backgroundColor: 'gray'}}/>
                     </div>
                 ) 
             } else {
@@ -134,15 +134,15 @@ export default class TimelineRuler extends Component {
                     style={{height: height, width: offset + this.props.screenWidth + offset, backgroundColor:'#fff'}} 
                     
                 >
-                    <div style={{marginLeft: offset-1, marginTop: 6, marginRight: -offset, backgroundColor: 'transparent', position:'absolute', zIndex: 0}}>
+                    <div style={{marginLeft: offset-1, marginTop: 4, marginRight: -offset, backgroundColor: 'transparent', position:'absolute', zIndex: 0}}>
                         {this.timeMarks()}
                     </div>
-                    <div style={{marginLeft: offset-1, marginTop: 24, backgroundColor: 'transparent', position:'absolute', zIndex: 0}}>
+                    <div style={{marginLeft: offset-1, marginTop: 14, backgroundColor: 'transparent', position:'absolute', zIndex: 0}}>
                         {this.ruler()}
                     </div>
                     <div
                         id={'timeline-ruler-clickable-area'} 
-                        style={{height: height, width: offset + this.props.screenWidth + offset, position:'absolute', zIndex: 1, opacity: 1}}
+                        style={{height: height, width: offset + this.props.screenWidth + offset, position:'absolute', zIndex: 1, opacity: 0}}
                         onClick={isPerforming?null:e=>this.clickRuler(e)}
                     />
                     {needle}

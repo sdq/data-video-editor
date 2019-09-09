@@ -1,5 +1,5 @@
 .track {
-    height: 36px;
+    height: 34px;
     background-color: #eeeeee;
     border-style: solid;
     border-width: 1px;
@@ -7,7 +7,7 @@
 }
 
 .trackinfo {
-    height: 36px;
+    height: 34px;
     width: 200px;
     border-bottom-color: #d8d8d8;
     border-bottom-style: solid;
@@ -16,7 +16,7 @@
 }
 
 .track-header {
-    height: 36px;
+    height: 34px;
     background-color: #eeeeee;
     border-style: solid;
     border-width: 1px;
@@ -25,7 +25,7 @@
 
 .track-header-info {
     background-color: #ffffff;
-    height: 36px;
+    height: 34px;
     width: 200px;
     border-bottom-color: #d8d8d8;
     border-bottom-style: solid;

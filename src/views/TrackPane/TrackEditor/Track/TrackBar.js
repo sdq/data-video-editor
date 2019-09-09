@@ -4,7 +4,7 @@ import Color from '@/constants/Color';
 import ElementType from '@/constants/ElementType';
 
 const y = 0;
-const height = 24;
+const height = 22;
 
 export default class TrackBar extends Component {
 
@@ -125,13 +125,13 @@ export default class TrackBar extends Component {
                 }}
             />
         } else {
-            bar = <div style={{marginLeft: this.props.x, height: 24, width: this.props.width ,backgroundColor: color}} onClick = {this.clickBar} onMouseOver = {this.clickBar}/>
+            bar = <div style={{marginLeft: this.props.x, height: 22, width: this.props.width ,backgroundColor: color}} onClick = {this.clickBar} onMouseOver = {this.clickBar}/>
         }
         return (
             <div 
                 style={{padding: 6}}
             >
-                <div id={"bar-container-"+this.props.element.id()} style={{height: 24, width: this.props.screenWidth, backgroundColor:'#fff'}}>
+                <div id={"bar-container-"+this.props.element.id()} style={{height: 22, width: this.props.screenWidth, backgroundColor:'#fff'}}>
                     {bar}
                 </div>
             </div>

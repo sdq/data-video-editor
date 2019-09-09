@@ -10,7 +10,7 @@ export default class AnimationTrack extends Component {
     render() {
         return (
             <div className="track">
-                <Layout style={{ background: '#eee', height: '36px' }}>
+                <Layout style={{ background: '#eee', height: '34px' }}>
                     <Sider width="200px">
                         <AnimationInfo 
                             {...this.props}

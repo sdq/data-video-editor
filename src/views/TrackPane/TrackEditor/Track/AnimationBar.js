@@ -4,7 +4,7 @@ import Color from '@/constants/Color';
 import ElementType from '@/constants/ElementType';
 
 const y = 0;
-const height = 24;
+const height = 22;
 
 export default class AnimationBar extends Component {
 
@@ -70,11 +70,6 @@ export default class AnimationBar extends Component {
             default:
                 break;
         }
-        // var bar = <div 
-        //     style={{marginLeft: x, height: 24, width: width ,backgroundColor: color}} 
-        //     // onClick = {this.clickBar} 
-        //     // onMouseOver = {this.clickBar}
-        //     />
 
         var bar;
         if (isAnimationBarActive && !isPerforming) {
@@ -97,7 +92,7 @@ export default class AnimationBar extends Component {
             />
         } else {
             bar = <div 
-            style={{marginLeft: x, height: 24, width: width ,backgroundColor: color}} 
+            style={{marginLeft: x, height: 22, width: width ,backgroundColor: color}} 
             onClick = {this.clickBar} 
             onMouseOver = {this.clickBar}
             />
@@ -106,7 +101,7 @@ export default class AnimationBar extends Component {
             <div 
                 style={{padding: 6}}
             >
-                <div id={"bar-container-"+this.props.element.id()} style={{height: 24, marginLeft: elementX, width: elementWidth, backgroundColor:'#fff'}} onMouseLeave={this.leaveBar}>
+                <div id={"bar-container-"+this.props.element.id()} style={{height: 22, marginLeft: elementX, width: elementWidth, backgroundColor:'#fff'}} onMouseLeave={this.leaveBar}>
                     {bar}
                 </div>
             </div>

@@ -8,7 +8,7 @@ import './track.css';
 
 const { Sider, Content } = Layout;
 
-const rowHeight = 36;
+const rowHeight = 34;
 const getItemStyle = (isDragging, draggableStyle) => ({
     background: isDragging ? "lightgreen" : "grey",
     ...draggableStyle
@@ -104,7 +104,7 @@ export default class Track extends Component {
                     >
                         <div style={{height: height, backgroundColor: '#fff'}}>
                             <div className="track">
-                                <Layout style={{ background: '#eee', height: '36px' }}>
+                                <Layout style={{ background: '#eee', height: '34px' }}>
                                     <Sider width="200px" {...provided.dragHandleProps} onClick={this.clickTrack}
                                     >
                                         <TrackInfo 
