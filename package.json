@@ -26,6 +26,7 @@
     "react-konva": "^16.8.7-3",
     "react-lazyload": "^2.6.2",
     "react-redux": "^7.1.0",
+    "react-resize-detector": "^4.2.0",
     "react-rnd": "^10.0.0",
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.0.1",
