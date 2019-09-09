@@ -30,8 +30,8 @@ export default class TimelineRuler extends Component {
         var newX = clickPosition - offset;
         if (newX < 0) {
             newX = 0
-        } else if ( newX > this.props.screenWidth) {
-            newX = this.props.screenWidth;
+        } else if ( newX > this.props.sceneWidth) {
+            newX = this.props.sceneWidth;
         }
         const changedPosition = this.keepOneDecimalPoint(newX / this.props.sceneScale);
         this.props.setPosition(changedPosition);
@@ -39,7 +39,10 @@ export default class TimelineRuler extends Component {
     }
 
     changeNeedlePlace(x) {
-        const changedPosition = this.keepOneDecimalPoint(x / this.props.sceneScale);
+        let changedPosition = this.keepOneDecimalPoint(x / this.props.sceneScale);
+        if (changedPosition > this.props.currentScene.duration()) {
+            changedPosition = this.props.currentScene.duration();
+        }
         this.props.setPosition(changedPosition);
         this.props.unselectElement();
     }
@@ -139,7 +142,7 @@ export default class TimelineRuler extends Component {
                     </div>
                     <div
                         id={'timeline-ruler-clickable-area'} 
-                        style={{height: height, width: offset + this.props.screenWidth + offset, position:'absolute', zIndex: 1, opacity: 0}}
+                        style={{height: height, width: offset + this.props.screenWidth + offset, position:'absolute', zIndex: 1, opacity: 1}}
                         onClick={isPerforming?null:e=>this.clickRuler(e)}
                     />
                     {needle}

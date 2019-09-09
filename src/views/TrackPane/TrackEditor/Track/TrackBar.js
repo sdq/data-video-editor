@@ -37,7 +37,24 @@ export default class TrackBar extends Component {
 
     adjustElementDuration(x, duration, sceneDuration) {
         const newScene = Object.assign({},this.props.currentScene);
-        newScene.duration(sceneDuration);
+        // let newSceneDuration = sceneDuration;
+        // if ((x + duration) > sceneDuration) {
+        //     newSceneDuration = x + duration;
+        // }
+        let newSceneDuration = 0
+        for (let index = 0; index < newScene.elements().length; index++) {
+            const element = newScene.elements()[index];
+            console.log(element);
+            let elementEnd = element.start() + element.duration();
+            console.log(elementEnd);
+            if (index === this.props.index) {
+                elementEnd = x + duration;
+            }
+            if (elementEnd > newSceneDuration) {
+                newSceneDuration = elementEnd
+            }
+        }
+        newScene.duration(newSceneDuration);
         var newEle = Object.assign({},this.props.element);
         newEle.start(x);
         newEle.duration(duration);
@@ -114,7 +131,7 @@ export default class TrackBar extends Component {
             <div 
                 style={{padding: 6}}
             >
-                <div id={"bar-container-"+this.props.element.id()} style={{height: 24, width: this.props.sceneWidth, backgroundColor:'#fff'}}>
+                <div id={"bar-container-"+this.props.element.id()} style={{height: 24, width: this.props.screenWidth, backgroundColor:'#fff'}}>
                     {bar}
                 </div>
             </div>
