@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
-import Konva from "konva";
 import { Stage } from 'react-konva';
 import InteractionArea from './InteractionArea';
 import EditableLayer from './EditableLayer';
 import BackgroundLayer from './BackgroundLayer';
-import AnimationLayer from './AnimationLayer';
+// import AnimationLayer from './AnimationLayer';
 import './scenecanvas.css';
-import { None } from 'vega';
-import _ from 'lodash';
 
 export default class EditCanvas extends Component {
 
@@ -73,8 +70,8 @@ export default class EditCanvas extends Component {
                 <Stage 
                     ref={ref => { this.stageRef = ref; }}
                     width={800} height={450} 
-                    onMouseDown={editable?this.handleStageMouseDown:None}
-                    onDblClick={editable?this.handleStageDblClick:None}
+                    onMouseDown={editable?this.handleStageMouseDown:null}
+                    onDblClick={editable?this.handleStageDblClick:null}
                 >
                     <BackgroundLayer 
                         {...this.props}

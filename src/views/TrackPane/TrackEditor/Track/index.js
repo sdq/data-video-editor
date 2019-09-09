@@ -20,11 +20,14 @@ export default class Track extends Component {
         super(props);
         this.state= {
             showAnimations: false,
+            animationBarActiveList:Array(this.props.element.animations().length).fill(false),
         }
         this.clickTrack = this.clickTrack.bind(this);
         this.clickBar = this.clickBar.bind(this);
         this.unactiveBars = this.unactiveBars.bind(this);
         this.setShowAnimations = this.setShowAnimations.bind(this);
+        this.setAnimationBarActive = this.setAnimationBarActive.bind(this);
+        this.setAnimationBarUnactive = this.setAnimationBarUnactive.bind(this);
     }
 
     clickTrack() {
@@ -46,9 +49,25 @@ export default class Track extends Component {
         })
     }
 
+    setAnimationBarActive(index) {
+        let animationBarActiveList = new Array(this.props.element.animations().length).fill(false);
+        animationBarActiveList[index] = true;
+        this.setState({
+            animationBarActiveList: animationBarActiveList
+        })
+    }
+
+    setAnimationBarUnactive() {
+        let animationBarActiveList = new Array(this.props.element.animations().length).fill(false);
+        this.setState({
+            animationBarActiveList: animationBarActiveList
+        })
+    }
+
     render() {
         var height = rowHeight;
         let {element, index, isPerforming, sceneScale} = this.props;
+        let {animationBarActiveList} = this.state;
         let animations = element.animations();
         var animationTracks = null;
         if (this.state.showAnimations) {
@@ -61,6 +80,9 @@ export default class Track extends Component {
                 elementX={element.start()*sceneScale}
                 width={animation.duration()*sceneScale}
                 x={animation.start()*sceneScale}
+                isAnimationBarActive={animationBarActiveList[index]} 
+                setAnimationBarActive={this.setAnimationBarActive} 
+                setAnimationBarUnactive={this.setAnimationBarUnactive} 
                 {...this.props}
             />)
         }

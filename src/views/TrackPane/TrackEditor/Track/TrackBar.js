@@ -4,7 +4,7 @@ import Color from '@/constants/Color';
 import ElementType from '@/constants/ElementType';
 
 const y = 0;
-const height = 24
+const height = 24;
 
 export default class TrackBar extends Component {
 
@@ -41,6 +41,26 @@ export default class TrackBar extends Component {
         var newEle = Object.assign({},this.props.element);
         newEle.start(x);
         newEle.duration(duration);
+
+        // update animations
+        const animations = newEle.animations();
+        for (let index = 0; index < animations.length; index++) {
+            const animation = Object.assign({},animations[index]);
+            var newStart = animation.start();
+            var newDuration;
+            if (duration < animation.start()) {
+                newDuration = duration;
+                newStart = 0;
+                animation.start(newStart);
+                animation.duration(newDuration);
+                newEle.update(animation, index);
+            } else if (duration < animation.start() + animation.duration()) {
+                newDuration = duration - newStart;
+                animation.duration(newDuration);
+                newEle.update(animation, index);
+            }
+        }
+
         newScene.updateElement(newEle, this.props.index);
         this.props.updateScene(this.props.sceneIndex, newScene);
         const elementName = this.props.sceneIndex + '-' + this.props.index;
