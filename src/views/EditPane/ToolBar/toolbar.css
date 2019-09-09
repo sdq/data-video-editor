@@ -1,0 +1,27 @@
+#edittoolbar {
+    height: 50px;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-bottom-color: #FFC107;
+}
+
+/* for select input display none */
+#select-unfold-sider .ant-select-selection__choice{
+    display: none
+}
+
+#select-unfold-sider{
+    outline: none;
+    color:transparent;
+    text-shadow:0 0 0 #000;
+    cursor: pointer;
+}
+
+#select-unfold-sider .ant-select-selection{
+    cursor: pointer;
+    background: #ffffff url(./layout.svg) no-repeat 25% center
+}
+         
+#edittoolbar .ant-select-dropdown{
+    width:120px !important;
+}

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { HotKeys } from "react-hotkeys";
 import shortcuts from '@/constants/Shortcuts';
-import EditToolBar from './EditToolBar';
+import ToolBar from './ToolBar';
 import PlayControlBar from './PlayControlBar';
 import SceneCanvas from './SceneCanvas';
 import { Element } from '@/models/Element';
@@ -79,7 +79,7 @@ export default class EditPane extends Component {
         return (
             <div id="editpane">
                 <HotKeys keyMap={shortcuts} handlers={this.handlers}>
-                    <EditToolBar
+                    <ToolBar
                         copyElement = {this.copyElement}
                         cutElement = {this.cutElement}
                         pasteElement = {this.pasteElement}

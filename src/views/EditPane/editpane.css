@@ -13,13 +13,6 @@
     margin: 0 auto;
 }
 
-#edittoolbar {
-    height: 50px;
-    border-bottom-style: solid;
-    border-bottom-width: 1px;
-    border-bottom-color: #FFC107;
-}
-
 #playcontrol {
     height: 50px;
     text-align: center;

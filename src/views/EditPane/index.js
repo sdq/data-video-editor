@@ -37,8 +37,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        displayResourcePane: () => dispatch(uiActions.displayResourcePane()),
-        displayToolPane: () => dispatch(uiActions.displayToolPane()),
+        displayResourcePane: (isActive) => dispatch(uiActions.displayResourcePane(isActive)),
+        displayToolPane: (isActive) => dispatch(uiActions.displayToolPane(isActive)),
         selectScene: (index) => dispatch(videoActions.selectScene(index)),
         updateScene: (index, scene) => dispatch(videoActions.updateScene(index, scene)),
         selectElement: (elementIndex, elementName) => dispatch(canvasActions.selectElement(elementIndex, elementName)),
