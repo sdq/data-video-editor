@@ -131,13 +131,14 @@ export default class TimelineRuler extends Component {
             <div className='timeline-ruler'>
                 <div 
                     id={"timeline-ruler"} 
-                    style={{height: height, width: offset + this.props.screenWidth + offset, backgroundColor:'#fff'}} 
+                    style={{height: height, width: offset + this.props.screenWidth + offset, backgroundColor:'#fff', //position:'relative', left: -this.props.screenX
+                    }} 
                     
                 >
-                    <div style={{marginLeft: offset-1, marginTop: 4, marginRight: -offset, backgroundColor: 'transparent', position:'absolute', zIndex: 0}}>
+                    <div style={{width: this.props.screenWidth, marginLeft: offset-1, marginTop: 4, marginRight: -offset, backgroundColor: 'transparent', position:'absolute', zIndex: 0}}>
                         {this.timeMarks()}
                     </div>
-                    <div style={{marginLeft: offset-1, marginTop: 14, backgroundColor: 'transparent', position:'absolute', zIndex: 0}}>
+                    <div style={{width: this.props.screenWidth, marginLeft: offset-1, marginTop: 14, backgroundColor: 'transparent', position:'absolute', zIndex: 0}}>
                         {this.ruler()}
                     </div>
                     <div

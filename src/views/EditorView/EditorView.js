@@ -10,6 +10,7 @@ import TrackPane from '../TrackPane';
 import HTML5Backend from 'react-dnd-html5-backend'
 import { DndProvider } from 'react-dnd'
 import UIMode from '@/constants/UIMode';
+import './editview.css';
 
 const { Sider, Content } = Layout;
 
@@ -19,6 +20,7 @@ export default class EditorView extends Component {
     render() {
         const {showResourcePane, showToolPane} = this.props;
         return (
+            <div id="editview">
             <DndProvider backend={HTML5Backend}>
                 <HeaderBar/>
                 <Layout>
@@ -64,6 +66,7 @@ export default class EditorView extends Component {
                     </Layout> */}
                 </Layout>
             </DndProvider>
+            </div>
         )
     }
 }

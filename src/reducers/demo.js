@@ -41,6 +41,9 @@ const demotext = new TextInfo(
 const element0 = new Element(ElementType.CHART, demochart);
 const element1 = new Element(ElementType.IMAGE, demoimage);
 const element2 = new Element(ElementType.TEXT, demotext);
+element0.duration(90.0);
+element1.duration(90.0);
+element2.duration(90.0);
 const scene1 = new Scene("A man is sitting on the chair and thinking about something.", 90.0);
 scene1.addElement(element0);
 scene1.addElement(element1);
@@ -81,6 +84,9 @@ const demotext2 = new TextInfo(
 const element02 = new Element(ElementType.CHART, demochart2);
 const element12 = new Element(ElementType.IMAGE, demoimage2);
 const element22 = new Element(ElementType.TEXT, demotext2);
+element02.duration(90.0);
+element12.duration(90.0);
+element22.duration(90.0);
 const scene2 = new Scene("A woman is sitting on the ground and thinking about something.", 90.0);
 scene2.addElement(element02);
 scene2.addElement(element12);

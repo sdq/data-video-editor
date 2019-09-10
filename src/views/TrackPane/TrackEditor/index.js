@@ -7,6 +7,7 @@ import ScrollBar from './ScrollBar';
 import './trackeditor.css';
 
 const infoWidth = 200;
+const scrollScale = 2;
 
 export default class TrackEditor extends Component {
 
@@ -60,7 +61,9 @@ export default class TrackEditor extends Component {
                 <TimelineBar 
                     setBarUnactive={this.setBarUnactive}
                     screenX={this.state.screenX}
-                    screenWidth={(this.state.screenWidth - infoWidth)*1.5}
+                    screenWidth={(this.state.screenWidth - infoWidth)}
+                    scrollScale={scrollScale}
+                    scrollWidth={(this.state.screenWidth - infoWidth)*scrollScale}
                     {...this.props}
                 />
                 {/* <TrackHeader {...this.props}/> */}
@@ -69,12 +72,15 @@ export default class TrackEditor extends Component {
                     setBarActive={(index)=>this.setBarActive(index)}
                     setBarUnactive={this.setBarUnactive}
                     screenX={this.state.screenX}
-                    screenWidth={this.state.screenWidth - infoWidth}
+                    screenWidth={(this.state.screenWidth - infoWidth)}
+                    scrollScale={scrollScale}
+                    scrollWidth={(this.state.screenWidth - infoWidth)*scrollScale}
                     {...this.props}
                 />
                 <ScrollBar 
                     screenX={this.state.screenX}
                     screenWidth={this.state.screenWidth - infoWidth}
+                    scrollScale={scrollScale}
                     onDragScrollbar={this.onDragScrollbar}
                     {...this.props}
                 />

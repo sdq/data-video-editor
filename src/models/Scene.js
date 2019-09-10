@@ -86,7 +86,16 @@ export default class Scene {
         };
         this.addElement = function(element) {
             element.start(0);
-            element.duration(this.duration());
+            if (element.duration() === 0) {
+                if (this.duration() > 10) {
+                    element.duration(10.0);
+                } else {
+                    element.duration(this.duration());
+                }
+            } else if (element.duration() > this.duration()) {
+                element.duration(this.duration());
+                this.duration(element.duration()); // update scene duration
+            }
             this._elements.push(element);
             return this;
         };

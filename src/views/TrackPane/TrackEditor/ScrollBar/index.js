@@ -7,32 +7,32 @@ const { Sider, Content } = Layout;
 
 const height = 20;
 const padding = 6;
-const scrollScale = 1.5;
 
 export default class ScrollBar extends Component {
     render() {
-        let {sceneWidth, screenX, screenWidth} = this.props;
+        let {sceneWidth, screenX, screenWidth, scrollScale} = this.props;
+        let x = 0;
         let width = screenWidth - padding;
         if (screenWidth <= scrollScale * sceneWidth) {
-            width = screenWidth * ( screenWidth / (sceneWidth * scrollScale))
+            width = screenWidth * ( screenWidth / (sceneWidth * scrollScale)) // scale
+            x = screenX * ( screenWidth / (sceneWidth * scrollScale))
         }
         let scrollbar = <Rnd
             //style={{zIndex: 2}}
             size={{ width: width, height: height-8 }}
-            position={{ x: screenX, y: 0 }}
-            bounds='parent'
+            position={{ x: x, y: 0 }}
+            bounds='#track-editor-scrollbar'
             // disableDragging={isPerforming}
             enableResizing={{}}
             enableUserSelectHack={false}
-            onDrag={(e,d) => {
-                console.log(e);
-                console.log(d);
-                //this.changeNeedlePlace(d.x);
+            onDrag={(e, d) => {
+                const x = d.x - 886; //TODO: onDrag bug!!
+                const screenX = x / (screenWidth / (sceneWidth * scrollScale));
+                this.props.onDragScrollbar(screenX);
             }}
             onDragStop={(e, d) => {
-                console.log('drag end');
-                //this.changeNeedlePlace(d.x);
-                this.props.onDragScrollbar(d.x);
+                const screenX = d.x / (screenWidth / (sceneWidth * scrollScale));
+                this.props.onDragScrollbar(screenX);
             }}
         >
             <div style={{width: width, height: height-8,backgroundColor: '#676767', borderRadius: 10}}/>
@@ -43,7 +43,7 @@ export default class ScrollBar extends Component {
                     <Sider width="200px" style={{ background: '#fff', height: '22px' }}>
                     </Sider>
                     <Content style={{backgroundColor: '#eee', height: '22px', padding: '4px', paddingLeft: '6px'}}>
-                        <div>
+                        <div id='track-editor-scrollbar'>
                             {scrollbar}
                         </div>
                     </Content>

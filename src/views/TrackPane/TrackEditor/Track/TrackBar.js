@@ -10,6 +10,10 @@ export default class TrackBar extends Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+            isDragging: false,
+            isResizing: false
+        };
         this.clickBar = this.clickBar.bind(this);
         this.leaveBar = this.leaveBar.bind(this);
         this.dragBar = this.dragBar.bind(this);
@@ -21,7 +25,9 @@ export default class TrackBar extends Component {
     }
 
     leaveBar() {
-        this.props.leaveBar();
+        if (!this.state.isDragging && !this.state.isResizing) {
+            this.props.leaveBar();
+        }
     }
 
     dragBar(x) {
@@ -117,11 +123,27 @@ export default class TrackBar extends Component {
                     right: true
                 }}
                 enableUserSelectHack={false}
+                onDragStart={() => {
+                    this.setState({
+                        isDragging: true
+                    })
+                }}
                 onDragStop={(e, d) => {
                     this.dragBar(d.x);
+                    this.setState({
+                        isDragging: false
+                    })
+                }}
+                onResizeStart={() => {
+                    this.setState({
+                        isResizing: true
+                    })
                 }}
                 onResizeStop={(e, direction, ref, delta, position) => {
                     this.resizeBar(position.x, parseFloat(ref.style.width));
+                    this.setState({
+                        isResizing: false
+                    })
                 }}
             />
         } else {
@@ -129,9 +151,10 @@ export default class TrackBar extends Component {
         }
         return (
             <div 
-                style={{padding: 6}}
+                style={{padding: 6, position: 'relative', left: -this.props.screenX}}
+                onMouseLeave={this.leaveBar}
             >
-                <div id={"bar-container-"+this.props.element.id()} style={{height: 22, width: this.props.screenWidth, backgroundColor:'#fff'}}>
+                <div id={"bar-container-"+this.props.element.id()} style={{height: 22, width: this.props.scrollWidth, backgroundColor:'#fff'}}  >
                     {bar}
                 </div>
             </div>
