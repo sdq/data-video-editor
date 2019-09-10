@@ -58,6 +58,9 @@ export default class AnimationLayer extends Component {
                 ref={node => (this.animationLayer = node)}
             >
                 {this.props.currentScene.elements().map(function(element, index) {
+                    if (index !== this.props.dbClickedElementIndex) {
+                        return null;
+                    }
                     switch (element.type()) {
                         case ElementType.TEXT:
                             return <TextElement 

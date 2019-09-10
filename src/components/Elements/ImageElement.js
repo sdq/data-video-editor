@@ -78,6 +78,10 @@ export default class ImageElement extends Component {
     }
 
     scale(scaleX, scaleY) {
+        this.imageref.position({
+            x: this.imageref.width() / 2,
+            y: this.imageref.height() / 2
+        });
         this.imageref.offsetX(this.imageref.width() / 2);
         this.imageref.offsetY(this.imageref.height() / 2);
         this.imageref.scale(scaleX, scaleY);

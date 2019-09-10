@@ -3,7 +3,7 @@ import { Stage } from 'react-konva';
 import InteractionArea from './InteractionArea';
 import EditableLayer from './EditableLayer';
 import BackgroundLayer from './BackgroundLayer';
-// import AnimationLayer from './AnimationLayer';
+import AnimationLayer from './AnimationLayer';
 import './scenecanvas.css';
 
 export default class EditCanvas extends Component {
@@ -12,7 +12,10 @@ export default class EditCanvas extends Component {
         super(props);
         this.state = {
             showAssistLines: false,
+            showAnimationLayer: false,
+            dbClickedElementIndex: -1,
         };
+        this.handleStageDblClick = this.handleStageDblClick.bind(this);
     }
 
     displayAssistLines(active) {
@@ -22,6 +25,12 @@ export default class EditCanvas extends Component {
     }
 
     handleStageMouseDown = e => {
+        // remove animation
+        this.setState({
+            showAnimationLayer: false,
+            dbClickedElementIndex: -1,
+        });
+
         // clicked on stage - clear selection
         if (e.target === e.target.getStage()) {
             this.props.unselectElement();
@@ -52,11 +61,17 @@ export default class EditCanvas extends Component {
 
     handleStageDblClick(e) {
         // console.log('dbclick');
+        this.props.unselectElement();
         const name = e.target.name();
 
         // console.log(name);
         if (name) {
-            // var eleIndex = Number(name.split('-')[1]);
+            var eleIndex = Number(name.split('-')[1]);
+            console.log(eleIndex);
+            this.setState({
+                showAnimationLayer: true,
+                dbClickedElementIndex: eleIndex,
+            });
             // TODO: show animation
         }
     }
@@ -78,8 +93,17 @@ export default class EditCanvas extends Component {
                     />
                     <EditableLayer 
                         displayAssistLines={(active) => this.displayAssistLines(active)} 
+                        showAnimationLayer = {this.state.showAnimationLayer}
+                        dbClickedElementIndex={this.state.dbClickedElementIndex}
                         {...this.props}
                     />
+                    {
+                        this.state.showAnimationLayer?
+                        <AnimationLayer
+                            dbClickedElementIndex={this.state.dbClickedElementIndex}
+                            {...this.props}
+                        />:null
+                    }
                     {/* <AnimationLayer
                         {...this.props}
                     /> */}

@@ -52,6 +52,9 @@ export default class EditableLayer extends Component {
             >
                 {this.props.currentScene.elements().map(function(element, index) {
                     //console.log(element.info);
+                    if (index === this.props.dbClickedElementIndex) {
+                        return null;
+                    }
                     switch (element.type()) {
                         case ElementType.TEXT:
                             if (this.isElementDisplay(element)) {
