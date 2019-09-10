@@ -5,7 +5,7 @@ import columns from '@/datasets/carsSchema';
 import './datapreview.css';
 
 const width = 280;
-const height = 200;
+const height = 160;
 
 export default class SimpleDataPreview extends Component {
     render() {

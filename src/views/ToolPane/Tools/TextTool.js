@@ -1,30 +1,21 @@
+
 import React, { Component } from 'react'
-import { InputNumber, Row, Col, Divider, Button, Select, Slider } from 'antd';
+import { InputNumber, Row, Col, Divider, Button, Select, Icon } from 'antd';
 import { SketchPicker } from 'react-color';
 
 const { Option } = Select;
 const ButtonGroup = Button.Group;
 
-function onSliderChange(value) {
-    console.log('onChange: ', value);
-}
-  
-function onAfterSliderChange(value) {
-    console.log('onAfterChange: ', value);
-}
-
 function onTextSizeChange(value) {
     console.log('changed', value);
-}
-  
-function formatter(value) {
-    return `${value}%`;
 }
 
 export default class TextTool extends Component {
 
     state = {
         displayColorPicker: false,
+        textX : this.props.currentElement.info().x,
+        textY : this.props.currentElement.info().y,
     };
 
     handleClick = () => {
@@ -35,62 +26,42 @@ export default class TextTool extends Component {
         this.setState({ displayColorPicker: false })
     };
 
+    ChangeTextXX (value)  {
+        this.props.currentElement.info().x = value;
+        const newScene = Object.assign({},this.props.currentScene);
+        newScene.updateElement(this.props.currentElement, this.props.elementIndex);
+        this.props.updateScene(this.props.sceneIndex, newScene);
+    };
+    ChangeTextYY = (value) => {
+        this.props.currentElement.info().y = value;
+        const newScene = Object.assign({},this.props.currentScene);
+        newScene.updateElement(this.props.currentElement, this.props.elementIndex);
+        this.props.updateScene(this.props.sceneIndex, newScene);
+    };
+
+
     render() {
+        const {currentElement} = this.props;
+        //const {textX,textY} = this.state;
         const popover = {
-            position: 'absolute',
-            //position: 'relative',
-            zIndex: '2',
+            //position: 'absolute',
+            position: 'relative',
+            //position: 'fixed',
+            zIndex: '66',
+            float:'right',
+           // top: '10px',
+            margin:'10px 15px 0px 0px',
+          // right: '10px',
+            //bottom: '0px',
+            left: '0px',
         }
         const cover = {
             position: 'fixed',
-            //position:
-            top: '0px',
-            right: '0px',
-            bottom: '0px',
-            left: '0px',
         }
 
         return (
 
-            <div style={{padding: '5px 10px 10px 10px', fontSize: '14px', backgroundColor: 'white'}}>
-
-                <Divider>Style</Divider>
-                <Row style={{margin: '0px 15px 0px 15px', fontSize: '14px'}}>
-                        <Select defaultValue="No style"  style={{ width: '100%' , align :'center' }}>
-                            <Option value="0">
-                                <Button type="link" icon="bold" size="large" style={{width: '20%',margin: '0px 5px 0px 5px'}} ></Button>
-                                No style
-                            </Option>
-                            <Option value="1">
-                                <Button type="link" icon="bold" size="large" style={{width: '20%',margin: '0px 5px 0px 5px'}} ></Button>
-                                Shadow
-                            </Option>
-                            <Option value="2">
-                                <Button type="link" icon="bold" size="large" style={{width: '20%',margin: '0px 5px 0px 5px'}} ></Button>
-                                Filling
-                            </Option>
-                            <Option value="3">
-                                <Button type="link" icon="bold" size="large" style={{width: '20%',margin: '0px 5px 0px 5px'}} ></Button>
-                                Distort
-                            </Option> 
-                            <Option value="4" style={{textAlign :'center' } }>
-                                More...
-                            </Option> 
-                        </Select>
-                </Row>
-
-                <Row style={{margin: '0px 10px 0px 15px', fontSize: '14px'}}>
-                <Col span={8} style={{ padding: '10px 0px 0 0px'}}>Transparency</Col>
-                <Col span={16} style={{textAlign:'center', padding: '2px 0px 0 10px'}}>
-                   <Slider 
-                   max={99}
-                   min={0}
-                   defaultValue={0} 
-                   tipFormatter={formatter} 
-                   onChange={onSliderChange} 
-                   onAfterChange={onAfterSliderChange} /> 
-                </Col>      
-                </Row>
+            <div style={{padding: '5px 10px 10px 10px', fontSize: '14px', backgroundColor: 'white',height:'500px',overflow: 'auto'}}>
 
                 <Divider>Character</Divider>
                 <Row style={{margin: '0px 15px 0px 15px', fontSize: '14px'}}> 
@@ -147,23 +118,29 @@ export default class TextTool extends Component {
                 </ButtonGroup>
 
                 </Row>
-                <Row style={{margin: '15px 15px 0px 15px', fontSize: '14px'}}>
+                <Row style={{margin: '15px 15px 0px 12px', fontSize: '14px'}}>
                     <Col span={2}  style={{textAlign:'center', padding: '0px 0px 0px 0px'}}>X</Col>
-                    <Col span={10}><InputNumber min={0} max={600} defaultValue={10} size="small" style={{width: '100%',padding: '0px 0px 0px 0px'}} /></Col>
+                    <Col span={6}><InputNumber min={0} max={600} value={currentElement.info().x} size="small" style={{width: '100%',padding: '0px 0px 0px 0px'}} 
+                    onChange = {value => this.ChangeTextXX(value)}
+                    onPressEnter={value => this.ChangeTextX(value)}
+                    /></Col>
                     <Col span={2} style={{textAlign:'center', padding: '0px 0px 0px 0px'}}>Y</Col>
-                    <Col span={10}><InputNumber min={0} max={600} defaultValue={10} size="small"  style={{width: '100%',padding: '0px 0px 0px 0px'}}/></Col>
+                    <Col span={6}><InputNumber min={0} max={600} value={currentElement.info().y} size="small"  style={{width: '100%',padding: '0px 0px 0px 0px'}}
+                    onChange = {value => this.ChangeTextYY(value)}
+                    onPressEnter={value => this.ChangeTextY(value)}
+                    /></Col>
+                    <Col span={2} style={{textAlign:'center', padding: '0px 0px 0px 0px'}}><Icon type="redo" /> </Col>
+                    <Col span={6}><InputNumber min={-360} max={360} defaultValue={0}  formatter={value => `${value}°`} size="small"  style={{width: '100%',padding: '0px 0px 0px 0px'}}/></Col>
                    
                 </Row>
-                <Row style={{margin: '15px 15px 0px 15px', fontSize: '14px'}}>
+                <Row style={{margin: '15px 15px 0px 12px', fontSize: '14px'}}>
                     <Col span={2} style={{textAlign:'center', padding: '0px 0px 0px 0px'}}>W</Col>
-                    <Col span={10}><InputNumber min={0} max={600} defaultValue={100} size="small" style={{width: '100%',padding: '0px 0px 0px 0px'}}/></Col>
+                    <Col span={6}><InputNumber min={0} max={600} defaultValue={100} size="small" style={{width: '100%',padding: '0px 0px 0px 0px'}}/></Col>
                     <Col span={2} style={{textAlign:'center', padding: '0px 0px 0px 0px'}}>H</Col>
-                    <Col span={10}><InputNumber min={0} max={600} defaultValue={100} size="small" style={{width: '100%',padding: '0px 0px 0px 0px'}}/></Col>
-                </Row>
-            
+                    <Col span={6}><InputNumber min={0} max={600} defaultValue={100} size="small" style={{width: '100%',padding: '0px 0px 0px 0px'}}/></Col>
+                    <Col span={2} style={{textAlign:'center', padding: '0px 0px 0px 0px'}}><Icon type="link" /> </Col>
+                </Row>    
             </div>
-        
         )
     }
 }
-
