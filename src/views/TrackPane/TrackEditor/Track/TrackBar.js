@@ -91,7 +91,8 @@ export default class TrackBar extends Component {
     }
 
     render() {
-        let {element, isBarActive, isPerforming} = this.props;
+        let {element, isBarActive, isPerforming, scenePosition, sceneScale} = this.props;
+        const scenePositionWithScale = scenePosition * sceneScale;
         var color = Color.LIGHT_ORANGE;
         switch (element.type()) {
             case ElementType.IMAGE:
@@ -110,7 +111,7 @@ export default class TrackBar extends Component {
             default:
                 break;
         }
-        var bar;
+        let bar;
         if (isBarActive && !isPerforming) {
             bar = <Rnd
                 id={"bar-"+this.props.element.id()}
@@ -149,14 +150,18 @@ export default class TrackBar extends Component {
         } else {
             bar = <div style={{marginLeft: this.props.x, height: 22, width: this.props.width ,backgroundColor: color}} onClick = {this.clickBar} onMouseOver = {this.clickBar}/>
         }
+        let interactiveNeedle = isPerforming?null:<div style={{position:'absolute',zIndex: 1, width: 2, height: 34,backgroundColor: 'red', marginLeft: 4+scenePositionWithScale}}/>;
         return (
             <div 
-                style={{padding: 6, position: 'relative', left: -this.props.screenX}}
+                style={{position: 'relative', left: -this.props.screenX}}
                 onMouseLeave={this.leaveBar}
             >
-                <div id={"bar-container-"+this.props.element.id()} style={{height: 22, width: this.props.scrollWidth, backgroundColor:'#fff'}}  >
-                    {bar}
+                <div style={{padding: 6, position:'absolute',zIndex: 0}}>
+                    <div id={"bar-container-"+this.props.element.id()} style={{height: 22, width: this.props.scrollWidth, backgroundColor:'#fff'}}  >
+                        {bar}
+                    </div>
                 </div>
+                {interactiveNeedle}
             </div>
         )
     }
