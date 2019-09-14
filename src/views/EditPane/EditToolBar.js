@@ -31,6 +31,14 @@ export default class EditToolBar extends Component {
         this.props.deleteElement();
     }
 
+    undoCanvas = () => {
+        this.props.undoCanvas(this.props.sceneIndex);
+    }
+
+    redoCanvas = () => {        
+        this.props.redoCanvas(this.props.sceneIndex);
+    }
+
     render() {
         const { isElementSelected, copiedElement, isPerforming } = this.props;
         return (
@@ -43,8 +51,8 @@ export default class EditToolBar extends Component {
                  </ButtonGroup>
                 
                 <ButtonGroup style = { {margin: '10px 20px 0 0', float:'right'} } >
-                    <Button icon="undo" style = { {padding: '0 20px 0 20px'} } disabled={isPerforming}/>
-                    <Button icon="redo" style = { {padding: '0 20px 0 20px'} } disabled={isPerforming}/>
+                    <Button icon="undo" style = { {padding: '0 20px 0 20px'} } onClick={this.undoCanvas} disabled={isPerforming}/>
+                    <Button icon="redo" style = { {padding: '0 20px 0 20px'} } onClick={this.redoCanvas} disabled={isPerforming}/>
                 </ButtonGroup>
 
                 <ButtonGroup style = { {margin: '10px 20px 0px 0px', float:'right'} }>

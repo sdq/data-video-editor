@@ -11,6 +11,7 @@ import * as videoActions from '@/actions/videoAction';
 import * as canvasActions from '@/actions/canvasAction';
 import * as playerActions from '@/actions/playerAction';
 import * as sceneActions from '@/actions/sceneAction';
+import * as metaActions from '@/actions/metaAction';
 
 const mapStateToProps = state => {
     return {
@@ -50,6 +51,8 @@ const mapDispatchToProps = dispatch => {
         playVideo: () => dispatch(playerActions.playVideo()),
         stopVideo: () => dispatch(playerActions.stopVideo()),
         setPosition: (position) => dispatch(sceneActions.setPosition(position)),
+        undoCanvas: (index) => dispatch(metaActions.undoCanvas(index)),
+        redoCanvas: (index) => dispatch(metaActions.redoCanvas(index)),
     }
 }
 
