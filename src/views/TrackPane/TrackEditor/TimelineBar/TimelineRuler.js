@@ -3,7 +3,9 @@ import { Rnd } from "react-rnd";
 import Needle from './Needle';
 import './timelinebar.css';
 
-const height = 24;
+const performingHeight = 228;
+const realHeight = 24;
+const trackHeight = 34;
 const width = 12;
 const offset = 6;
 
@@ -102,8 +104,13 @@ export default class TimelineRuler extends Component {
     }
 
     render() {
-        const {scenePosition, isPerforming, sceneScale} = this.props;
+        const {scenePosition, isPerforming, sceneScale, currentElements} = this.props;
         const scenePositionWithScale = scenePosition * sceneScale;
+        let height = isPerforming?performingHeight:realHeight;
+        let needleHeight = currentElements.length * trackHeight;
+        if (needleHeight > (performingHeight - realHeight)) {
+            needleHeight = performingHeight - realHeight;
+        }
         let needle = <Rnd
             style={{zIndex: 2}}
             size={{ width: width, height: height }}
@@ -119,37 +126,14 @@ export default class TimelineRuler extends Component {
                 this.changeNeedlePlace(d.x);
             }}
         >
-            <Needle/>
+            <Needle needleHeight={needleHeight}/>
         </Rnd>;
-        // if (this.state.isNeedleActive) {
-        //     needle = <Rnd
-        //         style={{zIndex: 2}}
-        //         size={{ width: width, height: height }}
-        //         position={{ x: scenePositionWithScale, y: 0 }}
-        //         bounds='parent'
-        //         disableDragging={isPerforming}
-        //         enableResizing={{}}
-        //         enableUserSelectHack={false}
-        //         onDrag={(e, d) => {
-        //             this.changeNeedlePlace(d.x);
-        //         }}
-        //         onDragStop={(e, d) => {
-        //             this.changeNeedlePlace(d.x);
-        //         }}
-        //     >
-        //         <Needle/>
-        //     </Rnd>
-        // } else {
-        //     needle = <div style={{marginLeft: scenePositionWithScale, height: height, width: width, position:'absolute', zIndex: 2}} onClick = {this.clickNeedle} onMouseOver = {this.clickNeedle}>
-        //         <Needle/>
-        //     </div>
-        // }
 
         return (
             <div className='timeline-ruler'>
                 <div 
                     id={"timeline-ruler"} 
-                    style={{height: height, width: offset + this.props.screenWidth + offset, backgroundColor:'#fff', position:'relative', left: -this.props.screenX
+                    style={{height: height, width: offset + this.props.screenWidth + offset, backgroundColor:'transparent', position:'relative', left: -this.props.screenX
                     }} 
                     
                 >
@@ -170,6 +154,13 @@ export default class TimelineRuler extends Component {
                     />
                     {needle}
                 </div>
+                {/* <div 
+                    id={"timeline-ruler"} 
+                    style={{height: height+100, width: offset + this.props.screenWidth + offset, opacity: 0, position:'relative', left: -this.props.screenX
+                    }} 
+                >
+                    {needle}
+                </div> */}
             </div>
         )
     }

@@ -26,7 +26,7 @@ export default class ScrollBar extends Component {
             enableResizing={{}}
             enableUserSelectHack={false}
             onDrag={(e, d) => {
-                const x = d.x - 886; //TODO: onDrag bug!!
+                const x = d.x - 412; //TODO: onDrag bug!!
                 const screenX = x / (screenWidth / (sceneWidth * scrollScale));
                 this.props.onDragScrollbar(screenX);
             }}

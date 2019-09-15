@@ -88,17 +88,17 @@ export default class PlayController extends Component {
         //console.log(scenePosition);
         return (
             <div className="play-controller">
-                <div style={{height: 24, width: 60, float: 'left', backgroundColor: 'black', opacity: isVideoPerforming?0.6:1 }} onClick={isVideoPerforming?null:this.playScene}>
+                <div style={{height: 23, width: 60, float: 'left', backgroundColor: 'black', opacity: isVideoPerforming?0.6:1 }} onClick={isVideoPerforming?null:this.playScene}>
                     <Icon type={isScenePerforming?'pause':'caret-right'} style={{color: 'white', fontSize: 20, marginTop: 2, marginLeft:22}}/>
                 </div>
 
-                <div style={{height: 24, width: 32, float: 'left', backgroundColor: 'white' }} onClick={(isFirstScene || isVideoPerforming)?null:this.lastScene}>
+                <div style={{height: 23, width: 32, float: 'left', backgroundColor: 'white' }} onClick={(isFirstScene || isVideoPerforming)?null:this.lastScene}>
                     <Icon type={'step-backward'} style={{color: (isFirstScene || isVideoPerforming)?'lightgray':'black', fontSize: 20, marginTop: 2, marginLeft:6}}/>
                 </div>
                 
-                <div style={{height: 24, width: 76, float: 'left', backgroundColor: 'white', textAlign: 'center', paddingTop: 1 }}>{this.ms2time(ms)}</div>
+                <div style={{height: 23, width: 76, float: 'left', backgroundColor: 'white', textAlign: 'center', paddingTop: 1 }}>{this.ms2time(ms)}</div>
 
-                <div style={{height: 24, width: 32, float: 'left', backgroundColor: 'white' }} onClick={(isLastScene || isVideoPerforming)?null:this.nextScene}>
+                <div style={{height: 23, width: 32, float: 'left', backgroundColor: 'white' }} onClick={(isLastScene || isVideoPerforming)?null:this.nextScene}>
                     <Icon type={'step-forward'} style={{color: (isLastScene || isVideoPerforming)?'lightgray':'black', fontSize: 20, marginTop: 2, marginLeft:6}}/>
                 </div>
             </div>

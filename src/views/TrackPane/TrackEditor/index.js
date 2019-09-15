@@ -58,32 +58,38 @@ export default class TrackEditor extends Component {
                 onMouseLeave={this.setBarUnactive}
             >
                 <ReactResizeDetector handleWidth onResize={this.onResize} />
-                <TimelineBar 
-                    setBarUnactive={this.setBarUnactive}
-                    screenX={this.state.screenX}
-                    screenWidth={(this.state.screenWidth - infoWidth)}
-                    scrollScale={scrollScale}
-                    scrollWidth={(this.state.screenWidth - infoWidth)*scrollScale}
-                    {...this.props}
-                />
+                <div style={{height: 24, width: this.state.screenWidth, position: 'absolute', zIndex: 1}}>
+                    <TimelineBar 
+                        setBarUnactive={this.setBarUnactive}
+                        screenX={this.state.screenX}
+                        screenWidth={(this.state.screenWidth - infoWidth)}
+                        scrollScale={scrollScale}
+                        scrollWidth={(this.state.screenWidth - infoWidth)*scrollScale}
+                        {...this.props}
+                    />
+                </div>
+                <div style={{marginTop: 24, height: 226, width: this.state.screenWidth, position: 'absolute', zIndex: 0}}>
+                    <TrackGroup 
+                        barActiveList={this.state.barActiveList} 
+                        setBarActive={(index)=>this.setBarActive(index)}
+                        setBarUnactive={this.setBarUnactive}
+                        screenX={this.state.screenX}
+                        screenWidth={(this.state.screenWidth - infoWidth)}
+                        scrollScale={scrollScale}
+                        scrollWidth={(this.state.screenWidth - infoWidth)*scrollScale}
+                        {...this.props}
+                    />
+                    <ScrollBar 
+                        screenX={this.state.screenX}
+                        screenWidth={this.state.screenWidth - infoWidth}
+                        scrollScale={scrollScale}
+                        onDragScrollbar={this.onDragScrollbar}
+                        {...this.props}
+                    />
+                </div>
+                
                 {/* <TrackHeader {...this.props}/> */}
-                <TrackGroup 
-                    barActiveList={this.state.barActiveList} 
-                    setBarActive={(index)=>this.setBarActive(index)}
-                    setBarUnactive={this.setBarUnactive}
-                    screenX={this.state.screenX}
-                    screenWidth={(this.state.screenWidth - infoWidth)}
-                    scrollScale={scrollScale}
-                    scrollWidth={(this.state.screenWidth - infoWidth)*scrollScale}
-                    {...this.props}
-                />
-                <ScrollBar 
-                    screenX={this.state.screenX}
-                    screenWidth={this.state.screenWidth - infoWidth}
-                    scrollScale={scrollScale}
-                    onDragScrollbar={this.onDragScrollbar}
-                    {...this.props}
-                />
+                
             </div>
         )
     }

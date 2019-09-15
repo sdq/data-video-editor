@@ -150,7 +150,7 @@ export default class TrackBar extends Component {
         } else {
             bar = <div style={{marginLeft: this.props.x, height: 22, width: this.props.width ,backgroundColor: color}} onClick = {this.clickBar} onMouseOver = {this.clickBar}/>
         }
-        let interactiveNeedle = isPerforming?null:<div style={{position:'absolute',zIndex: 1, width: 2, height: 34,backgroundColor: 'red', marginLeft: 4+scenePositionWithScale}}/>;
+        let interactiveNeedle = isPerforming?null:<div style={{position:'absolute',zIndex: 1, width: 2, height: 34,backgroundColor: 'red', marginLeft: 5+scenePositionWithScale}}/>;
         return (
             <div 
                 style={{position: 'relative', left: -this.props.screenX}}
