@@ -1,4 +1,5 @@
 import uuidv4 from 'uuid/v4';
+import Fragment from './element/Fragment';
 
 export default class Scene {
     constructor(script, duration) {
@@ -88,6 +89,8 @@ export default class Scene {
             element.duration(this.duration());
             this.duration(element.duration()); // update scene duration
         }
+        let fragment = new Fragment(0, element.duration());
+        element.addFragment(fragment);
         this._elements.push(element);
         return this;
     };

@@ -3,6 +3,7 @@ import ImageInfo from './element/ImageInfo';
 import ChartInfo from './element/ChartInfo';
 import TextInfo from './element/TextInfo';
 import AudioInfo from './element/AudioInfo';
+import Fragment from './element/Fragment';
 
 export {ImageInfo, ChartInfo, TextInfo, AudioInfo}
 
@@ -120,11 +121,35 @@ export class Element {
         this._animations.splice(index, 1);
         return this;
     };
-    // split & merge fragments
-    split = function() {
-
+    // fragments operation
+    fragments = function() {
+        return this._fragments;
+    }
+    addFragment = function(fragment) {
+        this._fragments.push(fragment);
+        return this;
+    };
+    split = function(position) {
+        let fragmentIndex = this._findFragment(position);
+        if (fragmentIndex === -1) {
+            return; // not in the fragments
+        }
+        // first, create a new fragment
+        let newFragment = new Fragment(position,this._fragments[fragmentIndex].end()-position)
+        this._fragments.splice(fragmentIndex+1, 0, newFragment);
+        // first, update the old fragment
+        this._fragments[fragmentIndex].duration(position-this._fragments[fragmentIndex].start())
     }
     merge = function() {
-        
+        // after merge, delete one old fragment, and update one old fragment (start or duration).
+    }
+    _findFragment = function(position) {
+        for (let index = 0; index < this._fragments.length; index++) {
+            const fragment = this._fragments[index];
+            if (position > fragment.start() && position < fragment.end()) {
+                return index;
+            }
+        }
+        return -1;
     }
 }

@@ -29,10 +29,11 @@ export default class EditableLayer extends Component {
     editElement(eleIndex, element) {
         this.props.displayAssistLines(false);
         const newScene = Object.assign({},this.props.currentScene);
-        newScene.updateElement(element, eleIndex);
+        const newElement = Object.assign({},element);
+        newScene.updateElement(newElement, eleIndex);
         this.props.updateScene(this.props.sceneIndex, newScene);
         const elementName = this.props.sceneIndex + '-' + eleIndex;
-        this.props.updateElement(element, eleIndex, elementName);
+        this.props.updateElement(newElement, eleIndex, elementName);
     }
 
     isElementDisplay(element) {

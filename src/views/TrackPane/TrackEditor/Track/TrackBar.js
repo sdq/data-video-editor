@@ -12,22 +12,40 @@ export default class TrackBar extends Component {
         super(props);
         this.state = {
             isDragging: false,
-            isResizing: false
+            isResizing: false,
+            showSplitBar: false,
         };
         this.clickBar = this.clickBar.bind(this);
         this.leaveBar = this.leaveBar.bind(this);
+        this.clipBar = this.clipBar.bind(this);
         this.dragBar = this.dragBar.bind(this);
         this.resizeBar = this.resizeBar.bind(this);
     }
 
     clickBar() {
+        this.setState({
+            showSplitBar: true
+        })
         this.props.clickBar();
     }
 
     leaveBar() {
+        this.setState({
+            showSplitBar: false
+        })
         if (!this.state.isDragging && !this.state.isResizing) {
             this.props.leaveBar();
         }
+    }
+
+    clipBar() {
+        const newScene = Object.assign({},this.props.currentScene);
+        const newEle = Object.assign({},this.props.element);
+        newEle.split(this.props.scenePosition);
+        newScene.updateElement(newEle, this.props.index);
+        this.props.updateScene(this.props.sceneIndex, newScene);
+        const elementName = this.props.sceneIndex + '-' + this.props.index;
+        this.props.updateElement(newEle, this.props.index, elementName);
     }
 
     dragBar(x) {
@@ -92,6 +110,7 @@ export default class TrackBar extends Component {
 
     render() {
         let {element, isBarActive, isPerforming, scenePosition, sceneScale} = this.props;
+        let {showSplitBar} = this.state;
         const scenePositionWithScale = scenePosition * sceneScale;
         var color = Color.LIGHT_ORANGE;
         switch (element.type()) {
@@ -111,46 +130,54 @@ export default class TrackBar extends Component {
             default:
                 break;
         }
-        let bar;
-        if (isBarActive && !isPerforming) {
-            bar = <Rnd
-                id={"bar-"+this.props.element.id()}
-                style={{backgroundColor: color}}
-                size={{ width: this.props.width, height: height }}
-                position={{ x: this.props.x, y: y }}
-                bounds='parent'
-                enableResizing={{
-                    left: true,
-                    right: true
-                }}
-                enableUserSelectHack={false}
-                onDragStart={() => {
-                    this.setState({
-                        isDragging: true
-                    })
-                }}
-                onDragStop={(e, d) => {
-                    this.dragBar(d.x);
-                    this.setState({
-                        isDragging: false
-                    })
-                }}
-                onResizeStart={() => {
-                    this.setState({
-                        isResizing: true
-                    })
-                }}
-                onResizeStop={(e, direction, ref, delta, position) => {
-                    this.resizeBar(position.x, parseFloat(ref.style.width));
-                    this.setState({
-                        isResizing: false
-                    })
-                }}
-            />
-        } else {
-            bar = <div style={{marginLeft: this.props.x, height: 22, width: this.props.width ,backgroundColor: color}} onClick = {this.clickBar} onMouseOver = {this.clickBar}/>
+        let bars = [];
+        let fragments = element.fragments();
+        for (let index = 0; index < fragments.length; index++) {
+            const fragment = fragments[index];
+            let fragmentX = fragment.start() * sceneScale;
+            let fragmentWidth = fragment.duration() * sceneScale;
+            if (isBarActive && !isPerforming) {
+                bars.push(<Rnd
+                    id={"bar-"+this.props.element.id()+'-'+index}
+                    style={{backgroundColor: color}}
+                    size={{ width: fragmentWidth, height: height }}
+                    position={{ x: fragmentX, y: y }}
+                    bounds='parent'
+                    enableResizing={{
+                        left: true,
+                        right: true
+                    }}
+                    enableUserSelectHack={false}
+                    onDragStart={() => {
+                        this.setState({
+                            isDragging: true
+                        })
+                    }}
+                    onDragStop={(e, d) => {
+                        this.dragBar(d.x);
+                        this.setState({
+                            isDragging: false
+                        })
+                    }}
+                    onResizeStart={() => {
+                        this.setState({
+                            isResizing: true
+                        })
+                    }}
+                    onResizeStop={(e, direction, ref, delta, position) => {
+                        this.resizeBar(position.x, parseFloat(ref.style.width));
+                        this.setState({
+                            isResizing: false
+                        })
+                    }}
+                />)
+            } else {
+                bars.push(<div style={{float: 'left', position: 'absolute', marginLeft: fragmentX, height: 22, width: fragmentWidth ,backgroundColor: color}} onClick = {this.clickBar} onMouseOver = {this.clickBar}/>);
+            }
         }
-        let interactiveNeedle = isPerforming?null:<div style={{position:'absolute',zIndex: 1, width: 2, height: 34,backgroundColor: 'red', marginLeft: 5+scenePositionWithScale}}/>;
+        // Needle for Interaction
+        let interactiveNeedle = !isPerforming?<div style={{position:'absolute',zIndex: 1, width: 2, height: 34,backgroundColor: 'red', marginLeft: 5+scenePositionWithScale}}/>:null;
+        let splitBar = !isPerforming&&showSplitBar ?<div style={{position:'absolute',zIndex: 1, width: 10, height: 14,backgroundColor: 'red', marginLeft: 7+scenePositionWithScale, marginTop: 10}} onClick={this.clipBar}/>:null;
         return (
             <div 
                 style={{position: 'relative', left: -this.props.screenX}}
@@ -158,10 +185,11 @@ export default class TrackBar extends Component {
             >
                 <div style={{padding: 6, position:'absolute',zIndex: 0}}>
                     <div id={"bar-container-"+this.props.element.id()} style={{height: 22, width: this.props.scrollWidth, backgroundColor:'#fff'}}  >
-                        {bar}
+                        {bars.map(x=>x)}
                     </div>
                 </div>
                 {interactiveNeedle}
+                {splitBar}
             </div>
         )
     }
