@@ -51,10 +51,16 @@ export default class TrackEditor extends Component {
         })
     }
 
-    render() {
+    needle() {
         let {isPerforming, scenePosition, sceneScale} = this.props;
         const scenePositionWithScale = scenePosition * sceneScale;
-        let needle = !isPerforming?<div style={{marginTop: 24, marginLeft: 205+scenePositionWithScale, height: 204, width: 2, position: 'absolute', zIndex: 1, backgroundColor: 'red'}}/>:null;
+        let needlePosition = 205+scenePositionWithScale-this.state.screenX;
+        let isOutsideRegion = needlePosition < 200 || needlePosition > this.state.screenWidth;
+        let needle = !isPerforming && !isOutsideRegion ? <div style={{marginTop: 24, marginLeft: 205+scenePositionWithScale-this.state.screenX, height: 204, width: 2, position: 'absolute', zIndex: 1, backgroundColor: 'red'}}/>:null;
+        return needle;
+    }
+
+    render() {
         return (
             <div 
                 className="trackeditor"
@@ -90,8 +96,7 @@ export default class TrackEditor extends Component {
                         {...this.props}
                     />
                 </div>
-                {/* needle */}
-                {needle}
+                {this.needle()}
                 {/* <TrackHeader {...this.props}/> */}
                 
             </div>
