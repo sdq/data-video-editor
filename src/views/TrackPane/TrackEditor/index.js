@@ -52,6 +52,9 @@ export default class TrackEditor extends Component {
     }
 
     render() {
+        let {isPerforming, scenePosition, sceneScale} = this.props;
+        const scenePositionWithScale = scenePosition * sceneScale;
+        let needle = !isPerforming?<div style={{marginTop: 24, marginLeft: 205+scenePositionWithScale, height: 204, width: 2, position: 'absolute', zIndex: 1, backgroundColor: 'red'}}/>:null;
         return (
             <div 
                 className="trackeditor"
@@ -87,7 +90,8 @@ export default class TrackEditor extends Component {
                         {...this.props}
                     />
                 </div>
-                
+                {/* needle */}
+                {needle}
                 {/* <TrackHeader {...this.props}/> */}
                 
             </div>

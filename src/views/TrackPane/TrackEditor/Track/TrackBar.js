@@ -115,7 +115,6 @@ export default class TrackBar extends Component {
                 newSceneDuration = elementEnd
             }
         }
-        console.log(newSceneDuration);
         newScene.duration(newSceneDuration);
         let newEle = Object.assign({},this.props.element);
         newEle.start(start);
@@ -141,7 +140,6 @@ export default class TrackBar extends Component {
         }
 
         newScene.updateElement(newEle, this.props.index);
-        console.log(newScene);
         this.props.updateScene(this.props.sceneIndex, newScene);
         const elementName = this.props.sceneIndex + '-' + this.props.index;
         this.props.updateElement(newEle, this.props.index, elementName);
@@ -220,8 +218,7 @@ export default class TrackBar extends Component {
                 bars.push(<div key={"bar-"+this.props.element.id()+'-'+index} style={{float: 'left', position: 'absolute', marginLeft: fragmentX, height: 22, width: fragmentWidth ,backgroundColor: color}} onClick = {this.clickBar} onMouseOver = {this.clickBar}/>);
             }
         }
-        // Needle
-        let needle = !isPerforming?<div style={{position:'absolute',zIndex: 1, width: 2, height: 34,backgroundColor: 'red', marginLeft: 5+scenePositionWithScale}}/>:null;
+        // clip
         let clipButton = !isPerforming&&showClip?<ClipButton onClick={this.clipBar} x={7+scenePositionWithScale}/>:null;
         return (
             <div 
@@ -233,7 +230,6 @@ export default class TrackBar extends Component {
                         {bars.map(x=>x)}
                     </div>
                 </div>
-                {needle}
                 {clipButton}
             </div>
         )
