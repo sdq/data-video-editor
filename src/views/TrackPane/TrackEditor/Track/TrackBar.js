@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ClipButton from './ClipButton';
 import { Rnd } from "react-rnd";
 import Color from '@/constants/Color';
 import ElementType from '@/constants/ElementType';
@@ -13,7 +14,7 @@ export default class TrackBar extends Component {
         this.state = {
             isDragging: false,
             isResizing: false,
-            showSplitBar: false,
+            showClip: false,
         };
         this.clickBar = this.clickBar.bind(this);
         this.leaveBar = this.leaveBar.bind(this);
@@ -23,15 +24,15 @@ export default class TrackBar extends Component {
     }
 
     clickBar() {
-        this.setState({
-            showSplitBar: true
-        })
+        // this.setState({
+        //     showClip: true
+        // })
         this.props.clickBar();
     }
 
     leaveBar() {
         this.setState({
-            showSplitBar: false
+            showClip: false
         })
         if (!this.state.isDragging && !this.state.isResizing) {
             this.props.leaveBar();
@@ -48,15 +49,34 @@ export default class TrackBar extends Component {
         this.props.updateElement(newEle, this.props.index, elementName);
     }
 
-    dragBar(x) {
-        const newX = x / this.props.sceneScale;
-        this.adjustElementDuration(newX, this.props.element.duration(), this.props.currentScene.duration());
+    dragBar(x, fragmentIndex) {
+        const newStart = x / this.props.sceneScale;
+        this.adjustFragmentStart(newStart, fragmentIndex);
+        // this.adjustElementDuration(newX, this.props.element.duration(), this.props.currentScene.duration());
+
+        // check other fragments make sure to merge
     }
 
     resizeBar(x, width) {
         const newX = x / this.props.sceneScale;
         const duration = width / this.props.sceneScale;
         this.adjustElementDuration(newX, duration, this.props.currentScene.duration());
+    }
+
+    adjustFragmentStart(start, fragmentIndex) {
+        const newScene = Object.assign({},this.props.currentScene);
+        const newElement = Object.assign({},this.props.element);
+        const newFragment = Object.assign({},this.props.element.fragments()[fragmentIndex]);
+        newFragment.start(start);
+        newElement.updateFragment(fragmentIndex, newFragment);
+        if ((start + newFragment.duration) > this.props.element.duration()) {
+            // TODO: Dragging the fragement to update whole duration
+
+        }
+        newScene.updateElement(newElement, this.props.index);
+        this.props.updateScene(this.props.sceneIndex, newScene);
+        const elementName = this.props.sceneIndex + '-' + this.props.index;
+        this.props.updateElement(newElement, this.props.index, elementName);
     }
 
     adjustElementDuration(x, duration, sceneDuration) {
@@ -79,7 +99,7 @@ export default class TrackBar extends Component {
             }
         }
         newScene.duration(newSceneDuration);
-        var newEle = Object.assign({},this.props.element);
+        let newEle = Object.assign({},this.props.element);
         newEle.start(x);
         newEle.duration(duration);
 
@@ -110,7 +130,7 @@ export default class TrackBar extends Component {
 
     render() {
         let {element, isBarActive, isPerforming, scenePosition, sceneScale} = this.props;
-        let {showSplitBar} = this.state;
+        let {showClip} = this.state;
         const scenePositionWithScale = scenePosition * sceneScale;
         var color = Color.LIGHT_ORANGE;
         switch (element.type()) {
@@ -154,7 +174,7 @@ export default class TrackBar extends Component {
                         })
                     }}
                     onDragStop={(e, d) => {
-                        this.dragBar(d.x);
+                        this.dragBar(d.x, index);
                         this.setState({
                             isDragging: false
                         })
@@ -170,6 +190,16 @@ export default class TrackBar extends Component {
                             isResizing: false
                         })
                     }}
+                    onMouseOver={() => {
+                        this.setState({
+                            showClip: true
+                        })
+                    }}
+                    onMouseLeave={() => {
+                        // this.setState({
+                        //     showClip: false
+                        // })
+                    }}
                 />)
             } else {
                 bars.push(<div style={{float: 'left', position: 'absolute', marginLeft: fragmentX, height: 22, width: fragmentWidth ,backgroundColor: color}} onClick = {this.clickBar} onMouseOver = {this.clickBar}/>);
@@ -177,7 +207,7 @@ export default class TrackBar extends Component {
         }
         // Needle for Interaction
         let interactiveNeedle = !isPerforming?<div style={{position:'absolute',zIndex: 1, width: 2, height: 34,backgroundColor: 'red', marginLeft: 5+scenePositionWithScale}}/>:null;
-        let splitBar = !isPerforming&&showSplitBar ?<div style={{position:'absolute',zIndex: 1, width: 10, height: 14,backgroundColor: 'red', marginLeft: 7+scenePositionWithScale, marginTop: 10}} onClick={this.clipBar}/>:null;
+        let splitBar = !isPerforming&&showClip?<ClipButton onClick={this.clipBar} x={7+scenePositionWithScale}/>:null;
         return (
             <div 
                 style={{position: 'relative', left: -this.props.screenX}}

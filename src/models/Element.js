@@ -129,6 +129,10 @@ export class Element {
         this._fragments.push(fragment);
         return this;
     };
+    updateFragment = function(index, fragment) {
+        this._fragments[index] = fragment;
+        return this;
+    }
     split = function(position) {
         let fragmentIndex = this._findFragment(position);
         if (fragmentIndex === -1) {
