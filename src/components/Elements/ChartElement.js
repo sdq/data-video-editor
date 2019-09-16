@@ -25,7 +25,7 @@ export default class ChartElement extends Component {
     };
 
     dragend(x,y) {
-        var newEle = this.props.element;
+        var newEle = _.cloneDeep(this.props.element);
         newEle.info().x = x;
         newEle.info().y = y;
         this.props.edit(newEle);
@@ -39,7 +39,7 @@ export default class ChartElement extends Component {
     }
     onTransformEnd(e) {
         // console.log("end transform");
-        var newEle = this.props.element;
+        const newEle = _.cloneDeep(this.props.element);
         newEle.info().x = e.target.x();
         newEle.info().y = e.target.y();
         newEle.info().width = e.target.width()*e.target.scaleX();

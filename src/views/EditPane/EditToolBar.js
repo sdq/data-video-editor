@@ -40,7 +40,9 @@ export default class EditToolBar extends Component {
     }
 
     render() {
-        const { isElementSelected, copiedElement, isPerforming } = this.props;
+        const { isElementSelected, copiedElement, isPerforming, past , future, sceneIndex} = this.props;
+        let currentPast = past[sceneIndex];
+        let currentFuture = future[sceneIndex];
         return (
             <div id='edittoolbar' style={{ background: Color.LIGHT_ORANGE }}> 
                 <ButtonGroup style = { {margin: '10px 0px 0px 20px', float:'left'} }>
@@ -51,8 +53,8 @@ export default class EditToolBar extends Component {
                  </ButtonGroup>
                 
                 <ButtonGroup style = { {margin: '10px 20px 0 0', float:'right'} } >
-                    <Button icon="undo" style = { {padding: '0 20px 0 20px'} } onClick={this.undoCanvas} disabled={isPerforming}/>
-                    <Button icon="redo" style = { {padding: '0 20px 0 20px'} } onClick={this.redoCanvas} disabled={isPerforming}/>
+                    <Button icon="undo" style = { {padding: '0 20px 0 20px'} } onClick={this.undoCanvas} disabled={isPerforming || currentPast.length === 0}/>
+                    <Button icon="redo" style = { {padding: '0 20px 0 20px'} } onClick={this.redoCanvas} disabled={isPerforming || currentFuture.length === 0}/>
                 </ButtonGroup>
 
                 <ButtonGroup style = { {margin: '10px 20px 0px 0px', float:'right'} }>

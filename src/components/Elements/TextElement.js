@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Text, Group } from 'react-konva';
 import Color from '@/constants/Color';
+import _ from 'lodash';
 
 export default class TextElement extends Component {
     constructor(props) {
@@ -8,8 +9,6 @@ export default class TextElement extends Component {
         this.state = {
             isDragging: false,
             text: props.element.info().text,
-            x: props.element.info().x,
-            y: props.element.info().y,
         };
         this.dragstart = this.dragstart.bind(this);
         this.dragend = this.dragend.bind(this);
@@ -22,7 +21,7 @@ export default class TextElement extends Component {
     };
 
     dragend(x,y) {
-        var newEle = this.props.element;
+        const newEle = _.cloneDeep(this.props.element);
         newEle.info().x = x;
         newEle.info().y = y;
         this.props.edit(newEle);
@@ -34,7 +33,7 @@ export default class TextElement extends Component {
         //console.log("onTransform");
     }
     onTransformEnd(e) {
-        var newEle = this.props.element;
+        const newEle = _.cloneDeep(this.props.element);
         newEle.info().x = e.target.x();
         newEle.info().y = e.target.y();
         newEle.info().width = e.target.width()*e.target.scaleX();
@@ -46,8 +45,8 @@ export default class TextElement extends Component {
         return (
             <Group name={this.props.name}
                 draggable = {this.props.draggable}
-                x={this.state.x}
-                y={this.state.y}
+                x={this.props.element.info().x}
+                y={this.props.element.info().y}
                 onDragStart={() => {
                     this.dragstart();
                     this.setState({
@@ -68,7 +67,7 @@ export default class TextElement extends Component {
             >
                 <Text
                     name={this.props.name}
-                    text={this.state.text}
+                    text={this.props.element.info().text}
                     fontSize={18}
                     //draggable
                     fill={this.state.isDragging ? Color.DEEP_ORANGE : 'black'}

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import EditPane from './EditPane';
-import {currentScene, sceneIndex, scenes, isFirstScene, isLastScene} from '@/selectors/video';
+import {currentScene, sceneIndex, scenes, isFirstScene, isLastScene, past, future} from '@/selectors/video';
 import {currentElement, currentElements, elementIndex, elementName, isElementSelected} from '@/selectors/canvas';
 import { dataList } from '@/selectors/vis';
 import { scenePosition } from '@/selectors/scene';
@@ -20,6 +20,8 @@ const mapStateToProps = state => {
         isFirstScene: isFirstScene(state),
         isLastScene: isLastScene(state),
         currentScene: currentScene(state),
+        past: past(state),
+        future: future(state),
         elementIndex: elementIndex(state),
         elementName: elementName(state),
         currentElement: currentElement(state),

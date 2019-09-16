@@ -5,6 +5,7 @@ import ImageElement from '@/components/Elements/ImageElement';
 import TextElement from '@/components/Elements/TextElement';
 import ChartElement from '@/components/Elements/ChartElement';
 import ElementType from '@/constants/ElementType';
+import _ from 'lodash';
 
 export default class EditableLayer extends Component {
 
@@ -28,9 +29,9 @@ export default class EditableLayer extends Component {
 
     editElement(eleIndex, element) {
         this.props.displayAssistLines(false);
-        const newScene = Object.assign({},this.props.currentScene);
-        const newElement = Object.assign({},element);
-        newScene.updateElement(newElement, eleIndex);
+        const newScene = _.cloneDeep(this.props.currentScene);
+        const newElement = _.cloneDeep(element);
+        newScene.updateElement(element, eleIndex);
         this.props.updateScene(this.props.sceneIndex, newScene);
         const elementName = this.props.sceneIndex + '-' + eleIndex;
         this.props.updateElement(newElement, eleIndex, elementName);
