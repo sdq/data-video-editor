@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Image, Group } from 'react-konva';
+import _ from 'lodash';
 
 export default class ImageElement extends Component {
     constructor(props) {
@@ -46,7 +47,7 @@ export default class ImageElement extends Component {
     };
 
     dragend(x,y) {
-        var newEle = this.props.element;
+        const newEle = _.cloneDeep(this.props.element);
         newEle.info().x = x;
         newEle.info().y = y;
         this.props.edit(newEle);
@@ -59,7 +60,7 @@ export default class ImageElement extends Component {
         // console.log("onTransform");
     }
     onTransformEnd(e) {
-        var newEle = this.props.element;
+        const newEle = _.cloneDeep(this.props.element);
         console.log("end transform");
         console.log(e.target.attrs);
         newEle.info().x = e.target.x();

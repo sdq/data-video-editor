@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import EditPane from './EditPane';
-import {currentScene, sceneIndex, scenes, isFirstScene, isLastScene} from '@/selectors/video';
+import {currentScene, sceneIndex, scenes, isFirstScene, isLastScene, past, future} from '@/selectors/video';
 import {currentElement, currentElements, elementIndex, elementName, isElementSelected} from '@/selectors/canvas';
 import { dataList } from '@/selectors/vis';
 import { scenePosition } from '@/selectors/scene';
@@ -11,6 +11,7 @@ import * as videoActions from '@/actions/videoAction';
 import * as canvasActions from '@/actions/canvasAction';
 import * as playerActions from '@/actions/playerAction';
 import * as sceneActions from '@/actions/sceneAction';
+import * as metaActions from '@/actions/metaAction';
 
 const mapStateToProps = state => {
     return {
@@ -19,6 +20,8 @@ const mapStateToProps = state => {
         isFirstScene: isFirstScene(state),
         isLastScene: isLastScene(state),
         currentScene: currentScene(state),
+        past: past(state),
+        future: future(state),
         elementIndex: elementIndex(state),
         elementName: elementName(state),
         currentElement: currentElement(state),
@@ -50,6 +53,8 @@ const mapDispatchToProps = dispatch => {
         playVideo: () => dispatch(playerActions.playVideo()),
         stopVideo: () => dispatch(playerActions.stopVideo()),
         setPosition: (position) => dispatch(sceneActions.setPosition(position)),
+        undoCanvas: (index) => dispatch(metaActions.undoCanvas(index)),
+        redoCanvas: (index) => dispatch(metaActions.redoCanvas(index)),
     }
 }
 
