@@ -136,16 +136,47 @@ export class Element {
     split = function(position) {
         let fragmentIndex = this._findFragment(position);
         if (fragmentIndex === -1) {
-            return; // not in the fragments
+            return; // not in the fragments 
         }
-        // first, create a new fragment
-        let newFragment = new Fragment(position,this._fragments[fragmentIndex].end()-position)
+        // first, move all later fragments delay 1s
+        for (let index = 0; index < this._fragments.length; index++) {
+            if (this._fragments[index].start() > position) {
+                const newStart = this._fragments[index].start() + 1;
+                this._fragments[index].start(newStart);
+            }
+        }
+        this.duration(this.duration()+1);
+        // then, create a new fragment
+        let newFragment = new Fragment(position+1,this._fragments[fragmentIndex].end()-position)
         this._fragments.splice(fragmentIndex+1, 0, newFragment);
-        // first, update the old fragment
+        // finally, update the old fragment
         this._fragments[fragmentIndex].duration(position-this._fragments[fragmentIndex].start())
+        return this;
     }
-    merge = function() {
-        // after merge, delete one old fragment, and update one old fragment (start or duration).
+    merge = function(fragment) {
+        // after merge, delete covered old fragments, and update one old fragment (start or duration).
+        const newFragment = fragment;
+        this._fragments.forEach(function(item, index, fragments){
+            if (item.start() < newFragment.start() && item.end() > newFragment.start()) {
+                newFragment.start(item.start())
+                console.log('merge1')
+                fragments.splice(index, 1);
+            } else if (item.start() < newFragment.end() && item.end() > newFragment.end()) {
+                newFragment.duration(item.end()-newFragment.end())
+                console.log('merge2')
+                fragments.splice(index, 1);
+            } else if (item.start() < newFragment.start() && item.end() > newFragment.end()) {
+                newFragment.start(item.start());
+                newFragment.duration(item.duration());
+                console.log('merge3')
+                fragments.splice(index, 1);
+            } else if (item.start() > newFragment.start() && item.end() < newFragment.end()) {
+                console.log('merge4')
+                fragments.splice(index, 1);
+            }
+        });
+        this._fragments.push(newFragment);
+        return this;
     }
     _findFragment = function(position) {
         for (let index = 0; index < this._fragments.length; index++) {

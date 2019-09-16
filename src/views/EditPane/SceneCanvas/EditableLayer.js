@@ -37,11 +37,15 @@ export default class EditableLayer extends Component {
     }
 
     isElementDisplay(element) {
+        let isElementDisplay = false;
         if (this.props.scenePosition >= element.start() && this.props.scenePosition <= element.start()+element.duration()) {
-            return true;
-        } else {
-            return false;
+            element.fragments().forEach(fragment => {
+                if (this.props.scenePosition >= fragment.start() && this.props.scenePosition <= fragment.end()) {
+                    isElementDisplay = true;
+                }
+            });
         }
+        return isElementDisplay;
     }
 
     render() {

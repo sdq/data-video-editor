@@ -20,24 +20,21 @@ export default class PlayControlBar extends Component {
             this.props.unselectElement();
             this.props.displayTrackEditor();
             this.props.playVideo();
-            var sceneStart = 0;
+            let sceneStart = 0;
 
             for (let index = 0; index < this.props.scenes.length; index++) {
                 const sceneDuration = this.props.scenes[index].duration();
+                console.log(sceneStart);
                 this.videoTimeouts.push(setTimeout(function () {
                     this.props.selectScene(index);
                     this.props.setPosition(0);
-                }.bind(this), sceneStart));
-                for (let time = 0; time < sceneDuration; time++) {
-                    this.sceneTimeouts.push(setTimeout(function () {
-                        this.props.setPosition(time);
-                    }.bind(this), sceneStart + time*60));
-                }
-                sceneStart += sceneDuration * 60;
+                }.bind(this), sceneStart * 1000));
+                // TODO: play scene
+                sceneStart += sceneDuration;
             }
             this.videoTimeouts.push(setTimeout(function () {
                 this.props.stopVideo();
-            }.bind(this), sceneStart));
+            }.bind(this), sceneStart * 1000));
         } else {
             this.pause();
         }

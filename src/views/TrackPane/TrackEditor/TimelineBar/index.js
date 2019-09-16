@@ -11,7 +11,6 @@ const realHeight = 24;
 export default class TimelineBar extends Component {
     render() {
         let height = this.props.isPerforming?performingHeight:realHeight;
-        console.log(height);
         return (
             <div className="timeline-bar" style={{height: height, backgroundColor: 'transparent'}}>
                 <Layout style={{ backgroundColor: 'transparent' , height: height}}>

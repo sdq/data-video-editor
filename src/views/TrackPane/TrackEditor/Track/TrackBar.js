@@ -41,66 +41,80 @@ export default class TrackBar extends Component {
 
     clipBar() {
         const newScene = Object.assign({},this.props.currentScene);
-        const newEle = Object.assign({},this.props.element);
-        newEle.split(this.props.scenePosition);
-        newScene.updateElement(newEle, this.props.index);
-        this.props.updateScene(this.props.sceneIndex, newScene);
-        const elementName = this.props.sceneIndex + '-' + this.props.index;
-        this.props.updateElement(newEle, this.props.index, elementName);
-    }
-
-    dragBar(x, fragmentIndex) {
-        const newStart = x / this.props.sceneScale;
-        this.adjustFragmentStart(newStart, fragmentIndex);
-        // this.adjustElementDuration(newX, this.props.element.duration(), this.props.currentScene.duration());
-
-        // check other fragments make sure to merge
-    }
-
-    resizeBar(x, width) {
-        const newX = x / this.props.sceneScale;
-        const duration = width / this.props.sceneScale;
-        this.adjustElementDuration(newX, duration, this.props.currentScene.duration());
-    }
-
-    adjustFragmentStart(start, fragmentIndex) {
-        const newScene = Object.assign({},this.props.currentScene);
         const newElement = Object.assign({},this.props.element);
-        const newFragment = Object.assign({},this.props.element.fragments()[fragmentIndex]);
-        newFragment.start(start);
-        newElement.updateFragment(fragmentIndex, newFragment);
-        if ((start + newFragment.duration) > this.props.element.duration()) {
-            // TODO: Dragging the fragement to update whole duration
-
-        }
+        newElement.split(this.props.scenePosition);
         newScene.updateElement(newElement, this.props.index);
+        newScene.duration(newScene.duration()+1);
         this.props.updateScene(this.props.sceneIndex, newScene);
         const elementName = this.props.sceneIndex + '-' + this.props.index;
         this.props.updateElement(newElement, this.props.index, elementName);
     }
 
-    adjustElementDuration(x, duration, sceneDuration) {
+    dragBar(x, fragmentIndex) {
+        const newStart = x / this.props.sceneScale;
+        this.adjustFragment(newStart, null, fragmentIndex);
+        // this.adjustElementDuration(newX, this.props.element.duration(), this.props.currentScene.duration());
+
+        // check other fragments make sure to merge
+    }
+
+    resizeBar(x, width, fragmentIndex) {
+        const newStart = x / this.props.sceneScale;
+        const newDuration = width / this.props.sceneScale;
+        this.adjustFragment(newStart, newDuration, fragmentIndex);
+        // this.adjustElementDuration(newStart, newDuration);
+    }
+
+    adjustFragment(start=null, duration=null, fragmentIndex) {
         const newScene = Object.assign({},this.props.currentScene);
-        // let newSceneDuration = sceneDuration;
-        // if ((x + duration) > sceneDuration) {
-        //     newSceneDuration = x + duration;
-        // }
+        const newElement = Object.assign({},this.props.element);
+        const newFragment = Object.assign({},this.props.element.fragments()[fragmentIndex]);
+        if (start !== null) {
+            newFragment.start(start);
+        }
+        if (duration !== null) {
+            newFragment.duration(duration);
+        }
+        newElement.updateFragment(fragmentIndex, newFragment);
+        let newElementStart = newElement.fragments()[0].start();
+        newElement.fragments().forEach(fragment => {
+            if (fragment.start() < newElementStart) {
+                newElementStart = fragment.start();
+            }
+        });
+        let newElementDuration = newElement.fragments()[0].end() - newElementStart;
+        newElement.fragments().forEach(fragment => {
+            if (fragment.end() - newElementStart > newElementDuration) {
+                newElementDuration = fragment.end() - newElementStart;
+            }
+        });
+        if (newElementStart !== newElement.start() || newElementDuration !== newElement.duration()) {
+            this.adjustElementDuration(newElementStart, newElementDuration)
+        } else {
+            newScene.updateElement(newElement, this.props.index);
+            this.props.updateScene(this.props.sceneIndex, newScene);
+            const elementName = this.props.sceneIndex + '-' + this.props.index;
+            this.props.updateElement(newElement, this.props.index, elementName);
+        }
+    }
+
+    adjustElementDuration(start, duration) {
+        const newScene = Object.assign({},this.props.currentScene);
         let newSceneDuration = 0
         for (let index = 0; index < newScene.elements().length; index++) {
             const element = newScene.elements()[index];
-            console.log(element);
             let elementEnd = element.start() + element.duration();
-            console.log(elementEnd);
             if (index === this.props.index) {
-                elementEnd = x + duration;
+                elementEnd = start + duration;
             }
             if (elementEnd > newSceneDuration) {
                 newSceneDuration = elementEnd
             }
         }
+        console.log(newSceneDuration);
         newScene.duration(newSceneDuration);
         let newEle = Object.assign({},this.props.element);
-        newEle.start(x);
+        newEle.start(start);
         newEle.duration(duration);
 
         // update animations
@@ -123,6 +137,7 @@ export default class TrackBar extends Component {
         }
 
         newScene.updateElement(newEle, this.props.index);
+        console.log(newScene);
         this.props.updateScene(this.props.sceneIndex, newScene);
         const elementName = this.props.sceneIndex + '-' + this.props.index;
         this.props.updateElement(newEle, this.props.index, elementName);
@@ -159,6 +174,7 @@ export default class TrackBar extends Component {
             if (isBarActive && !isPerforming) {
                 bars.push(<Rnd
                     id={"bar-"+this.props.element.id()+'-'+index}
+                    key={"bar-"+this.props.element.id()+'-'+index}
                     style={{backgroundColor: color}}
                     size={{ width: fragmentWidth, height: height }}
                     position={{ x: fragmentX, y: y }}
@@ -185,7 +201,7 @@ export default class TrackBar extends Component {
                         })
                     }}
                     onResizeStop={(e, direction, ref, delta, position) => {
-                        this.resizeBar(position.x, parseFloat(ref.style.width));
+                        this.resizeBar(position.x, parseFloat(ref.style.width), index);
                         this.setState({
                             isResizing: false
                         })
@@ -197,12 +213,12 @@ export default class TrackBar extends Component {
                     }}
                 />)
             } else {
-                bars.push(<div style={{float: 'left', position: 'absolute', marginLeft: fragmentX, height: 22, width: fragmentWidth ,backgroundColor: color}} onClick = {this.clickBar} onMouseOver = {this.clickBar}/>);
+                bars.push(<div key={"bar-"+this.props.element.id()+'-'+index} style={{float: 'left', position: 'absolute', marginLeft: fragmentX, height: 22, width: fragmentWidth ,backgroundColor: color}} onClick = {this.clickBar} onMouseOver = {this.clickBar}/>);
             }
         }
         // Needle for Interaction
         let interactiveNeedle = !isPerforming?<div style={{position:'absolute',zIndex: 1, width: 2, height: 34,backgroundColor: 'red', marginLeft: 5+scenePositionWithScale}}/>:null;
-        let splitBar = !isPerforming&&showClip?<ClipButton onClick={this.clipBar} x={7+scenePositionWithScale}/>:null;
+        let clipButton = !isPerforming&&showClip?<ClipButton onClick={this.clipBar} x={7+scenePositionWithScale}/>:null;
         return (
             <div 
                 style={{position: 'relative', left: -this.props.screenX}}
@@ -214,7 +230,7 @@ export default class TrackBar extends Component {
                     </div>
                 </div>
                 {interactiveNeedle}
-                {splitBar}
+                {clipButton}
             </div>
         )
     }

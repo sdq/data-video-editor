@@ -21,7 +21,7 @@ export default class PlayController extends Component {
             const end = this.props.currentScene.duration();
             const msOffset = (end - current) * 1000;
             // const widthOffset = (end - current) * this.props.sceneScale;
-            const n = msOffset / 100 + 1; // 100ms 切换一次
+            const n = Math.round(msOffset / 100) + 1; // 100ms 切换一次
             for (let index = 0; index < n; index++) {
                 this.timeouts.push(setTimeout(function () {
                     const position = current + index / 10 ;
