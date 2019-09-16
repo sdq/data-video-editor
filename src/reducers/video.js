@@ -28,7 +28,6 @@ export default (state = initialState, action) => {
         case ActionType.UPDATE_SCENE:
             newScenes[action.index] = action.scene;
             newState.scenes = newScenes;
-            console.log(newScenes);
             //newState.video.update(action.index, action.scene);
             return newState
         case ActionType.REORDER_SCENE:

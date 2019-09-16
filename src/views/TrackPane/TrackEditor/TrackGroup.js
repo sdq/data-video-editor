@@ -4,7 +4,7 @@ import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import './trackeditor.css';
   
 const getListStyle = isDraggingOver => ({
-    background: isDraggingOver ? "lightblue" : "lightgrey",
+    background: isDraggingOver ? "lightblue" : "white",
 });
 
 export default class TrackGroup extends Component {
@@ -22,6 +22,9 @@ export default class TrackGroup extends Component {
     }
 
     onDragEnd(result) {
+        if (result.destination === null) {
+            return; // drop outside region
+        }
         let sourceIndex = result.source.index;
         let destinationIndex = result.destination.index;
         const newScene = Object.assign({},this.props.currentScene);

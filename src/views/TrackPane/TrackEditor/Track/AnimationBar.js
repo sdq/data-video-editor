@@ -11,8 +11,8 @@ export default class AnimationBar extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isDragging: false,
-            isResizing: false
+            isBarDragging: false,
+            isBarResizing: false
         };
         this.clickBar = this.clickBar.bind(this);
         this.leaveBar = this.leaveBar.bind(this);
@@ -25,7 +25,7 @@ export default class AnimationBar extends Component {
     }
 
     leaveBar() {
-        if (!this.state.isDragging && !this.state.isResizing) {
+        if (!this.state.isBarDragging && !this.state.isBarResizing) {
             this.props.setAnimationBarUnactive();
         }
     }
@@ -92,24 +92,24 @@ export default class AnimationBar extends Component {
                 enableUserSelectHack={false}
                 onDragStart={() => {
                     this.setState({
-                        isDragging: true
+                        isBarDragging: true
                     })
                 }}
                 onDragStop={(e, d) => {
                     this.dragBar(d.x);
                     this.setState({
-                        isDragging: false
+                        isBarDragging: false
                     })
                 }}
                 onResizeStart={()=> {
                     this.setState({
-                        isResizing: true
+                        isBarResizing: true
                     })
                 }}
                 onResizeStop={(e, direction, ref, delta, position) => {
                     this.resizeBar(position.x, parseFloat(ref.style.width));
                     this.setState({
-                        isResizing: false
+                        isBarResizing: false
                     })
                 }}
             />

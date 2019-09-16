@@ -11,6 +11,7 @@
 
 .track-group {
     height: 204px;
+    background-color: #ffffff;
     overflow-y: auto;
     overflow-x: none;
 }

@@ -134,10 +134,11 @@ export class Element {
         return this;
     }
     split = function(position) {
-        let fragmentIndex = this._findFragment(position);
+        let fragmentIndex = this.findFragment(position);
         if (fragmentIndex === -1) {
             return; // not in the fragments 
         }
+        console.log(fragmentIndex);
         // first, move all later fragments delay 1s
         for (let index = 0; index < this._fragments.length; index++) {
             if (this._fragments[index].start() > position) {
@@ -153,32 +154,29 @@ export class Element {
         this._fragments[fragmentIndex].duration(position-this._fragments[fragmentIndex].start())
         return this;
     }
-    merge = function(fragment) {
-        // after merge, delete covered old fragments, and update one old fragment (start or duration).
-        const newFragment = fragment;
-        this._fragments.forEach(function(item, index, fragments){
-            if (item.start() < newFragment.start() && item.end() > newFragment.start()) {
-                newFragment.start(item.start())
-                console.log('merge1')
-                fragments.splice(index, 1);
-            } else if (item.start() < newFragment.end() && item.end() > newFragment.end()) {
-                newFragment.duration(item.end()-newFragment.end())
-                console.log('merge2')
-                fragments.splice(index, 1);
-            } else if (item.start() < newFragment.start() && item.end() > newFragment.end()) {
-                newFragment.start(item.start());
-                newFragment.duration(item.duration());
-                console.log('merge3')
-                fragments.splice(index, 1);
-            } else if (item.start() > newFragment.start() && item.end() < newFragment.end()) {
-                console.log('merge4')
-                fragments.splice(index, 1);
-            }
-        });
-        this._fragments.push(newFragment);
+    sort = function() {
+        this._fragments.sort(function(a, b){ return a.start()-b.start() })
         return this;
     }
-    _findFragment = function(position) {
+    merge = function() {
+        if (this._fragments.length < 2) {
+            return this;
+        }
+        this.sort();
+        for (let index = 0; index < this._fragments.length - 1; ) {
+            const fragmentA = this._fragments[index];
+            const fragmentB = this._fragments[index+1];
+            if (fragmentB.start() < fragmentA.end()) {
+                // merge
+                this._fragments[index].duration(Math.max(fragmentA.end(), fragmentB.end()) - fragmentA.start())
+                this._fragments.splice(index+1, 1);
+            } else {
+                index++
+            }
+        }
+        return this;
+    }
+    findFragment = function(position) {
         for (let index = 0; index < this._fragments.length; index++) {
             const fragment = this._fragments[index];
             if (position > fragment.start() && position < fragment.end()) {

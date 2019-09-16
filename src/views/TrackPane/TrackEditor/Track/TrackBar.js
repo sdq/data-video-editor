@@ -12,8 +12,8 @@ export default class TrackBar extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isDragging: false,
-            isResizing: false,
+            isBarDragging: false,
+            isBarResizing: false,
             showClip: false,
         };
         this.clickBar = this.clickBar.bind(this);
@@ -34,12 +34,15 @@ export default class TrackBar extends Component {
         this.setState({
             showClip: false
         })
-        if (!this.state.isDragging && !this.state.isResizing) {
+        if (!this.state.isBarDragging && !this.state.isBarResizing) {
             this.props.leaveBar();
         }
     }
 
     clipBar() {
+        if (this.props.element.findFragment(this.props.scenePosition) === -1) {
+            return;
+        }
         const newScene = Object.assign({},this.props.currentScene);
         const newElement = Object.assign({},this.props.element);
         newElement.split(this.props.scenePosition);
@@ -76,6 +79,7 @@ export default class TrackBar extends Component {
             newFragment.duration(duration);
         }
         newElement.updateFragment(fragmentIndex, newFragment);
+        newElement.merge();
         let newElementStart = newElement.fragments()[0].start();
         newElement.fragments().forEach(fragment => {
             if (fragment.start() < newElementStart) {
@@ -186,24 +190,24 @@ export default class TrackBar extends Component {
                     enableUserSelectHack={false}
                     onDragStart={() => {
                         this.setState({
-                            isDragging: true
+                            isBarDragging: true
                         })
                     }}
                     onDragStop={(e, d) => {
                         this.dragBar(d.x, index);
                         this.setState({
-                            isDragging: false
+                            isBarDragging: false
                         })
                     }}
                     onResizeStart={() => {
                         this.setState({
-                            isResizing: true
+                            isBarResizing: true
                         })
                     }}
                     onResizeStop={(e, direction, ref, delta, position) => {
                         this.resizeBar(position.x, parseFloat(ref.style.width), index);
                         this.setState({
-                            isResizing: false
+                            isBarResizing: false
                         })
                     }}
                     onMouseOver={() => {
