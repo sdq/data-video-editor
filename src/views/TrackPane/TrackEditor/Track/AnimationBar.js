@@ -57,7 +57,8 @@ export default class AnimationBar extends Component {
     }
     
     render() {
-        let {element, elementX, elementWidth, x, width, isPerforming, isAnimationBarActive} = this.props;
+        let {element, elementX, elementWidth, x, width, isPerforming, isAnimationBarActive, scenePosition, sceneScale} = this.props;
+        const scenePositionWithScale = scenePosition * sceneScale;
         var color = Color.LIGHT_ORANGE;
         switch (element.type()) {
             case ElementType.IMAGE:
@@ -119,14 +120,17 @@ export default class AnimationBar extends Component {
             onMouseOver = {this.clickBar}
             />
         }
+        // Needle
+        let needle = !isPerforming?<div style={{position:'absolute',zIndex: 1, width: 2, height: 34,backgroundColor: 'red', marginLeft: scenePositionWithScale-1, marginTop: -6}}/>:null;
         return (
             <div 
                 style={{padding: 6, position: 'relative', left: -this.props.screenX}}
                 onMouseLeave={this.leaveBar}
             >
-                <div id={"bar-container-"+this.props.element.id()} style={{height: 22, marginLeft: elementX, width: elementWidth, backgroundColor:'#fff'}}>
+                <div id={"bar-container-"+this.props.element.id()} style={{height: 22, marginLeft: elementX, width: elementWidth, backgroundColor:'#fff', position:'absolute',zIndex: 0}}>
                     {bar}
                 </div>
+                {needle}
             </div>
         )
     }

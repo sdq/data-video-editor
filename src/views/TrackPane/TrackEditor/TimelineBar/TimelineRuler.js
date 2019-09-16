@@ -5,7 +5,6 @@ import './timelinebar.css';
 
 const performingHeight = 228;
 const realHeight = 24;
-const trackHeight = 34;
 const width = 12;
 const offset = 6;
 
@@ -104,13 +103,10 @@ export default class TimelineRuler extends Component {
     }
 
     render() {
-        const {scenePosition, isPerforming, sceneScale, currentElements} = this.props;
+        const {scenePosition, isPerforming, sceneScale} = this.props;
         const scenePositionWithScale = scenePosition * sceneScale;
         let height = isPerforming?performingHeight:realHeight;
-        let needleHeight = currentElements.length * trackHeight;
-        if (needleHeight > (performingHeight - realHeight)) {
-            needleHeight = performingHeight - realHeight;
-        }
+        let needleHeight = performingHeight - realHeight;
         let needle = <Rnd
             style={{zIndex: 2}}
             size={{ width: width, height: height }}

@@ -216,8 +216,8 @@ export default class TrackBar extends Component {
                 bars.push(<div key={"bar-"+this.props.element.id()+'-'+index} style={{float: 'left', position: 'absolute', marginLeft: fragmentX, height: 22, width: fragmentWidth ,backgroundColor: color}} onClick = {this.clickBar} onMouseOver = {this.clickBar}/>);
             }
         }
-        // Needle for Interaction
-        let interactiveNeedle = !isPerforming?<div style={{position:'absolute',zIndex: 1, width: 2, height: 34,backgroundColor: 'red', marginLeft: 5+scenePositionWithScale}}/>:null;
+        // Needle
+        let needle = !isPerforming?<div style={{position:'absolute',zIndex: 1, width: 2, height: 34,backgroundColor: 'red', marginLeft: 5+scenePositionWithScale}}/>:null;
         let clipButton = !isPerforming&&showClip?<ClipButton onClick={this.clipBar} x={7+scenePositionWithScale}/>:null;
         return (
             <div 
@@ -229,7 +229,7 @@ export default class TrackBar extends Component {
                         {bars.map(x=>x)}
                     </div>
                 </div>
-                {interactiveNeedle}
+                {needle}
                 {clipButton}
             </div>
         )
