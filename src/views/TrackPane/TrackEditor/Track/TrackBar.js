@@ -195,11 +195,6 @@ export default class TrackBar extends Component {
                             showClip: true
                         })
                     }}
-                    onMouseLeave={() => {
-                        // this.setState({
-                        //     showClip: false
-                        // })
-                    }}
                 />)
             } else {
                 bars.push(<div style={{float: 'left', position: 'absolute', marginLeft: fragmentX, height: 22, width: fragmentWidth ,backgroundColor: color}} onClick = {this.clickBar} onMouseOver = {this.clickBar}/>);
