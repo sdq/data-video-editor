@@ -1,53 +1,9 @@
 import React, { Component } from 'react'
 import {  Collapse,Row, Col, Divider, Button, Input,List } from 'antd';
-import ImageCard from '@/components/ImageCard';
 import { SketchPicker } from 'react-color';
 import MyURL from '@/constants/MyURL';
 const { TextArea } = Input;
 const { Panel } = Collapse;
-
-const effectsList = [   //example for background  & effects 
-    {
-        name: "none",
-        style: "basic",
-        src: "https://datavideo.idvxlab.com/images/leaf.png"
-    },
-    {
-        name: "fade-in",
-        style: "basic",
-        src: "https://datavideo.idvxlab.com/images/leaf.png"
-    },
-    {
-        name: "daub",
-        style: "advanced",
-        src: "https://datavideo.idvxlab.com/images/chair.png"
-    },
-    {
-        name: "fan-shaped",
-        style: "advanced",
-        src: "https://datavideo.idvxlab.com/images/light.png"
-    },
-    {
-        name: "fan-shaped",
-        style: "advanced",
-        src: "https://datavideo.idvxlab.com/images/light.png"
-    },
-    {
-        name: "fan-shaped",
-        style: "advanced",
-        src: "https://datavideo.idvxlab.com/images/light.png"
-    },
-    {
-        name: "fan-shaped",
-        style: "advanced",
-        src: "https://datavideo.idvxlab.com/images/light.png"
-    },
-    {
-        name: "fan-shaped",
-        style: "advanced",
-        src: "https://datavideo.idvxlab.com/images/light.png"
-    },
-];
 
 const bglisttexture =  [    // 初始化  默认背景列表1 不可上传  加载时从服务器读取  (是否应该写到state内部？)
     {
@@ -142,8 +98,8 @@ export default class SceneTool extends Component {
 
 
     handleColorClick () {
-        let {displayColorPicker,key,color} =this.state;
-        displayColorPicker = displayColorPicker=="none"?"block":"none";
+        let {displayColorPicker} =this.state;
+        displayColorPicker = displayColorPicker==="none"?"block":"none";
         this.setState({displayColorPicker})
         if(displayColorPicker){
             //this.props.updateColor(key,color)
@@ -190,7 +146,7 @@ export default class SceneTool extends Component {
     };
 
     render() {
-        let {color,displayColorPicker,bgimage} = this.state;
+        let {color} = this.state;
         const popover = {
             position: 'absolute',
             //position: 'relative',

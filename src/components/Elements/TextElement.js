@@ -64,6 +64,7 @@ export default class TextElement extends Component {
                 onTransformStart={this.onTransformStart}
                 onTransform={this.onTransform}
                 onTransformEnd={this.onTransformEnd}
+                visible={this.props.visible}
             >
                 <Text
                     name={this.props.name}

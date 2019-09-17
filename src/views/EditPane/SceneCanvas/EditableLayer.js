@@ -57,9 +57,8 @@ export default class EditableLayer extends Component {
                 ref={node => (this.editableLayer = node)}
             >
                 {this.props.currentScene.elements().map(function(element, index) {
-                    //console.log(element.info);
                     if (index === this.props.dbClickedElementIndex) {
-                        return null;
+                        return null; // dbclick element for preview
                     }
                     switch (element.type()) {
                         case ElementType.TEXT:
@@ -71,6 +70,8 @@ export default class EditableLayer extends Component {
                                     element={element} 
                                     name={this.props.sceneIndex+"-"+index} 
                                     draggable={editable} 
+                                    visible={true}
+                                    showAnimation={false}
                                     {...this.props}
                                 />
                             } else {
@@ -87,6 +88,8 @@ export default class EditableLayer extends Component {
                                     element={element} 
                                     name={this.props.sceneIndex+"-"+index} 
                                     draggable={editable} 
+                                    visible={true}
+                                    showAnimation={false}
                                     {...this.props}
                                 />
                             } else {
@@ -104,6 +107,8 @@ export default class EditableLayer extends Component {
                                     width={200} 
                                     height={200} 
                                     draggable={editable} 
+                                    visible={true}
+                                    showAnimation={false}
                                     {...this.props}
                                 />
                             } else {

@@ -91,19 +91,27 @@ export default class EditCanvas extends Component {
                     <BackgroundLayer 
                         {...this.props}
                     />
-                    <EditableLayer 
-                        displayAssistLines={(active) => this.displayAssistLines(active)} 
-                        showAnimationLayer = {this.state.showAnimationLayer}
-                        dbClickedElementIndex={this.state.dbClickedElementIndex}
-                        {...this.props}
-                    />
                     {
+                        isPerforming?
+                        <AnimationLayer
+                            dbClickedElementIndex={this.state.dbClickedElementIndex}
+                            {...this.props}
+                        />:
+                        <EditableLayer 
+                            displayAssistLines={(active) => this.displayAssistLines(active)} 
+                            showAnimationLayer = {this.state.showAnimationLayer}
+                            dbClickedElementIndex={this.state.dbClickedElementIndex}
+                            {...this.props}
+                        />
+                    }
+                    
+                    {/* {
                         this.state.showAnimationLayer?
                         <AnimationLayer
                             dbClickedElementIndex={this.state.dbClickedElementIndex}
                             {...this.props}
                         />:null
-                    }
+                    } */}
                     {/* <AnimationLayer
                         {...this.props}
                     /> */}

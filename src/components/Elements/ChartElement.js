@@ -87,6 +87,7 @@ export default class ChartElement extends Component {
                 onTransformStart={this.onTransformStart}
                 onTransform={this.onTransform}
                 onTransformEnd={this.onTransformEnd}
+                visible={this.props.visible}
             >
                 {this.chooseChart()}
             </Group>
