@@ -107,9 +107,9 @@ export class Element {
         return this._animations;
     };
     add = function(animation) {
-        animation.start(0);
-        animation.duration(this.duration());
-        console.log(animation)
+        if (animation.duration() === 0) {
+            animation.duration(this.duration());
+        }
         this._animations.push(animation);
         return this;
     };

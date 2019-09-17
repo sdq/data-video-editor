@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Image, Group } from 'react-konva';
-// import ScaleAnimation from '@/animations/Scale';
+import ZoomAnimation from '@/animations/Zoom';
+import FadeAnimation from '@/animations/Fade';
 import _ from 'lodash';
 
 export default class ImageElement extends Component {
@@ -17,10 +18,12 @@ export default class ImageElement extends Component {
     componentDidMount() {
         this.loadImage();
         // TODO: load animation
-        // if (this.props.showAnimation) {
-        //     let animation = new ScaleAnimation(4, this.imageref, this.imageref.getLayer())
-        //     animation.play();
-        // }
+        if (this.props.showAnimation) {
+            let fadeAnimation = new FadeAnimation(0, 10, this.imageref, this.imageref.getLayer())
+            fadeAnimation.play();
+            let zoomAnimation = new ZoomAnimation(10, 10, this.imageref, this.imageref.getLayer())
+            zoomAnimation.play();
+        }
     }
     componentDidUpdate(oldProps) {
         if (oldProps.element.info().src !== this.props.element.info().src) {
@@ -78,21 +81,21 @@ export default class ImageElement extends Component {
     }
 
     // Animation
-    rotate(degree) {
-        this.imageref.offsetX(this.imageref.width() / 2);
-        this.imageref.offsetY(this.imageref.height() / 2);
-        this.imageref.rotate(degree);
-    }
+    // rotate(degree) {
+    //     this.imageref.offsetX(this.imageref.width() / 2);
+    //     this.imageref.offsetY(this.imageref.height() / 2);
+    //     this.imageref.rotate(degree);
+    // }
 
-    scale(scaleX, scaleY) {
-        this.imageref.position({
-            x: this.imageref.width() / 2,
-            y: this.imageref.height() / 2
-        });
-        this.imageref.offsetX(this.imageref.width() / 2);
-        this.imageref.offsetY(this.imageref.height() / 2);
-        this.imageref.scale(scaleX, scaleY);
-    }
+    // scale(scaleX, scaleY) {
+    //     this.imageref.position({
+    //         x: this.imageref.width() / 2,
+    //         y: this.imageref.height() / 2
+    //     });
+    //     this.imageref.offsetX(this.imageref.width() / 2);
+    //     this.imageref.offsetY(this.imageref.height() / 2);
+    //     this.imageref.scale(scaleX, scaleY);
+    // }
 
     render() {
         return (
