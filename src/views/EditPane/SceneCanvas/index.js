@@ -4,6 +4,7 @@ import InteractionArea from './InteractionArea';
 import EditableLayer from './EditableLayer';
 import BackgroundLayer from './BackgroundLayer';
 import AnimationLayer from './AnimationLayer';
+import ElementType from '@/constants/ElementType';
 import './scenecanvas.css';
 
 export default class EditCanvas extends Component {
@@ -12,7 +13,7 @@ export default class EditCanvas extends Component {
         super(props);
         this.state = {
             showAssistLines: false,
-            showAnimationLayer: false,
+            showTextEditor: false, 
             dbClickedElementIndex: -1,
         };
         this.handleStageDblClick = this.handleStageDblClick.bind(this);
@@ -24,9 +25,16 @@ export default class EditCanvas extends Component {
         })
     }
 
+    displayTextEditor(active) {
+        this.setState({
+            showTextEditor: active
+        })
+    }
+
     handleStageMouseDown = e => {
         // remove animation
         this.setState({
+            showTextEditor: false,
             showAnimationLayer: false,
             dbClickedElementIndex: -1,
         });
@@ -61,17 +69,21 @@ export default class EditCanvas extends Component {
 
     handleStageDblClick(e) {
         // console.log('dbclick');
-        this.props.unselectElement();
+        // this.props.unselectElement();
         const name = e.target.name();
 
-        // console.log(name);
         if (name) {
             var eleIndex = Number(name.split('-')[1]);
-            console.log(eleIndex);
+            let dbElement = this.props.currentElements[eleIndex];
             this.setState({
-                showAnimationLayer: true,
                 dbClickedElementIndex: eleIndex,
             });
+            if (dbElement.type() === ElementType.TEXT) {
+                this.setState({
+                    showTextEditor: true,
+                })
+            }
+            
             // TODO: show animation
         }
     }
@@ -81,7 +93,9 @@ export default class EditCanvas extends Component {
         const editable = !isPerforming;
         return (
             <div id="canvasContainer">
-                {editable?<InteractionArea showAssistLines={this.state.showAssistLines} {...this.props}/>: null}
+                {editable?<InteractionArea 
+                showTextEditor={this.state.showTextEditor}
+                showAssistLines={this.state.showAssistLines} {...this.props}/>: null}
                 <Stage 
                     ref={ref => { this.stageRef = ref; }}
                     width={800} height={450} 
@@ -98,23 +112,11 @@ export default class EditCanvas extends Component {
                             {...this.props}
                         />:
                         <EditableLayer 
-                            displayAssistLines={(active) => this.displayAssistLines(active)} 
-                            showAnimationLayer = {this.state.showAnimationLayer}
+                            displayAssistLines={(active) => this.displayAssistLines(active)}
                             dbClickedElementIndex={this.state.dbClickedElementIndex}
                             {...this.props}
                         />
                     }
-                    
-                    {/* {
-                        this.state.showAnimationLayer?
-                        <AnimationLayer
-                            dbClickedElementIndex={this.state.dbClickedElementIndex}
-                            {...this.props}
-                        />:null
-                    } */}
-                    {/* <AnimationLayer
-                        {...this.props}
-                    /> */}
                 </Stage>
             </div>
         )
