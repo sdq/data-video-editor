@@ -54,26 +54,6 @@ export default class Scene {
             return this;
         }
     };
-    // this.tracks = function(tracks) {
-    //     if (tracks == null){
-    //         return this._tracks;
-    //     } else {
-    //         this._tracks = tracks;
-    //         return this;
-    //     }
-    // };
-    // this.add = function(track) {
-    //     this._tracks.push(track);
-    //     return this;
-    // };
-    // this.remove = function(index) {
-    //     this._tracks.splice(index, 1);
-    //     return this;
-    // };
-    // this.clear = function() {
-    //     this._tracks = [];
-    //     return this;
-    // };
     elements = function() {
         return this._elements;
     };

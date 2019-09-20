@@ -73,14 +73,14 @@ export default class Player {
             this._timeouts.push(setTimeout(function () {
                 store.dispatch(videoActions.selectScene(index));
                 store.dispatch(sceneActions.setPosition(0));
-            }.bind(this), sceneStart * 1000));
+            }, sceneStart * 1000));
             // TODO: play scene
 
             sceneStart += sceneDuration;
         }
         this._timeouts.push(setTimeout(function () {
             store.dispatch(playerActions.stopVideo());
-        }.bind(this), sceneStart * 1000));
+        }, sceneStart * 1000));
     }
 
     pauseVideo() {
