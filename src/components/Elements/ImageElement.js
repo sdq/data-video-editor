@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Image, Group } from 'react-konva';
-import ZoomAnimation from '@/animations/Zoom';
-import FadeAnimation from '@/animations/Fade';
+// import ZoomAnimation from '@/animations/Zoom';
+// import FadeAnimation from '@/animations/Fade';
 import _ from 'lodash';
 
 export default class ImageElement extends Component {
@@ -19,10 +19,10 @@ export default class ImageElement extends Component {
         this.loadImage();
         // TODO: load animation
         if (this.props.showAnimation) {
-            let fadeAnimation = new FadeAnimation(0, 10, this.imageref, this.imageref.getLayer())
-            fadeAnimation.play();
-            let zoomAnimation = new ZoomAnimation(10, 10, this.imageref, this.imageref.getLayer())
-            zoomAnimation.play();
+            // let fadeAnimation = new FadeAnimation(0, 10, this.imageref, this.imageref.getLayer())
+            // fadeAnimation.play();
+            // let zoomAnimation = new ZoomAnimation(10, 10, this.imageref, this.imageref.getLayer())
+            // zoomAnimation.play();
         }
     }
     componentDidUpdate(oldProps) {

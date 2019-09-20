@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
+import Player from '@/player';
 import { Icon } from 'antd';
 import './timelinebar.css';
+
+const player = new Player();
 
 export default class PlayController extends Component {
 
@@ -13,37 +16,19 @@ export default class PlayController extends Component {
     }
 
     playScene() {
+        this.props.setBarUnactive();
+        this.props.unselectElement();
+        
         if (this.props.isPerforming === false) {
-            // play
-            this.props.unselectElement();
-            this.props.playScene(this.props.sceneIndex);
-            const current = this.props.scenePosition;
-            const end = this.props.currentScene.duration();
-            const msOffset = (end - current) * 1000;
-            // const widthOffset = (end - current) * this.props.sceneScale;
-            const n = Math.round(msOffset / 100) + 1; // 100ms 切换一次
-            for (let index = 0; index < n; index++) {
-                this.timeouts.push(setTimeout(function () {
-                    const position = current + index / 10 ;
-                    this.props.setPosition(position);
-                    if (index === (n-1)) {
-                        this.pauseScene();
-                        this.props.setPosition(0);
-                    }
-                }.bind(this), index * 100));
-            }
+            player.playScene();
         } else {
-            // pause
-            this.pauseScene();
+            player.pauseScene();
         }
     }
 
     pauseScene() {
         this.props.setBarUnactive();
-        for (var i = 0; i < this.timeouts.length; i++) {
-            clearTimeout(this.timeouts[i]);
-        }
-        this.props.stopScene(this.props.sceneIndex);
+        player.pauseScene();
     }
 
     nextScene() {
