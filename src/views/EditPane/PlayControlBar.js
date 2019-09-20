@@ -1,53 +1,32 @@
 import React, { Component } from 'react';
+import Player from '@/player';
 import Color from '@/constants/Color';
 import {Button} from 'antd';
 import './editpane.css';
 
+const player = new Player();
 const ButtonGroup = Button.Group;
 
 export default class PlayControlBar extends Component {
     constructor(props) {
         super(props);
-        this.videoTimeouts = [];
-        this.sceneTimeouts = [];
         this.play = this.play.bind(this);
         this.nextScene = this.nextScene.bind(this);
         this.lastScene = this.lastScene.bind(this);
     };
 
     play() {
+        this.props.unselectElement();
+        this.props.displayTrackEditor();
         if (this.props.isPerforming === false) {
-            this.props.unselectElement();
-            this.props.displayTrackEditor();
-            this.props.playVideo();
-            let sceneStart = 0;
-
-            for (let index = 0; index < this.props.scenes.length; index++) {
-                const sceneDuration = this.props.scenes[index].duration();
-                console.log(sceneStart);
-                this.videoTimeouts.push(setTimeout(function () {
-                    this.props.selectScene(index);
-                    this.props.setPosition(0);
-                }.bind(this), sceneStart * 1000));
-                // TODO: play scene
-                sceneStart += sceneDuration;
-            }
-            this.videoTimeouts.push(setTimeout(function () {
-                this.props.stopVideo();
-            }.bind(this), sceneStart * 1000));
+            player.playVideo();
         } else {
             this.pause();
         }
     };
 
     pause() {
-        for (var i = 0; i < this.videoTimeouts.length; i++) {
-            clearTimeout(this.videoTimeouts[i]);
-        }
-        for (var j = 0; j < this.sceneTimeouts.length; j++) {
-            clearTimeout(this.sceneTimeouts[j]);
-        }
-        this.props.stopVideo();
+        player.pauseVideo();
     }
 
     nextScene() {

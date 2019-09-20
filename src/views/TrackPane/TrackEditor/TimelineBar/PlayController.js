@@ -9,7 +9,6 @@ export default class PlayController extends Component {
 
     constructor(props) {
         super(props);
-        this.timeouts = [];
         this.playScene = this.playScene.bind(this);
         this.lastScene = this.lastScene.bind(this);
         this.nextScene = this.nextScene.bind(this);

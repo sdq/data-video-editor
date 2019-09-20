@@ -1,4 +1,5 @@
 import store from '@/store';
+import * as videoActions from '@/actions/videoAction';
 import * as sceneActions from '@/actions/sceneAction';
 import * as playerActions from '@/actions/playerAction';
 
@@ -20,8 +21,16 @@ export default class Player {
         return store.getState().video.index;
     }
 
+    get scenesCount() {
+        return store.getState().video.scenes.length;
+    }
+
     get currentSceneDuration() {
-        return store.getState().video.scenes[this.sceneIndex].duration();
+        return this.sceneDuration(this.sceneIndex);
+    }
+
+    sceneDuration(index) {
+        return store.getState().video.scenes[index].duration();
     }
 
     get scenePosition() {
@@ -31,6 +40,7 @@ export default class Player {
     playScene() {
         if (!this.isPerforming) {
             store.dispatch(playerActions.playScene(this.sceneIndex));
+            this._clearTimeouts();
             const current = this.scenePosition;
             const end = this.currentSceneDuration;
             const msOffset = (end - current) * 1000;
@@ -41,7 +51,7 @@ export default class Player {
                     store.dispatch(sceneActions.setPosition(position));
                     if (index === (n-1)) {
                         this.pauseScene();
-                        store.dispatch(sceneActions.setPosition(position));
+                        store.dispatch(sceneActions.setPosition(0));
                     }
                 }.bind(this), index * 100));
             }
@@ -51,6 +61,31 @@ export default class Player {
     pauseScene() {
         this._clearTimeouts();
         store.dispatch(playerActions.stopScene(this.sceneIndex));
+    }
+
+    playVideo() {
+        store.dispatch(playerActions.playVideo());
+        this._clearTimeouts();
+        let sceneStart = 0;
+
+        for (let index = 0; index < this.scenesCount; index++) {
+            const sceneDuration = this.sceneDuration(index);
+            this._timeouts.push(setTimeout(function () {
+                store.dispatch(videoActions.selectScene(index));
+                store.dispatch(sceneActions.setPosition(0));
+            }.bind(this), sceneStart * 1000));
+            // TODO: play scene
+
+            sceneStart += sceneDuration;
+        }
+        this._timeouts.push(setTimeout(function () {
+            store.dispatch(playerActions.stopVideo());
+        }.bind(this), sceneStart * 1000));
+    }
+
+    pauseVideo() {
+        this._clearTimeouts();
+        store.dispatch(playerActions.stopVideo());
     }
 
     _clearTimeouts() {
