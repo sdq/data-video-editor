@@ -1,4 +1,4 @@
-export default class Animation {
+export default class AnimationModel {
     constructor(type, name) {
         this._type = type;
         this._name = name;

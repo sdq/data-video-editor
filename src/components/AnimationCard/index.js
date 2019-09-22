@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { DragSource } from 'react-dnd';
 import DNDType from '@/constants/DNDType';
-import Animation from '@/models/Animation';
+import Animation from '@/animation/AnimationModel';
 import './animationcard.css';
 
 const animationSource = {

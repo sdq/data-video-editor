@@ -1,5 +1,5 @@
-import AnimationType from './AnimationType';
-import Animation from '@/models/Animation';
+import AnimationType from '../animation/AnimationType';
+import Animation from '@/animation/AnimationModel';
 
 const PresentationAnimations = [
     new Animation(AnimationType.PRESENTATION_APPEAR, 'Appear'),

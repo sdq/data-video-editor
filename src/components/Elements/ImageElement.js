@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Image, Group } from 'react-konva';
+import { AnimationCreator } from '@/animation';
 // import ZoomAnimation from '@/animations/Zoom';
 // import FadeAnimation from '@/animations/Fade';
 import _ from 'lodash';
@@ -18,11 +19,13 @@ export default class ImageElement extends Component {
     componentDidMount() {
         this.loadImage();
         // TODO: load animation
-        if (this.props.showAnimation) {
-            // let fadeAnimation = new FadeAnimation(0, 10, this.imageref, this.imageref.getLayer())
-            // fadeAnimation.play();
-            // let zoomAnimation = new ZoomAnimation(10, 10, this.imageref, this.imageref.getLayer())
-            // zoomAnimation.play();
+        let animations = this.props.element.animations(); 
+        if (this.props.showAnimation && animations.length !== 0) {
+            let animationCreator = new AnimationCreator(this.imageref);
+            for (let index = 0; index < animations.length; index++) {
+                const animation = animations[index];
+                animationCreator.fromModel(animation).play();
+            }
         }
     }
     componentDidUpdate(oldProps) {
@@ -79,23 +82,6 @@ export default class ImageElement extends Component {
         newEle.info().rotation = e.target.rotation();
         this.props.edit(newEle);
     }
-
-    // Animation
-    // rotate(degree) {
-    //     this.imageref.offsetX(this.imageref.width() / 2);
-    //     this.imageref.offsetY(this.imageref.height() / 2);
-    //     this.imageref.rotate(degree);
-    // }
-
-    // scale(scaleX, scaleY) {
-    //     this.imageref.position({
-    //         x: this.imageref.width() / 2,
-    //         y: this.imageref.height() / 2
-    //     });
-    //     this.imageref.offsetX(this.imageref.width() / 2);
-    //     this.imageref.offsetY(this.imageref.height() / 2);
-    //     this.imageref.scale(scaleX, scaleY);
-    // }
 
     render() {
         return (

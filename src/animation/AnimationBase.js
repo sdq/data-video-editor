@@ -1,20 +1,17 @@
-import Konva from "konva";
-
-export default class FadeAnimation {
-    constructor(start, duration, node, layer) {
+export default class AnimationBase {
+    constructor(start, duration, node) {
         this._node = node;
         this._layer = node.getLayer();
         this._start = start;
         this._duration = duration;
         this._isPlaying = false;
-        this._animation = new Konva.Animation(function(frame) {
-            this._node.opacity((Math.sin(frame.time * 2 * Math.PI / 3000) + 1) / 2);
-        }.bind(this), this._layer);
+        this._isAnimating = false;
+        this._animation = null;
     }
 
     isPlaying = () => this._isPlaying;
     play = function() {
-        if (this._isPlaying) {
+        if (this._isPlaying || this._animation === null) {
             return;
         }
         this._isPlaying = true;
