@@ -1,4 +1,4 @@
-import VisActionType from '../constants/VisActionType';
+import VisActionType from '@/actions/visTypes';
 
 export const openEditor = (dataIndex, spec) => ({
     type: VisActionType.OPEN_EDITOR,
@@ -7,13 +7,28 @@ export const openEditor = (dataIndex, spec) => ({
 })
 
 // Data
-export const uploadData = (csvfile) => ({
-    type: VisActionType.UPLOAD_DATA,
-    csvfile
+
+export const addData = (dataName, data, dataSchema) => ({
+    type: VisActionType.ADD_DATA,
+    dataName,
+    data,
+    dataSchema
 })
 
-export const changeData = (index) => ({
-    type: VisActionType.CHANGE_DATA,
+export const switchData = (index) => ({
+    type: VisActionType.SWITCH_DATA,
+    index
+})
+
+export const updateData = (index, data, dataSchema) => ({
+    type: VisActionType.UPDATE_DATA,
+    index,
+    data,
+    dataSchema
+})
+
+export const deleteData = (index) => ({
+    type: VisActionType.DELETE_DATA,
     index
 })
 

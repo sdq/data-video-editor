@@ -1,4 +1,4 @@
-import VisActionType from '@/constants/VisActionType';
+import VisActionType from '@/actions/visTypes';
 import cars from '@/datasets/cars';
 import carsSchema from '@/datasets/carsSchema';
 import Color from '@/constants/Color';
@@ -13,21 +13,26 @@ const originSpec = {
 }
 
 const initialState = {
+    // data
     dataIndex: 0,
+    dataNameList: ['cars.csv'],
     dataList: [cars],
     fieldsList: [carsSchema],
+    // vis
     specIndex: 0,
     specHistory: [JSON.stringify(originSpec)],
+    displaySpec: {},
+    // history
     actionHistory: [{
         "type": "none",
         "description": "origin state",
     }],
-    displaySpec: {},
 }
 
 export default (state = initialState, action) => {
     const newSpec = JSON.parse(state.specHistory[state.specIndex]);
     const newState = Object.assign({},state);
+    const newList = newState.dataNameList.slice();
     var newSpecHistory = [];
     var newActionHistory = [];
     switch (action.type) {
@@ -50,15 +55,35 @@ export default (state = initialState, action) => {
             return newState;
 
         // Data
-        case VisActionType.UPLOAD_DATA:
-            // TODO: upload data and process field type
+        case VisActionType.ADD_DATA:
+            newList.push(action.dataName)
+            newState.dataNameList = newList;
+            newState.dataList.push(action.data);
+            newState.fieldsList.push(action.dataSchema);
+            return newState
 
-            return state
+        case VisActionType.SWITCH_DATA:
+            newState.dataIndex = action.index 
+            return newState
 
-        case VisActionType.CHANGE_DATA:
-            // TODO: switch dataIndex
+        case VisActionType.UPDATE_DATA:
+            // TODO: update data, dataSchema
+            console.log("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh")
+            console.log(action)
+            newState.dataIndex = action.index;
+            const dataList = newState.dataList.slice();
+            dataList[action.index] = action.data;
+            newState.dataList = dataList;
+            console.log(newState)
+            return newState
 
-            return state
+        case VisActionType.DELETE_DATA:
+            newList.splice(action.index, 1)
+            newState.dataNameList = newList;
+            newState.dataList.splice(action.index, 1)
+            newState.fieldsList.splice(action.index, 1)
+            newState.dataIndex = 0
+            return newState
     
         // Vis
         case VisActionType.ENCODING:

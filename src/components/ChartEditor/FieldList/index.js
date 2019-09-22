@@ -10,7 +10,7 @@ export default class FieldList extends Component {
                 <List
                     size="small"
                     split = {false}
-                    dataSource={this.props.currentFields}
+                    dataSource={this.props.currentData.fields}
                     renderItem={item => <List.Item>
                         <Field field={item} { ...this.props }/>
                     </List.Item>}

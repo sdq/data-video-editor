@@ -3,9 +3,10 @@ import ElementType from '@/constants/ElementType';
 import _ from 'lodash';
 
 // Data
+export const dataNameList = state => state.vis.dataNameList;
 export const dataList = state => state.vis.dataList;
-const fieldsList = state => state.vis.fieldsList;
-const dataIndex = state => state.vis.dataIndex;
+export const fieldsList = state => state.vis.fieldsList;
+export const dataIndex = state => state.vis.dataIndex;
 
 // Chart
 const elementIndex = state => state.canvas.elementIndex;
@@ -13,30 +14,31 @@ const scenes = state => state.video.scenes;
 const sceneIndex = state => state.video.index;
 export const displaySpec = state => state.vis.displaySpec;
 
-export const getCurrentData = createSelector(
-    dataList,
+export const currentData = createSelector(
     dataIndex,
-    (dataList, dataIndex) => {
-        return dataList[dataIndex];
+    dataNameList,
+    dataList,
+    fieldsList,
+    (dataIndex, dataNameList, dataList, fieldsList) => {
+        console.log(dataNameList)
+        return {
+            'name': dataNameList[dataIndex],
+            'data': dataList[dataIndex],
+            'fields': fieldsList[dataIndex]
+        }
     }
 )
 
-export const getCurrentFields = createSelector(
-    fieldsList,
-    dataIndex,
-    (fieldsList, dataIndex) => fieldsList[dataIndex]
-)
-
-export const getCurrentVis = createSelector(
+export const currentVis = createSelector(
     scenes,
     sceneIndex,
     elementIndex,
-    function(scenes, sceneIndex, elementIndex) {
+    function (scenes, sceneIndex, elementIndex) {
         if (elementIndex === -1) {
             return {}
         }
         const currentElement = scenes[sceneIndex].elements()[elementIndex];
-        if (currentElement.type()===ElementType.CHART) {
+        if (currentElement.type() === ElementType.CHART) {
             return scenes[sceneIndex].elements()[elementIndex].info();
         } else {
             return {}
@@ -44,7 +46,7 @@ export const getCurrentVis = createSelector(
     }
 )
 
-export const getSlots = createSelector(
+export const slots = createSelector(
     displaySpec,
     (displaySpec) => {
         const slots = {

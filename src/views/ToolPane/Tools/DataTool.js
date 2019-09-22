@@ -3,10 +3,11 @@ import { Upload, Button, Icon, Select } from 'antd';
 import DataPreview from '@/components/DataPreview';
 import ChartEditor from '@/components/ChartEditor';
 import SimpleDataPreview from '@/components/DataPreview/SimpleDataPreview';
-import * as d3 from 'd3';
+import DataProcessor from '@/components/DataPreview/processor';
 
 const { Dragger } = Upload;
 const { Option } = Select;
+const dataProcessor = new DataProcessor();
 
 export default class DataTool extends Component {
 
@@ -15,6 +16,7 @@ export default class DataTool extends Component {
         this.state = {
             datavisible: false,
             chartvisible: false,
+            selectValue: "cars.csv"
         };
         this.handleDataPreview = this.handleDataPreview.bind(this);
         this.handleDataOk = this.handleDataOk.bind(this);
@@ -28,14 +30,20 @@ export default class DataTool extends Component {
         });
     }
 
-    handleDataOk = () => {
+    handleDataOk = (data) => {
         // TODO: Update Data
 
         // Disable editor
+        console.log(data)
         this.setState({
             datavisible: false,
         });
     }
+
+    handleDataUpdate = (data) => {
+        this.props.updateData(this.props.dataIndex, data, this.props.fieldsList[this.props.dataIndex])
+    }
+
 
     handleChartEditor = () => {
         this.props.openEditor(this.props.currentVis.dataIndex, this.props.currentVis.spec);
@@ -46,11 +54,9 @@ export default class DataTool extends Component {
 
     handleChartOk = () => {
         // Update chart on canvas
-        const newScene = Object.assign({},this.props.currentScene);
-        var newEle = Object.assign({},this.props.currentElement);
+        const newScene = Object.assign({}, this.props.currentScene);
+        var newEle = Object.assign({}, this.props.currentElement);
         newEle.info().spec = this.props.displaySpec;
-        console.log("new element");
-        console.log(newEle);
         newScene.updateElement(newEle, this.props.elementIndex);
         this.props.updateScene(this.props.sceneIndex, newScene);
         const elementName = this.props.sceneIndex + '-' + this.props.elementIndex;
@@ -61,57 +67,81 @@ export default class DataTool extends Component {
         });
     }
 
-    handleCancel() {
+    handleCancel = () => {
         this.setState({
             chartvisible: false,
             datavisible: false,
         });
     };
 
+    beforeUpload = (file) => {
+        const fileURL = URL.createObjectURL(file);
+        dataProcessor.process(fileURL).then((dataItem) => {
+            this.props.addData(file.name, dataItem.data, dataItem.schema);
+        });
+        return false;
+    }
+
+    handleDataSelect = (e) => {
+        let dataIndex = this.props.dataNameList.indexOf(e)
+        if (dataIndex + 1) {
+            this.props.switchData(dataIndex)
+        }
+    }
+
+    deleteData = (index) => {
+        this.props.deleteData(index)
+    }
+
     render() {
+        let { dataNameList, currentData } = this.props;
         return (
-            <div style={{padding: '10px 10px 10px 10px', fontSize: '14px', backgroundColor: 'white'}}>
+            <div style={{ padding: '10px 10px 10px 10px', fontSize: '14px', backgroundColor: 'white' }}>
                 <Dragger
                     accept=".csv"
                     showUploadList={false}
-                    beforeUpload={file => {
-                        console.log(file.name);
-                        const fileURL = URL.createObjectURL(file);
-                        console.log(fileURL);
-                        d3.csv(fileURL, function(data) {
-                            console.log(data);
-                            //TODO: deal with data
-                        })
-                        return false;
-                    }}
-                >
+                    beforeUpload={this.beforeUpload}>
                     <p className="ant-upload-drag-icon">
-                    <Icon type="inbox" />
+                        <Icon type="inbox" />
                     </p>
                     {/* <p className="ant-upload-text">Click or drag csv file to this area</p> */}
                     <p className="ant-upload-hint">
-                    Click or drag csv file to this area
+                        Click or drag csv file to this area
                     </p>
                 </Dragger>
-
-                <Select defaultValue="cars" style={{ marginTop: '8px', width: 280 }}>
-                    <Option value="cars">cars.csv</Option>
+                <Select id="data-selection"
+                    value={currentData.name}
+                    defaultValue={currentData.name}
+                    onChange={(e) => this.handleDataSelect(e)}
+                    optionLabelProp="label"
+                    style={{ marginTop: '8px', width: 280 }}
+                >
+                    {dataNameList.map((d, i) => (
+                        <Option label={d} key={d}>{d}
+                            <span aria-label={d}>
+                                <Button shape="circle" icon="close" size='small' style={{ float: 'right', fontSize: 10 }}
+                                    onClick={(e) => { this.deleteData(i); e.stopPropagation() }} />
+                            </span>
+                        </Option>)
+                    )}
                 </Select>
 
-                <SimpleDataPreview />
-                
-                <Button block style={{marginTop: '8px'}} onClick={this.handleDataPreview} type="primary">Preview & Edit Data</Button>
+                <SimpleDataPreview currentData={currentData} />
 
-                <Button block style={{marginTop: '8px'}} onClick={this.handleChartEditor} type="primary">Data Mapping</Button>
+                <Button block style={{ marginTop: '8px' }} onClick={this.handleDataPreview} type="primary">Preview & Edit Data</Button>
 
-                <DataPreview 
+                <Button block style={{ marginTop: '8px' }} onClick={this.handleChartEditor} type="primary">Data Mapping</Button>
+
+                <DataPreview
+                    currentData={currentData}
                     visible={this.state.datavisible}
                     handleOk={this.handleDataOk}
                     handleCancel={this.handleCancel}
+                    handleDataUpdate={this.handleDataUpdate}
                     {...this.props}
                 />
 
-                <ChartEditor 
+                <ChartEditor
                     visible={this.state.chartvisible}
                     handleOk={this.handleChartOk}
                     handleCancel={this.handleCancel}
