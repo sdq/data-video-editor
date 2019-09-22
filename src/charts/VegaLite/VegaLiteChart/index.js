@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Image } from 'react-konva';
+import { AnimationCreator } from '@/animation';
 import * as vega from 'vega';
 import * as vegalite from 'vega-lite';
 
@@ -16,6 +17,15 @@ export default class VegaLiteChart extends Component {
     }
     componentDidMount() {
         this.loadChart();
+        const animations = this.props.animations; 
+        if (this.props.showAnimation && animations.length !== 0) {
+            let animationCreator = new AnimationCreator(this.imageref);
+            for (let index = 0; index < animations.length; index++) {
+                const animation = animations[index];
+                let current = this.props.scenePosition;
+                animationCreator.fromModel(animation).play(current);
+            }
+        }
     }
     componentDidUpdate(oldProps) {
         if (oldProps.spec !== this.props.spec) {
@@ -72,6 +82,7 @@ export default class VegaLiteChart extends Component {
     render() {
         return (
             <Image 
+                ref={node=>this.imageref=node}
                 name={this.props.name}
                 image={this.state.chartImage} 
             />

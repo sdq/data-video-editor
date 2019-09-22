@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Collapse, Input } from 'antd';
-import animations from '@/constants/Animations';
+import { AnimationList } from '@/animation';
 import AnimationCard from '@/components/AnimationCard';
 
 const { Panel } = Collapse;
@@ -31,21 +31,21 @@ export default class AnimationTool extends Component {
                 <Collapse defaultActiveKey={['Presentation']} bordered={false} accordion>
                     <Panel header="Presentation" key="Presentation">
                         <div style={{height: paneHeight}}>
-                            {animations.presentation.map((animation, index) =>
+                            {AnimationList.presentation.map((animation, index) =>
                                 <AnimationCard key={index} animation={animation} {...this.props}/>
                             )}
                         </div>
                     </Panel>
                     <Panel header="Interpretation" key="Interpretation">
                         <div style={{height: paneHeight}}>
-                            {animations.interpretation.map((animation, index) =>
+                            {AnimationList.interpretation.map((animation, index) =>
                                 <AnimationCard key={index} animation={animation} {...this.props}/>
                             )}
                         </div>
                     </Panel>
                     <Panel header="Reasoning" key="Reasoning">
                         <div style={{height: paneHeight}}>
-                            {animations.reasoning.map((animation, index) =>
+                            {AnimationList.reasoning.map((animation, index) =>
                                 <AnimationCard key={index} animation={animation} {...this.props}/>
                             )}
                         </div>

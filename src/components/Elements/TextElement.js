@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Text, Group } from 'react-konva';
 import Color from '@/constants/Color';
+import { AnimationCreator } from '@/animation';
 import _ from 'lodash';
 
 export default class TextElement extends Component {
@@ -14,6 +15,18 @@ export default class TextElement extends Component {
         this.dragend = this.dragend.bind(this);
         this.onTransformStart = this.onTransformStart.bind(this);
         this.onTransformEnd = this.onTransformEnd.bind(this);
+    }
+
+    componentDidMount() {
+        const animations = this.props.element.animations(); 
+        if (this.props.showAnimation && animations.length !== 0) {
+            let animationCreator = new AnimationCreator(this.textref);
+            let current = this.props.scenePosition;
+            for (let index = 0; index < animations.length; index++) {
+                const animation = animations[index];
+                animationCreator.fromModel(animation).play(current);
+            }
+        }
     }
 
     dragstart() {
@@ -67,6 +80,7 @@ export default class TextElement extends Component {
                 visible={this.props.visible}
             >
                 <Text
+                    ref={node=>this.textref=node}
                     name={this.props.name}
                     text={this.props.element.info().text}
                     fontSize={18}

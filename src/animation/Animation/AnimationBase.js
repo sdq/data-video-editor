@@ -10,20 +10,20 @@ export default class AnimationBase {
     }
 
     isPlaying = () => this._isPlaying;
-    play = function() {
-        if (this._isPlaying || this._animation === null) {
+    play = function(current=0) {
+        if (this._isPlaying || this._animation === null || current > (this._start + this._duration)) {
             return;
         }
         this._isPlaying = true;
         this._startTimeout = setTimeout(function () {
             this._isAnimating = true;
             this._animation.start();
-        }.bind(this), this._start * 1000)
+        }.bind(this), (this._start - current) * 1000)
         this._stopTimeout = setTimeout(function () {
             this._animation.stop();
             this._isAnimating = false;
             this._isPlaying = false;
-        }.bind(this), (this._start + this._duration) * 1000)
+        }.bind(this), (this._start + this._duration - current) * 1000)
     }
     stop = function() {
         if (!this._isPlaying) {

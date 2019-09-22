@@ -5,26 +5,28 @@ import VegaLite from 'react-vega-lite';
 import _ from 'lodash';
 
 const demodata = {
-  "values": []
+    "values": []
 };
 
-const barchart = {
-    "mark": "bar",
+const scatterplot = {
+    "mark": "point",
     "encoding": {
+    //   "x": {"field": "a", "type": "ordinal"},
+    //   "y": {"field": "b", "type": "quantitative"},
       "color": {"value": Color.DEEP_ORANGE},
     }
 }
 
-export default class BarChart extends Component {
+export default class ScatterPlot extends Component {
 
     get spec() {
         var sizedSpec;
         if (_.isEmpty(this.props.spec) || _.isEmpty(this.props.spec.encoding)) {
-            sizedSpec = Object.assign({},barchart);
+            sizedSpec = Object.assign({},scatterplot);
         } else {
             sizedSpec = Object.assign({},this.props.spec);
         }
-        sizedSpec.mark = "bar";
+        sizedSpec.mark = "point";
         sizedSpec.width = this.props.width;
         sizedSpec.height = this.props.height;
         return sizedSpec;
@@ -42,7 +44,7 @@ export default class BarChart extends Component {
 
     render() {
         if (this.props.onCanvas) {
-            return (<VegaLiteChart name={this.props.name} spec={this.spec} data={this.data}/>);
+            return (<VegaLiteChart name={this.props.name} spec={this.spec} data={this.data} showAnimation={this.props.showAnimation} animations={this.props.animations}/>);
         } else {
             return (<VegaLite data={this.data} spec={this.spec}/>);
         }

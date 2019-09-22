@@ -6,27 +6,25 @@ import _ from 'lodash';
 
 const demodata = {
     "values": []
-};
+}
 
-const scatterplot = {
-    "mark": "point",
+const areachart = {
+    "mark": "area",
     "encoding": {
-    //   "x": {"field": "a", "type": "ordinal"},
-    //   "y": {"field": "b", "type": "quantitative"},
-      "color": {"value": Color.DEEP_ORANGE},
+        "color": {"value": Color.DEEP_ORANGE},
     }
 }
 
-export default class ScatterPlot extends Component {
+export default class AreaChart extends Component {
 
     get spec() {
         var sizedSpec;
         if (_.isEmpty(this.props.spec) || _.isEmpty(this.props.spec.encoding)) {
-            sizedSpec = Object.assign({},scatterplot);
+            sizedSpec = Object.assign({},areachart);
         } else {
             sizedSpec = Object.assign({},this.props.spec);
         }
-        sizedSpec.mark = "point";
+        sizedSpec.mark = "area";
         sizedSpec.width = this.props.width;
         sizedSpec.height = this.props.height;
         return sizedSpec;
@@ -44,7 +42,7 @@ export default class ScatterPlot extends Component {
 
     render() {
         if (this.props.onCanvas) {
-            return (<VegaLiteChart name={this.props.name} spec={this.spec} data={this.data}/>);
+            return (<VegaLiteChart name={this.props.name} data={this.data} spec={this.spec} showAnimation={this.props.showAnimation} animations={this.props.animations}/>);
         } else {
             return (<VegaLite data={this.data} spec={this.spec}/>);
         }

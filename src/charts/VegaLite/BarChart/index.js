@@ -8,23 +8,23 @@ const demodata = {
   "values": []
 };
 
-const linechart = {
-    "mark": "line",
+const barchart = {
+    "mark": "bar",
     "encoding": {
       "color": {"value": Color.DEEP_ORANGE},
     }
 }
 
-export default class LineChart extends Component {
+export default class BarChart extends Component {
 
     get spec() {
         var sizedSpec;
         if (_.isEmpty(this.props.spec) || _.isEmpty(this.props.spec.encoding)) {
-            sizedSpec = Object.assign({},linechart);
+            sizedSpec = Object.assign({},barchart);
         } else {
             sizedSpec = Object.assign({},this.props.spec);
         }
-        sizedSpec.mark = "line";
+        sizedSpec.mark = "bar";
         sizedSpec.width = this.props.width;
         sizedSpec.height = this.props.height;
         return sizedSpec;
@@ -42,9 +42,8 @@ export default class LineChart extends Component {
 
     render() {
         if (this.props.onCanvas) {
-            return (<VegaLiteChart name={this.props.name} spec={this.spec} data={this.data}/>);
+            return (<VegaLiteChart name={this.props.name} spec={this.spec} data={this.data} showAnimation={this.props.showAnimation} animations={this.props.animations}/>);
         } else {
-            console.log(this.spec);
             return (<VegaLite data={this.data} spec={this.spec}/>);
         }
     }

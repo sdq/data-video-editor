@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { Image, Group } from 'react-konva';
 import { AnimationCreator } from '@/animation';
-// import ZoomAnimation from '@/animations/Zoom';
-// import FadeAnimation from '@/animations/Fade';
 import _ from 'lodash';
 
 export default class ImageElement extends Component {
@@ -18,13 +16,13 @@ export default class ImageElement extends Component {
     }
     componentDidMount() {
         this.loadImage();
-        // TODO: load animation
-        let animations = this.props.element.animations(); 
+        const animations = this.props.element.animations(); 
         if (this.props.showAnimation && animations.length !== 0) {
             let animationCreator = new AnimationCreator(this.imageref);
+            let current = this.props.scenePosition;
             for (let index = 0; index < animations.length; index++) {
                 const animation = animations[index];
-                animationCreator.fromModel(animation).play();
+                animationCreator.fromModel(animation).play(current);
             }
         }
     }

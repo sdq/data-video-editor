@@ -5,26 +5,26 @@ import VegaLite from 'react-vega-lite';
 import _ from 'lodash';
 
 const demodata = {
-    "values": []
-}
+  "values": []
+};
 
-const areachart = {
-    "mark": "area",
+const linechart = {
+    "mark": "line",
     "encoding": {
-        "color": {"value": Color.DEEP_ORANGE},
+      "color": {"value": Color.DEEP_ORANGE},
     }
 }
 
-export default class AreaChart extends Component {
+export default class LineChart extends Component {
 
     get spec() {
         var sizedSpec;
         if (_.isEmpty(this.props.spec) || _.isEmpty(this.props.spec.encoding)) {
-            sizedSpec = Object.assign({},areachart);
+            sizedSpec = Object.assign({},linechart);
         } else {
             sizedSpec = Object.assign({},this.props.spec);
         }
-        sizedSpec.mark = "area";
+        sizedSpec.mark = "line";
         sizedSpec.width = this.props.width;
         sizedSpec.height = this.props.height;
         return sizedSpec;
@@ -42,7 +42,7 @@ export default class AreaChart extends Component {
 
     render() {
         if (this.props.onCanvas) {
-            return (<VegaLiteChart name={this.props.name} data={this.data} spec={this.spec}/>);
+            return (<VegaLiteChart name={this.props.name} spec={this.spec} data={this.data} showAnimation={this.props.showAnimation} animations={this.props.animations}/>);
         } else {
             return (<VegaLite data={this.data} spec={this.spec}/>);
         }
