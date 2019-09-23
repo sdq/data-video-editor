@@ -64,6 +64,10 @@ export default class Track extends Component {
         })
     }
 
+    deleteAnimation(index) {
+        //TODO: delete Animation at index
+    }
+
     render() {
         var height = rowHeight;
         let {element, index, isPerforming, sceneScale} = this.props;
@@ -83,6 +87,7 @@ export default class Track extends Component {
                 isAnimationBarActive={animationBarActiveList[index]} 
                 setAnimationBarActive={this.setAnimationBarActive} 
                 setAnimationBarUnactive={this.setAnimationBarUnactive} 
+                deleteAnimation={()=>this.deleteAnimation(index)}
                 {...this.props}
             />)
         }

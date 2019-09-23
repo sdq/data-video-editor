@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import ChartType from '@/constants/ChartType';
-import BarChart from '../BarChart';
-import LineChart from '../LineChart';
-import Scatterplot from '../Scatterplot';
-import AreaChart from '../AreaChart';
-import Histogram from '../Histogram';
+import BarChart from '../VegaLite/BarChart';
+import LineChart from '../VegaLite/LineChart';
+import Scatterplot from '../VegaLite/Scatterplot';
+import AreaChart from '../VegaLite/AreaChart';
+import Histogram from '../VegaLite/Histogram';
 
 export default class ChartContainer extends Component {
 
