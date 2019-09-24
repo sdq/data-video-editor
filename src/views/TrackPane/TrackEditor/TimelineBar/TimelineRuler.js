@@ -110,8 +110,8 @@ export default class TimelineRuler extends Component {
     calMarkLength = (d) => {
         let marginLeft = 0;
         if(d >= 5) marginLeft = 40 / 2;
-        if(d == 3) marginLeft = 22 / 2;
-        if(d == 2) marginLeft = 18 / 2;
+        if(d === 3) marginLeft = 22 / 2;
+        if(d === 2) marginLeft = 18 / 2;
         return -marginLeft
     }
 

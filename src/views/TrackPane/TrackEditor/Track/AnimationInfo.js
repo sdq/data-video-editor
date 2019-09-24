@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
 import {Icon} from 'antd'; 
+import ConfigureBase from '@/animation/Configure/ConfigureBase';
 import './track.css';
 
 export default class AnimationInfo extends Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+            configVisible: false
+        }
         this.configAnimation = this.configAnimation.bind(this);
         this.deleteAnimation = this.deleteAnimation.bind(this);
     }
@@ -23,6 +27,15 @@ export default class AnimationInfo extends Component {
 
     configAnimation() {
         // TODO: config animation
+        this.setState({configVisible: true})
+    }
+
+    handleOk = () => {
+        this.setState({configVisible: false})
+    }
+
+    handleCancel = () => {
+        this.setState({configVisible: false})
     }
 
     render() {
@@ -38,6 +51,12 @@ export default class AnimationInfo extends Component {
                 <div style={{float: 'right', marginLeft: 8}} onClick={this.configAnimation}>
                     <Icon type="setting" />
                 </div>
+                <ConfigureBase 
+                    visible={this.state.configVisible}
+                    animation={animation}
+                    handleOk={this.handleOk}
+                    handleCancel={this.handleCancel}
+                />
             </div>
         )
     }
