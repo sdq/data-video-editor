@@ -20,6 +20,18 @@ export default class TimelineRuler extends Component {
         this.clickRuler = this.clickRuler.bind(this);
     }
 
+    componentDidUpdate(){
+        // console.log('hh')
+        // var box=document.getElementsByClassName("pTime")[5];
+        // console.log(box)
+        // if(box){ 
+        //     console.log(box.offsetWidth);
+        // }
+        // 10s: 22px
+        // 1m: 18px
+        // 1m10s: 40px       
+    }   
+
     clickNeedle() {
         // this.setState({
         //     isNeedleActive: true,
@@ -31,7 +43,7 @@ export default class TimelineRuler extends Component {
         var newX = clickPosition - offset;
         if (newX < 0) {
             newX = 0
-        } else if ( newX > this.props.sceneWidth) {
+        } else if (newX > this.props.sceneWidth) {
             newX = this.props.sceneWidth;
         }
         const changedPosition = this.keepOneDecimalPoint(newX / this.props.sceneScale);
@@ -59,56 +71,93 @@ export default class TimelineRuler extends Component {
             step = step * gap;
         }
         const n = (this.props.scrollWidth / step - 1) * 5;
-        let rulings = [<div key={-1} style={{marginTop: 4, height: 6, width: 2, float: 'left', backgroundColor: 'gray'}}/>];
+        let rulings = [<div key={-1} style={{ marginTop: 4, height: 6, width: 2, float: 'left', backgroundColor: 'gray' }} />];
         for (let index = 0; index < n; index++) {
-            if ((index+1) % 5 === 0) {
+            if ((index + 1) % 5 === 0) {
                 rulings.push(
-                    <div key={index} style={{height: 4, width: step / 5, float: 'left', backgroundColor: 'white'}}>
-                        <div style={{height: 10, width: (step / 5) - 2, float: 'left', opacity: 0}}/>
-                        <div style={{marginTop: 4, height: 6, width: 2, float: 'left', backgroundColor: 'gray'}}/>
+                    <div key={index} style={{ height: 4, width: step / 5, float: 'left', backgroundColor: 'white' }}>
+                        <div style={{ height: 10, width: (step / 5) - 2, float: 'left', opacity: 0 }} />
+                        <div style={{ marginTop: 4, height: 6, width: 2, float: 'left', backgroundColor: 'gray' }} />
                     </div>
-                ) 
+                )
             } else {
                 rulings.push(
-                    <div key={index} style={{height: 4, width: step / 5, float: 'left', backgroundColor: 'white'}}>
-                        <div style={{height: 2, width: (step / 5) - 2, float: 'left', opacity: 0}}/>
-                        <div style={{marginTop: 8, height: 2, width: 2, float: 'left', backgroundColor: 'gray'}}/>
+                    <div key={index} style={{ height: 4, width: step / 5, float: 'left', backgroundColor: 'white' }}>
+                        <div style={{ height: 2, width: (step / 5) - 2, float: 'left', opacity: 0 }} />
+                        <div style={{ marginTop: 8, height: 2, width: 2, float: 'left', backgroundColor: 'gray' }} />
                     </div>
-                ) 
+                )
             }
         }
         return rulings;
     }
 
+    definedTime = (d) => {
+        let minute = parseInt(d/60);
+        let second = d % 60;
+        let time = null;
+        // let time = minute? `${minute}m${second}s`:`${second}s`
+        if(minute && second) {
+            time = `${minute}m${second}s`
+        } else if(!second) {
+            time = `${minute}m`
+        } else {
+            time = `${second}s`
+        }
+        return time;
+    }
+
+    calMarkLength = (d) => {
+        let marginLeft = 0;
+        if(d >= 5) marginLeft = 40 / 2;
+        if(d == 3) marginLeft = 22 / 2;
+        if(d == 2) marginLeft = 18 / 2;
+        return -marginLeft
+    }
+
     timeMarks() {
         var step = this.props.sceneScale;
         var gap = 10;
+
         if (this.props.sceneScale <= 10) {
             step = step * gap;
         }
         const n = this.props.scrollWidth / step - 1;
-        let timeMarks = [<div key={0} style={{height: 2, width: step, float: 'left', backgroundColor: 'transparent'}}>
-            <div style={{height: 2, width: step - 2, float: 'left', opacity: 0}}/>
-            <p style={{marginTop: -5, marginLeft: -6, float: 'left', fontSize: '10px'}}>0s</p>
+        let timeMarks = [<div key={0} style={{ height: 2, width: step, float: 'left', backgroundColor: 'transparent' }}>
+            <div style={{ height: 2, width: step - 2, float: 'left', opacity: 0 }} />
+            <p style={{ marginTop: -5, marginLeft: -6, float: 'left', fontSize: '6px' }}>0s</p>
         </div>];
+
         for (let index = 1; index < n; index++) {
-            timeMarks.push(
-                <div key={index} style={{height: 2, width: step, float: 'left', backgroundColor: 'transparent'}}>
-                    <div style={{height: 2, width: step - 2, float: 'left', opacity: 0}}/>
-                    <p style={{marginTop: -5, marginLeft: -10, float: 'left', fontSize: '10px'}}>{index * gap}s</p>
-                </div>
-            )
+            let definedTime=this.definedTime(index * gap)
+            // 5 为显示临界点
+            if ((step > 1 * gap && step < 5 * gap && index % 3 !== 0) || (step === gap && index % 6 !== 0)) {
+                timeMarks.push(
+                    <div key={index} style={{ visibility: 'hidden', height: 2, width: step, float: 'left', backgroundColor: 'transparent' }}>
+                        <div style={{ height: 2, width: step - 2, float: 'left', opacity: 0 }} />
+                        <p className='pTime' style={{ marginTop: -5, marginLeft: this.calMarkLength(definedTime.length), float: 'left', fontSize: '6px' }}>{definedTime}</p>
+                    </div>
+                )
+            } else {
+                timeMarks.push(
+                    <div key={index} style={{ height: 2, width: step, float: 'left', backgroundColor: 'transparent' }}>
+                        <div style={{ height: 2, width: step - 2, float: 'left', opacity: 0 }} />
+                        <p className='pTime' style={{ marginTop: -5, marginLeft: this.calMarkLength(definedTime.length), float: 'left', fontSize: '6px' }}>{definedTime}</p>
+                    </div>
+                )
+            }
         }
+        // console.log(document.getElementsByClassName("pTime").offsetWidth)
         return timeMarks;
     }
 
     render() {
-        const {scenePosition, isPerforming, sceneScale} = this.props;
+        const { scenePosition, isPerforming, sceneScale } = this.props;
         const scenePositionWithScale = scenePosition * sceneScale;
-        let height = isPerforming?performingHeight:realHeight;
+        let height = isPerforming ? performingHeight : realHeight;
         let needleHeight = performingHeight - realHeight;
         let needle = <Rnd
-            style={{zIndex: 2}}
+            style={{ zIndex: 2 }}
             size={{ width: width, height: height }}
             position={{ x: scenePositionWithScale, y: 0 }}
             bounds='parent'
@@ -122,31 +171,32 @@ export default class TimelineRuler extends Component {
                 this.changeNeedlePlace(d.x);
             }}
         >
-            <Needle needleHeight={needleHeight}/>
+            <Needle needleHeight={needleHeight} />
         </Rnd>;
 
         return (
             <div className='timeline-ruler'>
-                <div 
-                    id={"timeline-ruler"} 
-                    style={{height: height, width: offset + this.props.screenWidth + offset, backgroundColor:'transparent', position:'relative', left: -this.props.screenX
-                    }} 
-                    
+                <div
+                    id={"timeline-ruler"}
+                    style={{
+                        height: height, width: offset + this.props.screenWidth + offset, backgroundColor: 'transparent', position: 'relative', left: -this.props.screenX
+                    }}
+
                 >
-                    <div style={{width: this.props.screenWidth, marginLeft: offset-1, marginTop: 4, marginRight: -offset, backgroundColor: 'transparent', position:'absolute', zIndex: 0}}>
-                        <div style={{width: this.props.scrollWidth}}>
+                    <div style={{ width: this.props.screenWidth, marginLeft: offset - 1, marginTop: 4, marginRight: -offset, backgroundColor: 'transparent', position: 'absolute', zIndex: 0 }}>
+                        <div style={{ width: this.props.scrollWidth }}>
                             {this.timeMarks()}
                         </div>
                     </div>
-                    <div style={{width: this.props.screenWidth, marginLeft: offset-1, marginTop: 14, backgroundColor: 'transparent', position:'absolute', zIndex: 0}}>
-                        <div style={{width: this.props.scrollWidth}}>
+                    <div style={{ width: this.props.screenWidth, marginLeft: offset - 1, marginTop: 14, backgroundColor: 'transparent', position: 'absolute', zIndex: 0 }}>
+                        <div style={{ width: this.props.scrollWidth }}>
                             {this.ruler()}
                         </div>
                     </div>
                     <div
-                        id={'timeline-ruler-clickable-area'} 
-                        style={{height: height, width: offset + this.props.scrollWidth + offset, position:'absolute', zIndex: 1, opacity: 0}}
-                        onClick={isPerforming?null:e=>this.clickRuler(e)}
+                        id={'timeline-ruler-clickable-area'}
+                        style={{ height: height, width: offset + this.props.scrollWidth + offset, position: 'absolute', zIndex: 1, opacity: 0 }}
+                        onClick={isPerforming ? null : e => this.clickRuler(e)}
                     />
                     {needle}
                 </div>
