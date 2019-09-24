@@ -129,9 +129,9 @@ export default class TimelineRuler extends Component {
         </div>];
 
         for (let index = 1; index < n; index++) {
-            let definedTime=this.definedTime(index * gap)
-            // 5 为显示临界点
-            if ((step > 1 * gap && step < 5 * gap && index % 3 !== 0) || (step === gap && index % 6 !== 0)) {
+            let definedTime=this.definedTime(index * gap);
+            const threshold = 5; // threshold for ruler display
+            if ((step > 1 * gap && step < threshold * gap && index % 3 !== 0) || (step === gap && index % 6 !== 0)) {
                 timeMarks.push(
                     <div key={index} style={{ visibility: 'hidden', height: 2, width: step, float: 'left', backgroundColor: 'transparent' }}>
                         <div style={{ height: 2, width: step - 2, float: 'left', opacity: 0 }} />

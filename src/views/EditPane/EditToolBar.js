@@ -1,9 +1,23 @@
 import React, { Component } from 'react'
 import {Button} from 'antd';
+import { Element, TextInfo} from '@/models/Element';
+import ElementType from '@/constants/ElementType';
 import Color from '@/constants/Color';
 import './editpane.css';
 
 const ButtonGroup = Button.Group;
+
+const defaultText = new TextInfo(
+    "please input your text",
+    300,
+    250,
+    0,
+    'black',
+    20,
+    'Kavivanar',
+    'normal',
+    '',
+)
 
 export default class EditToolBar extends Component {
 
@@ -13,6 +27,7 @@ export default class EditToolBar extends Component {
         this.cutElement = this.cutElement.bind(this);
         this.pasteElement = this.pasteElement.bind(this);
         this.deleteElement = this.deleteElement.bind(this);
+        this.addText = this.addText.bind(this);
     }
 
     copyElement() {
@@ -29,6 +44,21 @@ export default class EditToolBar extends Component {
 
     deleteElement() {
         this.props.deleteElement();
+    }
+
+    addText = () => {        
+        const newTextElement = new Element(ElementType.TEXT, defaultText);
+        const newScene = Object.assign({},this.props.currentScene);
+        newScene.addElement(newTextElement);
+        this.props.updateScene(this.props.sceneIndex, newScene);
+    }
+
+    showGrid= () => {    
+        if(this.props.showGridLines) {
+            this.props.setIsShowGridLines(false)
+        } else {
+            this.props.setIsShowGridLines(true)
+        }
     }
 
     undoCanvas = () => {
@@ -59,11 +89,11 @@ export default class EditToolBar extends Component {
 
                 <ButtonGroup style = { {margin: '10px 20px 0px 0px', float:'right'} }>
                    
-                    <Button icon="pic-center" style = { {padding: '0 20px 0 20px'} } disabled={isPerforming}/>
-                    <Button icon="table" style = { {padding: '0 20px 0 20px'} } disabled={isPerforming}/>
+                    {/* <Button icon="pic-center" style = { {padding: '0 20px 0 20px'} } disabled={isPerforming}/> */}
+                    <Button icon="table" style = { {padding: '0 20px 0 20px'} } disabled={isPerforming} onClick={this.showGrid}/>
                  </ButtonGroup>
 
-                 <Button icon="font-size" style = { {width:'80px',margin: '10px 20px 0px 0px', float:'right'} } disabled={isPerforming}/>
+                 <Button icon="font-size" style = { {width:'80px',margin: '10px 20px 0px 0px', float:'right'} } disabled={isPerforming}  onClick={this.addText}/>
             </div>
         )
     }

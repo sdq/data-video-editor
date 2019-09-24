@@ -12,12 +12,19 @@ export default class EditPane extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            showGridLines: false,
             copiedElement: null,
         };
         this.copyElement = this.copyElement.bind(this);
         this.cutElement = this.cutElement.bind(this);
         this.pasteElement = this.pasteElement.bind(this);
         this.deleteElement = this.deleteElement.bind(this);
+    }
+
+    setIsShowGridLines = value => {
+        this.setState({
+            showGridLines: value
+        })
     }
 
     // edit methods
@@ -85,10 +92,13 @@ export default class EditPane extends Component {
                         pasteElement = {this.pasteElement}
                         deleteElement = {this.deleteElement}
                         copiedElement = {this.state.copiedElement}
+                        showGridLines={this.state.showGridLines}
+                        setIsShowGridLines = {this.setIsShowGridLines}
                         { ...this.props }
                     />
                     <div style={{ background: '#eee', height: '450px' }}>
                         <SceneCanvas 
+                            showGridLines={this.state.showGridLines}
                             { ...this.props }
                         />
                     </div>
