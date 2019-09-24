@@ -7,7 +7,7 @@ export default class ChartPanel extends Component {
     render() {
         return (
             <div style={{textAlign: 'center'}}>
-                <ChartContainer element={this.props.currentElement} width={530} height={530} data={this.props.data} spec={this.props.spec}/>
+                <ChartContainer element={this.props.currentElement} width={530} height={530} data={this.props.data} spec={this.props.spec} current={this.props.scenePosition}/>
             </div>
         )
     }

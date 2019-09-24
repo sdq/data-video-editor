@@ -108,7 +108,11 @@ export class Element {
     };
     add = function(animation) {
         if (animation.duration() === 0) {
-            animation.duration(this.duration());
+            if (this.duration() < 5) {
+                animation.duration(this.duration());
+            } else {
+                animation.duration(5);
+            }
         }
         this._animations.push(animation);
         return this;

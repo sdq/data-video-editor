@@ -44,7 +44,7 @@ export default class ScatterPlot extends Component {
 
     render() {
         if (this.props.onCanvas) {
-            return (<VegaLiteChart name={this.props.name} spec={this.spec} data={this.data} showAnimation={this.props.showAnimation} animations={this.props.animations}/>);
+            return (<VegaLiteChart name={this.props.name} spec={this.spec} data={this.data} showAnimation={this.props.showAnimation} animations={this.props.animations}  current={this.props.current}/>);
         } else {
             return (<VegaLite data={this.data} spec={this.spec}/>);
         }

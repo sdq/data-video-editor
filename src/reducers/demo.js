@@ -1,11 +1,11 @@
 import Scene from '../models/Scene';
 import Video from '../models/Video';
-import AnimationModel from '../animation/AnimationModel';
 import { Element, ImageInfo, ChartInfo, TextInfo} from '../models/Element';
 import MyURL from '../constants/MyURL';
 import ElementType from '../constants/ElementType';
 import ChartType from '../constants/ChartType';
-import AnimationType from '../animation/AnimationType';
+// import AnimationType from '../animation/AnimationType';
+// import AnimationModel from '../animation/AnimationModel';
 import Color from '../constants/Color';
 
 // Demo
@@ -88,14 +88,14 @@ const element12 = new Element(ElementType.IMAGE, demoimage2);
 const element22 = new Element(ElementType.TEXT, demotext2);
 element02.duration(90.0);
 element12.duration(90.0);
-const animation1 = new AnimationModel(AnimationType.PRESENTATION_FADE, 'Fade');
-animation1.start(0);
-animation1.duration(10);
-element12.add(animation1);
-const animation2 = new AnimationModel(AnimationType.PRESENTATION_ZOOM, 'Zoom');
-animation2.start(10);
-animation2.duration(10);
-element12.add(animation2);
+// const animation1 = new AnimationModel(AnimationType.PRESENTATION_FADE, 'Fade');
+// animation1.start(0);
+// animation1.duration(10);
+// element12.add(animation1);
+// const animation2 = new AnimationModel(AnimationType.PRESENTATION_ZOOM, 'Zoom');
+// animation2.start(10);
+// animation2.duration(10);
+// element12.add(animation2);
 element22.duration(90.0);
 const scene2 = new Scene("A woman is sitting on the ground and thinking about something.", 90.0);
 scene2.addElement(element02);

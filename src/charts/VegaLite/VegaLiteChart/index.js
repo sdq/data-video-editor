@@ -22,8 +22,7 @@ export default class VegaLiteChart extends Component {
             let animationCreator = new AnimationCreator(this.imageref);
             for (let index = 0; index < animations.length; index++) {
                 const animation = animations[index];
-                let current = this.props.scenePosition;
-                animationCreator.fromModel(animation).play(current);
+                animationCreator.fromModel(animation).play(this.props.current);
             }
         }
     }
