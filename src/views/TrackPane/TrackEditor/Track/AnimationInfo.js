@@ -11,7 +11,14 @@ export default class AnimationInfo extends Component {
     }
 
     deleteAnimation() {
-        // TODO: delete animation
+        const newScene = Object.assign({},this.props.currentScene);
+        const newElement = Object.assign({},this.props.element);
+        console.log(newElement);
+        newElement.remove(this.props.animationIndex);
+        newScene.updateElement(newElement, this.props.elementIndex);
+        this.props.updateScene(this.props.sceneIndex, newScene);
+        const elementName = this.props.sceneIndex + '-' + this.props.elementIndex;
+        this.props.updateElement(newElement, this.props.elementIndex, elementName);
     }
 
     configAnimation() {
