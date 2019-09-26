@@ -16,7 +16,6 @@ const audioSource = {
 	endDrag(props, monitor) {
         props.displayResourceTargetArea(false);
         const item = monitor.getItem();
-        console.log(66666666666,item)
 		const dropResult = monitor.getDropResult();
 		if (dropResult) {
             // console.log(item);
@@ -28,6 +27,8 @@ const audioSource = {
                 const newAudio = new AudioInfo(item.name,item.src);
                 const newElement = new Element(ElementType.AUDIO, newAudio);
                 newElement.duration(item.duration);
+                //
+                newElement.elementSelf(item.elementTag)
                 newScene.addElement(newElement);
                 props.addElement(newElement);
                 props.updateScene(dropResult.sceneIndex, newScene);
@@ -40,13 +41,16 @@ const audioSource = {
 class AudioCard extends Component {
     constructor(props){
        super(props);
-       this.state={
-        duration:0
-       }
+       //局部变量不需要放在this.state里边，
+       this.playerElement={}
     }
+    
     onCanPlay=() => {
-        let enDuration = this.state.duration.audioEl && this.state.duration.audioEl.duration;
-        this.props.info.duration=Math.round(enDuration)
+        let enDuration=this.playerElement.audioEl && this.playerElement.audioEl.duration
+        //this.props.info.duration=Math.round(enDuration)
+        this.props.info.duration=enDuration
+        //ReactAudioPlayer底层封装的是audio
+        this.props.info.elementTag=this.playerElement.audioEl
     }
 
     render() {
@@ -56,7 +60,8 @@ class AudioCard extends Component {
                 <p>{this.props.info.name}</p>
                 <ReactAudioPlayer
                     src={this.props.info.src}
-                    ref={(element) => { this.state.duration= element}}
+                    //ref={(element) => { this.state.duration = element}}
+                    ref={(element) => { this.playerElement = element}}
                     onCanPlay={this.onCanPlay}
                     controls
                 />
