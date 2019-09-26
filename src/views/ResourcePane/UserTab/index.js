@@ -12,6 +12,7 @@ export default class UserTab extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            activeKey:"audio",
             imageList: [],
             audioList: [
                 {
@@ -36,14 +37,18 @@ export default class UserTab extends Component {
                 newList = this.state.imageList;
                 newList.push(newFile);
                 this.setState({ 
-                    imageList: newList
+                    imageList: newList,
+                    //上传文件成功，打开对应的panel
+                    activeKey:"image"
                 });
                 break;
             case 'mp3':
                 newList = this.state.audioList;
                 newList.push(newFile);
                 this.setState({ 
-                    audioList: newList
+                    audioList: newList,
+                    //上传文件成功，打开对应的panel
+                    activeKey:"audio"
                 });
                 break;
             default:
@@ -76,6 +81,25 @@ export default class UserTab extends Component {
             }
         }
     };
+     callback=(key)=> {
+        //ant 中，undefined 表示收缩面板
+        if(typeof key !=='undefined'){
+            if(key==="image"){
+              this.setState({
+                activeKey:"image"
+              })
+            }else{
+              this.setState({
+                activeKey:"audio"
+              })
+            } 
+
+        }else{
+            this.setState({
+                activeKey:""
+              })
+        }
+      };
 
     render() {
         const { imageList, audioList } = this.state;
@@ -96,7 +120,7 @@ export default class UserTab extends Component {
                 </div>
                 
                 <div className="user-upload-list">
-                    <Collapse accordion bordered={false}>
+                    <Collapse accordion bordered={false} activeKey={this.state.activeKey} onChange={this.callback}>
                         <Panel header={"Image ("+imageList.length+")"} key="image" className="collaspe-panel">
                             <List
                                 grid={{ gutter: 3, column: 3 }}
