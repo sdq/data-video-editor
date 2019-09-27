@@ -32,6 +32,7 @@ export default class EditCanvas extends Component {
     }
 
     handleStageMouseDown = e => {
+        
         // remove animation
         this.setState({
             showTextEditor: false,
