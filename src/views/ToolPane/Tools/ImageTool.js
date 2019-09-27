@@ -3,13 +3,7 @@ import React, { Component } from 'react'
 import { InputNumber, Row, Col, Divider, Slider,Icon } from 'antd';
 
 
-function onSliderChange(value) {
-    console.log('onChange: ', value);
-}
-  
-function onAfterSliderChange(value) {
-    console.log('onAfterChange: ', value);
-}
+
 
 function formatter(value) {
     return `${value}%`;
@@ -17,16 +11,25 @@ function formatter(value) {
 
 export default class ImageTool extends Component {
 
+
+    constructor(props) {
+        super(props);
+    this.state = {
+        displayColorPicker: false,
+        imageX : this.props.currentElement.info().x,
+        imageY : this.props.currentElement.info().y,
+        opacity : this.props.currentElement.info().opacity, 
+    };
+    this.onSliderChange = this.onSliderChange.bind(this);
+}
+
+
+
     componentWillReceiveProps(props) {
         console.log('get new element');
         console.log(props.currentElement.info().x)
     }
 
-    state = {
-        displayColorPicker: false,
-        imageX : this.props.currentElement.info().x,
-        imageY : this.props.currentElement.info().y,
-    };
 
     handleClick = () => {
         this.setState({ displayColorPicker: !this.state.displayColorPicker })
@@ -106,6 +109,16 @@ export default class ImageTool extends Component {
 
      };
 
+     onSliderChange = (value)=>{
+        
+        const newScene = Object.assign({},this.props.currentScene);
+        this.setState({opacity:value}); //record
+       this.props.currentElement.info().opacity = value/100;
+        console.log(this.props.currentElement.info().opacity);
+        this.props.updateScene(this.props.sceneIndex, newScene);
+        
+    }
+
 
 
     render() {
@@ -151,12 +164,11 @@ export default class ImageTool extends Component {
                 <Col span={8} style={{ padding: '10px 0px 0 0px'}}>Transparency</Col>
                 <Col span={16} style={{textAlign:'center', padding: '2px 0px 0 10px'}}>
                    <Slider 
-                   max={99}
+                   max={100}
                    min={0}
-                   defaultValue={0} 
+                   defaultValue={(this.state.opacity)*100} 
                    tipFormatter={formatter} 
-                   onChange={onSliderChange} 
-                   onAfterChange={onAfterSliderChange} /> 
+                   onChange={this.onSliderChange}  /> 
                 </Col>      
                 </Row>
 

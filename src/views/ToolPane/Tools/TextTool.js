@@ -1,10 +1,19 @@
 
 import React, { Component } from 'react'
-import { InputNumber, Row, Col, Divider, Button, Select, Icon } from 'antd';
+import { InputNumber, Row, Col, Divider, Button, Select,Slider ,Icon } from 'antd';
 import { SketchPicker } from 'react-color';
 
 const { Option, OptGroup } = Select;
 const ButtonGroup = Button.Group;
+
+
+function onAfterSliderChange(value) {
+    console.log('onAfterChange: ', value);
+}
+
+function formatter(value) {
+    return `${value}%`;
+}
 
 export default class TextTool extends Component {
     constructor(props) {
@@ -20,6 +29,8 @@ export default class TextTool extends Component {
         bold:false,
         textunderline:false,
         textthroughline:false,
+        opacity : this.props.currentElement.info().opacity,
+        
     };
     this.handleColorClick = this.handleColorClick.bind(this);  //bind
     this.onTextSizeChange = this.onTextSizeChange.bind(this);
@@ -28,6 +39,10 @@ export default class TextTool extends Component {
     this.onTextBoldChange = this.onTextBoldChange.bind(this);
     this.onTextUnderline = this.onTextUnderline.bind(this);
     this.onTextThroughline = this.onTextThroughline.bind(this);
+    this.onSliderChange = this.onSliderChange.bind(this);
+    this.setAlignLeft = this.setAlignLeft.bind(this);
+    this.setAlignCenter = this.setAlignCenter.bind(this);
+    this.setAlignRight = this.setAlignRight.bind(this);
 }
 
     handleClick = () => {
@@ -48,9 +63,7 @@ export default class TextTool extends Component {
 
 
 
-    changeTextXX (value)  {
-       
-        
+    changeTextXX (value)  { 
         this.props.currentElement.info().x = value;
         const newScene = Object.assign({},this.props.currentScene);
         newScene.updateElement(this.props.currentElement, this.props.elementIndex);
@@ -88,6 +101,30 @@ export default class TextTool extends Component {
         this.props.updateScene(this.props.sceneIndex, newScene);
 
      };
+
+
+    
+     setAlignLeft (){
+        console.log(this.props.currentElement.info());
+        this.props.currentElement.info().textAlign = 'left';
+        const newScene = Object.assign({},this.props.currentScene);
+        newScene.updateElement(this.props.currentElement, this.props.elementIndex);
+        this.props.updateScene(this.props.sceneIndex, newScene);
+     }
+
+     setAlignCenter(){
+        this.props.currentElement.info().textAlign = 'center';
+        const newScene = Object.assign({},this.props.currentScene);
+        newScene.updateElement(this.props.currentElement, this.props.elementIndex);
+        this.props.updateScene(this.props.sceneIndex, newScene);
+     }
+
+     setAlignRight(){
+        this.props.currentElement.info().textAlign = 'right';
+        const newScene = Object.assign({},this.props.currentScene);
+        newScene.updateElement(this.props.currentElement, this.props.elementIndex);
+        this.props.updateScene(this.props.sceneIndex, newScene);
+     }
 
 
 
@@ -200,6 +237,17 @@ export default class TextTool extends Component {
         
     }
 
+    onSliderChange = (value)=>{
+        
+        const newScene = Object.assign({},this.props.currentScene);
+        this.setState({opacity:value}); //record
+       this.props.currentElement.info().opacity = value/100;
+        console.log(this.props.currentElement.info().opacity);
+        this.props.updateScene(this.props.sceneIndex, newScene);
+        
+    }
+
+
     render() {
         const {currentElement} = this.props;
         const popover = {
@@ -221,9 +269,9 @@ export default class TextTool extends Component {
                
                 <Row style={{margin: '5px 15px 0px 15px', fontSize: '14px'}}>
                 <ButtonGroup style={{ width: '100%' , align :'center' }}>
-                    <Button type="Default" icon="align-left"  style={{width: '33.3%',textAlign:'center',margin: '0px 0px 0px 0px'}} ></Button>
-                    <Button type="Default" icon="align-center" style={{width: '33.3%',Align:'center',margin: '0px 0px 0px 0px'}} ></Button>
-                    <Button type="Default" icon="align-right" style={{width: '33.3%',Align:'center',margin: '0px 0px 0px 0px'}}  ></Button>
+                    <Button type="Default" icon="align-left"  style={{width: '33.3%',textAlign:'center',margin: '0px 0px 0px 0px'}} onClick = {this.setAlignLeft} ></Button>
+                    <Button type="Default" icon="align-center" style={{width: '33.3%',Align:'center',margin: '0px 0px 0px 0px'}} onClick = {this.setAlignCenter} ></Button>
+                    <Button type="Default" icon="align-right" style={{width: '33.3%',Align:'center',margin: '0px 0px 0px 0px'}} onClick = {this.setAlignRight} ></Button>
                 </ButtonGroup>
 
                 </Row>
@@ -253,12 +301,12 @@ export default class TextTool extends Component {
                    <Col span={6}><InputNumber min={0} max={600} value={currentElement.info().height} size="small" style={{width: '100%',padding: '0px 0px 0px 0px'}}
                    onChange = {value => this.changeTextH(value)}
                    /></Col>
-                   <Col span={2} style={{textAlign:'center', padding: '0px 0px 0px 0px'}}><Icon type="link" /> </Col>
+                   {/* <Col span={2} style={{textAlign:'center', padding: '0px 0px 0px 0px'}}><Icon type="link" /> </Col> */}
                 </Row>
 
                 <Divider>Character</Divider>
                 <Row style={{margin: '0px 15px 0px 15px', fontSize: '14px'}}> 
-                    <Select defaultValue="Helvetica"  
+                    <Select defaultValue={this.props.currentElement.info().fontfamily}
                     style={{ width: '100%' , align :'center' }}
                     onChange={value => this.onTextFamilyChange(value)}
                     >
@@ -277,17 +325,17 @@ export default class TextTool extends Component {
                     </Select>
                 </Row>
 
-                <Row style={{margin: '15px 15px 0px 15px', fontSize: '14px'}}>
-                <Col span={18} style={{margin: '0px 0px 0px 0px'}}>
-                <Select defaultValue="Heavy"  style={{ width: '96%' , align :'center' }}
-                
-                >
-                            <Option value="Heavy">Heavy</Option>
-                            <Option value="Extralight">Extralight</Option>
-                            <Option value="Demibold">Demibold</Option>
-                        </Select>
+                <Row style={{margin: '10px 15px 0px 15px', fontSize: '14px'}}>
+                <Col span={17} style={{margin: '0px 0px 0px 0px'}}>
+                <Slider 
+                   max={99}
+                   min={0}
+                   defaultValue={(this.props.currentElement.info().opacity)*100} 
+                   tipFormatter={formatter} 
+                   onChange={this.onSliderChange} 
+                   onAfterChange={onAfterSliderChange} /> 
                 </Col>
-                <Col span={6} style={{margin: '0px 0px 0px 0px',float:'right'}}>
+                <Col span={6} style={{margin: '5px 0px 0px 0px',float:'right'}}>
                         <InputNumber min={1} max={250} 
                         defaultValue={this.props.currentElement.info().textSize} 
                         onChange={value => this.onTextSizeChange(value)}
@@ -306,10 +354,13 @@ export default class TextTool extends Component {
                 </Col>
 
                     <Col span={6} style={{margin: '0px 0px 0px 0px',float:'right'}}>
-                        <Button type="danger" block  style={{width: '100%',margin: '0px 0px 0px 0px'}} onClick={ this.handleColorClick } ></Button>
+                        <Button type="danger" block  style={{width: '100%',margin: '0px 0px 0px 0px',
+                        backgroundColor:this.props.currentElement.info().color}} onClick={ this.handleColorClick } ></Button>
                             { this.state.displayColorPicker ? <div style={ popover }>
                             <div style={ cover } onClick={ this.handleColorClose }/>
-                            <SketchPicker color={this.state.color}  onChange={this.handleColorChange} />
+                            <SketchPicker 
+                            //color={this.state.color}  
+                            onChange={this.handleColorChange} />
                             </div> : null }
                     </Col>
                 </Row>

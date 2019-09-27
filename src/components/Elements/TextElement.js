@@ -83,12 +83,15 @@ export default class TextElement extends Component {
                     ref={node=>this.textref=node}
                     name={this.props.name}
                     text={this.props.element.info().text}
+                    width = {300}
+                    height  = {this.props.element.info().textSize}
                     fill={this.state.isDragging ? Color.DEEP_ORANGE : this.props.element.info().color}
                     fontSize={this.props.element.info().textSize}  //init  fontSize
                     fontFamily = {this.props.element.info().fontFamily} // nouse  fontFamily
                     fontStyle= {this.props.element.info().fontStyle}  //can be normal, bold, or italic. Default is normal
-                    textDecoration = {this.props.element.info().textDecorationLine}//can be line-through, underline or empty string. Default is empty string.
-                    width = {300}
+                    textDecoration = {this.props.element.info().textDecorationLine}//can be line-through, underline or empty string. Default is empty string. 
+                    opacity = {this.props.element.info().opacity}
+                    align =  {this.props.element.info().textAlign}
                 />
             </Group>
         )

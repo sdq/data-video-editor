@@ -56,6 +56,10 @@ export default class ImageElement extends Component {
         this.props.editStart();
     };
 
+    drag(x,y){
+       console.log(x,y);
+    }
+
     dragend(x,y) {
         const newEle = _.cloneDeep(this.props.element);
         newEle.info().x = x;
@@ -90,6 +94,9 @@ export default class ImageElement extends Component {
                 rotation={this.props.element.info().rotation}
                 //draggable
                 onDragStart={this.dragstart}
+                onDrag={e => {
+                    this.drag(e.target.x(),e.target.y())
+                }}
                 onDragEnd={e => {
                     this.dragend(e.target.x(),e.target.y())
                 }}
@@ -104,6 +111,7 @@ export default class ImageElement extends Component {
                     // height={this.props.element.info().height}
                     name={this.props.name}
                     image={this.state.image} 
+                    opacity = {this.props.element.info().opacity}
                 />
             </Group>
         )
