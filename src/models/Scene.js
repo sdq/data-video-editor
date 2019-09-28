@@ -9,6 +9,7 @@ export default class Scene {
         // this._tracks = [];
         // this.dataurl = dataurl;
         this._elements = []; //TODO: move to track
+        this._audios = [];
         this._backgroundColor = '#ffffff';
         this._backgroundImage = '';
     }
@@ -56,6 +57,13 @@ export default class Scene {
     };
     elements = function() {
         return this._elements;
+    };
+      
+    getAudio = function(){
+        return this._audios;
+    };  
+    addAudio = function(audio){
+        this._audios.push(audio);
     };
     addElement = function(element) {
         element.start(0);

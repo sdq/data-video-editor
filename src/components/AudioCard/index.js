@@ -23,13 +23,16 @@ const audioSource = {
             if (dropResult.target === "canvas") {
                 //add element to scene
                 const newScene = Object.assign({},dropResult.currentScene);
-                //const newAudio = new AudioInfo(item.name,item.src,item.duration);
                 const newAudio = new AudioInfo(item.name,item.src);
                 const newElement = new Element(ElementType.AUDIO, newAudio);
-                newElement.duration(item.duration);
-                //
-                newElement.elementSelf(item.elementTag)
+                newElement.duration(props.info.audio.duration.toFixed(1));
                 newScene.addElement(newElement);
+                //add audioResource to audioList
+                let audioResource = {};
+                audioResource.id = newElement.id();
+                //console.log("newElement.id",newElement.id())
+                audioResource.element = props.info.audio
+                newScene.addAudio(audioResource);
                 props.addElement(newElement);
                 props.updateScene(dropResult.sceneIndex, newScene);
                 // props.displayTrackEditor();
@@ -46,11 +49,8 @@ class AudioCard extends Component {
     }
     
     onCanPlay=() => {
-        let enDuration=this.playerElement.audioEl && this.playerElement.audioEl.duration
-        //this.props.info.duration=Math.round(enDuration)
-        this.props.info.duration=enDuration
         //ReactAudioPlayer底层封装的是audio
-        this.props.info.elementTag=this.playerElement.audioEl
+        this.props.info.audio = this.playerElement.audioEl
     }
 
     render() {
