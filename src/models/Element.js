@@ -16,8 +16,6 @@ export class Element {
         this._duration = 0;
         this._fragments = [];
         this._animations = [];
-        //
-        this._elementSelf=[]
     }
     id = function() {
         return this._id;
@@ -37,15 +35,6 @@ export class Element {
             return this._info;
         } else {
             this._info = info;
-            return this;
-        }
-    };
-    elementSelf = function(tag) {
-        //element info
-        if (tag == null){
-            return this._elementSelf;
-        } else {
-            this._elementSelf = tag;
             return this;
         }
     };

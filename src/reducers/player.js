@@ -30,15 +30,6 @@ export default (state = initialState, action) => {
             newState.isVideoPerforming = false;
             newState.isScenePerforming = false;
             return newState
-            //
-        case  ActionType.PLAY_AUDIO:
-            return newState
-        case  ActionType.PAUSE_AUDIO:
-            return newState
-        case ActionType.PRE_PLAY_AUDIO:
-            return newState
-        case ActionType.BACK_PLAY_AUDIO:
-            return newState 
         default:
             return state
     }

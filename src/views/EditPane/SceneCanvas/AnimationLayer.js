@@ -11,19 +11,6 @@ export default class AnimationLayer extends Component {
         super(props);
         this.elementNodes = new Array(props.currentElements.length).fill({});
     }
-     
-    
-    componentWillUnmount() {
-       console.log("点击了暂停按钮")
-       this.props.currentScene.elements().map(element =>{
-           //console.log("elementNodes",element._info)
-           if(element.type() === ElementType.AUDIO){
-            element._elementSelf.pause()
-            console.log("pause")
-           }
-           return element
-       })
-    }
 
     isElementDisplay(element) {
         let isElementDisplay = false;
@@ -88,13 +75,6 @@ export default class AnimationLayer extends Component {
                                 {...this.props}
                             />
                         case ElementType.AUDIO:
-                            //console.log("element",element)
-                            if(this.isElementDisplay(element)){
-                                   element._elementSelf.play()
-                            }else{
-                                   element._elementSelf.pause()
-                                  // console.log("pause")  
-                            } 
                             return null;
                         default:
                             //TODO: remove

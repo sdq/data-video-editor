@@ -26,22 +26,3 @@ export const stopScene = (sceneIndex) => ({
     type: ActionType.STOP_SCENE,
     sceneIndex
 })
-//控制音频 
-export const playAudio = (sceneIndex) => ({
-    type: ActionType.PLAY_AUDIO,
-    sceneIndex
-})
-
-export const pauseAudio = (sceneIndex) => ({
-    type: ActionType.PAUSE_AUDIO,
-    sceneIndex
-})
-
-export const prePlayAudio = (sceneIndex) => ({
-    type: ActionType.PRE_PLAY_AUDIO,
-    sceneIndex
-})
-export const backPlayAudio = (sceneIndex) => ({
-    type: ActionType.BACK_PLAY_AUDIO,
-    sceneIndex
-})
