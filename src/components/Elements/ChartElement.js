@@ -11,13 +11,23 @@ export default class ChartElement extends Component {
             image: null,
         };
         this.dragstart = this.dragstart.bind(this);
+        this.dragmove = this.dragmove.bind(this);
         this.dragend = this.dragend.bind(this);
         this.onTransformStart = this.onTransformStart.bind(this);
+        this.onTransform = this.onTransform.bind(this);
         this.onTransformEnd = this.onTransformEnd.bind(this);
     }
 
     dragstart() {
         this.props.editStart();
+    };
+
+    dragmove(x,y) {
+        this.props.currentElement.info().x = x;
+        this.props.currentElement.info().y = y;//how to transmitt to toolbar
+        const newScene = Object.assign({},this.props.currentScene);
+        newScene.updateElement(this.props.currentElement, this.props.elementIndex);
+        this.props.updateScene(this.props.sceneIndex, newScene);//lead to unsmooth
     };
 
     dragend(x,y) {
@@ -30,9 +40,18 @@ export default class ChartElement extends Component {
     onTransformStart() {
         this.props.editStart();
     }
-    onTransform() {
-        // console.log("onTransform");
-    }
+   
+    onTransform(e) {
+        let currentWidth = this.props.currentElement.info().width;
+        let currentHeight = this.props.currentElement.info().height;
+        this.props.currentElement.info().width =  currentWidth*e.currentTarget.scaleX();
+        this.props.currentElement.info().height = currentHeight*e.currentTarget.scaleY();
+        this.props.currentElement.info().rotation = e.currentTarget.rotation();
+        const newScene = Object.assign({},this.props.currentScene);
+        newScene.updateElement(this.props.currentElement, this.props.elementIndex);
+        this.props.updateScene(this.props.sceneIndex, newScene);//lead to unsmooth
+     }
+
     onTransformEnd(e) {
         // console.log("end transform");
         const newEle = _.cloneDeep(this.props.element);
@@ -77,11 +96,16 @@ export default class ChartElement extends Component {
                 rotation={this.props.element.info().rotation}
                 //draggable
                 onDragStart={this.dragstart}
+                onDragMove={e => {
+                    this.dragmove(e.target.x(), e.target.y());
+                }}
                 onDragEnd={e => {
                     this.dragend(e.target.x(),e.target.y())
                 }}
                 onTransformStart={this.onTransformStart}
-                onTransform={this.onTransform}
+                onTransform={e => {
+                    this.onTransform(e);
+                }}
                 onTransformEnd={this.onTransformEnd}
                 visible={this.props.visible}
             >

@@ -13,7 +13,6 @@ import AnimationTool from './Tools/AnimationTool';
 const { TabPane } = Tabs;
 
 export default class ToolPane extends Component {
-
     // constructor(props) {
     //     super(props);
     //     this.state = {

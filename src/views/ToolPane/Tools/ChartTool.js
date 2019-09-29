@@ -20,20 +20,17 @@ export default class ChartTool extends Component {
         this.setState({ displayColorPicker: false })
     };
 
-    changeChartXX (value)  {
-
+    changeChartX (value)  {
         this.props.currentElement.info().x = value;
         const newScene = Object.assign({},this.props.currentScene);
         newScene.updateElement(this.props.currentElement, this.props.elementIndex);
         this.props.updateScene(this.props.sceneIndex, newScene);
     };
-    changeChartYY = (value) => {
-
+    changeChartY  (value)  {
         this.props.currentElement.info().y = value;
         const newScene = Object.assign({},this.props.currentScene);
         newScene.updateElement(this.props.currentElement, this.props.elementIndex);
         this.props.updateScene(this.props.sceneIndex, newScene);
- 
     };
     changeChartR = (value) => {
         this.props.currentElement.info().rotation = value;
@@ -65,31 +62,26 @@ export default class ChartTool extends Component {
               <Divider>Position</Divider>
                <Row style={{margin: '15px 15px 0px 12px', fontSize: '14px'}}>
                    <Col span={2}  style={{textAlign:'center', padding: '0px 0px 0px 0px'}}>X</Col>
-                   <Col span={6}><InputNumber min={0} max={600} value={currentElement.info().x} size="small" style={{width: '100%',padding: '0px 0px 0px 0px'}} 
-                  // value= {value}
-                  onChange = {value => this.ChangeChartXX(value)}
-                   onPressEnter={value => this.ChangeChartX(value)}
+                   <Col span={6}><InputNumber min={0} max={600} value={currentElement.info().x} size="small" precision={0.1} style={{width: '100%',padding: '0px 0px 0px 0px'}} 
+                   onChange = {value => this.ChangeChartX(value)}
                    /></Col>
                    <Col span={2} style={{textAlign:'center', padding: '0px 0px 0px 0px'}}>Y</Col>
-                   <Col span={6}><InputNumber min={0} max={600} value={currentElement.info().y} size="small"  style={{width: '100%',padding: '0px 0px 0px 0px'}}
-                    //value= {value}
-                   //onPressEnter = {this.ChangeTextY(value)}
-                   onChange = {value => this.ChangeChartYY(value)}
-                   onPressEnter={value => this.ChangeChartY(value)}
+                   <Col span={6}><InputNumber min={0} max={600} value={currentElement.info().y} size="small" precision={0.1} style={{width: '100%',padding: '0px 0px 0px 0px'}}
+                   onChange = {value => this.ChangeChartY(value)}
                    /></Col>
                    <Col span={2} style={{textAlign:'center', padding: '0px 0px 0px 0px'}}><Icon type="redo" /> </Col>
-                   <Col span={6}><InputNumber min={-360} max={360} value={currentElement.info().rotation}  formatter={value => `${value}°`} size="small"  style={{width: '100%',padding: '0px 0px 0px 0px'}}
+                   <Col span={6}><InputNumber min={-360} max={360} value={currentElement.info().rotation} precision={0.1} formatter={value => `${value}°`} size="small"  style={{width: '100%',padding: '0px 0px 0px 0px'}}
                    onChange = {value => this.changeChartR(value)}
                    /></Col>
                   
                </Row>
                <Row style={{margin: '15px 15px 0px 12px', fontSize: '14px'}}>
                    <Col span={2} style={{textAlign:'center', padding: '0px 0px 0px 0px'}}>W</Col>
-                   <Col span={6}><InputNumber min={0} max={600} value={currentElement.info().width} size="small" style={{width: '100%',padding: '0px 0px 0px 0px'}}
+                   <Col span={6}><InputNumber min={0} max={600} value={currentElement.info().width} size="small" precision={0.1} style={{width: '100%',padding: '0px 0px 0px 0px'}}
                    onChange = {value => this.changeChartW(value)}
                    /></Col>
                    <Col span={2} style={{textAlign:'center', padding: '0px 0px 0px 0px'}}>H</Col>
-                   <Col span={6}><InputNumber min={0} max={600} value={currentElement.info().height} size="small" style={{width: '100%',padding: '0px 0px 0px 0px'}}
+                   <Col span={6}><InputNumber min={0} max={600} value={currentElement.info().height} size="small" precision={0.1} style={{width: '100%',padding: '0px 0px 0px 0px'}}
                    onChange = {value => this.changeChartH(value)}
                    /></Col>
                    <Col span={2} style={{textAlign:'center', padding: '0px 0px 0px 0px'}}><Icon type="link" /> </Col>

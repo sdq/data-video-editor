@@ -12,8 +12,10 @@ export default class TextElement extends Component {
             text: props.element.info().text,
         };
         this.dragstart = this.dragstart.bind(this);
+        this.dragmove = this.dragmove.bind(this);
         this.dragend = this.dragend.bind(this);
         this.onTransformStart = this.onTransformStart.bind(this);
+        this.onTransform = this.onTransform.bind(this);
         this.onTransformEnd = this.onTransformEnd.bind(this);
     }
 
@@ -33,26 +35,46 @@ export default class TextElement extends Component {
         this.props.editStart();
     };
 
+    dragmove(x,y) {
+        this.props.currentElement.info().x = x;
+        this.props.currentElement.info().y = y;//how to transmitt to toolbar
+        const newScene = Object.assign({},this.props.currentScene);
+        newScene.updateElement(this.props.currentElement, this.props.elementIndex);
+        this.props.updateScene(this.props.sceneIndex, newScene);//lead to unsmooth
+    };
+    
+
     dragend(x,y) {
         const newEle = _.cloneDeep(this.props.element);
         newEle.info().x = x;
         newEle.info().y = y;
         this.props.edit(newEle);
     };
+
     onTransformStart() {
         this.props.editStart();
     }
-    onTransform() {
-        //console.log("onTransform");
+
+    onTransform(e) {
+        let currentWidth = this.props.currentElement.info().width;
+        let currentHeight = this.props.currentElement.info().height;
+        this.props.currentElement.info().width =  currentWidth*e.currentTarget.scaleX();
+        this.props.currentElement.info().height = currentHeight*e.currentTarget.scaleY();
+        this.props.currentElement.info().rotation = e.currentTarget.rotation();
+        const newScene = Object.assign({},this.props.currentScene);
+        newScene.updateElement(this.props.currentElement, this.props.elementIndex);
+        this.props.updateScene(this.props.sceneIndex, newScene);//lead to unsmooth
     }
+
     onTransformEnd(e) {
-        const newEle = _.cloneDeep(this.props.element);
-        newEle.info().x = e.target.x();
-        newEle.info().y = e.target.y();
-        newEle.info().width = e.target.width()*e.target.scaleX();
-        newEle.info().height = e.target.height()*e.target.scaleY();
-        newEle.info().rotation = e.target.rotation();
-        this.props.edit(newEle);
+        // const newEle = _.cloneDeep(this.props.element); //question
+        // newEle.info().x = e.target.x();
+        // newEle.info().y = e.target.y();
+        // console.log(e.target.width());
+        // newEle.info().width = e.target.width()*e.target.scaleX();
+        // newEle.info().height = e.target.height()*e.target.scaleY();
+        // newEle.info().rotation = e.target.rotation();
+        // this.props.edit(newEle);
     }
     render() {
         return (
@@ -66,6 +88,9 @@ export default class TextElement extends Component {
                         isDragging: true
                     });
                 }}
+                onDragMove={e => {
+                    this.dragmove(e.target.x(), e.target.y());
+                }}
                 onDragEnd={e => {
                     this.setState({
                         isDragging: false,
@@ -75,23 +100,26 @@ export default class TextElement extends Component {
                     this.dragend(e.target.x(), e.target.y());
                 }}
                 onTransformStart={this.onTransformStart}
-                onTransform={this.onTransform}
+                onTransform={e => {
+                    this.onTransform(e);
+                }}
                 onTransformEnd={this.onTransformEnd}
                 visible={this.props.visible}
             >
                 <Text
-                    ref={node=>this.textref=node}
-                    name={this.props.name}
-                    text={this.props.element.info().text}
-                    width = {300}
-                    height  = {this.props.element.info().textSize}
-                    fill={this.state.isDragging ? Color.DEEP_ORANGE : this.props.element.info().color}
-                    fontSize={this.props.element.info().textSize}  //init  fontSize
+                    ref = {node=>this.textref=node}
+                    name = {this.props.name}
+                    text = {this.props.element.info().text}
+                    width = {this.props.element.info().width}//the number of text*scale
+                    //height  = {this.props.element.info().textSize*3}//*rows
+                    height  = {this.props.element.info().height} //fake
+                    fill = {this.state.isDragging ? Color.DEEP_ORANGE : this.props.element.info().color}
+                    fontSize = {this.props.element.info().textSize}  //init  fontSize
                     fontFamily = {this.props.element.info().fontFamily} // nouse  fontFamily
-                    fontStyle= {this.props.element.info().fontStyle}  //can be normal, bold, or italic. Default is normal
+                    fontStyle = {this.props.element.info().fontStyle}  //can be normal, bold, or italic. Default is normal
                     textDecoration = {this.props.element.info().textDecorationLine}//can be line-through, underline or empty string. Default is empty string. 
                     opacity = {this.props.element.info().opacity}
-                    align =  {this.props.element.info().textAlign}
+                    align = {this.props.element.info().textAlign}
                 />
             </Group>
         )

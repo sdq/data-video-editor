@@ -1,8 +1,5 @@
-
 import React, { Component } from 'react'
-import { InputNumber, Row, Col, Divider, Slider,Icon } from 'antd';
-
-
+import { InputNumber, Row, Col, Divider, Slider, Icon } from 'antd';
 
 
 function formatter(value) {
@@ -10,10 +7,8 @@ function formatter(value) {
 }
 
 export default class ImageTool extends Component {
-
-
     constructor(props) {
-        super(props);
+    super(props);
     this.state = {
         displayColorPicker: false,
         imageX : this.props.currentElement.info().x,
@@ -24,10 +19,8 @@ export default class ImageTool extends Component {
 }
 
 
-
     componentWillReceiveProps(props) {
-        console.log('get new element');
-        console.log(props.currentElement.info().x)
+        //console.log('get new element');
     }
 
 
@@ -40,50 +33,17 @@ export default class ImageTool extends Component {
     };
 
 
-    changeImageXX (value)  {
-        console.log("X");
-        //console.log(value);// INPUT事件先于value事件触发
-        // const newElement = Object.assign({},this.props.currentElement);
-        // const newInfo = Object.assign({},newElement.info());
-        // const newScene = Object.assign({},this.props.currentScene);
-        // console.log(newInfo);
-        // newInfo.x = value;
-        // this.setState({ imageX: value })
-        // newElement.info(newInfo);
-        // newScene.updateElement(newElement, this.props.elementIndex);
-        // this.props.updateScene(this.props.sceneIndex, newScene);
-        // const elementName = this.props.sceneIndex + '-' + this.props.elementIndex;
-        // this.props.updateElement(newElement, this.props.elementIndex, elementName);
-       // console.log('######scene@@@@@@')
-        //console.log(newScene);
-        console.log(this.props.currentElement);
+    changeImageX (value)  {
         this.props.currentElement.info().x = value;
         const newScene = Object.assign({},this.props.currentScene);
         newScene.updateElement(this.props.currentElement, this.props.elementIndex);
         this.props.updateScene(this.props.sceneIndex, newScene);
-
     };
-    changeImageYY = (value) => {
-        // console.log("Y");
-        // //console.log(value);
-        // const newElement = Object.assign({},this.props.currentElement);
-        // const newInfo = Object.assign({},newElement.info());
-        // const newScene = Object.assign({},this.props.currentScene);
-        // console.log('imagey'+this.state.imageY);        
-        // newInfo.y = value;
-        // this.setState({ imageY: value })
-        // newElement.info(newInfo);
-        // newScene.updateElement(newElement, this.props.elementIndex);
-        // this.props.updateScene(this.props.sceneIndex, newScene);
-        // const elementName = this.props.sceneIndex + '-' + this.props.elementIndex;
-        // this.props.updateElement(newElement, this.props.elementIndex, elementName);
-        //console.log('######scene@@@@@@')
-        //console.log(newScene);
+    changeImageY = (value) => {
         this.props.currentElement.info().y = value;
         const newScene = Object.assign({},this.props.currentScene);
         newScene.updateElement(this.props.currentElement, this.props.elementIndex);
         this.props.updateScene(this.props.sceneIndex, newScene);
-
      };
      changeImageR = (value) => {
         console.log(this.props.currentElement);
@@ -91,72 +51,61 @@ export default class ImageTool extends Component {
         const newScene = Object.assign({},this.props.currentScene);
         newScene.updateElement(this.props.currentElement, this.props.elementIndex);
         this.props.updateScene(this.props.sceneIndex, newScene);
-
      };
-     changeImageW = (value) => {
-        
+     changeImageW = (value) => {  
         this.props.currentElement.info().width = value;
         const newScene = Object.assign({},this.props.currentScene);
         newScene.updateElement(this.props.currentElement, this.props.elementIndex);
         this.props.updateScene(this.props.sceneIndex, newScene);
-
      };
      changeImageH = (value) => {
         this.props.currentElement.info().height = value;
         const newScene = Object.assign({},this.props.currentScene);
         newScene.updateElement(this.props.currentElement, this.props.elementIndex);
         this.props.updateScene(this.props.sceneIndex, newScene);
-
      };
 
      onSliderChange = (value)=>{
-        
         const newScene = Object.assign({},this.props.currentScene);
         this.setState({opacity:value}); //record
-       this.props.currentElement.info().opacity = value/100;
+        this.props.currentElement.info().opacity = value/100;
         console.log(this.props.currentElement.info().opacity);
-        this.props.updateScene(this.props.sceneIndex, newScene);
-        
+        this.props.updateScene(this.props.sceneIndex, newScene);    
     }
 
 
 
     render() {
         const {currentElement} = this.props;
-        //const {imageX,imageY} = this.state;
         return (
             <div style={{padding: '10px 10px 10px 10px', fontSize: '14px', backgroundColor: 'white'}}>
                 <Divider>Position</Divider>
                 <Row style={{margin: '15px 15px 0px 12px', fontSize: '14px'}}>
                     <Col span={2}  style={{textAlign:'center', padding: '0px 0px 0px 0px'}}>X</Col>
-                    <Col span={6}><InputNumber min={0} max={600}  size="small" 
-                     value = {currentElement.info().x}
-                    //value={this.state.imageX}
-                    style={{width: '100%',padding: '0px 0px 0px 0px'}} 
-                    onChange = {value => this.changeImageXX(value)}
+                    <Col span={6}><InputNumber min={0} max={600} value = {currentElement.info().x} size="small" precision={0.1} style={{width: '100%',padding: '0px 0px 0px 0px'}} 
+                    onChange = {value => this.changeImageX(value)}
                     /></Col>
                     <Col span={2} style={{textAlign:'center', padding: '0px 0px 0px 0px'}}>Y</Col>
-                    <Col span={6}><InputNumber min={0} max={600} value={currentElement.info().y} size="small"  style={{width: '100%',padding: '0px 0px 0px 0px'}}
-                    onChange = {value => this.changeImageYY(value)}
+                    <Col span={6}><InputNumber min={0} max={600} value={currentElement.info().y} size="small" precision={0.1} style={{width: '100%',padding: '0px 0px 0px 0px'}}
+                    onChange = {value => this.changeImageY(value)}
                     /></Col>
                     <Col span={2} style={{textAlign:'center', padding: '0px 0px 0px 0px'}}><Icon type="redo" /> </Col>
-                    <Col span={6}><InputNumber min={-360} max={360} value={currentElement.info().rotation}  formatter={value => `${value}°`} size="small"  style={{width: '100%',padding: '0px 0px 0px 0px'}}
+                    <Col span={6}><InputNumber min={-360} max={360} value={currentElement.info().rotation} precision={0.1} formatter={value => `${value}°`} size="small"  style={{width: '100%',padding: '0px 0px 0px 0px'}}
                      onChange = {value => this.changeImageR(value)}
                     /></Col>
                    
                 </Row>
                 <Row style={{margin: '15px 15px 0px 12px', fontSize: '14px'}}>
                     <Col span={2} style={{textAlign:'center', padding: '0px 0px 0px 0px'}}>W</Col>
-                    <Col span={6}><InputNumber min={0} max={600} value={currentElement.info().width} size="small" style={{width: '100%',padding: '0px 0px 0px 0px'}}
+                    <Col span={6}><InputNumber min={0} max={600} value={currentElement.info().width} size="small" precision={0.1} style={{width: '100%',padding: '0px 0px 0px 0px'}}
                     onChange = {value => this.changeImageW(value)}
                     /></Col>
                     <Col span={2} style={{textAlign:'center', padding: '0px 0px 0px 0px'}}>H</Col>
-                    <Col span={6}><InputNumber min={0} max={600} value={currentElement.info().height} size="small" style={{width: '100%',padding: '0px 0px 0px 0px'}}
+                    <Col span={6}><InputNumber min={0} max={600} value={currentElement.info().height} size="small" precision={0.1} style={{width: '100%',padding: '0px 0px 0px 0px'}}
                     onChange = {value => this.changeImageH(value)}
                     /></Col>
                     <Col span={2} style={{textAlign:'center', padding: '0px 0px 0px 0px'}}><Icon type="link" /> </Col>
                 </Row>
-                
 
 
                 <Divider>Style</Divider>
@@ -171,7 +120,6 @@ export default class ImageTool extends Component {
                    onChange={this.onSliderChange}  /> 
                 </Col>      
                 </Row>
-
              
             </div>
         )

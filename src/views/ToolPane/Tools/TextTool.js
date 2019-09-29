@@ -1,6 +1,5 @@
-
 import React, { Component } from 'react'
-import { InputNumber, Row, Col, Divider, Button, Select,Slider ,Icon } from 'antd';
+import { InputNumber, Row, Col, Divider, Button, Select, Slider,Icon } from 'antd';
 import { SketchPicker } from 'react-color';
 
 const { Option, OptGroup } = Select;
@@ -8,7 +7,7 @@ const ButtonGroup = Button.Group;
 
 
 function onAfterSliderChange(value) {
-    console.log('onAfterChange: ', value);
+    //console.log('onAfterChange: ', value);
 }
 
 function formatter(value) {
@@ -54,23 +53,14 @@ export default class TextTool extends Component {
     };
 
 
-    ChangeTextX = (value) => {
-    //press
-    };
-    ChangeTextY = (value) => {
-    //press
-    };
-
-
-
-    changeTextXX (value)  { 
+    changeTextX (value)  { 
         this.props.currentElement.info().x = value;
         const newScene = Object.assign({},this.props.currentScene);
         newScene.updateElement(this.props.currentElement, this.props.elementIndex);
         this.props.updateScene(this.props.sceneIndex, newScene);
     };
-    changeTextYY = (value) => {
-       
+
+    changeTextY = (value) => {
         this.props.currentElement.info().y = value;
         const newScene = Object.assign({},this.props.currentScene);
         newScene.updateElement(this.props.currentElement, this.props.elementIndex);
@@ -79,7 +69,6 @@ export default class TextTool extends Component {
      };
 
      changeTextR = (value) => {
-        console.log(this.props.currentElement);
         this.props.currentElement.info().rotation = value;
         const newScene = Object.assign({},this.props.currentScene);
         newScene.updateElement(this.props.currentElement, this.props.elementIndex);
@@ -87,7 +76,6 @@ export default class TextTool extends Component {
 
      };
      changeTextW = (value) => {
-        
         this.props.currentElement.info().width = value;
         const newScene = Object.assign({},this.props.currentScene);
         newScene.updateElement(this.props.currentElement, this.props.elementIndex);
@@ -99,13 +87,10 @@ export default class TextTool extends Component {
         const newScene = Object.assign({},this.props.currentScene);
         newScene.updateElement(this.props.currentElement, this.props.elementIndex);
         this.props.updateScene(this.props.sceneIndex, newScene);
-
      };
-
 
     
      setAlignLeft (){
-        console.log(this.props.currentElement.info());
         this.props.currentElement.info().textAlign = 'left';
         const newScene = Object.assign({},this.props.currentScene);
         newScene.updateElement(this.props.currentElement, this.props.elementIndex);
@@ -127,7 +112,6 @@ export default class TextTool extends Component {
      }
 
 
-
      handleColorClick () {
         let {displayColorPicker} =this.state;
         displayColorPicker = displayColorPicker==="none"?"block":"none";
@@ -136,7 +120,6 @@ export default class TextTool extends Component {
             //this.props.updateColor(key,color)
         }
         this.setState({ displayColorPicker: !this.state.displayColorPicker })
-
     };
 
 
@@ -145,8 +128,7 @@ export default class TextTool extends Component {
         this.setState({color})
         const newScene = Object.assign({},this.props.currentScene);
         this.props.currentElement.info().color = color;
-        this.props.updateScene(this.props.sceneIndex, newScene);
-      
+        this.props.updateScene(this.props.sceneIndex, newScene); 
     }
   
 
@@ -165,7 +147,6 @@ export default class TextTool extends Component {
 
     onTextFamilyChange= (value)=>{
         let textFamily = value;   
-        console.log( this.props.currentElement.info().fontfamily);
         this.setState({textFamily}); //record
         const newScene = Object.assign({},this.props.currentScene);
         this.props.currentElement.info().fontfamily = textFamily;
@@ -173,15 +154,14 @@ export default class TextTool extends Component {
     }
 
 
-    onTextBoldChange() {
-        
+    onTextBoldChange() {    
         const newScene = Object.assign({},this.props.currentScene);
         if(this.state.bold)
         {
             this.setState({bold:false}); //record
             this.props.currentElement.info().fontStyle = "normal";
-        }else
-        {this.setState({bold:true,italic:false}); //record
+        }else{
+        this.setState({bold:true,italic:false}); //record
         this.props.currentElement.info().fontStyle = "bold";
     }
         this.props.updateScene(this.props.sceneIndex, newScene);
@@ -189,62 +169,52 @@ export default class TextTool extends Component {
     }
 
 
-    onTextItalicChange() {
-        
+    onTextItalicChange() {   
         const newScene = Object.assign({},this.props.currentScene);
         if(this.state.italic)
         {
             this.setState({italic:false}); //record
             this.props.currentElement.info().fontStyle = "normal";
-        }else
-        {this.setState({italic:true,bold:false}); //record
+        }else{
+        this.setState({italic:true,bold:false}); //record
         this.props.currentElement.info().fontStyle = "italic";
     }
         this.props.updateScene(this.props.sceneIndex, newScene);
         
     }
 
-    onTextUnderline() {
-        
+    onTextUnderline() { 
         const newScene = Object.assign({},this.props.currentScene);
         if(this.state.textunderline)
         {
             this.setState({textunderline:false}); //record
             this.props.currentElement.info().textDecorationLine = "normal";
-        }else
-        {this.setState({textunderline:true,textthroughline:false}); //record
+        }else{
+        this.setState({textunderline:true,textthroughline:false}); //record
         this.props.currentElement.info().textDecorationLine = "underline";
     }
-
-          console.log(this.state.textunderline);
         this.props.updateScene(this.props.sceneIndex, newScene);
         
     }
 
     onTextThroughline() {
-        
         const newScene = Object.assign({},this.props.currentScene);
         if (this.state.textthroughline) {
             this.setState({textthroughline:false}); //record
             this.props.currentElement.info().textDecorationLine = "normal";
-        } else
-            {this.setState({textthroughline:true,extunderline:false}); //record
+        } else {
+            this.setState({textthroughline:true,extunderline:false}); //record
             this.props.currentElement.info().textDecorationLine = "line-through";
         }
-
-        console.log(this.state.textthroughline);
         this.props.updateScene(this.props.sceneIndex, newScene);
         
     }
 
     onSliderChange = (value)=>{
-        
         const newScene = Object.assign({},this.props.currentScene);
         this.setState({opacity:value}); //record
-       this.props.currentElement.info().opacity = value/100;
-        console.log(this.props.currentElement.info().opacity);
+        this.props.currentElement.info().opacity = value/100;
         this.props.updateScene(this.props.sceneIndex, newScene);
-        
     }
 
 
@@ -264,41 +234,37 @@ export default class TextTool extends Component {
         return (
 
             <div style={{padding: '5px 10px 10px 10px', fontSize: '14px', backgroundColor: 'white',height:'500px',overflow: 'auto'}}>
-
                 <Divider>Position</Divider>
-               
                 <Row style={{margin: '5px 15px 0px 15px', fontSize: '14px'}}>
                 <ButtonGroup style={{ width: '100%' , align :'center' }}>
-                    <Button type="Default" icon="align-left"  style={{width: '33.3%',textAlign:'center',margin: '0px 0px 0px 0px'}} onClick = {this.setAlignLeft} ></Button>
+                    <Button type="Default" icon="align-left"   style={{width: '33.3%',Align:'center',margin: '0px 0px 0px 0px'}} onClick = {this.setAlignLeft} ></Button>
                     <Button type="Default" icon="align-center" style={{width: '33.3%',Align:'center',margin: '0px 0px 0px 0px'}} onClick = {this.setAlignCenter} ></Button>
-                    <Button type="Default" icon="align-right" style={{width: '33.3%',Align:'center',margin: '0px 0px 0px 0px'}} onClick = {this.setAlignRight} ></Button>
+                    <Button type="Default" icon="align-right"  style={{width: '33.3%',Align:'center',margin: '0px 0px 0px 0px'}} onClick = {this.setAlignRight} ></Button>
                 </ButtonGroup>
-
                 </Row>
+
                 <Row style={{margin: '15px 15px 0px 12px', fontSize: '14px'}}>
                    <Col span={2}  style={{textAlign:'center', padding: '0px 0px 0px 0px'}}>X</Col>
-                   <Col span={6}><InputNumber min={0} max={700} value={currentElement.info().x} size="small" style={{width: '100%',padding: '0px 0px 0px 0px'}} 
-                   onChange = {value => this.changeTextXX(value)}
-                   onPressEnter={value => this.changeTextX(value)}
+                   <Col span={6}><InputNumber min={0} max={700} value={currentElement.info().x} size="small" precision={0.1} style={{width: '100%',padding: '0px 0px 0px 0px'}} 
+                   onChange = {value => this.changeTextX(value)}
                    /></Col>
                    <Col span={2} style={{textAlign:'center', padding: '0px 0px 0px 0px'}}>Y</Col>
-                   <Col span={6}><InputNumber min={0} max={700} value={currentElement.info().y} size="small"  style={{width: '100%',padding: '0px 0px 0px 0px'}}
-                   onChange = {value => this.changeTextYY(value)}
-                   onPressEnter={value => this.changeTextY(value)}
+                   <Col span={6}><InputNumber min={0} max={700} value={currentElement.info().y} size="small" precision={0.1} style={{width: '100%',padding: '0px 0px 0px 0px'}}
+                   onChange = {value => this.changeTextY(value)}
                    /></Col>
                    <Col span={2} style={{textAlign:'center', padding: '0px 0px 0px 0px'}}><Icon type="redo" /> </Col>
-                   <Col span={6}><InputNumber min={-360} max={360} value={currentElement.info().rotation}  formatter={value => `${value}°`} size="small"  style={{width: '100%',padding: '0px 0px 0px 0px'}}
+                   <Col span={6}><InputNumber min={-360} max={360} value={currentElement.info().rotation} precision={0.1} formatter={value => `${value}°`} size="small"  style={{width: '100%',padding: '0px 0px 0px 0px'}}
                    onChange = {value => this.changeTextR(value)}
-                   /></Col>
-                  
+                   /></Col>  
                 </Row>
+
                 <Row style={{margin: '15px 15px 0px 12px', fontSize: '14px'}}>
                    <Col span={2} style={{textAlign:'center', padding: '0px 0px 0px 0px'}}>W</Col>
-                   <Col span={6}><InputNumber min={0} max={600} value={currentElement.info().width} size="small" style={{width: '100%',padding: '0px 0px 0px 0px'}}
+                   <Col span={6}><InputNumber min={0} max={800} value={currentElement.info().width} precision={0.1} size="small" style={{width: '100%',padding: '0px 0px 0px 0px'}}
                    onChange = {value => this.changeTextW(value)}
                    /></Col>
                    <Col span={2} style={{textAlign:'center', padding: '0px 0px 0px 0px'}}>H</Col>
-                   <Col span={6}><InputNumber min={0} max={600} value={currentElement.info().height} size="small" style={{width: '100%',padding: '0px 0px 0px 0px'}}
+                   <Col span={6}><InputNumber min={0} max={450} value={currentElement.info().height} precision={0.1} size="small" style={{width: '100%',padding: '0px 0px 0px 0px'}}
                    onChange = {value => this.changeTextH(value)}
                    /></Col>
                    {/* <Col span={2} style={{textAlign:'center', padding: '0px 0px 0px 0px'}}><Icon type="link" /> </Col> */}
@@ -353,18 +319,17 @@ export default class TextTool extends Component {
                 </ButtonGroup>
                 </Col>
 
-                    <Col span={6} style={{margin: '0px 0px 0px 0px',float:'right'}}>
-                        <Button type="danger" block  style={{width: '100%',margin: '0px 0px 0px 0px',
-                        backgroundColor:this.props.currentElement.info().color}} onClick={ this.handleColorClick } ></Button>
-                            { this.state.displayColorPicker ? <div style={ popover }>
-                            <div style={ cover } onClick={ this.handleColorClose }/>
-                            <SketchPicker 
-                            //color={this.state.color}  
-                            onChange={this.handleColorChange} />
-                            </div> : null }
+                <Col span={6} style={{margin: '0px 0px 0px 0px',float:'right'}}>
+                <Button type="danger" block  style={{width: '100%',margin: '0px 0px 0px 0px',
+                    backgroundColor:this.props.currentElement.info().color}} onClick={ this.handleColorClick } ></Button>
+                    { this.state.displayColorPicker ? <div style={ popover }>
+                    <div style={ cover } onClick={ this.handleColorClose }/>
+                    <SketchPicker 
+                     //color={this.state.color}  
+                    onChange={this.handleColorChange} />
+                    </div> : null }
                     </Col>
                 </Row>
-
             </div>
         
         )

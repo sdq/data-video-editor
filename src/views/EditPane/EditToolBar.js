@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {Button,Modal,Col,Row} from 'antd';
-import { Element, TextInfo} from '@/models/Element';
+import {Element,TextInfo} from '@/models/Element';
 import ElementType from '@/constants/ElementType';
 import Color from '@/constants/Color';
 import './editpane.css';
@@ -22,19 +22,16 @@ const defaultText = new TextInfo(
 
 
 export default class EditToolBar extends Component {
-
     constructor(props) {
         super(props);
         this.state = {
             visible: false,
         };
-    
         this.copyElement = this.copyElement.bind(this);
         this.cutElement = this.cutElement.bind(this);
         this.pasteElement = this.pasteElement.bind(this);
         this.deleteElement = this.deleteElement.bind(this);
         this.addText = this.addText.bind(this);
-        //this.setElementPos = this.setElementPos.bind(this);
     }
 
     copyElement() {
@@ -60,7 +57,6 @@ export default class EditToolBar extends Component {
         this.props.updateScene(this.props.sceneIndex, newScene);
     }
 
-
     showModal = () => {
         this.setState({
           visible: true,
@@ -82,15 +78,13 @@ export default class EditToolBar extends Component {
       };
 
       setElementPos = pos =>{  
-        //console.log(pos);
-        // 画布大小到底是多少？为什么和图表尺度不一样？
+      //lack of the real material‘s  size
         switch (pos) {
             case 'TL' :
                 this.props.currentElement.info().x = 0;
                 this.props.currentElement.info().y = 0;
                 break;
             case 'Top' :
-                console.log(this.props.currentElement.info().width);
                 this.props.currentElement.info().x = 400-this.props.currentElement.info().width/2;
                 this.props.currentElement.info().y =0;
                     break;
@@ -123,11 +117,8 @@ export default class EditToolBar extends Component {
                 this.props.currentElement.info().y = 450-this.props.currentElement.info().height;
                    break;
             default :
-                    return '如果以上都不是，那么必须使用default返回，哪怕是 null'
-
-        
+                    return null     
         }
-        
         const newScene = Object.assign({},this.props.currentScene);
         newScene.updateElement(this.props.currentElement, this.props.elementIndex);
         this.props.updateScene(this.props.sceneIndex, newScene);
@@ -162,7 +153,7 @@ export default class EditToolBar extends Component {
                     <Button icon="scissor" style = { {padding: '0 20px 0 20px'} } onClick={this.cutElement} disabled={!isElementSelected || isPerforming}/>
                     <Button icon="snippets" style = { {padding: '0 20px 0 20px'} } onClick={this.pasteElement} disabled={copiedElement === null || isPerforming}/>
                     <Button icon="delete" style = { {padding: '0 20px 0 20px'} } onClick={this.deleteElement} disabled={!isElementSelected || isPerforming}/>
-                 </ButtonGroup>
+                </ButtonGroup>
                 
                 <ButtonGroup style = { {margin: '10px 20px 0 0', float:'right'} } >
                     <Button icon="undo" style = { {padding: '0 20px 0 20px'} } onClick={this.undoCanvas} disabled={isPerforming || currentPast.length === 0}/>
@@ -171,8 +162,8 @@ export default class EditToolBar extends Component {
 
                 <ButtonGroup style = { {margin: '10px 20px 0px 0px', float:'right'} }>
                 <Button icon="pic-center" style = { {padding: '0 20px 0 20px'} } disabled={!isElementSelected || isPerforming} onClick={this.showModal}/> 
-                 <Modal
-                    //title="Basic Modal"
+                <Modal
+                     //title="Basic Modal"
                      visible={this.state.visible}
                      closable = {false}
                      footer={null}
@@ -184,11 +175,8 @@ export default class EditToolBar extends Component {
                      placement="bottomRight"
                      //style={{ top: 20 }} //position of click
                     >
-
-
-
                     <Row>
-                     <Col span={8}> <button type="button" id = 'TL'  onClick = {(value)=> this.setElementPos('TL')} > </button></Col>
+                     <Col span={8}> <button type="button" id = 'TL'  onClick = {()=> this.setElementPos('TL')} > </button></Col>
                      <Col span={8}> <button type="button" id = 'Top' onClick = {()=> this.setElementPos('Top')} > </button></Col>
                      <Col span={8}> <button type="button" id = 'TR'  onClick = {()=> this.setElementPos('TR')} > </button></Col>
                      </Row>
@@ -202,26 +190,11 @@ export default class EditToolBar extends Component {
                      <Col span={8}> <button type="button" id = 'Bottom' onClick = {()=> this.setElementPos('Bottom')} > </button></Col>
                      <Col span={8}> <button type="button" id = 'BR'     onClick = {()=> this.setElementPos('BR')} > </button></Col>
                     </Row>
-
-
                 </Modal> 
-
-                {/* <Popconfirm
-                 placement="bottomRight"
-                 icon={null}
-                 //title={text}
-                 //onConfirm={confirm}
-                 okText="Yes"
-                 cancelText="No"                                 
-                  >
-                    <Button icon="pic-center" style = { {padding: '0 20px 0 20px'} } disabled={isPerforming} onClick={this.showModal}/> 
-                </Popconfirm> */}
-
-
                 <Button icon="table" style = { {padding: '0 20px 0 20px'} } disabled={isPerforming} onClick={this.showGrid}/>
                 </ButtonGroup>
 
-                 <Button icon="font-size" style = { {width:'80px',margin: '10px 20px 0px 0px', float:'right'} } disabled={isPerforming}  onClick={this.addText}/>
+                <Button icon="font-size" style = { {width:'80px',margin: '10px 20px 0px 0px', float:'right'} } disabled={isPerforming}  onClick={this.addText}/>
             </div>
         )
     }

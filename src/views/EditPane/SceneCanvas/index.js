@@ -8,7 +8,6 @@ import ElementType from '@/constants/ElementType';
 import './scenecanvas.css';
 
 export default class EditCanvas extends Component {
-
     constructor(props) {
         super(props);
         this.state = {
@@ -72,19 +71,17 @@ export default class EditCanvas extends Component {
         // console.log('dbclick');
         // this.props.unselectElement();
         const name = e.target.name();
-
         if (name) {
             var eleIndex = Number(name.split('-')[1]);
             let dbElement = this.props.currentElements[eleIndex];
             this.setState({
-                dbClickedElementIndex: eleIndex,
+                 dbClickedElementIndex: eleIndex,
             });
             if (dbElement.type() === ElementType.TEXT) {
                 this.setState({
                     showTextEditor: true,
                 })
             }
-            
             // TODO: show animation
         }
     }
