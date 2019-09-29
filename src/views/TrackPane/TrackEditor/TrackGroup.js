@@ -3,7 +3,7 @@ import Track from './Track';
 import AudioTrack from './Track/AudioTrack';
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import './trackeditor.css';
-  
+import ElementType from '@/constants/ElementType'  
 const getListStyle = isDraggingOver => ({
     background: isDraggingOver ? "lightblue" : "white",
 });

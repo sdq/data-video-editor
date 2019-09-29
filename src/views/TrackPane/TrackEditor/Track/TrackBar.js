@@ -206,11 +206,11 @@ export default class TrackBar extends Component {
                     }}
                     onResizeStop={(e, direction, ref, delta, position) => {
                         var newDragedWidth=parseFloat(ref.style.width);
-                        console.log("newDragedWidth",newDragedWidth,element.elementMaxFragmentWidth,newDragedWidth > element.elementMaxFragmentWidth,element.isAudio)
+                        //console.log("newDragedWidth",newDragedWidth,element.elementMaxFragmentWidth,newDragedWidth > element.elementMaxFragmentWidth,element.isAudio)
                         if(newDragedWidth > element.elementMaxFragmentWidth && element.isAudio){
                             newDragedWidth=element.elementMaxFragmentWidth
                         }
-                        console.log("newDragedWidth",newDragedWidth)
+                        //console.log("newDragedWidth",newDragedWidth)
                         this.resizeBar(position.x, newDragedWidth, index);
                         this.setState({
                             isBarResizing: false

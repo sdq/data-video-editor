@@ -25,7 +25,8 @@ const audioSource = {
                 const newScene = Object.assign({},dropResult.currentScene);
                 const newAudio = new AudioInfo(item.name,item.src);
                 const newElement = new Element(ElementType.AUDIO, newAudio);
-                newElement.duration(props.info.audio.duration.toFixed(1));
+                //TODO set duration时要检查props.info.audio对象状态，是否可获取到duration
+                newElement.duration(Math.round(props.info.audio.duration));
                 newScene.addElement(newElement);
                 //add audioResource to audioList
                 let audioResource = {};

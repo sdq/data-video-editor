@@ -42,11 +42,11 @@ export default class Player {
     playScene() {
         if (!this.isPerforming) {
             store.dispatch(playerActions.playScene(this.sceneIndex));
-            AudioController.init(this.sceneIndex);
             this._clearTimeouts();
             const current = this.scenePosition;
             const end = this.currentSceneDuration;
             const msOffset = (end - current) * 1000;
+            AudioController.init(this.sceneIndex,current);
             const n = Math.round(msOffset / 100) + 1; // update every 100ms
             for (let index = 0; index < n; index++) {
                 this._timeouts.push(setTimeout(function () {
