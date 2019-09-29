@@ -217,9 +217,12 @@ export default class TrackBar extends Component {
                         })
                     }}
                     onMouseOver={() => {
-                        this.setState({
-                            showClip: true
-                        })
+                        if(!element.isAudio){
+                            this.setState({
+                                showClip: true
+                            })
+                        }
+                      
                     }}
                 />)
             } else {
