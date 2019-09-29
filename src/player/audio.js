@@ -38,6 +38,8 @@ export default class AudioController {
         this._audioResources = [];
         this._audioElement = [];
         this._position = startPlayPosition
+        //音频默认0s播放
+        this.audioPlayPosition = 0;
         this.beforeState = AudioState.NOTREADY;
 
         const scene = this.currentScene(index);
@@ -84,12 +86,17 @@ export default class AudioController {
         if (scenePosition > elementStart && scenePosition < elementStart + elementDuration) {
             for (let k = 0; k < elementFragments.length; k++) {
                 if (scenePosition < elementFragments[k].end()) {
+                    //播放位置在elementFragments[k + 1]内
+                    this.audioPlayPosition += this._position - elementFragments[k].start();
                     this.isAudioCanPlays[index] = AudioState.PLAY;
                     break;
                 } else if (scenePosition === elementFragments[k].end()) {
+                    this.audioPlayPosition += elementFragments[k].duration();
                     this.isAudioCanPlays[index] = AudioState.PAUSE;
                     break;
                 } else if (k + 1 < elementFragments.length) {
+                    //累加前边的播放时长
+                    this.audioPlayPosition += elementFragments[k].duration();
                     if (scenePosition < elementFragments[k + 1].start()) {
                         this.isAudioCanPlays[index] = AudioState.PAUSE;
                         break;
@@ -113,8 +120,9 @@ export default class AudioController {
             start = seekable.start(s)
             end = seekable.end(s)
             //console.log("11111", start, this._position, end)
-            if (this._position >= start && this._position <= end) {
-                audio.currentTime = this._position;//当前位置可播放
+            if (this.audioPlayPosition >= start && this.audioPlayPosition <= end) {
+                audio.currentTime = this.audioPlayPosition;//当前位置可播放
+                //console.log("currentTime ",audio.currentTime)
                 audio.play();
                 return
             }
@@ -139,6 +147,7 @@ export default class AudioController {
                     } else {
                         this.setAudioCurrentTime(item.element, item.element.seekable, item.element.buffered);
                     }
+                    //console.log("Paly")
                     this.beforeState = AudioState.PLAY;
                 } else {
                     //console.log("isPalying-------------")
@@ -160,7 +169,7 @@ export default class AudioController {
         const scene = this.currentScene(index)
         scene.getAudio().map(item => {
             item.element.pause();
-            console.log("Pause")
+            //console.log("Pause")
             return item;
         })
     }
