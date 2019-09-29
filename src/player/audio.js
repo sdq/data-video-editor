@@ -16,7 +16,7 @@ export default class AudioController {
         } else {
             return AudioController.instance
         }
-        this.beforeState = AudioState.NOTREADY;
+        this.beforeState = [];
         this.isAudioCanPlays = [];
         this._audioResources = [];
         this._audioElement = [];
@@ -39,13 +39,15 @@ export default class AudioController {
         this._audioElement = [];
         this._position = startPlayPosition
         //音频默认0s播放
-        this.audioPlayPosition = 0;
-        this.beforeState = AudioState.NOTREADY;
+        this.audioPlayPosition = [];
+        this.beforeState = [];
 
         const scene = this.currentScene(index);
         this._audioResources = scene.getAudio()
         this._audioResources.map(item => {
             this.isAudioCanPlays.push(AudioState.NOTREADY);
+            this.audioPlayPosition.push(0);
+            this.beforeState.push(AudioState.NOTREADY)
             return item;
         })
         //
@@ -87,16 +89,16 @@ export default class AudioController {
             for (let k = 0; k < elementFragments.length; k++) {
                 if (scenePosition < elementFragments[k].end()) {
                     //播放位置在elementFragments[k + 1]内
-                    this.audioPlayPosition += this._position - elementFragments[k].start();
+                    this.audioPlayPosition[index] += this._position - elementFragments[k].start();
                     this.isAudioCanPlays[index] = AudioState.PLAY;
                     break;
                 } else if (scenePosition === elementFragments[k].end()) {
-                    this.audioPlayPosition += elementFragments[k].duration();
+                    this.audioPlayPosition[index] += elementFragments[k].duration();
                     this.isAudioCanPlays[index] = AudioState.PAUSE;
                     break;
                 } else if (k + 1 < elementFragments.length) {
                     //累加前边的播放时长
-                    this.audioPlayPosition += elementFragments[k].duration();
+                    this.audioPlayPosition[index] += elementFragments[k].duration();
                     if (scenePosition < elementFragments[k + 1].start()) {
                         this.isAudioCanPlays[index] = AudioState.PAUSE;
                         break;
@@ -111,7 +113,7 @@ export default class AudioController {
         return this.isAudioCanPlays[index];
     }
 
-    setAudioCurrentTime(audio, seekable, buffered) {
+    setAudioCurrentTime(index, audio, seekable, buffered) {
         //console.log("seekable--------", seekable.length)
         let seekableLength = seekable.length
         let start;
@@ -119,9 +121,9 @@ export default class AudioController {
         for (let s = 0; s < seekableLength; s++) {
             start = seekable.start(s)
             end = seekable.end(s)
-            //console.log("11111", start, this._position, end)
-            if (this.audioPlayPosition >= start && this.audioPlayPosition <= end) {
-                audio.currentTime = this.audioPlayPosition;//当前位置可播放
+            //console.log("11111", start, this.audioPlayPosition[index], end)
+            if (this.audioPlayPosition[index] >= start && this.audioPlayPosition[index] <= end) {
+                audio.currentTime = this.audioPlayPosition[index];//当前位置可播放
                 //console.log("currentTime ",audio.currentTime)
                 audio.play();
                 return
@@ -135,28 +137,28 @@ export default class AudioController {
     playAudio() {
         this._audioResources.map((item, index) => {
             let playState = this.getAudioPlayState(item, index)
-            //console.log("beforeState====", this.beforeState)
-            //console.log("playState====", playState)
+            //console.log("beforeState====", index,this.beforeState[index])
+            //console.log("playState====", index,playState)
             if (playState === AudioState.PLAY) {
-                if (playState !== this.beforeState) {
+                if (playState !== this.beforeState[index]) {
                     //Safari浏览器支持该fastSeek方法，Chrome浏览器里没有该方法
                     if ('fastSeek' in item.element) {  //Safari
-                        //console.log("fastSeek", this._position)
-                        item.element.fastSeek(this._position);//改变audio.currentTime的值
-                        item.element.play()
+                        //console.log("fastSeek", this.audioPlayPosition[index])
+                        item.element.fastSeek(this.audioPlayPosition[index]);//改变audio.currentTime的值
+                        item.element.play();
                     } else {
-                        this.setAudioCurrentTime(item.element, item.element.seekable, item.element.buffered);
+                        this.setAudioCurrentTime(index, item.element, item.element.seekable, item.element.buffered);
                     }
                     //console.log("Paly")
-                    this.beforeState = AudioState.PLAY;
+                    this.beforeState[index] = AudioState.PLAY;
                 } else {
                     //console.log("isPalying-------------")
                 }
             } else if (playState === AudioState.PAUSE) {
-                if (playState !== this.beforeState) {
+                if (playState !== this.beforeState[index]) {
                     //console.log("pause")
                     item.element.pause();
-                    this.beforeState = AudioState.PAUSE;
+                    this.beforeState[index] = AudioState.PAUSE;
                 } else {
                     //console.log("isPausing--------------")
                 }
@@ -169,6 +171,9 @@ export default class AudioController {
         const scene = this.currentScene(index)
         scene.getAudio().map(item => {
             item.element.pause();
+            this.isAudioCanPlays.push(AudioState.NOTREADY);
+            this.audioPlayPosition.push(0);
+            this.beforeState.push(AudioState.NOTREADY)
             //console.log("Pause")
             return item;
         })
