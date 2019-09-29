@@ -85,13 +85,17 @@ export default class AudioController {
             for (let k = 0; k < elementFragments.length; k++) {
                 if (scenePosition < elementFragments[k].end()) {
                     this.isAudioCanPlays[index] = AudioState.PLAY;
+                    break;
                 } else if (scenePosition === elementFragments[k].end()) {
                     this.isAudioCanPlays[index] = AudioState.PAUSE;
+                    break;
                 } else if (k + 1 < elementFragments.length) {
                     if (scenePosition < elementFragments[k + 1].start()) {
                         this.isAudioCanPlays[index] = AudioState.PAUSE;
+                        break;
                     } else if (scenePosition === elementFragments[k + 1].start()) {
                         this.isAudioCanPlays[index] = AudioState.PLAY;
+                        break;
                     }
                 }
             }
