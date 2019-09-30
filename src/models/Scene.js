@@ -59,7 +59,7 @@ export default class Scene {
         return this._elements;
     };
       
-    getAudio = function(){
+    audios = function(){
         return this._audios;
     };  
     addAudio = function(audio){

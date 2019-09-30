@@ -43,7 +43,7 @@ export default class AudioController {
         this.beforeState = [];
 
         const scene = this.currentScene(index);
-        this._audioResources = scene.getAudio()
+        this._audioResources = scene.audios()
         this._audioResources.map(item => {
             this.isAudioCanPlays.push(AudioState.NOTREADY);
             this.audioPlayPosition.push(0);
@@ -169,7 +169,7 @@ export default class AudioController {
 
     pauseAudio(index) {
         const scene = this.currentScene(index)
-        scene.getAudio().map(item => {
+        scene.audios().map(item => {
             item.element.pause();
             this.isAudioCanPlays.push(AudioState.NOTREADY);
             this.audioPlayPosition.push(0);
