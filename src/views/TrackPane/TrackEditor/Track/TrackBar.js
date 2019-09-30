@@ -159,6 +159,8 @@ export default class TrackBar extends Component {
                 break;
             case ElementType.AUDIO:
                 color = Color.AUDIO_BAR;
+                element.isAudio=true;
+                element.elementMaxFragmentWidth= element._duration * sceneScale;
                 break;
             case ElementType.TEXT:
                 color = Color.TEXT_BAR;
@@ -203,15 +205,24 @@ export default class TrackBar extends Component {
                         })
                     }}
                     onResizeStop={(e, direction, ref, delta, position) => {
-                        this.resizeBar(position.x, parseFloat(ref.style.width), index);
+                        var newDragedWidth=parseFloat(ref.style.width);
+                        //console.log("newDragedWidth",newDragedWidth,element.elementMaxFragmentWidth,newDragedWidth > element.elementMaxFragmentWidth,element.isAudio)
+                        if(newDragedWidth > element.elementMaxFragmentWidth && element.isAudio){
+                            newDragedWidth=element.elementMaxFragmentWidth
+                        }
+                        //console.log("newDragedWidth",newDragedWidth)
+                        this.resizeBar(position.x, newDragedWidth, index);
                         this.setState({
                             isBarResizing: false
                         })
                     }}
                     onMouseOver={() => {
-                        this.setState({
-                            showClip: true
-                        })
+                        if(!element.isAudio){
+                            this.setState({
+                                showClip: true
+                            })
+                        }
+                      
                     }}
                 />)
             } else {

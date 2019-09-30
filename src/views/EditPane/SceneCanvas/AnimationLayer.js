@@ -33,9 +33,7 @@ export default class AnimationLayer extends Component {
                     // TODO: dbclick
                     // if (index !== this.props.dbClickedElementIndex) {
                     //     return null;
-                    // }
                     switch (element.type()) {
-
                         case ElementType.TEXT:
                             return <TextElement
                                 ref={node => (this.elementNodes[index] = node)} 

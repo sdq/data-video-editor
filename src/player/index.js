@@ -2,7 +2,9 @@ import store from '@/store';
 import * as videoActions from '@/actions/videoAction';
 import * as sceneActions from '@/actions/sceneAction';
 import * as playerActions from '@/actions/playerAction';
+import AudioInstance from './audio';
 
+const AudioController=new AudioInstance()
 export default class Player {
     constructor() {
         if (!Player.instance) {
@@ -44,11 +46,13 @@ export default class Player {
             const current = this.scenePosition;
             const end = this.currentSceneDuration;
             const msOffset = (end - current) * 1000;
+            AudioController.init(this.sceneIndex,current);
             const n = Math.round(msOffset / 100) + 1; // update every 100ms
             for (let index = 0; index < n; index++) {
                 this._timeouts.push(setTimeout(function () {
                     const position = current + index / 10 ;
                     store.dispatch(sceneActions.setPosition(position));
+                    AudioController.playAudio()
                     if (index === (n-1)) {
                         this.pauseScene();
                         store.dispatch(sceneActions.setPosition(0));
@@ -61,6 +65,7 @@ export default class Player {
     pauseScene() {
         this._clearTimeouts();
         store.dispatch(playerActions.stopScene(this.sceneIndex));
+        AudioController.pauseAudio(this.sceneIndex)      
     }
 
     playVideo() {

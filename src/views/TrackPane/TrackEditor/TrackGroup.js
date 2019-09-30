@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import Track from './Track';
+import AudioTrack from './Track/AudioTrack';
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import './trackeditor.css';
-  
+import ElementType from '@/constants/ElementType'  
 const getListStyle = isDraggingOver => ({
     background: isDraggingOver ? "lightblue" : "white",
 });
@@ -55,19 +56,33 @@ export default class TrackGroup extends Component {
                             ref={provided.innerRef}
                             style={getListStyle(snapshot.isDraggingOver)}
                             >
-                            {elements.map((element, index) => (
-                                <Track 
-                                    key={element.id()} 
-                                    index={index} 
-                                    element={element} 
-                                    isBarActive={barActiveList[index]} 
-                                    setBarActive={this.setBarActive} 
-                                    setBarUnactive={this.setBarUnactive} 
-                                    isSelected={this.props.isElementSelected && (this.props.elementIndex===index)} 
-                                    {...this.props}
-                                />
-                            ))}
-                            {provided.placeholder}
+                                {elements.map((element, index) => {
+                                    if (element.type() !== ElementType.AUDIO) {
+                                        return (<Track
+                                            key={element.id()}
+                                            index={index}
+                                            element={element}
+                                            isBarActive={barActiveList[index]}
+                                            setBarActive={this.setBarActive}
+                                            setBarUnactive={this.setBarUnactive}
+                                            isSelected={this.props.isElementSelected && (this.props.elementIndex === index)}
+                                            {...this.props}
+                                        />)
+                                    } else {
+                                        return (<AudioTrack
+                                            key={element.id()}
+                                            index={index}
+                                            element={element}
+                                            isBarActive={barActiveList[index]}
+                                            setBarActive={this.setBarActive}
+                                            setBarUnactive={this.setBarUnactive}
+                                            isSelected={this.props.isElementSelected && (this.props.elementIndex === index)}
+                                            {...this.props}
+                                        />)
+                                    }
+                                }
+                                )}
+                                {provided.placeholder}
                             </div>
                         )}
                     </Droppable>
