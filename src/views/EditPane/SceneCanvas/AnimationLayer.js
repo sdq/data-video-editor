@@ -24,14 +24,11 @@ export default class AnimationLayer extends Component {
         return isElementDisplay;
     }
 
-
-
     render() {
         return (
             <Layer 
                 ref={node => (this.animationLayer = node)}
             >
-            
                 {this.props.currentScene.elements().map(function(element, index) {
                     // TODO: dbclick
                     // if (index !== this.props.dbClickedElementIndex) {
