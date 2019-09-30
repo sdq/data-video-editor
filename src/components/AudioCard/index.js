@@ -45,7 +45,6 @@ const audioSource = {
 class AudioCard extends Component {
     constructor(props){
        super(props);
-       //局部变量不需要放在this.state里边，
        this.playerElement={}
     }
     
