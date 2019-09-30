@@ -14,11 +14,6 @@ export default {
     PLAY_SCENE : 'PLAY_SCENE',
     PAUSE_SCENE : 'PAUSE_SCENE',
     STOP_SCENE : 'STOP_SCENE',
-    //add audio type -add by gmj 
-    PLAY_AUDIO:'PLAY_AUDIO',
-    PAUSE_AUDIO:'PAUSE_AUDIO',
-    PRE_PLAY_AUDIO:'PRE_PLAY_AUDIO',
-    BACK_PLAY_AUDIO:'BACK_PLAY_AUDIO',
     // Video Action
     SELECT_SCENE: 'SELECT_SCENE',
     ADD_SCENE : 'ADD_SCENE',
