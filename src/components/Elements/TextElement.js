@@ -12,10 +12,8 @@ export default class TextElement extends Component {
             text: props.element.info().text,
         };
         this.dragstart = this.dragstart.bind(this);
-        this.dragmove = this.dragmove.bind(this);
         this.dragend = this.dragend.bind(this);
         this.onTransformStart = this.onTransformStart.bind(this);
-        this.onTransform = this.onTransform.bind(this);
         this.onTransformEnd = this.onTransformEnd.bind(this);
     }
 
@@ -35,15 +33,6 @@ export default class TextElement extends Component {
         this.props.editStart();
     };
 
-    dragmove(x,y) {
-        this.props.currentElement.info().x = x;
-        this.props.currentElement.info().y = y;//how to transmitt to toolbar
-        const newScene = Object.assign({},this.props.currentScene);
-        newScene.updateElement(this.props.currentElement, this.props.elementIndex);
-        this.props.updateScene(this.props.sceneIndex, newScene);//lead to unsmooth
-    };
-    
-
     dragend(x,y) {
         const newEle = _.cloneDeep(this.props.element);
         newEle.info().x = x;
@@ -55,26 +44,14 @@ export default class TextElement extends Component {
         this.props.editStart();
     }
 
-    onTransform(e) {
-        let currentWidth = this.props.currentElement.info().width;
-        let currentHeight = this.props.currentElement.info().height;
-        this.props.currentElement.info().width =  currentWidth*e.currentTarget.scaleX();
-        this.props.currentElement.info().height = currentHeight*e.currentTarget.scaleY();
-        this.props.currentElement.info().rotation = e.currentTarget.rotation();
-        const newScene = Object.assign({},this.props.currentScene);
-        newScene.updateElement(this.props.currentElement, this.props.elementIndex);
-        this.props.updateScene(this.props.sceneIndex, newScene);//lead to unsmooth
-    }
-
-    onTransformEnd(e) {
-        // const newEle = _.cloneDeep(this.props.element); //question
-        // newEle.info().x = e.target.x();
-        // newEle.info().y = e.target.y();
-        // console.log(e.target.width());
-        // newEle.info().width = e.target.width()*e.target.scaleX();
-        // newEle.info().height = e.target.height()*e.target.scaleY();
-        // newEle.info().rotation = e.target.rotation();
-        // this.props.edit(newEle);
+    onTransformEnd(e) {  //text no size
+        const newEle = _.cloneDeep(this.props.element); 
+        newEle.info().x = e.target.x();
+        newEle.info().y = e.target.y();
+        newEle.info().width = e.target.width()*e.target.scaleX();
+        newEle.info().height = e.target.height()*e.target.scaleY();
+        newEle.info().rotation = e.target.rotation();
+        this.props.edit(newEle);
     }
     render() {
         return (
@@ -88,9 +65,6 @@ export default class TextElement extends Component {
                         isDragging: true
                     });
                 }}
-                onDragMove={e => {
-                    this.dragmove(e.target.x(), e.target.y());
-                }}
                 onDragEnd={e => {
                     this.setState({
                         isDragging: false,
@@ -100,9 +74,6 @@ export default class TextElement extends Component {
                     this.dragend(e.target.x(), e.target.y());
                 }}
                 onTransformStart={this.onTransformStart}
-                onTransform={e => {
-                    this.onTransform(e);
-                }}
                 onTransformEnd={this.onTransformEnd}
                 visible={this.props.visible}
             >
