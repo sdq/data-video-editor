@@ -49,7 +49,6 @@ class AudioCard extends Component {
     }
     
     onCanPlay=() => {
-        //ReactAudioPlayer底层封装的是audio
         this.props.info.audio = this.playerElement.audioEl
     }
 
