@@ -66,13 +66,9 @@ export default class ImageElement extends Component {
     onTransformStart() {
         this.props.editStart();
     }
-    onTransform() {
-        // console.log("onTransform");
-    }
+
     onTransformEnd(e) {
         const newEle = _.cloneDeep(this.props.element);
-        console.log("end transform");
-        console.log(e.target.attrs);
         newEle.info().x = e.target.x();
         newEle.info().y = e.target.y();
         newEle.info().width = newEle.info().width*e.target.scaleX(); //*e.target.scaleX()
@@ -94,7 +90,6 @@ export default class ImageElement extends Component {
                     this.dragend(e.target.x(),e.target.y())
                 }}
                 onTransformStart={this.onTransformStart}
-                onTransform={this.onTransform}
                 onTransformEnd={this.onTransformEnd}
                 visible={this.props.visible}
             >
@@ -104,6 +99,7 @@ export default class ImageElement extends Component {
                     // height={this.props.element.info().height}
                     name={this.props.name}
                     image={this.state.image} 
+                    opacity = {this.props.element.info().opacity}
                 />
             </Group>
         )

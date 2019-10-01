@@ -39,14 +39,13 @@ export default class TextElement extends Component {
         newEle.info().y = y;
         this.props.edit(newEle);
     };
+
     onTransformStart() {
         this.props.editStart();
     }
-    onTransform() {
-        //console.log("onTransform");
-    }
-    onTransformEnd(e) {
-        const newEle = _.cloneDeep(this.props.element);
+
+    onTransformEnd(e) {  //text no size
+        const newEle = _.cloneDeep(this.props.element); 
         newEle.info().x = e.target.x();
         newEle.info().y = e.target.y();
         newEle.info().width = e.target.width()*e.target.scaleX();
@@ -75,20 +74,23 @@ export default class TextElement extends Component {
                     this.dragend(e.target.x(), e.target.y());
                 }}
                 onTransformStart={this.onTransformStart}
-                onTransform={this.onTransform}
                 onTransformEnd={this.onTransformEnd}
                 visible={this.props.visible}
             >
                 <Text
-                    ref={node=>this.textref=node}
-                    name={this.props.name}
-                    text={this.props.element.info().text}
-                    fill={this.state.isDragging ? Color.DEEP_ORANGE : this.props.element.info().color}
-                    fontSize={this.props.element.info().textSize}  //init  fontSize
+                    ref = {node=>this.textref=node}
+                    name = {this.props.name}
+                    text = {this.props.element.info().text}
+                    width = {this.props.element.info().width}//the number of text*scale
+                    //height  = {this.props.element.info().textSize*3}//*rows
+                    height  = {this.props.element.info().height} //fake
+                    fill = {this.state.isDragging ? Color.DEEP_ORANGE : this.props.element.info().color}
+                    fontSize = {this.props.element.info().textSize}  //init  fontSize
                     fontFamily = {this.props.element.info().fontFamily} // nouse  fontFamily
-                    fontStyle= {this.props.element.info().fontStyle}  //can be normal, bold, or italic. Default is normal
-                    textDecoration = {this.props.element.info().textDecorationLine}//can be line-through, underline or empty string. Default is empty string.
-                    width = {300}
+                    fontStyle = {this.props.element.info().fontStyle}  //can be normal, bold, or italic. Default is normal
+                    textDecoration = {this.props.element.info().textDecorationLine}//can be line-through, underline or empty string. Default is empty string. 
+                    opacity = {this.props.element.info().opacity}
+                    align = {this.props.element.info().textAlign}
                 />
             </Group>
         )

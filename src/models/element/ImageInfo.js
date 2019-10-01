@@ -1,5 +1,5 @@
 export default class ImageInfo {
-    constructor(name, src, x, y, width, height, rotation) {
+    constructor(name, src, x, y, width, height, rotation,opacity = 1) {
         this.name = name;
         this.src = src;
         this.x = x;
@@ -7,5 +7,6 @@ export default class ImageInfo {
         this.width = width;
         this.height = height;
         this.rotation = rotation;
+        this.opacity = opacity;
     }
 }

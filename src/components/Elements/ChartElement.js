@@ -30,9 +30,7 @@ export default class ChartElement extends Component {
     onTransformStart() {
         this.props.editStart();
     }
-    onTransform() {
-        // console.log("onTransform");
-    }
+   
     onTransformEnd(e) {
         // console.log("end transform");
         const newEle = _.cloneDeep(this.props.element);
@@ -76,12 +74,11 @@ export default class ChartElement extends Component {
                 height={this.props.element.info().height}
                 rotation={this.props.element.info().rotation}
                 //draggable
-                onDragStart={this.dragstart}
+                onDragStart={this.dragstart}  
                 onDragEnd={e => {
                     this.dragend(e.target.x(),e.target.y())
                 }}
                 onTransformStart={this.onTransformStart}
-                onTransform={this.onTransform}
                 onTransformEnd={this.onTransformEnd}
                 visible={this.props.visible}
             >
