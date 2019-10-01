@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Upload, Button, Row, Col, Collapse, List } from 'antd';
 import ImageCard from '@/components/ImageCard';
 import AudioCard from '@/components/AudioCard';
+import GifCard from '@/components/GifCard';
 import VideoCard from '@/components/VideoCard';
 import './usertab.css';
 
@@ -28,7 +29,14 @@ export default class UserTab extends Component {
                     name: "demo",
                     src: "https://datavideo.idvxlab.com/videos/demo.mp4"
                 },
-            ]
+            ],
+            gifList: [
+                {
+                    uid: '-1',
+                    name: "walking",
+                    src: "https://datavideo.idvxlab.com/gifs/walking.gif"
+                },
+            ],
         }
     }
 
@@ -44,19 +52,28 @@ export default class UserTab extends Component {
             case 'png':
                 newList = this.state.imageList;
                 newList.push(newFile);
-                this.setState({ 
+                this.setState({
                     imageList: newList,
                     //上传文件成功，打开对应的panel
-                    activeKey:"image"
+                    activeKey: "image"
                 });
                 break;
             case 'mp3':
                 newList = this.state.audioList;
                 newList.push(newFile);
-                this.setState({ 
+                this.setState({
                     audioList: newList,
                     //上传文件成功，打开对应的panel
-                    activeKey:"audio"
+                    activeKey: "audio"
+                });
+                break;
+            case 'gif':
+                newList = this.state.gifList;
+                newList.push(newFile);
+                this.setState({
+                    gifList: newList,
+                    //上传文件成功，打开对应的panel
+                    activeKey: "gif"
                 });
                 break;
             default:
@@ -71,8 +88,20 @@ export default class UserTab extends Component {
                 console.log('deleteyes', this.state.imageList[i].uid);
                 const newList = this.state.imageList;
                 newList.splice(i, 1);
-                this.setState({ 
+                this.setState({
                     imageList: newList
+                });
+            }
+        }
+    };
+    onDeleteGif = (key) => {
+        for (var i = 0; i < this.state.gifList.length; i++) {
+            if (this.state.gifList[i].uid === key) {
+                console.log('deleteyes', this.state.gifList[i].uid);
+                const newList = this.state.gifList;
+                newList.splice(i, 1);
+                this.setState({
+                    gifList: newList
                 });
             }
         }
@@ -83,7 +112,7 @@ export default class UserTab extends Component {
             if (this.state.audioList[i].uid === key) {
                 const newList = this.state.audioList;
                 newList.splice(i, 1);
-                this.setState({ 
+                this.setState({
                     audioList: newList
                 });
             }
@@ -104,7 +133,12 @@ export default class UserTab extends Component {
             case "video":
                 this.setState({
                     activeKey:"video"
-                })
+                });
+                break;
+            case "gif":
+                this.setState({
+                    activeKey: "gif"
+                });
                 break;
             
             default:
@@ -116,41 +150,55 @@ export default class UserTab extends Component {
     };
 
     render() {
-        const { imageList, audioList, videoList } = this.state;
+        const { imageList, audioList, videoList, gifList } = this.state;
         return (
             <div className="usertab">
-                <div style={{height: "120px", margin: "8px"}}>
+                <div style={{ height: "120px", margin: "8px" }}>
                     <Dragger
                         showUploadList={false}
-                        accept=".png,.mp3"
+                        accept=".png,.mp3,.gif"
                         //accept=".png,.mp3,.wav,.wma,.aif,.mid,.ra,.vqf,.ape,.acm,.acc"
-                        beforeUpload= {this.uploadFile}
+                        beforeUpload={this.uploadFile}
                     >
                         <p className="ant-upload-text" >Click or drag to upload</p>
                         <p className="ant-upload-hint">
-                            support for .png image or .mp3 audio
+                            support for .png .gif image or .mp3 audio
                         </p>
                     </Dragger>
                 </div>
-                
+
                 <div className="user-upload-list">
                     <Collapse accordion bordered={false} activeKey={this.state.activeKey} onChange={this.callback}>
-                        <Panel header={"Image ("+imageList.length+")"} key="image" className="collaspe-panel">
+                        <Panel header={"Image (" + imageList.length + ")"} key="image" className="collaspe-panel">
                             <List
                                 grid={{ gutter: 3, column: 3 }}
                                 dataSource={imageList}
                                 renderItem={item => (
                                     <List.Item>
                                         <ImageCard info={item}  {...this.props} />
-                                        <Button style={{marginLeft: '36px'}} key={item.uid} type="link" icon="delete" size="small"
+                                        <Button style={{ marginLeft: '36px' }} key={item.uid} type="link" icon="delete" size="small"
                                             onClick={() => this.onDeleteImage(item.uid)}
                                         />
                                     </List.Item>
                                 )}
                             />
                         </Panel>
+                        <Panel header={"Gif (" + gifList.length + ")"} key="gif" className="collaspe-panel">
+                            <List
+                                grid={{ gutter: 3, column: 3 }}
+                                dataSource={gifList}
+                                renderItem={item => (
+                                    <List.Item>
+                                        <GifCard info={item}  {...this.props} />
+                                        <Button style={{ marginLeft: '36px' }} key={item.uid} type="link" icon="delete" size="small"
+                                            onClick={() => this.onDeleteGif(item.uid)}
+                                        />
+                                    </List.Item>
+                                )}
+                            />
+                        </Panel> 
 
-                        <Panel header={"Audio ("+audioList.length+")"} key="audio" className="collaspe-panel">
+                        <Panel header={"Audio (" + audioList.length + ")"} key="audio" className="collaspe-panel">
                             <List
                                 style={{ width: '100%', }}
                                 grid={{ gutter: 8, column: 1 }}
@@ -159,7 +207,7 @@ export default class UserTab extends Component {
                                     <List.Item>
                                         <Row>
                                             <Col span={20} >
-                                                <AudioCard info={item} {...this.props}/>
+                                                <AudioCard info={item} {...this.props} />
                                             </Col>
                                             <Col offset={16}>
                                                 <Button key={item.uid} type="link" icon="delete" size="small"
@@ -170,7 +218,6 @@ export default class UserTab extends Component {
                                 )}
                             />
                         </Panel>
-
                         <Panel header={"Video ("+videoList.length+")"} key="video" className="collaspe-panel">
                             <List
                                 grid={{ gutter: 3, column: 3 }}

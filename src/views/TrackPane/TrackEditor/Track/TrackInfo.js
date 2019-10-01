@@ -27,6 +27,7 @@ export default class TrackInfo extends Component {
         var name = '';
         switch (element.type()) {
             case ElementType.IMAGE:
+            case ElementType.GIF:
                 name = element.info().name;
                 icon = <Icon type="picture" style={{color: Color.ILLUSTRATION_BAR}}/>;
                 break;
