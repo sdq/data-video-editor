@@ -9,6 +9,7 @@ export default class Player {
     constructor() {
         if (!Player.instance) {
             this._timeouts = [];
+            this._videoTimeouts = [];
             Player.instance = this;
         } else {
             return Player.instance;
@@ -71,31 +72,55 @@ export default class Player {
     playVideo() {
         store.dispatch(playerActions.playVideo());
         this._clearTimeouts();
+        this._clearVideoTimeouts();
         let sceneStart = 0;
 
         for (let index = 0; index < this.scenesCount; index++) {
             const sceneDuration = this.sceneDuration(index);
-            this._timeouts.push(setTimeout(function () {
+            this._videoTimeouts.push(setTimeout(function () {
                 store.dispatch(videoActions.selectScene(index));
                 store.dispatch(sceneActions.setPosition(0));
-            }, sceneStart * 1000));
-            // TODO: play scene
-
+                // play scene
+                this._clearTimeouts();
+                const current = this.scenePosition;
+                const end = this.currentSceneDuration;
+                const msOffset = (end - current) * 1000;
+                AudioController.init(this.sceneIndex,current);
+                const n = Math.round(msOffset / 100) + 1; // update every 100ms
+                for (let index = 0; index < n; index++) {
+                    this._timeouts.push(setTimeout(function () {
+                        const position = current + index / 10 ;
+                        store.dispatch(sceneActions.setPosition(position));
+                        AudioController.playAudio()
+                        if (index === (n-1)) {
+                            this.pauseScene();
+                            store.dispatch(sceneActions.setPosition(0));
+                        }
+                    }.bind(this), index * 100));
+                }
+            }.bind(this), sceneStart * 1000));
             sceneStart += sceneDuration;
         }
-        this._timeouts.push(setTimeout(function () {
+        this._videoTimeouts.push(setTimeout(function () {
             store.dispatch(playerActions.stopVideo());
         }, sceneStart * 1000));
     }
 
     pauseVideo() {
         this._clearTimeouts();
+        this._clearVideoTimeouts();
         store.dispatch(playerActions.stopVideo());
     }
 
     _clearTimeouts() {
         for (var i = 0; i < this._timeouts.length; i++) {
             clearTimeout(this._timeouts[i]);
+        }
+    }
+
+    _clearVideoTimeouts() {
+        for (var i = 0; i < this._videoTimeouts.length; i++) {
+            clearTimeout(this._videoTimeouts[i]);
         }
     }
 
