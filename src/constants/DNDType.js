@@ -3,6 +3,7 @@ export default {
 	DND_IMAGE: 'DND_IMAGE',
 	DND_CHART: 'DND_CHART',
 	DND_AUDIO: 'DND_AUDIO',
+	DND_VIDEO: 'DND_VIDEO',
 	//Chart DND
 	DND_MAPPING: 'DND_MAPPING',
 	//Tool DND

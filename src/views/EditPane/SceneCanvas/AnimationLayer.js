@@ -3,6 +3,7 @@ import { Layer } from 'react-konva';
 import ImageElement from '@/components/Elements/ImageElement';
 import TextElement from '@/components/Elements/TextElement';
 import ChartElement from '@/components/Elements/ChartElement';
+import VideoElement from '@/components/Elements/VideoElement';
 import ElementType from '@/constants/ElementType';
 
 export default class AnimationLayer extends Component {
@@ -66,6 +67,17 @@ export default class AnimationLayer extends Component {
                                 name={this.props.sceneIndex+"-"+index} 
                                 width={200} 
                                 height={200} 
+                                draggable={false} 
+                                visible={this.isElementDisplay(element)}
+                                showAnimation={true}
+                                {...this.props}
+                            />
+                        case ElementType.VIDEO:
+                            return <VideoElement 
+                                ref={node => (this.elementNodes[index] = node)}
+                                key={this.props.sceneIndex+"-"+index} 
+                                element={element} 
+                                name={this.props.sceneIndex+"-"+index}
                                 draggable={false} 
                                 visible={this.isElementDisplay(element)}
                                 showAnimation={true}

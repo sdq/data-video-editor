@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Tabs } from 'antd';
 import IllustrationTab from './IllustrationTab/IllustrationTab';
-import PictographTab from './PictographTab/PictographTab';
+// import PictographTab from './PictographTab/PictographTab';
 // import TextTab from './TextTab/TextTab';
 import ChartTab from './ChartTab/ChartTab';
 import UserTab from './UserTab';
@@ -14,18 +14,18 @@ export default class ResourcePane extends Component {
         return (
             <div className="card-container">
                 <Tabs type="card">
+                    <TabPane tab="My Media" key="User">
+                        <UserTab {...this.props}/>
+                    </TabPane>
                     <TabPane tab="Illustration" key="Illustration">
                         <IllustrationTab {...this.props}/>
                     </TabPane>
                     <TabPane tab="Chart" key="Chart">
                         <ChartTab {...this.props}/>
                     </TabPane>
-                    <TabPane tab="Pictograph" key="Pictograph">
+                    {/* <TabPane tab="Pictograph" key="Pictograph">
                         <PictographTab/>
-                    </TabPane>
-                    <TabPane tab="User" key="User">
-                        <UserTab {...this.props}/>
-                    </TabPane>
+                    </TabPane> */}
                     {/* <TabPane tab="Text" key="Text">
                         <TextTab {...this.props}/>
                     </TabPane>  */}

@@ -38,6 +38,10 @@ export default class TrackInfo extends Component {
                 name = element.info().name;
                 icon = <Icon type="sound" style={{color: Color.AUDIO_BAR}}/>;
                 break;
+            case ElementType.VIDEO:
+                name = element.info().name;
+                icon = <Icon type="video-camera" style={{color: Color.VIDEO_BAR}}/>;
+                break;
             case ElementType.TEXT:
                 name = element.info().text;
                 icon = <Icon type="font-size" style={{color: Color.TEXT_BAR}}/>;

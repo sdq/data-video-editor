@@ -29,6 +29,8 @@ export default class CanvasPreview extends Component {
                                     return <ImageElement key={this.props.sceneIndex+"-"+index} element={element} name={this.props.sceneIndex+"-"+index} draggable = {false} {...this.props}/>
                                 case ElementType.CHART:
                                     return <ChartElement key={this.props.sceneIndex+"-"+index} element={element} name={this.props.sceneIndex+"-"+index}  width={200} height={200} draggable = {false} {...this.props}/>
+                                case ElementType.VIDEO:
+                                    return null;
                                 case ElementType.AUDIO:
                                     return null;
                                 default:

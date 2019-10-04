@@ -10,19 +10,13 @@ export default class ImageTool extends Component {
     constructor(props) {
     super(props);
     this.state = {
-        displayColorPicker: false,
-        imageX : this.props.currentElement.info().x,
-        imageY : this.props.currentElement.info().y,
-        opacity : this.props.currentElement.info().opacity, 
-    };
-    this.onSliderChange = this.onSliderChange.bind(this);
-}
-
-
-    componentWillReceiveProps(props) {
-        //console.log('get new element');
+            displayColorPicker: false,
+            imageX : this.props.currentElement.info().x,
+            imageY : this.props.currentElement.info().y,
+            opacity : this.props.currentElement.info().opacity, 
+        };
+        this.onSliderChange = this.onSliderChange.bind(this);
     }
-
 
     handleClick = () => {
         this.setState({ displayColorPicker: !this.state.displayColorPicker })

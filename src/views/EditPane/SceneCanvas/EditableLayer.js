@@ -4,6 +4,7 @@ import TransformerComponent from '@/components/Elements/TransformerComponent';
 import ImageElement from '@/components/Elements/ImageElement';
 import TextElement from '@/components/Elements/TextElement';
 import ChartElement from '@/components/Elements/ChartElement';
+import VideoElement from '@/components/Elements/VideoElement';
 import ElementType from '@/constants/ElementType';
 import _ from 'lodash';
 
@@ -104,6 +105,25 @@ export default class EditableLayer extends Component {
                                     editStart={this.editStart} 
                                     element={element} 
                                     name={this.props.sceneIndex+"-"+index} 
+                                    width={200} 
+                                    height={200} 
+                                    draggable={editable} 
+                                    visible={true}
+                                    showAnimation={false}
+                                    {...this.props}
+                                />
+                            } else {
+                                return null;
+                            }
+
+                        case ElementType.VIDEO:
+                            if (this.isElementDisplay(element)) {
+                                return <VideoElement 
+                                    key={this.props.sceneIndex+"-"+index} 
+                                    edit={ele => this.editElement(index, ele)} 
+                                    editStart={this.editStart} 
+                                    element={element} 
+                                    name={this.props.sceneIndex+"-"+index}
                                     width={200} 
                                     height={200} 
                                     draggable={editable} 
