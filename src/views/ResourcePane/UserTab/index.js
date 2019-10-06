@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Upload, Button, Row, Col, Collapse, List } from 'antd';
 import ImageCard from '@/components/ImageCard';
 import AudioCard from '@/components/AudioCard';
+import VideoCard from '@/components/VideoCard';
 import './usertab.css';
 
 const { Panel } = Collapse;
@@ -12,7 +13,7 @@ export default class UserTab extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            activeKey:"audio",
+            activeKey:"video",
             imageList: [],
             audioList: [
                 {
@@ -21,6 +22,13 @@ export default class UserTab extends Component {
                     src: "https://datavideo.idvxlab.com/audios/column-anon.mp3"
                 },
             ],
+            videoList: [
+                {
+                    uid: '-1',
+                    name: "demo",
+                    src: "https://datavideo.idvxlab.com/videos/demo.mp4"
+                },
+            ]
         }
     }
 
@@ -81,28 +89,34 @@ export default class UserTab extends Component {
             }
         }
     };
-     callback=(key)=> {
-        //ant 中，undefined 表示收缩面板
-        if(typeof key !=='undefined'){
-            if(key==="image"){
-              this.setState({
-                activeKey:"image"
-              })
-            }else{
-              this.setState({
-                activeKey:"audio"
-              })
-            } 
-
-        }else{
-            this.setState({
-                activeKey:""
-              })
+    callback=(key)=> {
+        switch (key) {
+            case "image":
+                this.setState({
+                    activeKey:"image"
+                })
+                break;
+            case "audio":
+                this.setState({
+                    activeKey:"audio"
+                })
+                break;
+            case "video":
+                this.setState({
+                    activeKey:"video"
+                })
+                break;
+            
+            default:
+                this.setState({
+                    activeKey:""
+                })
+                break;
         }
-      };
+    };
 
     render() {
-        const { imageList, audioList } = this.state;
+        const { imageList, audioList, videoList } = this.state;
         return (
             <div className="usertab">
                 <div style={{height: "120px", margin: "8px"}}>
@@ -152,6 +166,18 @@ export default class UserTab extends Component {
                                                     onClick={() => this.onDeleteMusic(item.uid)} />
                                             </Col>
                                         </Row>
+                                    </List.Item>
+                                )}
+                            />
+                        </Panel>
+
+                        <Panel header={"Video ("+videoList.length+")"} key="video" className="collaspe-panel">
+                            <List
+                                grid={{ gutter: 3, column: 3 }}
+                                dataSource={videoList}
+                                renderItem={item => (
+                                    <List.Item>
+                                        <VideoCard info={item}  {...this.props} />
                                     </List.Item>
                                 )}
                             />

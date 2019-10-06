@@ -29,7 +29,7 @@ class ResourceTargetArea extends Component {
 }
 
 export default DropTarget(
-	[DNDType.DND_IMAGE, DNDType.DND_CHART, DNDType.DND_AUDIO],
+	[DNDType.DND_IMAGE, DNDType.DND_CHART, DNDType.DND_AUDIO, DNDType.DND_VIDEO],
 	canvasTarget,
 	(connect, monitor) => ({
 		connectDropTarget: connect.dropTarget(),

@@ -3,9 +3,10 @@ import ImageInfo from './element/ImageInfo';
 import ChartInfo from './element/ChartInfo';
 import TextInfo from './element/TextInfo';
 import AudioInfo from './element/AudioInfo';
+import VideoInfo from './element/VideoInfo';
 import Fragment from './element/Fragment';
 
-export {ImageInfo, ChartInfo, TextInfo, AudioInfo}
+export {ImageInfo, ChartInfo, TextInfo, AudioInfo, VideoInfo}
 
 export class Element {
     constructor(type, info) {
@@ -35,54 +36,6 @@ export class Element {
             return this._info;
         } else {
             this._info = info;
-            return this;
-        }
-    };
-    play = function() {
-        //TODO: play
-    };
-    pause = function() {
-        //TODO: pause
-    };
-    stop = function() {
-        //TODO: stop
-    };
-    forward = function() {
-        //TODO: forward to next frame
-    };
-    backward = function() {
-        //TODO: backward to last frame
-    };
-    begin = function() {
-        //TODO: first frame
-    };
-    end = function() {
-        //TODO: end frame
-    };
-    duration = function(duration) {
-        //set animation duration
-        if (duration == null){
-            return this._duration;
-        } else {
-            this._duration = duration;
-            return this;
-        }
-    };
-    loop = function(loop) {
-        //set animation loop
-        if (loop == null){
-            return this._loop;
-        } else {
-            this._loop = loop;
-            return this;
-        }
-    };
-    style = function(style) {
-        //set animation style
-        if (style == null){
-            return this._style;
-        } else {
-            this._style = style;
             return this;
         }
     };
@@ -124,6 +77,24 @@ export class Element {
     remove = function(index) {
         this._animations.splice(index, 1);
         return this;
+    };
+    loop = function(loop) {
+        //set animation loop
+        if (loop == null){
+            return this._loop;
+        } else {
+            this._loop = loop;
+            return this;
+        }
+    };
+    style = function(style) {
+        //set animation style
+        if (style == null){
+            return this._style;
+        } else {
+            this._style = style;
+            return this;
+        }
     };
     // fragments operation
     fragments = function() {

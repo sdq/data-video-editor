@@ -7,8 +7,6 @@ export default class AnimationCreator {
         this._node = node;
     }
     fromModel(model) {
-        console.log(model);
-        console.log(model.type());
         switch (model.type()) {
             // Presentation
             case AnimationType.PRESENTATION_FADEIN:

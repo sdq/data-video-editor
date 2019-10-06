@@ -7,9 +7,6 @@ import VegaLite from '@/charts/VegaLite';
 export default class ChartElement extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            image: null,
-        };
         this.dragstart = this.dragstart.bind(this);
         this.dragend = this.dragend.bind(this);
         this.onTransformStart = this.onTransformStart.bind(this);

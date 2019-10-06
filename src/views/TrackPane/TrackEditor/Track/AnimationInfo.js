@@ -17,7 +17,6 @@ export default class AnimationInfo extends Component {
     deleteAnimation() {
         const newScene = Object.assign({},this.props.currentScene);
         const newElement = Object.assign({},this.props.element);
-        console.log(newElement);
         newElement.remove(this.props.animationIndex);
         newScene.updateElement(newElement, this.props.elementIndex);
         this.props.updateScene(this.props.sceneIndex, newScene);
