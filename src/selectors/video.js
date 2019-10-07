@@ -21,3 +21,16 @@ export const isLastScene = createSelector(
     sceneIndex,
     (scenes, sceneIndex) => sceneIndex === scenes.length-1
 )
+
+export const videoDuration = createSelector(
+    scenes,
+    sceneIndex,
+    (scenes) => {
+        let duration = 0;
+        scenes.forEach((scene,i) => {
+            duration += scenes[i].duration()
+        });
+        console.log(duration)
+        return duration;
+    }
+)

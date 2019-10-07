@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Layer } from 'react-konva';
+import { Layer, Rect, Image } from 'react-konva';
+import Konva from "konva";
 import ImageElement from '@/components/Elements/ImageElement';
 import GifElement from '@/components/Elements/GifElement';
 import TextElement from '@/components/Elements/TextElement';
@@ -12,7 +13,43 @@ export default class AnimationLayer extends Component {
     constructor(props) {
         super(props);
         this.elementNodes = new Array(props.currentElements.length).fill({});
+        this.state = {
+            image: null,
+        };
     }
+
+    componentDidMount() {
+        this.loadImage();
+        this.animationLayer.canvas._canvas.id = 'animation-layer';
+
+        // Mention: add fake animation to make sure the canvas recorder can capture the static video.
+        this.fakeAnimation = new Konva.Animation(function(frame) {
+            this.fakeAnimationNode.x(
+                10 * Math.sin((frame.time * 2 * Math.PI) / 2000) + 10
+            );
+        }.bind(this), this.animationLayer);
+        this.fakeAnimation.start();
+    }
+    componentDidUpdate(oldProps) {
+        if (oldProps.currentScene.backgroundImage() !== this.props.currentScene.backgroundImage()) {
+            this.loadImage();
+        }
+    }
+    componentWillUnmount() {
+        this.image.removeEventListener('load', this.handleLoad);
+        this.fakeAnimation.stop();
+    }
+    loadImage() {
+        // save to "this" to remove "load" handler on unmount
+        this.image = new window.Image();
+        this.image.src = this.props.currentScene.backgroundImage();
+        this.image.addEventListener('load', this.handleLoad);
+    }
+    handleLoad = () => {
+        this.setState({
+            image: this.image
+        });
+    };
 
     isElementDisplay(element) {
         let isElementDisplay = false;
@@ -27,10 +64,34 @@ export default class AnimationLayer extends Component {
     }
 
     render() {
+        const { currentScene } = this.props;
+        const hasBackgroundImage = currentScene.backgroundImage() !== "";
         return (
             <Layer 
                 ref={node => (this.animationLayer = node)}
             >
+                {/* background */}
+                <Rect
+                    x={0}
+                    y={0}
+                    width={800}
+                    height={450}
+                    fill={currentScene.backgroundColor()}
+                />
+                {
+                    hasBackgroundImage?
+                    <Image 
+                        ref={node=>this.imageref=node}
+                        x={0}
+                        y={0}
+                        width={800}
+                        height={450}
+                        name={this.props.name}
+                        image={this.state.image} 
+                    />
+                    :null
+                }
+                {/* elements */}
                 {this.props.currentScene.elements().map(function(element, index) {
                     // TODO: dbclick
                     // if (index !== this.props.dbClickedElementIndex) {
@@ -106,6 +167,15 @@ export default class AnimationLayer extends Component {
                             return;
                     }
                 }.bind(this))}
+                <Rect
+                    ref={node=>this.fakeAnimationNode=node}
+                    x={0}
+                    y={0}
+                    width={20}
+                    height={20}
+                    fill={'red'}
+                    opacity={0}
+                />
             </Layer>
         )
     }

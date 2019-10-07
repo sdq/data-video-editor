@@ -61,6 +61,7 @@ export default class VegaLiteChart extends Component {
                     this.chartImage = new window.Image();
                     //TODO: load image from vegalite spec
                     this.chartImage.src = url;
+                    this.chartImage.crossOrigin = 'Anonymous';
                     this.chartImage.addEventListener('load', this.handleLoad);
                 }.bind(this)).catch(function(error) {
                     console.log("export error");

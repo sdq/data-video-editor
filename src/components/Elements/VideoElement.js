@@ -43,7 +43,9 @@ export default class VideoElement extends Component {
     loadVideo() {
         this.video = document.createElement('video');
         this.video.setAttribute("id", "video-"+this.props.element.id());
-        this.video.src = this.props.element.info().src;
+        var rand = '?'+Math.random();
+        this.video.src = this.props.element.info().src + rand;
+        this.video.crossOrigin='anonymous';
         this.video.addEventListener('loadedmetadata', this.handleLoad);
     }
     handleLoad = () => {

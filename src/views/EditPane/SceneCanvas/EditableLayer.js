@@ -25,6 +25,10 @@ export default class EditableLayer extends Component {
         this.editElement = this.editElement.bind(this);
     }
 
+    componentDidMount() {
+        this.editableLayer.canvas._canvas.id = 'editable-layer';
+    }
+
     editStart() {
         this.props.displayAssistLines(true);
     }
