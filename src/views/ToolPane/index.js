@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import ToolPane from './ToolPane';
 import {currentScene, sceneIndex, scenes} from '@/selectors/video';
 import {currentElement, elementIndex, isElementSelected} from '@/selectors/canvas';
-import { displaySpec, getCurrentData, getCurrentVis, getCurrentFields, getSlots } from '@/selectors/vis';
+import { dataNameList, dataList, fieldsList, displaySpec, currentData, currentVis, slots, dataIndex } from '@/selectors/vis';
 import * as videoActions from '@/actions/videoAction';
 import * as canvasActions from '@/actions/canvasAction';
 import * as visActions from '@/actions/visAction';
@@ -16,12 +16,16 @@ const mapStateToProps = state => {
         elementIndex: elementIndex(state),
         currentElement: currentElement(state),
         isElementSelected: isElementSelected(state),
+        // data
+        dataNameList: dataNameList(state),
+        dataList: dataList(state),
+        fieldsList: fieldsList(state),
+        currentData: currentData(state),
+        dataIndex: dataIndex(state),
         // vis
         displaySpec: displaySpec(state),
-        currentData: getCurrentData(state),
-        currentVis: getCurrentVis(state),
-        currentFields: getCurrentFields(state),
-        slots: getSlots(state),
+        currentVis: currentVis(state),
+        slots: slots(state),
     }
 }
 
@@ -36,8 +40,10 @@ const mapDispatchToProps = dispatch => {
         displayAnimationTargetArea: (isActive) => dispatch(uiActions.displayAnimationTargetArea(isActive)),
         // vis
         openEditor: (dataIndex, spec) => dispatch(visActions.openEditor(dataIndex, spec)),
-        uploadData: (file) => dispatch(visActions.uploadData(file)),
-        changeData: (file) => dispatch(visActions.changeData(file)),
+        switchData : (index) => dispatch(visActions.switchData(index)),
+        addData: (dataName, data, dataSchema) => dispatch(visActions.addData(dataName, data, dataSchema)),
+        updateData: (index, data, dataSchema) => dispatch(visActions.updateData(index, data, dataSchema)),
+        deleteData: (index) => dispatch(visActions.deleteData(index)),
         encoding: (channel, field, isEncoded) => {
             if (isEncoded) {
                 return dispatch(visActions.modifyEncoding(channel, field))
