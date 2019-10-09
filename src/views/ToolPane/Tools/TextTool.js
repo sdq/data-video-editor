@@ -52,42 +52,56 @@ export default class TextTool extends Component {
         this.setState({ displayColorPicker: false })
     };
 
-
-    changeTextX (value)  { 
-        this.props.currentElement.info().x = value;
+    changeTextX (x)  { 
+        let y = this.props.currentElement.info().y;  //console conflict
+        let dragPos = {x,y}; 
+        this.props.dragElement(dragPos);
+        this.props.currentElement.info().x = x;
         const newScene = Object.assign({},this.props.currentScene);
         newScene.updateElement(this.props.currentElement, this.props.elementIndex);
         this.props.updateScene(this.props.sceneIndex, newScene);
-    };
+    }
 
-    changeTextY = (value) => {
-        this.props.currentElement.info().y = value;
+    changeTextY = (y) => {
+        let x = this.props.currentElement.info().x;  //console conflict
+        let dragPos = {x,y}; 
+        this.props.dragElement(dragPos);
+        this.props.currentElement.info().y = y;
         const newScene = Object.assign({},this.props.currentScene);
         newScene.updateElement(this.props.currentElement, this.props.elementIndex);
         this.props.updateScene(this.props.sceneIndex, newScene);
  
-     };
+     }
 
-     changeTextR = (value) => {
-        this.props.currentElement.info().rotation = value;
+     changeTextR = (r) => {
+        this.props.currentElement.info().rotation = r;
+        const newScene = Object.assign({},this.props.currentScene);
+        newScene.updateElement(this.props.currentElement, this.props.elementIndex);
+        this.props.updateScene(this.props.sceneIndex, newScene);
+
+     }
+
+     changeTextW = (w) => {
+        let r = this.props.currentElement.info().rotation;  // need a real size to effect
+        let h = this.props.currentElement.info().height; 
+        let transformInfo = {w,h,r}; 
+        this.props.transformElement(transformInfo);
+        this.props.currentElement.info().width = w;
         const newScene = Object.assign({},this.props.currentScene);
         newScene.updateElement(this.props.currentElement, this.props.elementIndex);
         this.props.updateScene(this.props.sceneIndex, newScene);
 
      };
-     changeTextW = (value) => {
-        this.props.currentElement.info().width = value;
+     changeTextH = (h) => {
+        let r = this.props.currentElement.info().rotation;  // need a real size to effect
+        let w = this.props.currentElement.info().width; 
+        let transformInfo = {w,h,r}; 
+        this.props.transformElement(transformInfo);    
+        this.props.currentElement.info().height = h;
         const newScene = Object.assign({},this.props.currentScene);
         newScene.updateElement(this.props.currentElement, this.props.elementIndex);
         this.props.updateScene(this.props.sceneIndex, newScene);
-
-     };
-     changeTextH = (value) => {
-        this.props.currentElement.info().height = value;
-        const newScene = Object.assign({},this.props.currentScene);
-        newScene.updateElement(this.props.currentElement, this.props.elementIndex);
-        this.props.updateScene(this.props.sceneIndex, newScene);
-     };
+     }
 
     
      setAlignLeft (){
@@ -171,22 +185,19 @@ export default class TextTool extends Component {
 
     onTextItalicChange() {   
         const newScene = Object.assign({},this.props.currentScene);
-        if(this.state.italic)
-        {
+        if(this.state.italic){
             this.setState({italic:false}); //record
             this.props.currentElement.info().fontStyle = "normal";
         }else{
         this.setState({italic:true,bold:false}); //record
         this.props.currentElement.info().fontStyle = "italic";
     }
-        this.props.updateScene(this.props.sceneIndex, newScene);
-        
+        this.props.updateScene(this.props.sceneIndex, newScene);   
     }
 
     onTextUnderline() { 
         const newScene = Object.assign({},this.props.currentScene);
-        if(this.state.textunderline)
-        {
+        if(this.state.textunderline){
             this.setState({textunderline:false}); //record
             this.props.currentElement.info().textDecorationLine = "normal";
         }else{
@@ -232,7 +243,6 @@ export default class TextTool extends Component {
         }
 
         return (
-
             <div style={{padding: '5px 10px 10px 10px', fontSize: '14px', backgroundColor: 'white',height:'500px',overflow: 'auto'}}>
                 <Divider>Position</Divider>
                 <Row style={{margin: '5px 15px 0px 15px', fontSize: '14px'}}>
@@ -245,26 +255,26 @@ export default class TextTool extends Component {
 
                 <Row style={{margin: '15px 15px 0px 12px', fontSize: '14px'}}>
                    <Col span={2}  style={{textAlign:'center', padding: '0px 0px 0px 0px'}}>X</Col>
-                   <Col span={6}><InputNumber min={0} max={700} value={currentElement.info().x} size="small" precision={0.1} style={{width: '100%',padding: '0px 0px 0px 0px'}} 
+                   <Col span={6}><InputNumber min={0} max={700} value = {this.props.dragPos ? this.props.dragPos.x : currentElement.info().x } size="small" precision={0.1} style={{width: '100%',padding: '0px 0px 0px 0px'}} 
                    onChange = {value => this.changeTextX(value)}
                    /></Col>
                    <Col span={2} style={{textAlign:'center', padding: '0px 0px 0px 0px'}}>Y</Col>
-                   <Col span={6}><InputNumber min={0} max={700} value={currentElement.info().y} size="small" precision={0.1} style={{width: '100%',padding: '0px 0px 0px 0px'}}
+                   <Col span={6}><InputNumber min={0} max={700} value = {this.props.dragPos ? this.props.dragPos.y : currentElement.info().y } size="small" precision={0.1} style={{width: '100%',padding: '0px 0px 0px 0px'}}
                    onChange = {value => this.changeTextY(value)}
                    /></Col>
                    <Col span={2} style={{textAlign:'center', padding: '0px 0px 0px 0px'}}><Icon type="redo" /> </Col>
-                   <Col span={6}><InputNumber min={-360} max={360} value={currentElement.info().rotation} precision={0.1} formatter={value => `${value}°`} size="small"  style={{width: '100%',padding: '0px 0px 0px 0px'}}
+                   <Col span={6}><InputNumber min={-360} max={360} value={this.props.transformInfo ? this.props.transformInfo.r : currentElement.info().rotation} precision={0.1} formatter={value => `${value}°`} size="small"  style={{width: '100%',padding: '0px 0px 0px 0px'}}
                    onChange = {value => this.changeTextR(value)}
                    /></Col>  
                 </Row>
 
                 <Row style={{margin: '15px 15px 0px 12px', fontSize: '14px'}}>
                    <Col span={2} style={{textAlign:'center', padding: '0px 0px 0px 0px'}}>W</Col>
-                   <Col span={6}><InputNumber min={0} max={800} value={currentElement.info().width} precision={0.1} size="small" style={{width: '100%',padding: '0px 0px 0px 0px'}}
+                   <Col span={6}><InputNumber min={0} max={800} value={this.props.transformInfo ? this.props.transformInfo.w : currentElement.info().width} precision={0.1} size="small" style={{width: '100%',padding: '0px 0px 0px 0px'}}
                    onChange = {value => this.changeTextW(value)}
                    /></Col>
                    <Col span={2} style={{textAlign:'center', padding: '0px 0px 0px 0px'}}>H</Col>
-                   <Col span={6}><InputNumber min={0} max={450} value={currentElement.info().height} precision={0.1} size="small" style={{width: '100%',padding: '0px 0px 0px 0px'}}
+                   <Col span={6}><InputNumber min={0} max={450} value={this.props.transformInfo ? this.props.transformInfo.h : currentElement.info().height} precision={0.1} size="small" style={{width: '100%',padding: '0px 0px 0px 0px'}}
                    onChange = {value => this.changeTextH(value)}
                    /></Col>
                    {/* <Col span={2} style={{textAlign:'center', padding: '0px 0px 0px 0px'}}><Icon type="link" /> </Col> */}
