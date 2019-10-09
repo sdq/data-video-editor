@@ -5,17 +5,25 @@ const initialState = {
     elementIndex: -1,
     elementName: '',
     actionHistory: [],
+    dragPos:'', 
+    transformInfo:'',
 }
 
 export default (state = initialState, action) => {
     const newState = Object.assign({},state);
     newState.actionHistory = state.actionHistory.slice();
     newState.actionHistory.push(action);
-    switch (action.type) {
+  switch (action.type) {
         case ActionType.SELECT_ELEMENT:
             newState.isElementSelected = true;
             newState.elementIndex = action.elementIndex;
             newState.elementName = action.elementName;
+            return newState;
+        case ActionType.DRAG_ELEMENT:
+            newState.dragPos = action.dragPos;
+            return newState;
+        case ActionType.TRANSFORM_ELEMENT:
+            newState.transformInfo = action.transformInfo;
             return newState;
         case ActionType.UNSELECT_ELEMENT:
             newState.isElementSelected = false;

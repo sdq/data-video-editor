@@ -4,6 +4,9 @@ import Color from '@/constants/Color';
 import { AnimationCreator } from '@/animation';
 import _ from 'lodash';
 
+
+let lastScale = '';  
+
 export default class TextElement extends Component {
     constructor(props) {
         super(props);
@@ -12,9 +15,11 @@ export default class TextElement extends Component {
             text: props.element.info().text,
         };
         this.dragstart = this.dragstart.bind(this);
+        this.dragmove = this.dragmove.bind(this);
         this.dragend = this.dragend.bind(this);
         this.onTransformStart = this.onTransformStart.bind(this);
         this.onTransformEnd = this.onTransformEnd.bind(this);
+        this.onTransform = this.onTransform.bind(this);
     }
 
     componentDidMount() {
@@ -33,6 +38,11 @@ export default class TextElement extends Component {
         this.props.editStart();
     };
 
+    dragmove(x,y){
+        let dragpos = {x,y};
+        this.props.dragElement(dragpos);
+    }
+
     dragend(x,y) {
         const newEle = _.cloneDeep(this.props.element);
         newEle.info().x = x;
@@ -44,15 +54,34 @@ export default class TextElement extends Component {
         this.props.editStart();
     }
 
-    onTransformEnd(e) {  //text no size
-        const newEle = _.cloneDeep(this.props.element); 
+    onTransform(e) {
+        let currentWidth = this.props.currentElement.info().width;
+        let currentHeight = this.props.currentElement.info().height;
+        let w,h,r = '';
+        if(lastScale!==e.currentTarget.scaleX()){
+             w = currentWidth*e.currentTarget.scaleX();
+             h = currentHeight*e.currentTarget.scaleY();
+        }else{
+             w = currentWidth;
+             h = currentHeight;
+        }
+             r = e.currentTarget.rotation();  
+        let transforminfo = {w,h,r};
+        this.props.transformElement(transforminfo);  
+     }
+
+    onTransformEnd(e) {  //text with no real size
+        const newEle = _.cloneDeep(this.props.element);
         newEle.info().x = e.target.x();
         newEle.info().y = e.target.y();
-        newEle.info().width = e.target.width()*e.target.scaleX();
-        newEle.info().height = e.target.height()*e.target.scaleY();
+        if(lastScale!==e.target.scaleX()){
+            newEle.info().width = newEle.info().width*e.target.scaleX(); 
+            newEle.info().height = newEle.info().height*e.target.scaleY(); 
+        }
         newEle.info().rotation = e.target.rotation();
         this.props.edit(newEle);
     }
+
     render() {
         return (
             <Group name={this.props.name}
@@ -65,6 +94,9 @@ export default class TextElement extends Component {
                         isDragging: true
                     });
                 }}
+                onDragMove= {e => {
+                    this.dragmove(e.target.x(),e.target.y())
+                }}
                 onDragEnd={e => {
                     this.setState({
                         isDragging: false,
@@ -74,6 +106,9 @@ export default class TextElement extends Component {
                     this.dragend(e.target.x(), e.target.y());
                 }}
                 onTransformStart={this.onTransformStart}
+                onTransform={e => {
+                    this.onTransform(e);
+                }}
                 onTransformEnd={this.onTransformEnd}
                 visible={this.props.visible}
             >
@@ -81,9 +116,6 @@ export default class TextElement extends Component {
                     ref = {node=>this.textref=node}
                     name = {this.props.name}
                     text = {this.props.element.info().text}
-                    width = {this.props.element.info().width}//the number of text*scale
-                    //height  = {this.props.element.info().textSize*3}//*rows
-                    height  = {this.props.element.info().height} //fake
                     fill = {this.state.isDragging ? Color.DEEP_ORANGE : this.props.element.info().color}
                     fontSize = {this.props.element.info().textSize}  //init  fontSize
                     fontFamily = {this.props.element.info().fontFamily} // nouse  fontFamily
@@ -91,6 +123,10 @@ export default class TextElement extends Component {
                     textDecoration = {this.props.element.info().textDecorationLine}//can be line-through, underline or empty string. Default is empty string. 
                     opacity = {this.props.element.info().opacity}
                     align = {this.props.element.info().textAlign}
+                    //width = {this.props.element.info().width}//the number of text*scale
+                    width = {(this.props.element.info().text.length*this.props.element.info().textSize)}
+                    height = {this.props.element.info().height} //fake  the number or rows and scale
+                    //height = {((this.props.element.info().text.length*this.props.element.info().textSize)/this.props.element.info().width)*this.props.element.info().textSize}
                 />
             </Group>
         )
