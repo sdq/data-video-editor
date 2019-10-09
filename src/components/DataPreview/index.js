@@ -20,7 +20,6 @@ export default class DataPreview extends Component {
 
     render() {
         let { currentData } = this.props;
-        console.log(this.props)
         if (!currentData.data) return false;
         let fields = currentData.fields;
         const customizedColumns = fields.map((column, i) => {

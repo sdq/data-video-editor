@@ -20,7 +20,6 @@ export const currentData = createSelector(
     dataList,
     fieldsList,
     (dataIndex, dataNameList, dataList, fieldsList) => {
-        console.log(dataNameList)
         return {
             'name': dataNameList[dataIndex],
             'data': dataList[dataIndex],

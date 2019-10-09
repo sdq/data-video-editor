@@ -33,8 +33,6 @@ export default class DataTool extends Component {
     handleDataOk = (data) => {
         // TODO: Update Data
 
-        // Disable editor
-        console.log(data)
         this.setState({
             datavisible: false,
         });
