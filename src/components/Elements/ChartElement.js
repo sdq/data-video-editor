@@ -4,6 +4,8 @@ import _ from 'lodash';
 import ChartType from '@/constants/ChartType';
 import VegaLite from '@/charts/VegaLite';
 
+let lastScale = '';
+
 export default class ChartElement extends Component {
     constructor(props) {
         super(props);
@@ -11,15 +13,22 @@ export default class ChartElement extends Component {
             image: null,
         };
         this.dragstart = this.dragstart.bind(this);
+        this.dragmove = this.dragmove.bind(this);
         this.dragend = this.dragend.bind(this);
         this.onTransformStart = this.onTransformStart.bind(this);
         this.onTransformEnd = this.onTransformEnd.bind(this);
+        this.onTransform = this.onTransform.bind(this);
     }
 
     dragstart() {
         this.props.editStart();
     };
 
+
+    dragmove(x,y){
+        let dragpos = {x,y};
+        this.props.dragElement(dragpos);
+    }
     dragend(x,y) {
         var newEle = _.cloneDeep(this.props.element);
         newEle.info().x = x;
@@ -30,6 +39,23 @@ export default class ChartElement extends Component {
     onTransformStart() {
         this.props.editStart();
     }
+
+    
+    onTransform(e) {
+        let currentWidth = this.props.currentElement.info().width;
+        let currentHeight = this.props.currentElement.info().height;
+        let w,h,r = '';
+        if(lastScale!==e.currentTarget.scaleX()){
+             w = currentWidth*e.currentTarget.scaleX();
+             h = currentHeight*e.currentTarget.scaleY();
+        }else{
+             w = currentWidth;
+             h = currentHeight;
+        }
+             r = e.currentTarget.rotation();  
+        let transforminfo = {w,h,r};
+        this.props.transformElement(transforminfo);
+     }
    
     onTransformEnd(e) {
         // console.log("end transform");
@@ -75,10 +101,16 @@ export default class ChartElement extends Component {
                 rotation={this.props.element.info().rotation}
                 //draggable
                 onDragStart={this.dragstart}  
+                onDragMove= {e => {
+                    this.dragmove(e.target.x(),e.target.y())
+                }}
                 onDragEnd={e => {
                     this.dragend(e.target.x(),e.target.y())
                 }}
                 onTransformStart={this.onTransformStart}
+                onTransform={e => {
+                    this.onTransform(e);
+                }}
                 onTransformEnd={this.onTransformEnd}
                 visible={this.props.visible}
             >

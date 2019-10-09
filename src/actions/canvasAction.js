@@ -34,3 +34,15 @@ export const reorderElement = (sourceIndex, destinationIndex) => ({
     sourceIndex,
     destinationIndex,
 })
+
+
+export const dragElement = (dragPos) => ({ 
+    type: ActionType.DRAG_ELEMENT,
+    dragPos,
+})
+
+
+export const transformElement = (transformInfo) => ({ 
+    type: ActionType.TRANSFORM_ELEMENT,
+    transformInfo,
+})

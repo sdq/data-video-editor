@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import EditPane from './EditPane';
 import {currentScene, sceneIndex, scenes, isFirstScene, isLastScene, past, future} from '@/selectors/video';
-import {currentElement, currentElements, elementIndex, elementName, isElementSelected} from '@/selectors/canvas';
+import {currentElement, currentElements, elementIndex, elementName, isElementSelected, dragPos, transformInfo} from '@/selectors/canvas';
 import { dataList } from '@/selectors/vis';
 import { scenePosition } from '@/selectors/scene';
 import { isPerforming, isScenePerforming, isVideoPerforming } from '@/selectors/player';
@@ -35,6 +35,9 @@ const mapStateToProps = state => {
         showResourceTargetArea: showResourceTargetArea(state),
         // vis
         dataList: dataList(state),
+        dragPos:dragPos(state),
+        transformInfo:transformInfo(state),
+
     }
 }
 
@@ -55,6 +58,8 @@ const mapDispatchToProps = dispatch => {
         setPosition: (position) => dispatch(sceneActions.setPosition(position)),
         undoCanvas: (index) => dispatch(metaActions.undoCanvas(index)),
         redoCanvas: (index) => dispatch(metaActions.redoCanvas(index)),
+        dragElement: (dragPos) => dispatch(canvasActions.dragElement(dragPos)),
+        transformElement: (transformInfo) => dispatch(canvasActions.transformElement(transformInfo)),
     }
 }
 
