@@ -134,7 +134,7 @@ export default class UserTab extends Component {
                 </div>
                 
                 <div className="user-upload-list">
-                    <Collapse accordion bordered={false} activeKey={this.state.activeKey} onChange={this.callback}>
+                    <Collapse accordion bordered={false} onChange={this.callback}>
                         <Panel header={"Image ("+imageList.length+")"} key="image" className="collaspe-panel">
                             <List
                                 grid={{ gutter: 3, column: 3 }}

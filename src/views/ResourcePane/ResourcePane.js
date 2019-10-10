@@ -13,7 +13,7 @@ export default class ResourcePane extends Component {
     render() {
         return (
             <div className="card-container">
-                <Tabs type="card">
+                <Tabs type="card" defaultActiveKey="Illustration">
                     <TabPane tab="My Media" key="User">
                         <UserTab {...this.props}/>
                     </TabPane>
