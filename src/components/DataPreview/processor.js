@@ -16,22 +16,27 @@ class DataProcessor {
 
     process = (fileURL) => {
         return new Promise((resolve, reject) => {
-            d3.csv(fileURL, (data) => {
-                let schema = [];
-                for (let key in data[0]) {
-                    //TODO: 简单方法判断是哪种类型数据，以后需要改 
-                    let reg = /^[0-9]*$/;
-                    if (reg.test(data[0][key])) {
-                        schema.push({ name: key, type: FieldType.QUANTITATIVE })
-                    } else {
-                        schema.push({name: key, type: FieldType.NOMINAL})
+            d3.csv(fileURL, (error, data) => {
+                //reject
+                if (error) {
+                    reject(error);
+                } else {
+                //resolve
+                    let schema = [];
+                    for (let key in data[0]) {
+                        if (!isNaN(data[0][key])) {
+                            schema.push({ name: key, type: FieldType.QUANTITATIVE })
+                        }
+                        else {
+                            schema.push({ name: key, type: FieldType.NOMINAL })
+                        }
                     }
+                    let dataItem = {
+                        schema: schema,
+                        data: data
+                    }
+                    resolve(dataItem);
                 }
-                let dataItem = {
-                    schema: schema,
-                    data: data
-                }
-                resolve(dataItem);
             })
         });
     }

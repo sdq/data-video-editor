@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Input, InputNumber, Form } from 'antd';
+import { Table, Input, InputNumber, Form, Button } from 'antd';
 import _ from 'lodash';
 
 const EditableContext = React.createContext();
@@ -53,10 +53,10 @@ class EditableCell extends Component {
 
 class EditableTable extends Component {
     constructor(props) {
-        super(props);       
-        this.state = { 
-            data: this.props.dataSource, 
-            editingKey: '' 
+        super(props);
+        this.state = {
+            data: this.props.dataSource,
+            editingKey: ''
         };
     }
 
@@ -73,7 +73,7 @@ class EditableTable extends Component {
             }
             const newData = [...this.props.dataSource];
             const index = key
-            
+
             if (index > -1) {
                 const item = newData[index];
                 newData.splice(index, 1, {
@@ -85,7 +85,7 @@ class EditableTable extends Component {
                 newData.push(row);
                 this.setState({ data: newData, editingKey: '' });
             }
-            this.props.handleDataUpdate(newData)           
+            this.props.handleDataUpdate(newData)
         });
     }
 
@@ -105,49 +105,52 @@ class EditableTable extends Component {
             {
                 title: 'operation',
                 dataIndex: 'operation',
+                width: 120,
+                key: 'operation',
+                fixed: 'right',
                 render: (text, record, rowIndex) => {
                     const { editingKey } = this.state;
                     const editable = this.isEditing(rowIndex);
                     return editable ? (
-                    <span>
-                        <EditableContext.Consumer>
-                            {form => (
-                            <button
-                                onClick={() => this.save(form, rowIndex)}
-                                style={{ marginRight: 8, width:'70px' }}
-                            >
-                                Save
-                            </button>
-                            )}
-                        </EditableContext.Consumer>
-                        <button style={{width:'70px'}} onClick={() => this.cancel(rowIndex)}>
-                            Cancel
-                        </button>
-                    </span>
+                        <span style={{display:'table'}}>
+                            <EditableContext.Consumer>
+                                {form => (
+                                    <Button 
+                                        onClick={() => this.save(form, rowIndex)}
+                                        style={{background: 'none',border:'none',padding:0, marginRight: 8, width: '30px', display: 'table-cell' }}
+                                    >
+                                        Save
+                                    </Button>
+                                )}
+                            </EditableContext.Consumer>
+                            <Button onClick={() => this.cancel(rowIndex)} style={{background: 'none',border:'none', padding:0,width: '45px', display: 'table-cell'  }} >
+                                Cancel
+                            </Button>
+                        </span>
                     ) : (
-                        <button style={{width:'70px'}} disabled={editingKey !== ''} onClick={() => this.edit(rowIndex)}>
-                            Edit
-                        </button>
-                    );
+                            <Button style={{background: 'none',border:'none',padding:0, width: '26px',display: 'table-cell' }} disabled={editingKey !== ''} onClick={() => this.edit(rowIndex)}>
+                                Edit
+                        </Button>
+                        );
                 }
             }
         )
         const columns = editableColumns
-        .map(col => {
-            if (!col.editable) {
-                return col;
-            }
-            return {
-                ...col,
-                onCell: (record, rowIndex) => ({
-                    record,
-                    rowIndex,
-                    dataIndex: col.dataIndex,
-                    title: col.title,
-                    editing: this.isEditing(rowIndex),
-                }),
-            };
-        });
+            .map(col => {
+                if (!col.editable) {
+                    return col;
+                }
+                return {
+                    ...col,
+                    onCell: (record, rowIndex) => ({
+                        record,
+                        rowIndex,
+                        dataIndex: col.dataIndex,
+                        title: col.title,
+                        editing: this.isEditing(rowIndex),
+                    }),
+                };
+            });
 
         return (
             <div>
@@ -157,10 +160,10 @@ class EditableTable extends Component {
                         bordered
                         dataSource={this.props.dataSource}
                         columns={columns}
-                        // rowKey={rowIndex}
+                        scroll={{ x: 1000}}
+                        rowKey={columns[0].title}
                         rowClassName="editable-row"
                         pagination={{
-                            // TODO:
                             pageSize: 6,
                             onChange: this.cancel,
                         }}

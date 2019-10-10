@@ -67,14 +67,10 @@ export default (state = initialState, action) => {
             return newState
 
         case VisActionType.UPDATE_DATA:
-            // TODO: update data, dataSchema
-            console.log("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh")
-            console.log(action)
             newState.dataIndex = action.index;
             const dataList = newState.dataList.slice();
             dataList[action.index] = action.data;
             newState.dataList = dataList;
-            console.log(newState)
             return newState
 
         case VisActionType.DELETE_DATA:

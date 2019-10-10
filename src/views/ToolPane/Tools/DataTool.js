@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Upload, Button, Icon, Select } from 'antd';
+import { Upload, Button, Icon, Select, Alert } from 'antd';
 import DataPreview from '@/components/DataPreview';
 import ChartEditor from '@/components/ChartEditor';
 import SimpleDataPreview from '@/components/DataPreview/SimpleDataPreview';
@@ -16,7 +16,7 @@ export default class DataTool extends Component {
         this.state = {
             datavisible: false,
             chartvisible: false,
-            selectValue: "cars.csv"
+            alertvisible: false
         };
         this.handleDataPreview = this.handleDataPreview.bind(this);
         this.handleDataOk = this.handleDataOk.bind(this);
@@ -74,10 +74,15 @@ export default class DataTool extends Component {
 
     beforeUpload = (file) => {
         const fileURL = URL.createObjectURL(file);
-        dataProcessor.process(fileURL).then((dataItem) => {
-            this.props.addData(file.name, dataItem.data, dataItem.schema);
-        });
-        return false;
+        dataProcessor.process(fileURL)
+            .then((dataItem) => {
+                this.props.addData(file.name, dataItem.data, dataItem.schema);
+            }).catch((reason) => {
+                this.setState({
+                    alertvisible: true,
+                });
+                console.log(reason);
+            });
     }
 
     handleDataSelect = (e) => {
@@ -145,6 +150,8 @@ export default class DataTool extends Component {
                     handleCancel={this.handleCancel}
                     {...this.props}
                 />
+                <Alert style={{display:this.state.alertvisible === false? 'none' : 'block',position:'fixed', top: 110, width :280}} message="Error: Failed to load data." type="error" showIcon closable />
+                {/* <Alert style={{position:'fixed', top: 10}} type="error" message="Error text" banner /> */}
             </div>
         )
     }
