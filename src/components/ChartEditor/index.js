@@ -25,7 +25,7 @@ export default class ChartEditor extends Component {
                     </Sider>
                     <Layout>
                     <Content className="pane">
-                        <ChartPanel data={this.props.currentData} spec={this.props.displaySpec} {...this.props}/>
+                        <ChartPanel data={this.props.currentData.data} spec={this.props.displaySpec} {...this.props}/>
                     </Content>
                     </Layout>
                 </Layout>
