@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
-import {  Collapse,Row, Col, Divider, Button, Input,List } from 'antd';
+import {  Collapse, Row, Col, Divider, Button, Input, List } from 'antd';
 import { SketchPicker } from 'react-color';
 import MyURL from '@/constants/MyURL';
 const { TextArea } = Input;
 const { Panel } = Collapse;
 
-const bglisttexture =  [    // 初始化  默认背景列表1 不可上传  加载时从服务器读取  (是否应该写到state内部？)
+const bglisttexture =  [    
     {
     name: "earth",
     style: "Texture",
@@ -31,7 +31,7 @@ const bglisttexture =  [    // 初始化  默认背景列表1 不可上传  加�
     style: "advanced",
     src: MyURL.OSS+"/backgroundImages/t-triangle.png"
 }];
-const bglistscene = [    // 初始化  默认背景列表1 不可上传  加载时从服务器读取  (是否应该写到state内部？)
+const bglistscene = [    
     {
     name: "sandy",
     style: "Scene",
@@ -47,7 +47,7 @@ const bglistscene = [    // 初始化  默认背景列表1 不可上传  加载�
     style: "Scene",
     src: MyURL.OSS+"/backgroundImages/s-blackboard.png"
 }];
-const bglistcharacter = [    // 初始化  默认背景列表1 不可上传  加载时从服务器读取  (是否应该写到state内部？)
+const bglistcharacter = [   
     {
     name: "student",
     style: "Character",
@@ -70,30 +70,27 @@ export default class SceneTool extends Component {
         this.state = {
             displayColorPicker: false,
             inputValue: 1,
-            color : "",  //current bgcolor
+            color : this.props.currentScene.backgroundColor(), //default
             key : "",
-            bgimage:"",  //current bgimage
+            bgimage:"", 
         };
         this.handleTitleChange = this.handleTitleChange.bind(this);
         this.handleScriptChange = this.handleScriptChange.bind(this);
-        this.handleColorClick = this.handleColorClick.bind(this);  //bind
+        this.handleColorClick = this.handleColorClick.bind(this);  
     }
 
     handleBGClick = (item)=>{
         let bgimage=item.src;
-        this.setState({bgimage})  //传给state管理
-        //绑定当前点击scene
+        this.setState({bgimage})  
         const newScene = Object.assign({},this.props.currentScene);
         newScene.backgroundImage(bgimage);
         this.props.updateScene(this.props.sceneIndex, newScene);
     }
 
 
-    handleBGChange(){ //no use
+    handleBGChange(){ 
         let bgimage = this.state.bgimage;
         this.setState({bgimage})
-       
-
     }
 
 
@@ -114,10 +111,10 @@ export default class SceneTool extends Component {
         let bgimage = "";
         this.setState({bgimage,color})
         const newScene = Object.assign({},this.props.currentScene);
-        newScene.backgroundImage("");//clear background
+        newScene.backgroundImage("");
         newScene.backgroundColor(color);
-        this.props.updateScene(this.props.sceneIndex, newScene);
-      
+        this.props.updateScene(this.props.sceneIndex, newScene); 
+        console.log( this.props.currentScene.backgroundColor());
     }
   
 
@@ -128,16 +125,13 @@ export default class SceneTool extends Component {
 
     handleScriptChange(e) {
         const newScene = Object.assign({},this.props.currentScene);
-       
         newScene.script(e.target.value);
         this.props.updateScene(this.props.sceneIndex, newScene);
     }
 
     handleTitleChange(e) {
-        //title 处理
+        //title
     }
-
-
 
     onChange = value => {
         const newScene = Object.assign({},this.props.currentScene);
@@ -175,8 +169,9 @@ export default class SceneTool extends Component {
         return (
             <div style={{padding: '5px 10px 0px 10px', fontSize: '14px',height:'500px',overflow: 'auto'}}>
                 <Divider>Script</Divider> 
-                {/* <Row style={{margin: '5px 0px 0px 0px', fontSize: '14px'}}>
-                    <Input placeholder="title" style={{ padding: '0px 5px 0 5px'}} value={this.props.currentScene.title()} onChange={this.handleTitleChange}  />
+                {/* 
+                <Row style={{margin: '5px 0px 0px 0px', fontSize: '14px'}}>
+                <Input placeholder="title" style={{ padding: '0px 5px 0 5px'}} value={this.props.currentScene.title()} onChange={this.handleTitleChange}  />
                 </Row> */}
                 <Row style={{margin: '0px 0px 0px 0px', fontSize: '12px'}}>
                     <TextArea style={{ padding: '0px 5px 0 5px'}} rows={3} value={this.props.currentScene.script()} onChange={this.handleScriptChange}   />
@@ -188,23 +183,16 @@ export default class SceneTool extends Component {
                 Color
                 </Col>
                     <Col span={5} style={{margin: '0px 0px 0px 0px'}}>
-                     <Button size='small' type="primary" onClick={ this.handleColorClick } style={{width: '100%',margin: '0px 0px 0px 0px',background:color,border:"none",lineHeight:"31px",verticalAlign: "middle"}}></Button>  
-                      {this.state.displayColorPicker ? <div style={ popover }>
-                      <div style={ cover } onClick={ this.handleColorClose }/>
-                        <SketchPicker color={this.state.color}  onChange={this.handleColorChange} />
-                       </div>:null }
-                        
-                        {/* <Button type="danger" block size='small' style={{width: '100%',margin: '0px 0px 0px 0px'}} onClick={ this.handleColorClick } ></Button>
-                            { this.state.displayColorPicker ? <div style={ popover }>
-                            <div style={ cover } onClick={ this.handleColorClose }/>
-                            <SketchPicker  color={this.state.color}  onChange={this.handleColorChange} />
-                            </div> : null }   */}
+                     <Button size='small' type="Default" onClick={ this.handleColorClick } style={{width: '100%',margin: '0px 0px 0px 0px',background:this.props.currentScene.backgroundColor(),border:"none",lineHeight:"31px",verticalAlign: "middle"}}></Button>  
+                     {this.state.displayColorPicker ? <div style={ popover }>
+                     <div style={ cover } onClick={ this.handleColorClose }/>
+                     <SketchPicker color={this.props.currentScene.backgroundColor()}  onChange={this.handleColorChange} />
+                     </div>:null }
                     </Col>
                 </Row>
                 <Collapse accordion bordered={false} expandIconPosition="right" >
                 <Panel header="Geometric Texture" key="1" style={customPanelStyle} >
-                <List 
-                            
+                <List         
                     grid={{ gutter: 3, column: 2 }}
                         dataSource={bglisttexture}
                             renderItem={item => (
