@@ -3,7 +3,7 @@ import { Image, Group } from 'react-konva';
 import { AnimationCreator } from '@/animation';
 import _ from 'lodash';
 
-
+// record last scale when transform
 let lastScale = '';  
 
 export default class ImageElement extends Component {
@@ -82,6 +82,8 @@ export default class ImageElement extends Component {
         let currentWidth = this.props.currentElement.info().width;
         let currentHeight = this.props.currentElement.info().height;
         let w,h,r = '';
+        //Determine whether scale is equal to last time(Rotation only)
+        //So scale calculation is not performed at this time
         if(lastScale!==e.currentTarget.scaleX()){
              w = currentWidth*e.currentTarget.scaleX();
              h = currentHeight*e.currentTarget.scaleY();
@@ -111,7 +113,7 @@ export default class ImageElement extends Component {
             <Group name={this.props.name} 
                 draggable = {this.props.draggable}
                 x={this.props.element.info().x}
-                y={this.props.element.info().y}
+                y={this.props.element.info().y} 
                 rotation={this.props.element.info().rotation}
                 //draggable
                 onDragStart={this.dragstart}
