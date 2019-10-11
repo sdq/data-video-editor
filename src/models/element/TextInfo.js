@@ -1,5 +1,5 @@
 export default class TextInfo {
-    constructor(text, x, y, rotation, color='black', textSize=20, fontFamily = 'Helvetica', fontStyle, textDecorationLine,opacity=1,textAlign='left',width=400,height=50) {
+    constructor(text, x, y, rotation, color='black', textSize=20, fontFamily = 'Helvetica', fontStyle, textDecorationLine,opacity=1,textAlign='left',width=400,height=60) {
         this.text = text;
         this.x = x;
         this.y = y;

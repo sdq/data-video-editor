@@ -38,10 +38,10 @@ export default class TextEditor extends Component {
               fontSize:this.props.currentElement.info().textSize,
               background:'none',
               color:'black',
-              top:(this.props.currentElement) ? this.props.currentElement.info().y : 0,
-              left:(this.props.currentElement) ? this.props.currentElement.info().x : 0,
+              top:(this.props.currentElement) ? this.props.currentElement.info().y-7 : 0,
+              left:(this.props.currentElement) ? this.props.currentElement.info().x-0.5 : 0,
               width: "400px",//fake
-              height:"50px",//fake
+              height:"60px",//fake
               fillOpacity:0.5
             }}
             value = {this.state.text}
