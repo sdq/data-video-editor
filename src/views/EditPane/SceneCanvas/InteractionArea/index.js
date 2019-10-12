@@ -13,7 +13,7 @@ export default class InteractionArea extends Component {
             <div style={{position:'absolute', zIndex:1}}>
                 {showAnimationTargetArea?<AnimationTargetArea {...this.props}/>:null}
                 {showResourceTargetArea?<ResourceTargetArea {...this.props}/>:null}
-                {showAssistLines ? <AssistLines /> : null }
+                {showAssistLines ? <AssistLines {...this.props}/> : null }
                 {showGridLines ? <GridLines /> : null }
                 {showTextEditor ? <TextEditor {...this.props}/> : null }
                 {showGifEditor ? <GifEditor  {...this.props}/> : null }
