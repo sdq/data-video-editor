@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+var offsetX = 0;  //offset in browers
+var offsetY = 0;  //offset in browers
 
 export default class TextEditor extends Component {
     constructor(props) {
@@ -25,6 +27,31 @@ export default class TextEditor extends Component {
     }
 
     render() {
+            var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串
+            var isOpera = userAgent.indexOf("Opera") > -1;
+            if (isOpera) {
+                offsetX =0.5;
+                offsetY = 7;
+            }; //判断是否Opera浏览器
+            if (userAgent.indexOf("Firefox") > -1) {
+                offsetX = 1;
+                offsetY = 6.6;
+            } //判断是否Firefox浏览器
+            if (userAgent.indexOf("Chrome") > -1){
+                offsetX = 1;
+                offsetY = 9.5;
+         }
+            if (userAgent.indexOf("Safari") > -1) {
+                offsetX =1.5;
+                offsetY = 9.5;
+            } //判断是否Safari浏览器
+            if (userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1 && !isOpera) {
+                offsetX =0.5;
+                offsetY = 6.5;
+            }; //判断是否IE浏览器
+            //console.log(userAgent);
+            //仍然需要更精准测试
+
         return (
              <div className="TextEditor" style={{display: (this.state.isShowTextArea) ? "block" : "none"}} > 
              <textarea
@@ -38,10 +65,11 @@ export default class TextEditor extends Component {
               fontSize:this.props.currentElement.info().textSize,
               background:'none',
               color:'black',
-              top:(this.props.currentElement) ? this.props.currentElement.info().y : 0,
-              left:(this.props.currentElement) ? this.props.currentElement.info().x : 0,
-              width: "400px",//fake
-              height:"50px",//fake
+              //Elimination of displacement error between textTranform and textEditor
+              top:(this.props.currentElement) ? this.props.currentElement.info().y-offsetY : 0,
+              left:(this.props.currentElement) ? this.props.currentElement.info().x-offsetX : 0,
+              width:"400px", 
+              height:"60px",//completely fake width and height now
               fillOpacity:0.5
             }}
             value = {this.state.text}
