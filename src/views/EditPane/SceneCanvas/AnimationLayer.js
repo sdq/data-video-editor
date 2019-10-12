@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Layer } from 'react-konva';
 import ImageElement from '@/components/Elements/ImageElement';
+import GifElement from '@/components/Elements/GifElement';
 import TextElement from '@/components/Elements/TextElement';
 import ChartElement from '@/components/Elements/ChartElement';
 import VideoElement from '@/components/Elements/VideoElement';
@@ -59,6 +60,18 @@ export default class AnimationLayer extends Component {
                                 {...this.props}
                             />
                             
+                        case ElementType.GIF:
+                            return <GifElement
+                                ref={node => (this.elementNodes[index] = node)}
+                                key={this.props.sceneIndex + "-" + index}
+                                element={element}
+                                name={this.props.sceneIndex + "-" + index}
+                                draggable={false}
+                                visible={this.isElementDisplay(element)}
+                                showAnimation={true}
+                                {...this.props}
+                            />
+
                         case ElementType.CHART:
                             return <ChartElement 
                                 ref={node => (this.elementNodes[index] = node)}

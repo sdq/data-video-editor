@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Stage, Layer } from 'react-konva';
 import ImageElement from '@/components/Elements/ImageElement';
+import GifElement from '@/components/Elements/GifElement';
 import TextElement from '@/components/Elements/TextElement';
 import ChartElement from '@/components/Elements/ChartElement';
 import ElementType from '@/constants/ElementType';
@@ -27,6 +28,8 @@ export default class CanvasPreview extends Component {
                                     return <TextElement key={this.props.sceneIndex+"-"+index} element={element} name={this.props.sceneIndex+"-"+index} draggable = {false} {...this.props}/>
                                 case ElementType.IMAGE:
                                     return <ImageElement key={this.props.sceneIndex+"-"+index} element={element} name={this.props.sceneIndex+"-"+index} draggable = {false} {...this.props}/>
+                                case ElementType.GIF:
+                                    return <GifElement key={this.props.sceneIndex + "-" + index} element={element} name={this.props.sceneIndex + "-" + index} draggable={false} {...this.props} />
                                 case ElementType.CHART:
                                     return <ChartElement key={this.props.sceneIndex+"-"+index} element={element} name={this.props.sceneIndex+"-"+index}  width={200} height={200} draggable = {false} {...this.props}/>
                                 case ElementType.VIDEO:

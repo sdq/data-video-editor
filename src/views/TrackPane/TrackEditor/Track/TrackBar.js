@@ -152,6 +152,7 @@ export default class TrackBar extends Component {
         var color = Color.LIGHT_ORANGE;
         switch (element.type()) {
             case ElementType.IMAGE:
+            case ElementType.GIF:
                 color = Color.ILLUSTRATION_BAR;
                 break;
             case ElementType.CHART:

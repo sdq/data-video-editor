@@ -14,6 +14,7 @@ export default class EditCanvas extends Component {
         this.state = {
             showAssistLines: false,
             showTextEditor: false, 
+            showGifEditor:false,
             dbClickedElementIndex: -1,
         };
         this.handleStageDblClick = this.handleStageDblClick.bind(this);
@@ -37,6 +38,7 @@ export default class EditCanvas extends Component {
             showTextEditor: false,
             showAnimationLayer: false,
             dbClickedElementIndex: -1,
+            showGifEditor:false,
         });
 
         // clicked on stage - clear selection
@@ -82,6 +84,10 @@ export default class EditCanvas extends Component {
                 this.setState({
                     showTextEditor: true,
                 })
+            }else if(dbElement.type() === ElementType.GIF){
+                this.setState({
+                    showGifEditor: true,
+                })
             }
             
             // TODO: show animation
@@ -95,6 +101,7 @@ export default class EditCanvas extends Component {
             <div id="canvasContainer">
                 {editable?<InteractionArea 
                 showTextEditor={this.state.showTextEditor}
+                showGifEditor={this.state.showGifEditor}
                 showAssistLines={this.state.showAssistLines} {...this.props}/>: null}
                 <Stage 
                     ref={ref => { this.stageRef = ref; }}

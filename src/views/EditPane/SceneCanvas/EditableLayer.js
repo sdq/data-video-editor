@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Layer } from 'react-konva';
 import TransformerComponent from '@/components/Elements/TransformerComponent';
 import ImageElement from '@/components/Elements/ImageElement';
+import GifElement from '@/components/Elements/GifElement'
 import TextElement from '@/components/Elements/TextElement';
 import ChartElement from '@/components/Elements/ChartElement';
 import VideoElement from '@/components/Elements/VideoElement';
@@ -59,8 +60,11 @@ export default class EditableLayer extends Component {
             >
                 {this.props.currentScene.elements().map(function(element, index) {
                     if (index === this.props.dbClickedElementIndex) {
-                        return null; // dbclick element for preview
-                    }
+                        // if (element.type() !== ElementType.GIF) {
+                            return null; // dbclick element for preview
+                        // } 
+                    } 
+
                     switch (element.type()) {
                         case ElementType.TEXT:
                             if (this.isElementDisplay(element)) {
@@ -97,6 +101,25 @@ export default class EditableLayer extends Component {
                                 return null;
                             }
                             
+                        case ElementType.GIF:
+                            if (this.isElementDisplay(element)) {
+                                return <GifElement
+                                    ref={node => (this.elementNodes[index] = node)}
+                                    key={this.props.sceneIndex + "-" + index}
+                                    edit={ele => this.editElement(index, ele)}
+                                    editStart={this.editStart}
+                                    element={element}
+                                    name={this.props.sceneIndex + "-" + index}
+                                    draggable={editable}
+                                    visible={true}
+                                    showAnimation={false}
+                                    isAnimateGifBydbClicked={element.isAnimateGif}
+                                    {...this.props}
+                                />
+                            } else {
+                                return null;
+                            }
+
                         case ElementType.CHART:
                             if (this.isElementDisplay(element)) {
                                 return <ChartElement 
