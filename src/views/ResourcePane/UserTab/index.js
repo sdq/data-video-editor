@@ -14,7 +14,7 @@ export default class UserTab extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            activeKey:"video",
+            activeKey:"",
             imageList: [],
             audioList: [
                 {
