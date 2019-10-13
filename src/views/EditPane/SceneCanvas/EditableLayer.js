@@ -132,8 +132,6 @@ export default class EditableLayer extends Component {
                                     editStart={this.editStart} 
                                     element={element} 
                                     name={this.props.sceneIndex+"-"+index} 
-                                    width={200} 
-                                    height={200} 
                                     draggable={editable} 
                                     visible={true}
                                     showAnimation={false}

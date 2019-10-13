@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { Group } from 'react-konva';
 import _ from 'lodash';
-import ChartType from '@/constants/ChartType';
-import VegaLite from '@/charts/VegaLite';
+import ChartContainer from '@/charts/ChartContainer';
 
 let lastScale = '';
 
@@ -78,24 +77,23 @@ export default class ChartElement extends Component {
 
     chooseChart() {
         var data = {};
+        const chartInfo = this.props.element.info();
         if (!_.isEmpty(this.props.dataList)) {
-            data = this.props.dataList[this.props.element.info().dataIndex];
+            data = this.props.dataList[chartInfo.dataIndex];
         }
-        switch (this.props.element.info().type) {
-            case ChartType.AREACHART:
-                return <VegaLite.AreaChart name={this.props.name} data={data} spec={this.props.element.info().spec} width={this.props.width} height={this.props.height} onCanvas={true} showAnimation={this.props.showAnimation} animations={this.props.element.animations()} current={this.props.scenePosition}/>
-            case ChartType.BARCHART:
-                return <VegaLite.BarChart name={this.props.name} data={data} spec={this.props.element.info().spec} width={this.props.width} height={this.props.height} onCanvas={true} showAnimation={this.props.showAnimation} animations={this.props.element.animations()} current={this.props.scenePosition}/>
-            case ChartType.LINECHART:
-                return <VegaLite.LineChart name={this.props.name} data={data} spec={this.props.element.info().spec} width={this.props.width} height={this.props.height} onCanvas={true} showAnimation={this.props.showAnimation} animations={this.props.element.animations()} current={this.props.scenePosition}/>
-            case ChartType.SCATTERPLOT:
-                return <VegaLite.Scatterplot name={this.props.name} data={data} spec={this.props.element.info().spec} width={this.props.width} height={this.props.height} onCanvas={true} showAnimation={this.props.showAnimation} animations={this.props.element.animations()} current={this.props.scenePosition}/>
-            case ChartType.HISTOGRAM:
-                return <VegaLite.Histogram name={this.props.name} data={data} spec={this.props.element.info().spec} width={this.props.width} height={this.props.height} onCanvas={true} showAnimation={this.props.showAnimation} animations={this.props.element.animations()} current={this.props.scenePosition}/>
-        
-            default:
-                return <VegaLite.BarChart name={this.props.name} data={data} spec={this.props.element.info().spec} onCanvas={true} showAnimation={this.props.showAnimation} animations={this.props.element.animations()} current={this.props.scenePosition}/>
-        }
+        return  <ChartContainer 
+                    category={chartInfo.category}
+                    type={chartInfo.type}
+                    name={this.props.name} 
+                    data={data} 
+                    spec={chartInfo.spec} 
+                    width={chartInfo.width} 
+                    height={chartInfo.height} 
+                    onCanvas={true} 
+                    showAnimation={this.props.showAnimation} 
+                    animations={this.props.element.animations()} 
+                    current={this.props.scenePosition}
+                />
     }
 
     render() {

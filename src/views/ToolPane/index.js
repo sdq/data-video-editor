@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import ToolPane from './ToolPane';
 import {currentScene, sceneIndex, scenes} from '@/selectors/video';
 import {currentElement, elementIndex, isElementSelected, dragPos,transformInfo} from '@/selectors/canvas';
-import { dataNameList, dataList, fieldsList, displaySpec, currentData, currentVis, slots, dataIndex } from '@/selectors/vis';
+import { dataNameList, dataList, fieldsList, displaySpec, currentData, currentVis, channels, dataIndex } from '@/selectors/vis';
 import * as videoActions from '@/actions/videoAction';
 import * as canvasActions from '@/actions/canvasAction';
 import * as visActions from '@/actions/visAction';
@@ -27,7 +27,7 @@ const mapStateToProps = state => {
         // vis
         displaySpec: displaySpec(state),
         currentVis: currentVis(state),
-        slots: slots(state),
+        channels: channels(state),
     }
 }
 

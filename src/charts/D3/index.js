@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import VegaLiteContainer from './VegaLiteContainer';
+import D3Container from './D3Container';
 
-export default class VegaLite extends Component {
+export default class D3Chart extends Component {
     render() {
         return (
-            <VegaLiteContainer
+            <D3Container
                 type={this.props.type}
                 name={this.props.name} 
                 data={this.props.data} 

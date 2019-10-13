@@ -5,10 +5,11 @@
   "dependencies": {
     "antd": "^3.20.3",
     "babel-plugin-import": "^1.12.0",
+    "canvg": "^2.0.0",
     "customize-cra": "^0.4.1",
     "d3": "4.13.0",
-    "gif-frames": "^1.0.1",
     "fix-webm-duration": "^1.0.0",
+    "gif-frames": "^1.0.1",
     "konva": "^3.4.1",
     "less": "^3.9.0",
     "less-loader": "^5.0.0",

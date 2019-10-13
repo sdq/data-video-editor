@@ -7,8 +7,6 @@ export default class AssistLines extends Component {
     render() {
         //console.log(this.props)
         const { x, y } = this.props.dragPos;
-        console.log("AssistLines", x, y)
-
 
         return (
             <div style={{ position: 'absolute', zIndex: 1 }}>
