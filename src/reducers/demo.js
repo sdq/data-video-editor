@@ -4,6 +4,7 @@ import { Element, ImageInfo, ChartInfo, TextInfo} from '../models/Element';
 import MyURL from '../constants/MyURL';
 import ElementType from '../constants/ElementType';
 import ChartType from '../constants/ChartType';
+import ChartCategory from '../constants/ChartCategory';
 // import AnimationType from '../animation/AnimationType';
 // import AnimationModel from '../animation/AnimationModel';
 import Color from '../constants/Color';
@@ -12,14 +13,15 @@ import Color from '../constants/Color';
 const demoimage = new ImageInfo(
     'man.png',
     MyURL.OSS+'/images/man.png',
-    300,
-    60,
+    480,
+    89,
     100,
     100,
     0,
 )
 const demochart = new ChartInfo(
     0,
+    ChartCategory.VEGALITE,
     ChartType.BARCHART,
     {
         "mark": "bar",
@@ -31,14 +33,14 @@ const demochart = new ChartInfo(
     },
     100,
     40,
-    100,
-    100,
+    300,
+    300,
     0,
 )
 const demotext = new TextInfo(
     "一个年轻的男子，坐在街道旁的椅子上发呆。他的身旁有一个路灯和灌木。",
-    100,
-    360,
+    45,
+    409,
 )
 const element0 = new Element(ElementType.CHART, demochart);
 const element1 = new Element(ElementType.IMAGE, demoimage);
@@ -55,14 +57,15 @@ scene1.addElement(element2);
 const demoimage2 = new ImageInfo(
     'woman.png',
     MyURL.OSS+'/images/woman.png',
-    230,
-    240,
+    342,
+    112,
     100,
     100,
     0,
 )
 const demochart2 = new ChartInfo(
     0,
+    ChartCategory.VEGALITE,
     ChartType.LINECHART,
     {
         "mark": "line",
@@ -72,16 +75,16 @@ const demochart2 = new ChartInfo(
           "color": {"value": Color.DEEP_ORANGE},
         }
     },
-    240,
-    40,
-    100,
-    100,
+    81,
+    132,
+    200,
+    200,
     0,
 )
 const demotext2 = new TextInfo(
     "一位女士坐在地上正在思考问题。",
-    500,
-    380,
+    333,
+    328,
 )
 const element02 = new Element(ElementType.CHART, demochart2);
 const element12 = new Element(ElementType.IMAGE, demoimage2);

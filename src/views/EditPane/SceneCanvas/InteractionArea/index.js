@@ -5,10 +5,11 @@ import AssistLines from './AssistLines';
 import GridLines from './GridLines';
 import TextEditor from './TextEditor';
 import GifEditor from './GifAnimator';
+import ChartInteractionArea from './ChartInteractionArea';
 
 export default class InteractionArea extends Component {
     render() {
-        const { showAnimationTargetArea, showResourceTargetArea, showAssistLines, showTextEditor, showGridLines, showGifEditor } = this.props;
+        const { showAnimationTargetArea, showResourceTargetArea, showAssistLines, showTextEditor, showGridLines, showGifEditor, showChartPreview } = this.props;
         return ( 
             <div style={{position:'absolute', zIndex:1}}>
                 {showAnimationTargetArea?<AnimationTargetArea {...this.props}/>:null}
@@ -17,6 +18,7 @@ export default class InteractionArea extends Component {
                 {showGridLines ? <GridLines /> : null }
                 {showTextEditor ? <TextEditor {...this.props}/> : null }
                 {showGifEditor ? <GifEditor  {...this.props}/> : null }
+                {showChartPreview ? <ChartInteractionArea  {...this.props}/> : null }
             </div>
         )
     }

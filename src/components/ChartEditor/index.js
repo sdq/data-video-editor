@@ -21,7 +21,7 @@ export default class ChartEditor extends Component {
             >
                 <Layout style={{ height: '600px' }}>
                     <Sider width={420} className="pane">
-                        <MappingPanel currentFields={carsSchema} slots={this.props.slots}  {...this.props}/>
+                        <MappingPanel currentFields={carsSchema} channels={this.props.channels}  {...this.props}/>
                     </Sider>
                     <Layout>
                     <Content className="pane">

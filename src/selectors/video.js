@@ -30,7 +30,6 @@ export const videoDuration = createSelector(
         scenes.forEach((scene,i) => {
             duration += scenes[i].duration()
         });
-        console.log(duration)
         return duration;
     }
 )
