@@ -5,11 +5,12 @@ import './chartpanel.css';
 export default class ChartPanel extends Component {
 
     render() {
+        const chartInfo = this.props.currentElement.info();
         return (
             <div style={{textAlign: 'center'}}>
                 <ChartContainer 
-                    element={this.props.currentElement} 
-                    type={this.props.currentElement.info().type}
+                    category={chartInfo.category}
+                    type={chartInfo.type}
                     data={this.props.data}
                     spec={this.props.spec}
                     width={530} 

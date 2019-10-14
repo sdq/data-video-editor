@@ -66,14 +66,16 @@ export default class ChartElement extends Component {
 
     chooseChart() {
         var data = {};
+        const chartInfo = this.props.element.info();
         if (!_.isEmpty(this.props.dataList)) {
-            data = this.props.dataList[this.props.element.info().dataIndex];
+            data = this.props.dataList[chartInfo.dataIndex];
         }
         return  <ChartContainer 
-                    type={this.props.element.info().type}
+                    category={chartInfo.category}
+                    type={chartInfo.type}
                     name={this.props.name} 
                     data={data} 
-                    spec={this.props.element.info().spec} 
+                    spec={chartInfo.spec} 
                     width={this.props.width} 
                     height={this.props.height} 
                     onCanvas={true} 

@@ -1,17 +1,27 @@
 import * as d3 from 'd3';
+import canvg from 'canvg';
 import './style.css';
-import data from '../D3Container/data';
 
 const fakeWidth = 400;
 const fakeHeight = 400;
 
+const defaultSpec = {
+    "type": "barchart",
+    "encoding": {
+        "x": {},
+        "y": {}
+    }
+}
+
 const draw = (props) => {
-    d3.select('.vis-barchart > *').remove();
-    // const data = data;
+    let a = document.createElement("div")
+    d3.select(a).remove();
+    const data = props.demodata;
+    // console.log(data);
     const margin = {top: 20, right: 20, bottom: 30, left: 40};
     const width = fakeWidth - margin.left - margin.right;
     const height = fakeHeight - margin.top - margin.bottom;
-    let svg = d3.select('.vis-barchart').append('svg')
+    let svg = d3.select(a).append('svg')
             .attr('width',width + margin.left + margin.right)
             .attr('height',height + margin.top + margin.bottom)
             .append("g")
@@ -49,6 +59,18 @@ const draw = (props) => {
     // add the y Axis
     svg.append("g")
         .call(d3.axisLeft(y));
+    
+    // console.log(svg.node());
+
+    if (props.onCanvas) {
+        var canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        var source = svg.node().parentNode.innerHTML;
+        canvg(canvas, source);
+
+        return canvas.toDataURL('image/png');
+    }
 }
 
 export default draw;

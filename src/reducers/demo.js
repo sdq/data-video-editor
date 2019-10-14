@@ -4,6 +4,7 @@ import { Element, ImageInfo, ChartInfo, TextInfo} from '../models/Element';
 import MyURL from '../constants/MyURL';
 import ElementType from '../constants/ElementType';
 import ChartType from '../constants/ChartType';
+import ChartCategory from '../constants/ChartCategory';
 // import AnimationType from '../animation/AnimationType';
 // import AnimationModel from '../animation/AnimationModel';
 import Color from '../constants/Color';
@@ -20,6 +21,7 @@ const demoimage = new ImageInfo(
 )
 const demochart = new ChartInfo(
     0,
+    ChartCategory.D3,
     ChartType.BARCHART,
     {
         "mark": "bar",
@@ -63,6 +65,7 @@ const demoimage2 = new ImageInfo(
 )
 const demochart2 = new ChartInfo(
     0,
+    ChartCategory.VEGALITE,
     ChartType.LINECHART,
     {
         "mark": "line",

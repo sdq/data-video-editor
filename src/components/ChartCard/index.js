@@ -26,6 +26,7 @@ const chartSource = {
                 const newScene = Object.assign({},dropResult.currentScene);
                 const newChart = new ChartInfo(
                     0,
+                    item.category, // category
                     item.type, //type
                     {}, //spec
                     260,
