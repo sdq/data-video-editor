@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Image, Group } from 'react-konva';
 import { AnimationCreator } from '@/animation';
 import _ from 'lodash';
-var gifFrames = require('gif-frames');
 
 export default class GifElement extends Component {
     constructor(props) {
@@ -11,15 +10,17 @@ export default class GifElement extends Component {
             canvas: null,
         };
         this.isToAnimate = false;
-        this.data = [];
-        this._imageDelay = 1;
+        this.data = this.props.element.info().gifFrames || [];
         this.dragstart = this.dragstart.bind(this);
         this.dragend = this.dragend.bind(this);
         this.onTransformStart = this.onTransformStart.bind(this);
         this.onTransformEnd = this.onTransformEnd.bind(this);
     }
-    async componentDidMount() {
-        await this.parseGif();
+    componentDidMount() {
+        //默认显示第一帧
+        this.setState({
+            canvas: this.data[0].getImage()
+        });
         if (this.props.showAnimation) {
             this.isToAnimate = true
         }
@@ -44,33 +45,14 @@ export default class GifElement extends Component {
         //console.log("Umount...", this.isToAnimate)
         this.pause();
     }
-    async parseGif() {
-        //console.log("gifUrl", this.props.element._duration)
-        let gifUrl = this.props.element.info().src;
-        let _this = this;
-        await gifFrames(
-            { url: gifUrl, frames: 'all', outputType: 'canvas', cumulative: true },
-            function (err, frameData) {
-                if (err) {
-                    throw err;
-                }
-                _this.data = frameData;
-                //console.log("delay", frameData[0].frameInfo.delay)
-                //元素默认是10s 对应播放的delay 是元素自身读取的默认delay（1/100ths of a second）。根据bar按照比例计算_this._imageDelay
-                _this._imageDelay = frameData[0].frameInfo.delay * _this.props.element._duration;
-                //console.log("_imageDelay", _this._imageDelay)
-                //默认显示第一张图片
-                _this.setState({
-                    canvas: frameData[0].getImage()
-                })
-            }
-        );
-    }
+
 
     play = () => {
         //console.log("play...", this._imageDelay)
         this.isToAnimate = false;
         let that = this;
+        //delay 单位是0.01s,this.props.element.info().delay * 10 转化为ms 
+        let gifDelay = this.props.element.info().delay * 10;
         for (let i = 0; i < this.data.length; i++) {
             (function (playFrame) {
                 // update canvas that we are using for Konva.Image
@@ -78,14 +60,14 @@ export default class GifElement extends Component {
                     that.setState({
                         canvas: that.data[playFrame].getImage(),
                     })
-                    // console.log("drawImage", playFrame)
-                }, that._imageDelay * playFrame);
+                    //console.log("drawImage", playFrame)
+                }, gifDelay * playFrame);
 
                 //最后一帧，递归播放
                 if (playFrame === that.data.length - 1) {
-                    that._startTimeoutNext= setTimeout(() => {
+                    that._startTimeoutNext = setTimeout(() => {
                         that.play();
-                    }, that._imageDelay * (playFrame + 1));
+                    }, gifDelay * (playFrame + 1));
                 }
             })(i);
         };

@@ -5,6 +5,7 @@ import AudioCard from '@/components/AudioCard';
 import GifCard from '@/components/GifCard';
 import VideoCard from '@/components/VideoCard';
 import './usertab.css';
+var gifFrames = require('gif-frames');
 
 const { Panel } = Collapse;
 const { Dragger } = Upload;
@@ -14,8 +15,14 @@ export default class UserTab extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            activeKey:"",
-            imageList: [],
+            activeKey: "",
+            imageList: [
+                {
+                    uid: '-1',
+                    name: "woman",
+                    src: "https://datavideo.idvxlab.com/images/woman.png"
+                },
+            ],
             audioList: [
                 {
                     uid: '-1',
@@ -40,6 +47,13 @@ export default class UserTab extends Component {
         }
     }
 
+    componentDidMount(){
+        //这里是解析对列表中默认的gif进行解析
+        this.state.gifList.map(async element => {
+            element.gifData = await this.parseGif(element.src);
+            return element;
+        })
+    }
     uploadFile = (file) => {
         let newFile = {};
         newFile.uid = file.uid;
@@ -69,12 +83,17 @@ export default class UserTab extends Component {
                 break;
             case 'gif':
                 newList = this.state.gifList;
+                (async () => {
+                    newFile.gifData = await this.parseGif(newFile.src);
+                })();
+                //console.log("newFile",newFile)
                 newList.push(newFile);
                 this.setState({
                     gifList: newList,
                     //上传文件成功，打开对应的panel
                     activeKey: "gif"
                 });
+                //console.log("uploadFile111", this.state.gifList)
                 break;
             default:
                 break;
@@ -82,10 +101,24 @@ export default class UserTab extends Component {
         return false;
     }
 
+    async parseGif(gifUrl) {
+        //console.log("gifUrl", gifUrl)
+        let _this = this;
+        await gifFrames(
+            { url: gifUrl, frames: 'all', outputType: 'canvas', cumulative: true },
+            function (err, frameData) {
+                if (err) {
+                    throw err;
+                }
+                _this.gifData = frameData;
+            }
+        );
+        return _this.gifData;
+    }
     onDeleteImage = (key) => {
         for (var i = 0; i < this.state.imageList.length; i++) {
             if (this.state.imageList[i].uid === key) {
-                console.log('deleteyes', this.state.imageList[i].uid);
+                //console.log('deleteyes', this.state.imageList[i].uid);
                 const newList = this.state.imageList;
                 newList.splice(i, 1);
                 this.setState({
@@ -97,7 +130,7 @@ export default class UserTab extends Component {
     onDeleteGif = (key) => {
         for (var i = 0; i < this.state.gifList.length; i++) {
             if (this.state.gifList[i].uid === key) {
-                console.log('deleteyes', this.state.gifList[i].uid);
+                //console.log('deleteyes', this.state.gifList[i].uid);
                 const newList = this.state.gifList;
                 newList.splice(i, 1);
                 this.setState({
@@ -118,21 +151,21 @@ export default class UserTab extends Component {
             }
         }
     };
-    callback=(key)=> {
+    callback = (key) => {
         switch (key) {
             case "image":
                 this.setState({
-                    activeKey:"image"
+                    activeKey: "image"
                 })
                 break;
             case "audio":
                 this.setState({
-                    activeKey:"audio"
+                    activeKey: "audio"
                 })
                 break;
             case "video":
                 this.setState({
-                    activeKey:"video"
+                    activeKey: "video"
                 });
                 break;
             case "gif":
@@ -140,10 +173,10 @@ export default class UserTab extends Component {
                     activeKey: "gif"
                 });
                 break;
-            
+
             default:
                 this.setState({
-                    activeKey:""
+                    activeKey: ""
                 })
                 break;
         }
@@ -151,6 +184,8 @@ export default class UserTab extends Component {
 
     render() {
         const { imageList, audioList, videoList, gifList } = this.state;
+        //console.log("gifList", gifList)
+
         return (
             <div className="usertab">
                 <div style={{ height: "120px", margin: "8px" }}>
@@ -196,7 +231,7 @@ export default class UserTab extends Component {
                                     </List.Item>
                                 )}
                             />
-                        </Panel> 
+                        </Panel>
 
                         <Panel header={"Audio (" + audioList.length + ")"} key="audio" className="collaspe-panel">
                             <List
@@ -218,7 +253,7 @@ export default class UserTab extends Component {
                                 )}
                             />
                         </Panel>
-                        <Panel header={"Video ("+videoList.length+")"} key="video" className="collaspe-panel">
+                        <Panel header={"Video (" + videoList.length + ")"} key="video" className="collaspe-panel">
                             <List
                                 grid={{ gutter: 3, column: 3 }}
                                 dataSource={videoList}

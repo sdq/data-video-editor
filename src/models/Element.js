@@ -1,12 +1,13 @@
 import uuidv4 from 'uuid/v4';
 import ImageInfo from './element/ImageInfo';
+import GifInfo from './element/GifInfo';
 import ChartInfo from './element/ChartInfo';
 import TextInfo from './element/TextInfo';
 import AudioInfo from './element/AudioInfo';
 import VideoInfo from './element/VideoInfo';
 import Fragment from './element/Fragment';
 
-export {ImageInfo, ChartInfo, TextInfo, AudioInfo, VideoInfo}
+export {ImageInfo, GifInfo, ChartInfo, TextInfo, AudioInfo, VideoInfo}
 
 export class Element {
     constructor(type, info) {
