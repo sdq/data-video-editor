@@ -31,6 +31,17 @@ export default class ChartElement extends Component {
         newEle.info().x = x;
         newEle.info().y = y;
         this.props.edit(newEle);
+        if (Math.abs(x - 400) < 40) {
+            x = 400;
+            //console.log("吸附x")
+        }
+        if (Math.abs(y - 225) < 40) {
+            y = 225;
+            //console.log("吸附y")
+        }
+        //更新右侧ToolPane的值 
+        let dragPos = { x, y };
+        this.props.dragElement(dragPos);
     };
 
     onTransformStart() {

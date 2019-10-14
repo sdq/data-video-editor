@@ -67,6 +67,19 @@ export default class ImageElement extends Component {
     }
 
     dragend(x,y) {
+        //TODO:存在吸附不成功的情况
+         if( Math.abs(x-400) < 40){
+            x=400;
+           // console.log("吸附x")
+         }
+         if( Math.abs(y-225) < 40){
+            y=225;
+            //console.log("吸附y")
+         }
+
+        //更新右侧ToolPane的值 
+        let dragPos = { x, y };
+        this.props.dragElement(dragPos);
         const newEle = _.cloneDeep(this.props.element);
         newEle.info().x = x;
         newEle.info().y = y;
