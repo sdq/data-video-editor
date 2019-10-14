@@ -56,7 +56,7 @@ class GifCard extends Component {
         const { connectDragSource } = this.props;
         return connectDragSource(
             <div className="gifcard" align="center">
-                <img src={this.props.info.src} alt={this.props.info.name} />
+                <img crossOrigin='anonymous' src={this.props.info.src} alt={this.props.info.name} />
             </div>
         )
     }

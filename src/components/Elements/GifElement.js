@@ -146,6 +146,7 @@ export default class GifElement extends Component {
                     width={this.props.element.info().width}
                     height={this.props.element.info().height}
                     name={this.props.name}
+                    crossOrigin='anonymous'
                     image={canvas}
                     opacity={this.props.element.info().opacity}
                 />
