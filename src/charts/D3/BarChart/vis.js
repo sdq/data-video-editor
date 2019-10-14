@@ -1,13 +1,13 @@
 import * as d3 from 'd3';
 import './style.css';
-import data from './data';
+import data from '../D3Container/data';
 
 const fakeWidth = 400;
 const fakeHeight = 400;
 
 const draw = (props) => {
     d3.select('.vis-barchart > *').remove();
-    const data = data;
+    // const data = data;
     const margin = {top: 20, right: 20, bottom: 30, left: 40};
     const width = fakeWidth - margin.left - margin.right;
     const height = fakeHeight - margin.top - margin.bottom;
