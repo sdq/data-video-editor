@@ -3,8 +3,8 @@ export default class ChartInfo {
         this.dataIndex = dataIndex;
         this.type = type; // chart type
         this.spec = spec; // chart spec
-        this.x = x;
-        this.y = y;
+        this.x = x; // position x
+        this.y = y; // position y
         this.width = width;
         this.height = height;
         this.rotation = rotation;

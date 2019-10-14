@@ -7,8 +7,8 @@ import './shelf.css';
 
 const boxTarget = {
 	drop: (props) => ({ 
-        name: props.channel,
-        isEncoded: props.slot.isEncoded,
+        name: props.channel.name,
+        isEncoded: props.channel.isEncoded,
     })
 }
 
@@ -20,14 +20,14 @@ class Shelf extends Component {
     }
 
     removeEncoding() {
-        this.props.removeEncoding(this.props.channel, this.props.slot.name)
+        this.props.removeEncoding(this.props.channel.name, this.props.channel.field)
     }
 
     render() {
         const { canDrop, isOver, connectDropTarget } = this.props;
         const isActive = canDrop && isOver;
         const isAvailable = this.props.dropAvailable;
-        let backgroundColor = this.props.slot.isEncoded ? Color.DEEP_ORANGE : '#fff';
+        let backgroundColor = this.props.channel.isEncoded ? Color.DEEP_ORANGE : '#fff';
         if (!isAvailable) {
             backgroundColor = 'darkgrey';
         }
@@ -40,9 +40,9 @@ class Shelf extends Component {
         return connectDropTarget(
             <div>
                 <Row className="shelf">
-                    <Col span={4} className="channelName">{this.props.channel}</Col>
-                    <Col span={ this.props.slot.isEncoded ? 14 : 18} className="channelSlot" style={{ backgroundColor: backgroundColor, color: this.props.slot.isEncoded ? "#ffffff" : "#37415C" }}>{this.props.slot.isEncoded ? this.props.slot.name : 'drop field here'}</Col>
-                    <Col span={ this.props.slot.isEncoded ? 4 : 0} className="channelSlot" style={{ backgroundColor }}>
+                    <Col span={4} className="channelName">{this.props.channel.name}</Col>
+                    <Col span={ this.props.channel.isEncoded ? 14 : 18} className="channelSlot" style={{ backgroundColor: backgroundColor, color: this.props.channel.isEncoded ? "#ffffff" : "#37415C" }}>{this.props.channel.isEncoded ? this.props.channel.field : 'drop field here'}</Col>
+                    <Col span={ this.props.channel.isEncoded ? 4 : 0} className="channelSlot" style={{ backgroundColor }}>
                         <Button shape="circle" type="link" ghost size="small" icon="close" onClick={this.removeEncoding}/>
                     </Col>
                 </Row>

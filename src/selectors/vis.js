@@ -45,31 +45,33 @@ export const currentVis = createSelector(
     }
 )
 
-export const slots = createSelector(
+export const channels = createSelector(
     displaySpec,
     (displaySpec) => {
-        const slots = {
+        const channels = {
             x: {
+                name: 'x',
                 isEncoded: false,
-                name: ""
+                field: ''
             },
             y: {
+                name: 'y',
                 isEncoded: false,
-                name: ""
+                field: ''
             },
         }
         if (_.isEmpty(displaySpec) || displaySpec === "") {
-            return slots;
+            return channels;
         }
         const encoding = displaySpec["encoding"];
         if ("x" in encoding && "field" in encoding["x"]) {
-            slots.x.isEncoded = true;
-            slots.x.name = encoding["x"]["field"];
+            channels.x.isEncoded = true;
+            channels.x.field = encoding["x"]["field"];
         }
         if ("y" in encoding && "field" in encoding["y"]) {
-            slots.y.isEncoded = true;
-            slots.y.name = encoding["y"]["field"];
+            channels.y.isEncoded = true;
+            channels.y.field = encoding["y"]["field"];
         }
-        return slots;
+        return channels;
     }
 )
