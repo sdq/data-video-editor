@@ -5,20 +5,24 @@ import './style.css';
 const fakeWidth = 400;
 const fakeHeight = 400;
 
-const defaultSpec = {
-    "type": "barchart",
-    "encoding": {
-        "x": {},
-        "y": {}
-    }
-}
+// const defaultSpec = {
+//     "type": "barchart",
+//     "encoding": {
+//         "x": {},
+//         "y": {}
+//     }
+// }
 
 const draw = (props) => {
-    let a = document.createElement("div")
-    d3.select(a).remove();
+    // console.log('draw')
+    let a = document.createElement("div");
+    if (!props.onCanvas) {
+        d3.select('.vis-barchart > *').remove();
+        a = '.vis-barchart';
+    }
     const data = props.demodata;
     // console.log(data);
-    const margin = {top: 20, right: 20, bottom: 30, left: 40};
+    const margin = {top: 10, right: 30, bottom: 10, left: 30};
     const width = fakeWidth - margin.left - margin.right;
     const height = fakeHeight - margin.top - margin.bottom;
     let svg = d3.select(a).append('svg')
@@ -70,6 +74,8 @@ const draw = (props) => {
         canvg(canvas, source);
 
         return canvas.toDataURL('image/png');
+    } else {
+        return svg.node().parentNode.innerHTML;
     }
 }
 

@@ -14,6 +14,7 @@ export default class EditCanvas extends Component {
         this.state = {
             showAssistLines: false,
             showTextEditor: false, 
+            showChartPreview: false, 
             showGifEditor:false,
             dbClickedElementIndex: -1,
         };
@@ -37,6 +38,7 @@ export default class EditCanvas extends Component {
         this.setState({
             showTextEditor: false,
             showAnimationLayer: false,
+            showChartPreview: false,
             dbClickedElementIndex: -1,
             showGifEditor:false,
         });
@@ -55,7 +57,7 @@ export default class EditCanvas extends Component {
     
         // find clicked rect by its name
         const name = e.target.name();
-        // console.log(name);
+        console.log(name);
         if (name) {
             var eleIndex = Number(name.split('-')[1]);
             this.props.selectElement(eleIndex, name);
@@ -84,13 +86,15 @@ export default class EditCanvas extends Component {
                 this.setState({
                     showTextEditor: true,
                 })
-            }else if(dbElement.type() === ElementType.GIF){
+            } else if(dbElement.type() === ElementType.GIF){
                 this.setState({
                     showGifEditor: true,
                 })
-            }
-            
-            // TODO: show animation
+            } else if(dbElement.type() === ElementType.CHART){
+                this.setState({
+                    showChartPreview: true,
+                })
+            } 
         }
     }
 
@@ -99,10 +103,15 @@ export default class EditCanvas extends Component {
         const editable = !isPerforming;
         return (
             <div id="canvasContainer">
-                {editable?<InteractionArea 
-                showTextEditor={this.state.showTextEditor}
-                showGifEditor={this.state.showGifEditor}
-                showAssistLines={this.state.showAssistLines} {...this.props}/>: null}
+                {editable?
+                <InteractionArea 
+                    showTextEditor={this.state.showTextEditor}
+                    showChartPreview={this.state.showChartPreview}
+                    showGifEditor={this.state.showGifEditor}
+                    showAssistLines={this.state.showAssistLines} 
+                    {...this.props}
+                />: 
+                null}
                 <Stage 
                     ref={ref => { this.stageRef = ref; }}
                     width={800} height={450} 

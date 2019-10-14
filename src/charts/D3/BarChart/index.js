@@ -15,15 +15,15 @@ export default class BarChart extends Component {
         const chartImageUrl = draw(this.props);
         this.chartImage = new window.Image();
         this.chartImage.src = chartImageUrl;
-        this.chartImage.addEventListener('load', this.handleLoad);
+        this.chartImage.addEventListener('load', this.handleLoad);  
     }
 
-    componentDidUpdate(preProps) {
-        const chartImageUrl = draw(this.props);
-        this.chartImage = new window.Image();
-        this.chartImage.src = chartImageUrl;
-        this.chartImage.addEventListener('load', this.handleLoad);
-    }
+    // componentDidUpdate(preProps) {
+    //     const chartImageUrl = draw(this.props);
+    //     this.chartImage = new window.Image();
+    //     this.chartImage.src = chartImageUrl;
+    //     this.chartImage.addEventListener('load', this.handleLoad);
+    // }
 
     handleLoad = () => {
         this.setState({
@@ -33,9 +33,9 @@ export default class BarChart extends Component {
 
     render() {
         if (this.props.onCanvas) {
-            return <Image 
+            return  <Image 
                         ref={node=>this.imageref=node}
-                        name={'d3 chart'}
+                        name={this.props.name}
                         image={this.state.chartImage} 
                     />
         } else {
