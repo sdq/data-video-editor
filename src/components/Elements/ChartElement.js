@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Group } from 'react-konva';
 import _ from 'lodash';
-import VegaLite from '@/charts/VegaLite';
+import ChartContainer from '@/charts/ChartContainer';
 
 let lastScale = '';
 
@@ -69,7 +69,7 @@ export default class ChartElement extends Component {
         if (!_.isEmpty(this.props.dataList)) {
             data = this.props.dataList[this.props.element.info().dataIndex];
         }
-        return  <VegaLite 
+        return  <ChartContainer 
                     type={this.props.element.info().type}
                     name={this.props.name} 
                     data={data} 

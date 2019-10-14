@@ -11,79 +11,19 @@ export default class VegaLiteContainer extends Component {
     chooseChart() {
         switch (this.props.type) {
             case ChartType.AREACHART:
-                return  <AreaChart 
-                            name={this.props.name} 
-                            data={this.props.data} 
-                            spec={this.props.spec} 
-                            width={this.props.width} 
-                            height={this.props.height} 
-                            onCanvas={this.props.onCanvas} 
-                            showAnimation={this.props.showAnimation} 
-                            animations={this.props.animations} 
-                            current={this.props.scenePosition}
-                        />
+                return  <AreaChart {...this.props}/>
             case ChartType.BARCHART:
-                return  <BarChart 
-                            name={this.props.name} 
-                            data={this.props.data} 
-                            spec={this.props.spec} 
-                            width={this.props.width} 
-                            height={this.props.height} 
-                            onCanvas={this.props.onCanvas} 
-                            showAnimation={this.props.showAnimation} 
-                            animations={this.props.animations} 
-                            current={this.props.scenePosition}
-                        />
+                return  <BarChart {...this.props}/>
             case ChartType.LINECHART:
-                return  <LineChart
-                            name={this.props.name} 
-                            data={this.props.data} 
-                            spec={this.props.spec} 
-                            width={this.props.width} 
-                            height={this.props.height} 
-                            onCanvas={this.props.onCanvas} 
-                            showAnimation={this.props.showAnimation} 
-                            animations={this.props.animations} 
-                            current={this.props.scenePosition}
-                        />
+                return  <LineChart {...this.props}/>
             case ChartType.SCATTERPLOT:
-                return  <Scatterplot
-                            name={this.props.name} 
-                            data={this.props.data} 
-                            spec={this.props.spec} 
-                            width={this.props.width} 
-                            height={this.props.height} 
-                            onCanvas={this.props.onCanvas} 
-                            showAnimation={this.props.showAnimation} 
-                            animations={this.props.animations} 
-                            current={this.props.scenePosition}
-                        />
+                return  <Scatterplot {...this.props}/>
             case ChartType.HISTOGRAM:
-                return  <Histogram
-                            name={this.props.name} 
-                            data={this.props.data} 
-                            spec={this.props.spec} 
-                            width={this.props.width} 
-                            height={this.props.height} 
-                            onCanvas={this.props.onCanvas} 
-                            showAnimation={this.props.showAnimation} 
-                            animations={this.props.animations} 
-                            current={this.props.scenePosition}
-                        />
+                return  <Histogram {...this.props}/>
         
             default:
                 console.log('error in chart type');
-                return  <Histogram
-                            name={this.props.name} 
-                            data={this.props.data} 
-                            spec={this.props.spec} 
-                            width={this.props.width} 
-                            height={this.props.height} 
-                            onCanvas={this.props.onCanvas} 
-                            showAnimation={this.props.showAnimation} 
-                            animations={this.props.animations} 
-                            current={this.props.scenePosition}
-                        />;
+                return  <Histogram {...this.props}/>
         }
     }
 
