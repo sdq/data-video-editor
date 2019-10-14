@@ -42,7 +42,12 @@ export default class ImageElement extends Component {
     loadImage() {
         // save to "this" to remove "load" handler on unmount
         this.image = new window.Image();
-        this.image.src = this.props.element.info().src;
+        // adding a rand to avoid a Chrome caching issue
+        // once you already had made a request to this image without requesting for the CORS headers
+        // the following request would fail
+        var rand = '?'+Math.random();
+        this.image.src = this.props.element.info().src + rand;
+        this.image.crossOrigin='anonymous'
         this.image.addEventListener('load', this.handleLoad);
     }
     handleLoad = () => {

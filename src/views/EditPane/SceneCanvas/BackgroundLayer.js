@@ -10,6 +10,7 @@ export default class BackgroundLayer extends Component {
     }
     componentDidMount() {
         this.loadImage();
+        this.backgroundLayer.canvas._canvas.id = 'background-layer';
     }
     componentDidUpdate(oldProps) {
         if (oldProps.currentScene.backgroundImage() !== this.props.currentScene.backgroundImage()) {

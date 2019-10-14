@@ -97,6 +97,18 @@ export default class EditCanvas extends Component {
     render() {
         const { isPerforming } = this.props;
         const editable = !isPerforming;
+        const editableLayer = <EditableLayer 
+                displayAssistLines={(active) => this.displayAssistLines(active)}
+                dbClickedElementIndex={this.state.dbClickedElementIndex}
+                {...this.props}
+            />;
+        const backgroundLayer = <BackgroundLayer 
+                {...this.props}
+            />
+        const animationLayer = <AnimationLayer
+                dbClickedElementIndex={this.state.dbClickedElementIndex}
+                {...this.props}
+            />
         return (
             <div id="canvasContainer">
                 {editable?<InteractionArea 
@@ -109,21 +121,9 @@ export default class EditCanvas extends Component {
                     onMouseDown={editable?this.handleStageMouseDown:null}
                     onDblClick={editable?this.handleStageDblClick:null}
                 >
-                    <BackgroundLayer 
-                        {...this.props}
-                    />
-                    {
-                        isPerforming?
-                        <AnimationLayer
-                            dbClickedElementIndex={this.state.dbClickedElementIndex}
-                            {...this.props}
-                        />:
-                        <EditableLayer 
-                            displayAssistLines={(active) => this.displayAssistLines(active)}
-                            dbClickedElementIndex={this.state.dbClickedElementIndex}
-                            {...this.props}
-                        />
-                    }
+                    {isPerforming?null:backgroundLayer}
+                    {isPerforming?null:editableLayer}
+                    {isPerforming?animationLayer:null}
                 </Stage>
             </div>
         )

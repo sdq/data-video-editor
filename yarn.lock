@@ -4773,6 +4773,11 @@ find-up@^2.0.0, find-up@^2.1.0:
   dependencies:
     locate-path "^2.0.0"
 
+fix-webm-duration@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/fix-webm-duration/-/fix-webm-duration-1.0.0.tgz#60624281536c2caa86641fe6487f7c92c66f632e"
+  integrity sha512-fwYAr+wYZoeHNPSpHXdNFqUs0EpwAkNzmDM6bHPpVeVN8NNB1jipvUssC4kjhUMb0fML266nEGii3NXHL/eWJw==
+
 flat-cache@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/flat-cache/-/flat-cache-2.0.1.tgz#5d296d6f04bda44a4630a301413bdbc2ec085ec0"
