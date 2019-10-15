@@ -53,7 +53,7 @@ export default class DataTool extends Component {
     handleChartOk = () => {
         // Update chart on canvas
         const newScene = Object.assign({}, this.props.currentScene);
-        var newEle = Object.assign({}, this.props.currentElement);
+        let newEle = Object.assign({}, this.props.currentElement);
         newEle.info().spec = this.props.displaySpec;
         newScene.updateElement(newEle, this.props.elementIndex);
         this.props.updateScene(this.props.sceneIndex, newScene);

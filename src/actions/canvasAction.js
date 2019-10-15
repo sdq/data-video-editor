@@ -41,7 +41,6 @@ export const dragElement = (dragPos) => ({
     dragPos,
 })
 
-
 export const transformElement = (transformInfo) => ({ 
     type: ActionType.TRANSFORM_ELEMENT,
     transformInfo,

@@ -37,7 +37,7 @@ const mapDispatchToProps = dispatch => {
         selectElement: (elementIndex, selectElement) => dispatch(canvasActions.selectElement(elementIndex, selectElement)),
         unselectElement: () => dispatch(canvasActions.unselectElement()),
         addElement: (element) => dispatch(canvasActions.addElement(element)),
-        removeElement: (elementIndex) => dispatch(canvasActions.selectElement(elementIndex)),
+        removeElement: (elementIndex) => dispatch(canvasActions.removeElement(elementIndex)),
         updateElement: (element, elementIndex, selectElement) => dispatch(canvasActions.updateElement(element, elementIndex, selectElement)),
         displayAnimationTargetArea: (isActive) => dispatch(uiActions.displayAnimationTargetArea(isActive)),
         dragElement: (dragPos) => dispatch(canvasActions.dragElement(dragPos)),

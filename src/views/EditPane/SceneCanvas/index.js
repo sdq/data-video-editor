@@ -57,7 +57,6 @@ export default class EditCanvas extends Component {
     
         // find clicked rect by its name
         const name = e.target.name();
-        console.log(name);
         if (name) {
             var eleIndex = Number(name.split('-')[1]);
             this.props.selectElement(eleIndex, name);
@@ -67,7 +66,7 @@ export default class EditCanvas extends Component {
 
         if (e.evt.button === 2) {
             // TODO: right click
-            console.log(name);
+            console.log('right click:'+name);
         }
     };
 

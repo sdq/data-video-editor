@@ -1,7 +1,8 @@
 import MyURL from '@/constants/MyURL';
+import ChartCategory from '@/constants/ChartCategory';
 import ChartType from '@/constants/ChartType';
 
-const data = [
+export const vegaliteCharts = [
     {
         chart: ChartType.AREACHART,
         src: MyURL.OSS+"/charts/areachart.png"
@@ -24,4 +25,9 @@ const data = [
     },
 ];
 
-export default data;
+export const d3Charts = [
+    {
+        chart: ChartType.BARCHART,
+        src: MyURL.OSS+"/charts/barchart.png"
+    },
+]

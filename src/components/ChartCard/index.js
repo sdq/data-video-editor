@@ -11,7 +11,10 @@ const chartSource = {
 
 	beginDrag(props) {
         props.displayResourceTargetArea(true);
-		return {type: props.charttype};
+		return {
+            category: props.chartcategory,
+            type: props.charttype
+        };
 	},
 
 	endDrag(props, monitor) {
@@ -19,7 +22,7 @@ const chartSource = {
 		const item = monitor.getItem();
 		const dropResult = monitor.getDropResult();
 		if (dropResult) {
-            // console.log(item);
+            console.log(item);
             // console.log(dropResult);
             if (dropResult.target === "canvas") {
                 //add element to scene
@@ -31,8 +34,8 @@ const chartSource = {
                     {}, //spec
                     260,
                     100,
-                    100,
-                    100,
+                    300,
+                    300,
                     0,
                 )
                 const newElement = new Element(ElementType.CHART, newChart);
