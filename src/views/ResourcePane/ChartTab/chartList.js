@@ -1,5 +1,4 @@
 import MyURL from '@/constants/MyURL';
-import ChartCategory from '@/constants/ChartCategory';
 import ChartType from '@/constants/ChartType';
 
 export const vegaliteCharts = [
