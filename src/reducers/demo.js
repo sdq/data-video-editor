@@ -21,7 +21,7 @@ const demoimage = new ImageInfo(
 )
 const demochart = new ChartInfo(
     0,
-    ChartCategory.VEGALITE,
+    ChartCategory.D3,
     ChartType.BARCHART,
     {
         "mark": "bar",

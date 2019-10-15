@@ -21,12 +21,14 @@ export default class BarChart extends Component {
         }
     }
 
-    // componentDidUpdate(preProps) {
-    //     const chartImageUrl = draw(this.props);
-    //     this.chartImage = new window.Image();
-    //     this.chartImage.src = chartImageUrl;
-    //     this.chartImage.addEventListener('load', this.handleLoad);
-    // }
+    componentDidUpdate(preProps) {
+        if (preProps.spec !== this.props.spec) {
+            const chartImageUrl = draw(this.props);
+            this.chartImage = new window.Image();
+            this.chartImage.src = chartImageUrl;
+            this.chartImage.addEventListener('load', this.handleLoad);
+        }
+    }
 
     handleLoad = () => {
         this.setState({

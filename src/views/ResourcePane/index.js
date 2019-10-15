@@ -14,6 +14,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
+        selectElement: (elementIndex, elementName) => dispatch(canvasActions.selectElement(elementIndex, elementName)),
         addElement: (element) => dispatch(canvasActions.addElement(element)),
         addScene: (scene) => dispatch(videoActions.addScene(scene)),
         updateScene: (index, scene) => dispatch(videoActions.updateScene(index, scene)),
