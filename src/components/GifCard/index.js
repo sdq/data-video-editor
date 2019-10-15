@@ -25,10 +25,9 @@ const imageSource = {
                 const newScene = Object.assign({}, dropResult.currentScene);
 
                 //console.log("gifData", item.gifData);
-                let delay = 40;
+                let delay = 1;
                 let gifFrames;
                 if (item.gifData) {
-                    delay = item.gifData[0].frameInfo.delay;
                     gifFrames=item.gifData;
                     //console.log("gifDuration", item.gifData[0].frameInfo.delay);
                 }
@@ -56,7 +55,7 @@ class GifCard extends Component {
         const { connectDragSource } = this.props;
         return connectDragSource(
             <div className="gifcard" align="center">
-                <img crossOrigin='anonymous' src={this.props.info.src} alt={this.props.info.name} />
+                 <img crossOrigin='anonymous' src={this.props.info.src} alt={this.props.info.name} /> 
             </div>
         )
     }

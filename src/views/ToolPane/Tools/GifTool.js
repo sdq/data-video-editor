@@ -11,9 +11,10 @@ export default class GifTool extends Component {
     super(props);
     this.state = {
             displayColorPicker: false,
-            imageX : this.props.currentElement.info().x,
-            imageY : this.props.currentElement.info().y,
+            gifX : this.props.currentElement.info().x,
+            gifY : this.props.currentElement.info().y,
             opacity : this.props.currentElement.info().opacity, 
+            speed : this.props.currentElement.info().delay, 
         };
         this.onSliderChange = this.onSliderChange.bind(this);
     }
@@ -27,32 +28,31 @@ export default class GifTool extends Component {
     };
 
 
-    changeImageX (value)  {
+    changeGifX (value)  {
         this.props.currentElement.info().x = value;
         const newScene = Object.assign({},this.props.currentScene);
         newScene.updateElement(this.props.currentElement, this.props.elementIndex);
         this.props.updateScene(this.props.sceneIndex, newScene);
     };
-    changeImageY = (value) => {
+    changeGifY = (value) => {
         this.props.currentElement.info().y = value;
         const newScene = Object.assign({},this.props.currentScene);
         newScene.updateElement(this.props.currentElement, this.props.elementIndex);
         this.props.updateScene(this.props.sceneIndex, newScene);
      };
-     changeImageR = (value) => {
-        console.log(this.props.currentElement);
+     changeGifR = (value) => {
         this.props.currentElement.info().rotation = value;
         const newScene = Object.assign({},this.props.currentScene);
         newScene.updateElement(this.props.currentElement, this.props.elementIndex);
         this.props.updateScene(this.props.sceneIndex, newScene);
      };
-     changeImageW = (value) => {  
+     changeGifW = (value) => {  
         this.props.currentElement.info().width = value;
         const newScene = Object.assign({},this.props.currentScene);
         newScene.updateElement(this.props.currentElement, this.props.elementIndex);
         this.props.updateScene(this.props.sceneIndex, newScene);
      };
-     changeImageH = (value) => {
+     changeGifH = (value) => {
         this.props.currentElement.info().height = value;
         const newScene = Object.assign({},this.props.currentScene);
         newScene.updateElement(this.props.currentElement, this.props.elementIndex);
@@ -67,6 +67,13 @@ export default class GifTool extends Component {
         this.props.updateScene(this.props.sceneIndex, newScene);    
     }
 
+    onSpeedChange = (value)=>{
+        const newScene = Object.assign({},this.props.currentScene);
+        this.setState({speed:value}); //record current speed
+        //TODO : let value match real speed 
+        this.props.currentElement.info().delay = value;
+        this.props.updateScene(this.props.sceneIndex, newScene);    
+    }
 
 
     render() {
@@ -77,26 +84,26 @@ export default class GifTool extends Component {
                 <Row style={{margin: '15px 15px 0px 12px', fontSize: '14px'}}>
                     <Col span={2}  style={{textAlign:'center', padding: '0px 0px 0px 0px'}}>X</Col>
                     <Col span={6}><InputNumber min={0} max={600} value = {currentElement.info().x} size="small" precision={0.1} style={{width: '100%',padding: '0px 0px 0px 0px'}} 
-                    onChange = {value => this.changeImageX(value)}
+                    onChange = {value => this.changeGifX(value)}
                     /></Col>
                     <Col span={2} style={{textAlign:'center', padding: '0px 0px 0px 0px'}}>Y</Col>
                     <Col span={6}><InputNumber min={0} max={600} value={currentElement.info().y} size="small" precision={0.1} style={{width: '100%',padding: '0px 0px 0px 0px'}}
-                    onChange = {value => this.changeImageY(value)}
+                    onChange = {value => this.changeGifY(value)}
                     /></Col>
                     <Col span={2} style={{textAlign:'center', padding: '0px 0px 0px 0px'}}><Icon type="redo" /> </Col>
                     <Col span={6}><InputNumber min={-360} max={360} value={currentElement.info().rotation} precision={0.1} formatter={value => `${value}°`} size="small"  style={{width: '100%',padding: '0px 0px 0px 0px'}}
-                     onChange = {value => this.changeImageR(value)}
+                     onChange = {value => this.changeGifR(value)}
                     /></Col>
                    
                 </Row>
                 <Row style={{margin: '15px 15px 0px 12px', fontSize: '14px'}}>
                     <Col span={2} style={{textAlign:'center', padding: '0px 0px 0px 0px'}}>W</Col>
                     <Col span={6}><InputNumber min={0} max={600} value={currentElement.info().width} size="small" precision={0.1} style={{width: '100%',padding: '0px 0px 0px 0px'}}
-                    onChange = {value => this.changeImageW(value)}
+                    onChange = {value => this.changeGifW(value)}
                     /></Col>
                     <Col span={2} style={{textAlign:'center', padding: '0px 0px 0px 0px'}}>H</Col>
                     <Col span={6}><InputNumber min={0} max={600} value={currentElement.info().height} size="small" precision={0.1} style={{width: '100%',padding: '0px 0px 0px 0px'}}
-                    onChange = {value => this.changeImageH(value)}
+                    onChange = {value => this.changeGifH(value)}
                     /></Col>
                     <Col span={2} style={{textAlign:'center', padding: '0px 0px 0px 0px'}}><Icon type="link" /> </Col>
                 </Row>
@@ -116,7 +123,17 @@ export default class GifTool extends Component {
                 </Row>
                 <Divider>Duration</Divider>
                 <Row style={{margin: '0px 10px 0px 15px', fontSize: '14px'}}>
-                      
+                <Col span={16} style={{ padding: '10px 0px 0 0px'}}>Playback Speed</Col>
+                <Col span={8} style={{margin: '5px 0px 0px 0px',float:'right'}}>
+                        <InputNumber min={0.1} max={8.0} 
+                        defaultValue={this.props.currentElement.info().delay} 
+                        onChange={value => this.onSpeedChange(value)}
+                        style={{width: '100%',float:'right'}}
+                        formatter={value => `${value}X`}
+                        step={0.1}
+                        parser={value => value.replace('X', '')}
+                        />
+                </Col> 
                 </Row>
              
             </div>

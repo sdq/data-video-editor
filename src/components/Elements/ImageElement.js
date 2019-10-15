@@ -67,12 +67,14 @@ export default class ImageElement extends Component {
     };
 
     dragmove(x,y){
+        //实时更改素材的真实X,Y，以便吸附
+        this.props.currentElement.info().x = x;
+        this.props.currentElement.info().y = y;
         let dragpos = {x,y};
         this.props.dragElement(dragpos);
     }
 
     dragend(x,y) {
-        //TODO:存在吸附不成功的情况
          if( Math.abs(x-400) < 40){
             x=400;
            // console.log("吸附x")
