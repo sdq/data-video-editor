@@ -21,15 +21,16 @@ export default class ChartElement extends Component {
     };
 
 
-    dragmove(x,y){
-        let dragpos = {x,y};
+    dragmove(x, y) {
+        //实时更改素材的真实X,Y，以便吸附
+        this.props.currentElement.info().x = x;
+        this.props.currentElement.info().y = y;
+        //更改toolbar实时位置显示
+        let dragpos = { x, y };
         this.props.dragElement(dragpos);
     }
     dragend(x,y) {
         var newEle = _.cloneDeep(this.props.element);
-        newEle.info().x = x;
-        newEle.info().y = y;
-        this.props.edit(newEle);
         if (Math.abs(x - 400) < 40) {
             x = 400;
             //console.log("吸附x")
@@ -41,6 +42,9 @@ export default class ChartElement extends Component {
         //更新右侧ToolPane的值 
         let dragPos = { x, y };
         this.props.dragElement(dragPos);
+        newEle.info().x = x;
+        newEle.info().y = y;
+        this.props.edit(newEle);
     };
 
     onTransformStart() {
