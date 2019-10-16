@@ -56,7 +56,6 @@ export default class EditableLayer extends Component {
     }
 
     render() {
-        console.log(this.props);
         const { isPerforming } = this.props;
         const editable = !isPerforming;
         return (
