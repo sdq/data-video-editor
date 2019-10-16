@@ -6,6 +6,13 @@ import { Element, GifInfo } from '@/models/Element';
 // import Scene from '@/models/Scene';
 import './gifcard.css';
 
+//gif size
+let w = 0;
+let h = 0;
+//drag end pos
+let x = 240;
+let y = 100;
+
 const imageSource = {
 
     beginDrag(props) {
@@ -17,6 +24,7 @@ const imageSource = {
         props.displayResourceTargetArea(false);
         const item = monitor.getItem();
         const dropResult = monitor.getDropResult();
+        //TODO:获取实时拖拽位置，写入x，y
         if (dropResult) {
             // console.log(item);
             // console.log(dropResult);
@@ -32,7 +40,7 @@ const imageSource = {
                     //console.log("gifDuration", item.gifData[0].frameInfo.delay);
                 }
             
-                const newImage = new GifInfo(item.name, item.src, delay, gifFrames, 240, 100, 100, 100, 0);
+                const newImage = new GifInfo(item.name, item.src, delay, gifFrames, x, y, w, h, 0);
                 const newElement = new Element(ElementType.GIF, newImage);
                 newScene.addElement(newElement);
                 props.addElement(newElement);
@@ -51,6 +59,18 @@ const imageSource = {
 }
 
 class GifCard extends Component {
+
+    componentWillUpdate() {
+        //get img size after drag , 有一定时间延迟, 对gif也按照img读取尺寸
+         let img = new Image();
+         img.src = this.props.info.src;
+         img.onload = async function(){
+             w = img.width;
+             h = img.height;
+         };
+     }
+ 
+
     render() {
         const { connectDragSource } = this.props;
         return connectDragSource(

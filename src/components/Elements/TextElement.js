@@ -48,18 +48,40 @@ export default class TextElement extends Component {
     }
 
     dragend(x,y) {
-        const newEle = _.cloneDeep(this.props.element);
-        if (Math.abs(x - 400) < 40) {
-            x = 400;
-           // console.log("吸附x")
-        }
-        if (Math.abs(y - 225) < 40) {
-            y = 225;
-           // console.log("吸附y")
-        }
+
+        //基础吸附功能
+        let w = this.props.currentElement.info().width;
+        let h = this.props.currentElement.info().height;        
+        let margin = 40;
+
+        let marginLeftL = Math.abs(x - 0); //素材左-画布左
+        let marginTopT = Math.abs(y - 0);  //素材上-画布上
+        let marginRightR = Math.abs(x+w - 800);  //素材右-画布右
+        let marginBottomB = Math.abs(y+h - 450);  //素材下-画布下
+
+        let marginCenterXC = Math.abs(x+w/2 - 400);  //素材中-画布中
+        let marginCenterYC = Math.abs(y+h/2 - 225);  //素材中-画布中
+        let marginLeftC = Math.abs(x - 400); //素材左-画布中
+        let marginTopC = Math.abs(y - 225);  //素材上-画布中
+        let marginRightC = Math.abs(x+w - 400);  //素材右-画布中
+        let marginBottomC = Math.abs(y+h - 225);  //素材下-画布中
+
+        if( marginLeftL < margin){x=0;}//素材左-画布左
+        if( marginTopT < margin){y=0;}//素材上-画布上
+        if( marginRightR < margin){x=800-w;}//素材右-画布右
+        if( marginBottomB < margin){y=450-h;}//素材下-画布下
+
+        if( marginCenterXC < margin){x=400-w/2;}//素材中-画布中
+        if( marginCenterYC < margin){y=225-h/2;}//素材中-画布中
+        if( marginLeftC < margin){x=400;}//素材左-画布中
+        if( marginTopC < margin){y=225;}//素材上-画布中
+        if( marginRightC < margin){x=400-w;}//素材右-画布中
+        if( marginBottomC < margin){y=225-h;}//素材下-画布中
+
         //更新右侧ToolPane的值 
         let dragPos = { x, y };
         this.props.dragElement(dragPos);
+        const newEle = _.cloneDeep(this.props.element);
         newEle.info().x = x;
         newEle.info().y = y;
         this.props.edit(newEle);
@@ -73,25 +95,36 @@ export default class TextElement extends Component {
         let currentWidth = this.props.currentElement.info().width;
         let currentHeight = this.props.currentElement.info().height;
         let w,h,r = '';
+        //Determine whether scale is equal to last time(Rotation only)
+        //So scale calculation is not performed at this time
         if(lastScale!==e.currentTarget.scaleX()){
              w = currentWidth*e.currentTarget.scaleX();
-             h = currentHeight*e.currentTarget.scaleY();
+             //h = currentHeight*e.currentTarget.scaleY();
+             //计算新的文字高度
+             h = Math.ceil((this.props.currentElement.info().text.length * this.props.currentElement.info().textSize)/w)*(this.props.currentElement.info().textSize+5);
+             //实时更改素材的真实w,h，以便显示正确边框和辅助线
+             this.props.currentElement.info().width = w;
+             this.props.currentElement.info().height = h;
+             
         }else{
              w = currentWidth;
              h = currentHeight;
         }
-             r = e.currentTarget.rotation();  
-        let transforminfo = {w,h,r};
-        this.props.transformElement(transforminfo);  
+             r = e.currentTarget.rotation();
+        //实时更改素材的真实r，以便显示正确边框和辅助线
+        this.props.currentElement.info().rotation = r;
+        let transforminfo = {w,currentHeight,r};
+        this.props.transformElement(transforminfo);
      }
 
-    onTransformEnd(e) {  //text with no real size
+    onTransformEnd(e) {  
         const newEle = _.cloneDeep(this.props.element);
         newEle.info().x = e.target.x();
         newEle.info().y = e.target.y();
         if(lastScale!==e.target.scaleX()){
             newEle.info().width = newEle.info().width*e.target.scaleX(); 
-            newEle.info().height = newEle.info().height*e.target.scaleY(); 
+            //newEle.info().height = newEle.info().height*e.target.scaleY(); 
+            newEle.info().height = Math.ceil((this.props.currentElement.info().text.length * this.props.currentElement.info().textSize)/this.props.currentElement.info().width)*(this.props.currentElement.info().textSize+5)
         }
         newEle.info().rotation = e.target.rotation();
         this.props.edit(newEle);
@@ -138,10 +171,8 @@ export default class TextElement extends Component {
                     textDecoration = {this.props.element.info().textDecorationLine}//can be line-through, underline or empty string. Default is empty string. 
                     opacity = {this.props.element.info().opacity}
                     align = {this.props.element.info().textAlign}
-                    //width = {this.props.element.info().width}//the number of text*scale
-                    width = {(this.props.element.info().text.length*this.props.element.info().textSize)}
-                    height = {this.props.element.info().height} //fake  the number or rows and scale
-                    //height = {((this.props.element.info().text.length*this.props.element.info().textSize)/this.props.element.info().width)*this.props.element.info().textSize}
+                    width = {this.props.element.info().width}
+                    height = {this.props.element.info().height} 
                 />
             </Group>
         )

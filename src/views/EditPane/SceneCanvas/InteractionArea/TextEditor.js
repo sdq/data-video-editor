@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 
-var offsetX = 0;  //offset in browers
-var offsetY = 0;  //offset in browers
+let offsetX = 0.0;  //offset in browers，不同浏览器不同，每一次刷新都不同
+let offsetY = 0.0;  //offset in browers
+let offsetW = 20;   //offset between textelement and texteditor，不同浏览器不同
+let offsetH = 0;    //offset between textelement and texteditor
 
 export default class TextEditor extends Component {
     constructor(props) {
@@ -27,10 +29,11 @@ export default class TextEditor extends Component {
     }
 
     render() {
-            var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串
+        //取得浏览器的userAgent字符串
+            var userAgent = navigator.userAgent; 
             var isOpera = userAgent.indexOf("Opera") > -1;
             if (isOpera) {
-                offsetX =0.5;
+                offsetX = 0.5;
                 offsetY = 7;
             }; //判断是否Opera浏览器
             if (userAgent.indexOf("Firefox") > -1) {
@@ -38,19 +41,20 @@ export default class TextEditor extends Component {
                 offsetY = 6.6;
             } //判断是否Firefox浏览器
             if (userAgent.indexOf("Chrome") > -1){
-                offsetX = 1;
-                offsetY = 9.5;
-         }
-            if (userAgent.indexOf("Safari") > -1) {
-                offsetX =1.5;
-                offsetY = 9.5;
+                offsetX = 2;
+                offsetY = 6.4965;
+            }
+            if (userAgent.indexOf("Safari") > -1 && !(userAgent.indexOf("Chrome") > -1) ) {
+                //在Mac主机电脑上通过测试
+                offsetX = 2;
+                offsetY = 7;
             } //判断是否Safari浏览器
             if (userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1 && !isOpera) {
-                offsetX =0.5;
+                offsetX = 0.5;
                 offsetY = 6.5;
             }; //判断是否IE浏览器
-            //console.log(userAgent);
             //仍然需要更精准测试
+
 
         return (
              <div className="TextEditor" style={{display: (this.state.isShowTextArea) ? "block" : "none"}} > 
@@ -62,14 +66,16 @@ export default class TextEditor extends Component {
               position: "absolute",
               outline: "none",
               border: "0px",
-              fontSize:this.props.currentElement.info().textSize,
               background:'none',
               color:'black',
-              //Elimination of displacement error between textTranform and textEditor
+              //Elimination of displacement error between textTransform and textEditor
+              //判断当前element是否存在，保证编辑时切换scene运行正确
+              fontFamily:(this.props.currentElement) ? this.props.currentElement.info().fontFamily:"Arial",
+              fontSize:(this.props.currentElement) ? this.props.currentElement.info().textSize:20,
               top:(this.props.currentElement) ? this.props.currentElement.info().y-offsetY : 0,
               left:(this.props.currentElement) ? this.props.currentElement.info().x-offsetX : 0,
-              width:"400px", 
-              height:"60px",//completely fake width and height now
+              width:(this.props.currentElement) ? this.props.currentElement.info().width+offsetW : 0, 
+              height:(this.props.currentElement) ? this.props.currentElement.info().height+offsetH : 0,
               fillOpacity:0.5
             }}
             value = {this.state.text}

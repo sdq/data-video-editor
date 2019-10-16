@@ -245,13 +245,6 @@ export default class TextTool extends Component {
         return (
             <div style={{padding: '5px 10px 10px 10px', fontSize: '14px', backgroundColor: 'white',height:'500px',overflow: 'auto'}}>
                 <Divider>Position</Divider>
-                <Row style={{margin: '5px 15px 0px 15px', fontSize: '14px'}}>
-                <ButtonGroup style={{ width: '100%' , align :'center' }}>
-                    <Button type="Default" icon="align-left"   style={{width: '33.3%',Align:'center',margin: '0px 0px 0px 0px'}} onClick = {this.setAlignLeft} ></Button>
-                    <Button type="Default" icon="align-center" style={{width: '33.3%',Align:'center',margin: '0px 0px 0px 0px'}} onClick = {this.setAlignCenter} ></Button>
-                    <Button type="Default" icon="align-right"  style={{width: '33.3%',Align:'center',margin: '0px 0px 0px 0px'}} onClick = {this.setAlignRight} ></Button>
-                </ButtonGroup>
-                </Row>
 
                 <Row style={{margin: '15px 15px 0px 12px', fontSize: '14px'}}>
                    <Col span={2}  style={{textAlign:'center', padding: '0px 0px 0px 0px'}}>X</Col>
@@ -280,9 +273,9 @@ export default class TextTool extends Component {
                    {/* <Col span={2} style={{textAlign:'center', padding: '0px 0px 0px 0px'}}><Icon type="link" /> </Col> */}
                 </Row>
 
-                <Divider>Character</Divider>
+                <Divider>Properties</Divider>
                 <Row style={{margin: '0px 15px 0px 15px', fontSize: '14px'}}> 
-                    <Select defaultValue={this.props.currentElement.info().fontfamily}
+                    <Select defaultValue={this.props.currentElement.info().fontfamily ? this.props.currentElement.info().fontfamily : "Font"}
                     style={{ width: '100%' , align :'center' }}
                     onChange={value => this.onTextFamilyChange(value)}
                     >
@@ -340,6 +333,16 @@ export default class TextTool extends Component {
                     </div> : null }
                     </Col>
                 </Row>
+
+                <Divider>Paragraph</Divider>
+                <Row style={{margin: '10px 15px 0px 15px', fontSize: '14px'}}>
+                <ButtonGroup style={{ width: '100%' , align :'center' }}>
+                    <Button type="Default" icon="align-left"   style={{width: '33.3%',Align:'center',margin: '0px 0px 0px 0px'}} onClick = {this.setAlignLeft} ></Button>
+                    <Button type="Default" icon="align-center" style={{width: '33.3%',Align:'center',margin: '0px 0px 0px 0px'}} onClick = {this.setAlignCenter} ></Button>
+                    <Button type="Default" icon="align-right"  style={{width: '33.3%',Align:'center',margin: '0px 0px 0px 0px'}} onClick = {this.setAlignRight} ></Button>
+                </ButtonGroup>
+                </Row>
+
             </div>
         
         )

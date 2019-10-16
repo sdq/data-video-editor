@@ -6,6 +6,14 @@ import {Element, ImageInfo} from '@/models/Element';
 // import Scene from '@/models/Scene';
 import './imagecard.css';
 
+//img size
+let w = 0;
+let h = 0;
+//drag end pos
+let x = 240;
+let y = 100;
+
+
 const imageSource = {
 
 	beginDrag(props) {
@@ -16,14 +24,15 @@ const imageSource = {
 	endDrag(props, monitor) {
         props.displayResourceTargetArea(false);
 		const item = monitor.getItem();
-		const dropResult = monitor.getDropResult();
+        const dropResult = monitor.getDropResult();
+        //TODO:获取实时拖拽位置，写入x，y
 		if (dropResult) {
             // console.log(item);
             // console.log(dropResult);
             if (dropResult.target === "canvas") {
                 //add element to scene
                 const newScene = Object.assign({},dropResult.currentScene);
-                const newImage = new ImageInfo(item.name,item.src, 240, 100, 100, 100, 0);
+                const newImage = new ImageInfo(item.name,item.src, x, y, w, h, 0);
                 const newElement = new Element(ElementType.IMAGE, newImage);
                 newScene.addElement(newElement);
                 props.addElement(newElement);
@@ -42,6 +51,17 @@ const imageSource = {
 }
 
 class ImageCard extends Component {
+
+    componentWillUpdate() {
+        //get img size after drag , 有一定时间延迟
+        let img = new Image();
+        img.src = this.props.info.src;
+        img.onload = async function(){
+            w = img.width;
+            h = img.height;
+        };
+    }
+
     render() {
         const { connectDragSource } = this.props;
         return connectDragSource(

@@ -56,6 +56,7 @@ export default class EditableLayer extends Component {
     }
 
     render() {
+        console.log(this.props);
         const { isPerforming } = this.props;
         const editable = !isPerforming;
         return (
@@ -171,6 +172,7 @@ export default class EditableLayer extends Component {
                 }.bind(this))}
                 <TransformerComponent
                     selectedElementName={this.props.elementName}
+                    selectedElementType = {this.props.currentElement? this.props.currentElement.type() : null  }
                 />
             </Layer>
         )
