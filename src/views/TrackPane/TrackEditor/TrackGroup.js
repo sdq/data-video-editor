@@ -69,18 +69,6 @@ export default class TrackGroup extends Component {
                                                 isSelected={this.props.isElementSelected && (this.props.elementIndex === index)}
                                                 {...this.props}
                                             />)
-
-                                        case ElementType.VIDEO:
-                                            return (<AudioTrack
-                                                key={element.id()}
-                                                index={index}
-                                                element={element}
-                                                isBarActive={barActiveList[index]}
-                                                setBarActive={this.setBarActive}
-                                                setBarUnactive={this.setBarUnactive}
-                                                isSelected={this.props.isElementSelected && (this.props.elementIndex === index)}
-                                                {...this.props}
-                                            />)
                                     
                                         default:
                                             return (<Track
