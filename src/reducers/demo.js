@@ -15,8 +15,8 @@ const demoimage = new ImageInfo(
     MyURL.OSS+'/images/man.png',
     480,
     89,
-    100,
-    100,
+    142,
+    253,
     0,
 )
 const demochart = new ChartInfo(
@@ -59,8 +59,8 @@ const demoimage2 = new ImageInfo(
     MyURL.OSS+'/images/woman.png',
     342,
     112,
-    100,
-    100,
+    276,
+    198,
     0,
 )
 const demochart2 = new ChartInfo(

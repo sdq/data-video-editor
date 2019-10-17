@@ -68,10 +68,9 @@ export default class ChartTool extends Component {
 
     };
     render() {
-
         const {currentElement} = this.props;
         return (
-            <div style={{padding: '10px 10px 10px 10px', fontSize: '14px', backgroundColor: 'white'}}>
+            <div style={{padding: '5px 10px 10px 10px', fontSize: '14px', backgroundColor: 'white',overflow: 'auto'}}>
               <Divider>Position</Divider>
                <Row style={{margin: '15px 15px 0px 12px', fontSize: '14px'}}>
                    <Col span={2}  style={{textAlign:'center', padding: '0px 0px 0px 0px'}}>X</Col>
@@ -97,7 +96,7 @@ export default class ChartTool extends Component {
                    <Col span={6}><InputNumber min={0} max={600} value={this.props.transformInfo ? this.props.transformInfo.h : currentElement.info().height} size="small" precision={0.1} style={{width: '100%',padding: '0px 0px 0px 0px'}}
                    onChange = {value => this.changeChartH(value)}
                    /></Col>
-                   <Col span={2} style={{textAlign:'center', padding: '0px 0px 0px 0px'}}><Icon type="link" /> </Col>
+                   {/* <Col span={2} style={{textAlign:'center', padding: '0px 0px 0px 0px'}}><Icon type="link" /> </Col> */}
                </Row>
             </div>
         )

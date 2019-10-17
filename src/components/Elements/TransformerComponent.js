@@ -13,9 +13,9 @@ export default class TransformerComponent extends Component {
 
     checkNode() {
         // here we need to manually attach or detach Transformer node
+        
         const stage = this.transformer.getStage();
         const { selectedElementName } = this.props;
-    
         var selectedNode = stage.findOne("." + selectedElementName);
         // do nothing if selected node is already attached
         if (selectedNode === this.transformer.node()) {
@@ -37,6 +37,7 @@ export default class TransformerComponent extends Component {
     }
 
     render() {
+         const { selectedElementType } = this.props;  //判断text-element
         return (
             <Transformer
                 ref={node => {
@@ -45,7 +46,7 @@ export default class TransformerComponent extends Component {
                 borderStroke={Color.DEEP_ORANGE}
                 anchorStroke={Color.DEEP_ORANGE}
                 anchorFill={Color.LIGHT_ORANGE}
-                enabledAnchors= {['top-left', 'top-right', 'bottom-left', 'bottom-right']}
+                enabledAnchors= {  (selectedElementType==="text_element")  ? ['middle-left', 'middle-right'] : ['top-left', 'top-right', 'bottom-left', 'bottom-right']}
             />
         )
     }

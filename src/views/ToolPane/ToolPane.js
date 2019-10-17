@@ -23,6 +23,10 @@ export default class ToolPane extends Component {
     // }
 
     chooseTool() {
+        //每当切换toolbar时，清空公用dragpos,transinfo
+        this.props.dragElement('');
+        this.props.transformElement('');
+
         if (this.props.isElementSelected && this.props.currentElement) {
             switch (this.props.currentElement.type()) {
                 case ElementType.IMAGE:

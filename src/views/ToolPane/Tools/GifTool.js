@@ -63,7 +63,6 @@ export default class GifTool extends Component {
         const newScene = Object.assign({},this.props.currentScene);
         this.setState({opacity:value}); //record
         this.props.currentElement.info().opacity = value/100;
-        console.log(this.props.currentElement.info().opacity);
         this.props.updateScene(this.props.sceneIndex, newScene);    
     }
 
@@ -79,33 +78,33 @@ export default class GifTool extends Component {
     render() {
         const {currentElement} = this.props;
         return (
-            <div style={{padding: '10px 10px 10px 10px', fontSize: '14px', backgroundColor: 'white'}}>
+            <div style={{padding: '5px 10px 10px 10px', fontSize: '14px', backgroundColor: 'white',overflow: 'auto'}}>
                 <Divider>Position</Divider>
                 <Row style={{margin: '15px 15px 0px 12px', fontSize: '14px'}}>
                     <Col span={2}  style={{textAlign:'center', padding: '0px 0px 0px 0px'}}>X</Col>
-                    <Col span={6}><InputNumber min={0} max={600} value = {currentElement.info().x} size="small" precision={0.1} style={{width: '100%',padding: '0px 0px 0px 0px'}} 
+                    <Col span={6}><InputNumber min={0} max={600} value={this.props.dragPos ? this.props.dragPos.x : currentElement.info().x } size="small" precision={0.1} style={{width: '100%',padding: '0px 0px 0px 0px'}} 
                     onChange = {value => this.changeGifX(value)}
                     /></Col>
                     <Col span={2} style={{textAlign:'center', padding: '0px 0px 0px 0px'}}>Y</Col>
-                    <Col span={6}><InputNumber min={0} max={600} value={currentElement.info().y} size="small" precision={0.1} style={{width: '100%',padding: '0px 0px 0px 0px'}}
+                    <Col span={6}><InputNumber min={0} max={600} value={this.props.dragPos ? this.props.dragPos.y : currentElement.info().y } size="small" precision={0.1} style={{width: '100%',padding: '0px 0px 0px 0px'}}
                     onChange = {value => this.changeGifY(value)}
                     /></Col>
                     <Col span={2} style={{textAlign:'center', padding: '0px 0px 0px 0px'}}><Icon type="redo" /> </Col>
-                    <Col span={6}><InputNumber min={-360} max={360} value={currentElement.info().rotation} precision={0.1} formatter={value => `${value}°`} size="small"  style={{width: '100%',padding: '0px 0px 0px 0px'}}
+                    <Col span={6}><InputNumber min={-360} max={360} value={this.props.transformInfo ? this.props.transformInfo.r : currentElement.info().rotation} precision={0.1} formatter={value => `${value}°`} size="small"  style={{width: '100%',padding: '0px 0px 0px 0px'}}
                      onChange = {value => this.changeGifR(value)}
                     /></Col>
                    
                 </Row>
                 <Row style={{margin: '15px 15px 0px 12px', fontSize: '14px'}}>
                     <Col span={2} style={{textAlign:'center', padding: '0px 0px 0px 0px'}}>W</Col>
-                    <Col span={6}><InputNumber min={0} max={600} value={currentElement.info().width} size="small" precision={0.1} style={{width: '100%',padding: '0px 0px 0px 0px'}}
+                    <Col span={6}><InputNumber min={0} max={600} value={this.props.transformInfo ? this.props.transformInfo.w : currentElement.info().width} size="small" precision={0.1} style={{width: '100%',padding: '0px 0px 0px 0px'}}
                     onChange = {value => this.changeGifW(value)}
                     /></Col>
                     <Col span={2} style={{textAlign:'center', padding: '0px 0px 0px 0px'}}>H</Col>
-                    <Col span={6}><InputNumber min={0} max={600} value={currentElement.info().height} size="small" precision={0.1} style={{width: '100%',padding: '0px 0px 0px 0px'}}
+                    <Col span={6}><InputNumber min={0} max={600} value={this.props.transformInfo ? this.props.transformInfo.h : currentElement.info().height} size="small" precision={0.1} style={{width: '100%',padding: '0px 0px 0px 0px'}}
                     onChange = {value => this.changeGifH(value)}
                     /></Col>
-                    <Col span={2} style={{textAlign:'center', padding: '0px 0px 0px 0px'}}><Icon type="link" /> </Col>
+                    {/* <Col span={2} style={{textAlign:'center', padding: '0px 0px 0px 0px'}}><Icon type="link" /> </Col> */}
                 </Row>
 
 

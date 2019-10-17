@@ -7,6 +7,14 @@ import {Element, ChartInfo} from '@/models/Element';
 // import Scene from '@/models/Scene';
 import './chartcard.css';
 
+
+//img size
+let w = 300;
+let h = 300;
+//drag end pos
+let x = 240;
+let y = 100;
+
 const chartSource = {
 
 	beginDrag(props) {
@@ -20,7 +28,8 @@ const chartSource = {
 	endDrag(props, monitor) {
         props.displayResourceTargetArea(false);
 		const item = monitor.getItem();
-		const dropResult = monitor.getDropResult();
+        const dropResult = monitor.getDropResult();
+        //TODO:获取实时拖拽位置，写入x，y
 		if (dropResult) {
             console.log(item);
             // console.log(dropResult);
@@ -32,10 +41,10 @@ const chartSource = {
                     item.category, // category
                     item.type, //type
                     {}, //spec
-                    260,
-                    100,
-                    300,
-                    300,
+                    x,
+                    y,
+                    w,
+                    h,
                     0,
                 )
                 const newElement = new Element(ElementType.CHART, newChart);

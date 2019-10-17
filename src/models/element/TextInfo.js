@@ -11,7 +11,9 @@ export default class TextInfo {
         this.textDecorationLine = textDecorationLine;
         this.opacity = opacity;
         this.textAlign = textAlign;
-        this.width = width;
-        this.height = height;
+        //default size when create newtext
+        this.width = text ? text.length * textSize:width; //the number of text*scale
+        //this.height = height;//fake height
+        this.height = text ? Math.ceil((text.length * textSize)/width)*(textSize+5) : height;// 根据字数、字号、宽度，计算当前行高，10为额外行距
     }
 }
