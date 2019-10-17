@@ -64,21 +64,19 @@ export default class EditToolBar extends Component {
       };
     
       handleOk = e => {
-        console.log(e);
         this.setState({
           visible: false,
         });
       };
     
       handleCancel = e => {
-        console.log(e);
         this.setState({
           visible: false,
         });
       };
 
       setElementPos = pos =>{  
-      //lack of the real material‘s  size
+      //use the real material‘s  size
         switch (pos) {
             case 'TL' :
                 this.props.currentElement.info().x = 0;
@@ -86,23 +84,23 @@ export default class EditToolBar extends Component {
                 break;
             case 'Top' :
                 this.props.currentElement.info().x = 400-this.props.currentElement.info().width/2;
-                this.props.currentElement.info().y =0;
+                this.props.currentElement.info().y = 0;
                     break;
             case 'TR' :
-                this.props.currentElement.info().x = 800-this.props.currentElement.info().width/2;
+                this.props.currentElement.info().x = 800-this.props.currentElement.info().width;
                 this.props.currentElement.info().y = 0;
                     break;
             case 'Left' :
                 this.props.currentElement.info().x = 0;
-                this.props.currentElement.info().y = 200-this.props.currentElement.info().height/2;
+                this.props.currentElement.info().y = 225-this.props.currentElement.info().height/2;
                     break;
             case 'Center' :
                 this.props.currentElement.info().x = 400-this.props.currentElement.info().width/2;
-                this.props.currentElement.info().y =225-this.props.currentElement.info().height/2;
+                this.props.currentElement.info().y = 225-this.props.currentElement.info().height/2;
                     break;
             case 'Right' :
-                this.props.currentElement.info().x = 800;
-                this.props.currentElement.info().y =225-this.props.currentElement.info().height/2;
+                this.props.currentElement.info().x = 800-this.props.currentElement.info().width;
+                this.props.currentElement.info().y = 225-this.props.currentElement.info().height/2;
                     break;
             case 'BL' :
                 this.props.currentElement.info().x = 0;
@@ -160,12 +158,13 @@ export default class EditToolBar extends Component {
                     <Button icon="redo" style = { {padding: '0 20px 0 20px'} } onClick={this.redoCanvas} disabled={isPerforming || currentFuture.length === 0}/>
                 </ButtonGroup>
 
-                <ButtonGroup style = { {margin: '10px 20px 0px 0px', float:'right'} }>
-                <Button icon="pic-center" style = { {padding: '0 20px 0 20px'} } disabled={!isElementSelected || isPerforming} onClick={this.showModal}/> 
+                <ButtonGroup id = "assist-position" style = { {margin: '10px 20px 0px 0px', float:'right'} }>
+                <Button id = "quickalign" icon="pic-center" style = { {padding: '0 20px 0 20px'} } disabled={!isElementSelected || isPerforming} onClick={this.showModal}/> 
                 <Modal
-                     //title="Basic Modal"
+                     //title="Quick Align"
                      visible={this.state.visible}
                      closable = {false}
+                     keyboard = {true}
                      footer={null}
                      mask = {false}
                      maskClosable = {true}
@@ -173,7 +172,9 @@ export default class EditToolBar extends Component {
                      onCancel={this.handleCancel}
                      width = {100}
                      placement="bottomRight"
-                     //style={{ top: 20 }} //position of click
+                     //modal位置根据拉伸后画布及按钮位置动态计算
+                     style={{ top: 115 , left : document.getElementById('quickalign') ? (document.getElementById('assist-position').offsetLeft-450)/2 : 200}} 
+                     //getContainer = {document.getElementById('quickalign')}
                     >
                     <Row>
                      <Col span={8}> <button type="button" id = 'TL'  onClick = {()=> this.setElementPos('TL')} > </button></Col>

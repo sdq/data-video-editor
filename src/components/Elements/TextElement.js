@@ -52,7 +52,7 @@ export default class TextElement extends Component {
         //基础吸附功能
         let w = this.props.currentElement.info().width;
         let h = this.props.currentElement.info().height;        
-        let margin = 40;
+        let margin = 10;
 
         let marginLeftL = Math.abs(x - 0); //素材左-画布左
         let marginTopT = Math.abs(y - 0);  //素材上-画布上

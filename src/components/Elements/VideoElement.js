@@ -11,9 +11,11 @@ export default class VideoElement extends Component {
         super(props);
         this.state = {
             video: null,
+            isDragging: false,
             isPlaying: false
         };
         this.dragstart = this.dragstart.bind(this);
+        this.dragmove = this.dragmove.bind(this);
         this.dragend = this.dragend.bind(this);
         this.onTransformStart = this.onTransformStart.bind(this);
         this.onTransformEnd = this.onTransformEnd.bind(this);
@@ -116,7 +118,7 @@ export default class VideoElement extends Component {
         //基础吸附功能
         let w = this.props.currentElement.info().width;
         let h = this.props.currentElement.info().height;        
-        let margin = 40;
+        let margin = 10;
 
         let marginLeftL = Math.abs(x - 0); //素材左-画布左
         let marginTopT = Math.abs(y - 0);  //素材上-画布上
@@ -152,7 +154,8 @@ export default class VideoElement extends Component {
 
     onTransformStart() {
         this.props.editStart();
-    }
+    };
+
     onTransform(e) {
         let currentWidth = this.props.currentElement.info().width;
         let currentHeight = this.props.currentElement.info().height;
@@ -174,29 +177,18 @@ export default class VideoElement extends Component {
         this.props.currentElement.info().rotation = r;
         let transforminfo = { w, h, r };
         this.props.transformElement(transforminfo);
-    }
-
-    onTransformEnd(e) {
-        let currentWidth = this.props.currentElement.info().width;
-        let currentHeight = this.props.currentElement.info().height;
-        let w, h, r = '';
-        //Determine whether scale is equal to last time(Rotation only)
-        //So scale calculation is not performed at this time
-        if (lastScale !== e.currentTarget.scaleX()) {
-            w = currentWidth * e.currentTarget.scaleX();
-            h = currentHeight * e.currentTarget.scaleY();
-            //实时更改素材的真实w,h，以便显示正确边框和辅助线
-            this.props.currentElement.info().width = w;
-            this.props.currentElement.info().height = h;
-        } else {
-            w = currentWidth;
-            h = currentHeight;
+     }
+   
+     onTransformEnd(e) {
+        const newEle = _.cloneDeep(this.props.element);
+        newEle.info().x = e.target.x();
+        newEle.info().y = e.target.y();
+        if(lastScale!==e.target.scaleX()){
+            newEle.info().width = newEle.info().width*e.target.scaleX(); 
+            newEle.info().height = newEle.info().height*e.target.scaleY(); 
         }
-        r = e.currentTarget.rotation();
-        //实时更改素材的真实r，以便显示正确边框和辅助线
-        this.props.currentElement.info().rotation = r;
-        let transforminfo = { w, h, r };
-        this.props.transformElement(transforminfo);
+        newEle.info().rotation = e.target.rotation();
+        this.props.edit(newEle);
     }
 
     render() {

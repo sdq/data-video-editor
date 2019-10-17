@@ -4,7 +4,7 @@ import ElementType from '@/constants/ElementType';
 import Color from '@/constants/Color';
 import SceneTool from './Tools/SceneTool';
 import ImageTool from './Tools/ImageTool';
-import GifTool from './Tools/GifTool'
+import GifTool from './Tools/GifTool';
 import VideoTool from './Tools/VideoTool';
 // import AudioTool from './Tools/AudioTool';
 import ChartTool from './Tools/ChartTool';

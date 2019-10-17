@@ -1,6 +1,13 @@
 .imagetab {
     overflow-x: hidden;
-    overflow-y: auto;
-    height: 480px;
-    padding: 16px;
+    overflow-y: hidden;
+    height: 500px;
+    padding: 10px;
+}
+
+.collaspe{
+    /* 仅list滚动视野太小，应整个collaspe滚动 */
+    overflow-x: hidden;
+    overflow-y: visible;
+    height: 500px; 
 }
