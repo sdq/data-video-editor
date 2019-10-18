@@ -140,7 +140,7 @@ export default class HeaderBar extends Component {
                     <p>Do you want to export the video?</p>
                     <p>This might take several minutes.</p>
                 </Modal>
-                <Modal
+                {/* <Modal
                     className='recordConfirm'
                     visible={this.state.loading}
                     onCancel={this.handleCancel}
@@ -151,7 +151,7 @@ export default class HeaderBar extends Component {
                     <Spin id='spin' size="large"></Spin>
                     <p>Recording...</p>
                     <p>{this.formatSeconds(this.state.remainTime)} remaining</p>
-                </Modal>
+                </Modal> */}
             </div>
         )
     }
