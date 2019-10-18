@@ -6,7 +6,10 @@ export default class Recorder {
             this.recorder = null; // for stop recording
             this.recorder_timeout = null;
             this.isCompleted = false;
-
+            this.ctx = new AudioContext();;
+            this.dest = null;
+            this.MEDIA_ELEMENT_NODES = [];
+            this.MEDIA_ELEMENT_Map = new WeakMap();
             this.isRecording = false;
             Recorder.instance = this;
         } else {
@@ -27,12 +30,21 @@ export default class Recorder {
                 
                 var canvas = document.getElementById(canvasId);
                 var stream = canvas.captureStream(); // fps
+                console.log(stream)
                 var videoData = [];
                 var options = {
-                    // audioBitsPerSecond : 128000,
-                    // videoBitsPerSecond : 2500000,
-                    mimeType : 'video/webm'
+                    audioBitsPerSecond : 128000,
+                    videoBitsPerSecond : 2500000,
+                    mimeType : 'video/webm;'
                 }
+
+                var audios = ['audiotest']
+                if (document.getElementById('audiotest') !== null) {
+                    var audioTrack = this.extractAudio(['audiotest']);
+                    stream.addTrack(audioTrack);
+                }
+                
+
                 var recorder = new MediaRecorder(stream, options);
 
                 this.recorder = recorder;
@@ -43,6 +55,11 @@ export default class Recorder {
                     // 播放视频
                     playCanvas();
                     // 根据时间停止录制
+                    // setTimeout(() => {
+                    //     var videoOrAudioElement = document.getElementById('audiotest');
+                    //     console.log(videoOrAudioElement)
+                    //     videoOrAudioElement.play();
+                    // }, 1000);
                     this.recorder_timeout = setTimeout(() => {
                         this.isCompleted = true;
                         recorder.stop(); 
@@ -71,7 +88,7 @@ export default class Recorder {
 
                 recorder.ondataavailable = function(event) {
                     videoData.push(event.data); 
-                    // console.log(event.data.size);  
+                    // console.log(event.data);  
                     // console.log('data available');
                 }
 
@@ -89,7 +106,7 @@ export default class Recorder {
                         ysFixWebmDuration(videoBlob, duration, function(fixedBlob) {
                             resolve(fixedBlob);
                         });
-                        // resolve(videoData);
+                        // resolve(videoBlob);
                     }
                     else {
                         reject('recording is stopped.');
@@ -98,6 +115,12 @@ export default class Recorder {
                     this.recorder = null; 
                     this.isRecording = false;
                     this.isCompleted = false;
+                    // if(this.ctx !== null) {
+                    //     this.MEDIA_ELEMENT_NODES.forEach((node) => {
+                    //         node.disconnect();
+                    //     })
+                    //     console.log('ctx', this.ctx)
+                    // } 
                 }
                 recorder.start(timeSlice);
                 var startTime = Date.now();
@@ -111,5 +134,41 @@ export default class Recorder {
         } else {
             this.recorder.stop();
         }
+    }
+
+    extractAudio(audios) {
+        let ctx = this.ctx;
+        // this.ctx = ctx;
+        let dest = ctx.createMediaStreamDestination();
+        // this.dest = dest
+        audios.forEach((audio) => {
+            let videoOrAudioElement = document.getElementById(audio);
+            if(this.MEDIA_ELEMENT_Map.has(videoOrAudioElement)){
+                let sourceNode = this.MEDIA_ELEMENT_Map.get(videoOrAudioElement);
+                sourceNode.connect(dest);
+                sourceNode.connect(ctx.destination);
+                this.MEDIA_ELEMENT_NODES.push(sourceNode);
+            }
+            else {
+                let sourceNode = ctx.createMediaElementSource(videoOrAudioElement);
+                console.log(ctx)
+                sourceNode.connect(dest);
+                sourceNode.connect(ctx.destination);
+                this.MEDIA_ELEMENT_NODES.push(sourceNode);
+                this.MEDIA_ELEMENT_Map.set(videoOrAudioElement, sourceNode);
+            }
+            // let videoOrAudioElement = document.getElementById(audio);
+            // let sourceNode = ctx.createMediaElementSource(videoOrAudioElement);
+            // console.log(ctx)
+            // sourceNode.connect(dest);
+            // sourceNode.connect(ctx.destination);
+            // this.MEDIA_ELEMENT_NODES.push(sourceNode);
+            // this.MEDIA_ELEMENT_NODES.set(videoOrAudioElement, sourceNode);
+        });
+        let audioTrack = dest.stream.getAudioTracks()[0];
+        console.log("audiotrack", audioTrack)
+        this.ctx = ctx;
+        // this.dest = dest
+        return audioTrack;
     }
 }
