@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import 'antd/dist/antd.css';
+import "video-react/dist/video-react.css";
 import { Provider } from 'react-redux'
 import store from './store';
 import App from './App';

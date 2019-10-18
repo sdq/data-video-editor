@@ -5,6 +5,7 @@ import Color from '@/constants/Color';
 import SceneTool from './Tools/SceneTool';
 import ImageTool from './Tools/ImageTool';
 import GifTool from './Tools/GifTool'
+import VideoTool from './Tools/VideoTool';
 // import AudioTool from './Tools/AudioTool';
 import ChartTool from './Tools/ChartTool';
 import TextTool from './Tools/TextTool';
@@ -47,6 +48,15 @@ export default class ToolPane extends Component {
                             <AnimationTool {...this.props}/>
                         </TabPane>
                     </Tabs>;
+                 case ElementType.VIDEO:
+                    return <Tabs type="card">
+                    <TabPane tab="Design" key="Design">
+                        <VideoTool {...this.props}/>
+                    </TabPane>
+                    <TabPane tab="Animation" key="Animation">
+                        <AnimationTool {...this.props}/>
+                    </TabPane>
+                </Tabs>;
                 case ElementType.CHART:
                     return <Tabs type="card">
                         <TabPane tab="Data" key="Data">

@@ -4,7 +4,7 @@ import * as sceneActions from '@/actions/sceneAction';
 import * as playerActions from '@/actions/playerAction';
 import AudioInstance from './audio';
 
-const AudioController=new AudioInstance()
+const AudioController = new AudioInstance();
 export default class Player {
     constructor() {
         if (!Player.instance) {
@@ -53,7 +53,7 @@ export default class Player {
                 this._timeouts.push(setTimeout(function () {
                     const position = current + index / 10 ;
                     store.dispatch(sceneActions.setPosition(position));
-                    AudioController.playAudio()
+                    AudioController.playAudio();
                     if (index === (n-1)) {
                         this.pauseScene();
                         store.dispatch(sceneActions.setPosition(0));
@@ -66,7 +66,7 @@ export default class Player {
     pauseScene() {
         this._clearTimeouts();
         store.dispatch(playerActions.stopScene(this.sceneIndex));
-        AudioController.pauseAudio(this.sceneIndex)      
+        AudioController.pauseAudio(this.sceneIndex)       
     }
 
     playVideo() {

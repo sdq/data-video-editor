@@ -16,6 +16,7 @@ export default class EditCanvas extends Component {
             showTextEditor: false, 
             showChartPreview: false, 
             showGifEditor:false,
+            showVideoEditor:false,
             dbClickedElementIndex: -1,
         };
         this.handleStageDblClick = this.handleStageDblClick.bind(this);
@@ -41,6 +42,7 @@ export default class EditCanvas extends Component {
             showChartPreview: false,
             dbClickedElementIndex: -1,
             showGifEditor:false,
+            showVideoEditor:false,
         });
 
         // clicked on stage - clear selection
@@ -89,7 +91,11 @@ export default class EditCanvas extends Component {
                 this.setState({
                     showGifEditor: true,
                 })
-            } else if(dbElement.type() === ElementType.CHART){
+            } else if (dbElement.type() === ElementType.VIDEO) {
+                this.setState({
+                    showVideoEditor: true,
+                })
+            } else if (dbElement.type() === ElementType.CHART) {
                 this.setState({
                     showChartPreview: true,
                 })
@@ -119,6 +125,7 @@ export default class EditCanvas extends Component {
                     showTextEditor={this.state.showTextEditor}
                     showChartPreview={this.state.showChartPreview}
                     showGifEditor={this.state.showGifEditor}
+                    showVideoEditor={this.state.showVideoEditor}
                     showAssistLines={this.state.showAssistLines} 
                     {...this.props}
                 />: 

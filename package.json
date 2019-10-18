@@ -39,7 +39,8 @@
     "uuid": "^3.3.2",
     "vega": "^5.4.0",
     "vega-lib": "^4.4.0",
-    "vega-lite": "^3.4.0"
+    "vega-lite": "^3.4.0",
+    "video-react": "^0.14.1"
   },
   "scripts": {
     "start": "react-app-rewired start",

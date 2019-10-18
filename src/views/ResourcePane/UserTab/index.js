@@ -47,7 +47,7 @@ export default class UserTab extends Component {
         }
     }
 
-    componentDidMount(){
+    componentDidMount() {
         //这里是解析对列表中默认的gif进行解析
         this.state.gifList.map(async element => {
             element.gifData = await this.parseGif(element.src);
@@ -79,6 +79,15 @@ export default class UserTab extends Component {
                     audioList: newList,
                     //上传文件成功，打开对应的panel
                     activeKey: "audio"
+                });
+                break;
+            case 'mp4':
+                newList = this.state.videoList;
+                newList.push(newFile);
+                this.setState({
+                    videoList: newList,
+                    //上传文件成功，打开对应的panel
+                    activeKey: "video"
                 });
                 break;
             case 'gif':
@@ -151,6 +160,19 @@ export default class UserTab extends Component {
             }
         }
     };
+
+    onDeleteVideo = (key) => {
+        for (var i = 0; i < this.state.videoList.length; i++) {
+            if (this.state.videoList[i].uid === key) {
+                const newList = this.state.videoList;
+                newList.splice(i, 1);
+                this.setState({
+                    videoList: newList
+                });
+            }
+        }
+    };
+
     callback = (key) => {
         switch (key) {
             case "image":
@@ -183,7 +205,7 @@ export default class UserTab extends Component {
     };
 
     render() {
-        const { imageList, audioList, videoList, gifList } = this.state;
+        const { imageList, audioList, videoList, gifList} = this.state;
         //console.log("gifList", gifList)
 
         return (
@@ -191,7 +213,7 @@ export default class UserTab extends Component {
                 <div style={{ height: "120px", margin: "8px" }}>
                     <Dragger
                         showUploadList={false}
-                        accept=".png,.mp3,.gif"
+                        accept=".png,.mp3,.gif,.mp4"
                         //accept=".png,.mp3,.wav,.wma,.aif,.mid,.ra,.vqf,.ape,.acm,.acc"
                         beforeUpload={this.uploadFile}
                     >
@@ -255,11 +277,14 @@ export default class UserTab extends Component {
                         </Panel>
                         <Panel header={"Video (" + videoList.length + ")"} key="video" className="collaspe-panel">
                             <List
-                                grid={{ gutter: 3, column: 3 }}
+                                grid={{ gutter: 3, column: 2 }}
                                 dataSource={videoList}
                                 renderItem={item => (
-                                    <List.Item>
+                                    <List.Item >  
                                         <VideoCard info={item}  {...this.props} />
+                                        <Button style={{ marginLeft: '70px' }} key={item.uid} type="link" icon="delete" size="small"
+                                            onClick={() => this.onDeleteVideo(item.uid)}
+                                        />  
                                     </List.Item>
                                 )}
                             />

@@ -39,7 +39,10 @@ const imageSource = {
                     gifFrames=item.gifData;
                     //console.log("gifDuration", item.gifData[0].frameInfo.delay);
                 }
-            
+                //console.log("endDrag",w,h)
+                //gif 尺寸太大，要设置100*100，按照自身尺寸显示会溢出画布
+                w=100;
+                h=100;
                 const newImage = new GifInfo(item.name, item.src, delay, gifFrames, x, y, w, h, 0);
                 const newElement = new Element(ElementType.GIF, newImage);
                 newScene.addElement(newElement);

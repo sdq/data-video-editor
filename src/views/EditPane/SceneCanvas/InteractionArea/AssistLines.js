@@ -6,12 +6,17 @@ export default class AssistLines extends Component {
 
     render() {
         //获取当前元素信息（不考虑旋转情况）
-        const x = this.props.currentElement.info().x;
-        const y = this.props.currentElement.info().y;
-        const w = this.props.currentElement.info().width;
-        const h = this.props.currentElement.info().height;
+        let x = 0;
+        let y = 0;
+        let w = 0;
+        let h = 0;
         //console.log(w,h)
-        
+        if(this.props.currentElement && this.props.currentElement.info()){
+             x = this.props.currentElement.info().x;
+             y = this.props.currentElement.info().y;
+             w = this.props.currentElement.info().width;
+             h = this.props.currentElement.info().height;
+        }
         //判定显示辅助线的margin
         let margin = 40;
 
