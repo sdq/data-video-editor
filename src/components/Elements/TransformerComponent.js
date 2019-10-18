@@ -46,7 +46,7 @@ export default class TransformerComponent extends Component {
                 borderStroke={Color.DEEP_ORANGE}
                 anchorStroke={Color.DEEP_ORANGE}
                 anchorFill={Color.LIGHT_ORANGE}
-                enabledAnchors= {  (selectedElementType==="text_element")  ? ['middle-left', 'middle-right'] : ['top-left', 'top-right', 'bottom-left', 'bottom-right']}
+                enabledAnchors= {  (selectedElementType==="text_element")  ? ['middle-right'] : ['top-left', 'top-right', 'bottom-left', 'bottom-right']}
             />
         )
     }

@@ -66,6 +66,9 @@ export default class AnimationBar extends Component {
             case ElementType.CHART:
                 color = Color.CHART_BAR;
                 break;
+            case ElementType.VIDEO:
+                color = Color.VIDEO_BAR;
+                break;
             case ElementType.AUDIO:
                 color = Color.AUDIO_BAR;
                 break;

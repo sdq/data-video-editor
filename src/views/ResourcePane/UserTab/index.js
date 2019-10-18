@@ -210,7 +210,7 @@ export default class UserTab extends Component {
 
         return (
             <div className="usertab">
-                <div style={{ height: "120px", margin: "8px" }}>
+                <div style={{ height: "120px" }}>
                     <Dragger
                         showUploadList={false}
                         accept=".png,.mp3,.gif,.mp4"

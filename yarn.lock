@@ -9747,6 +9747,13 @@ react-slick@~0.24.0:
     lodash.debounce "^4.0.8"
     resize-observer-polyfill "^1.5.0"
 
+react-undraw@^1.14.0:
+  version "1.14.0"
+  resolved "https://registry.yarnpkg.com/react-undraw/-/react-undraw-1.14.0.tgz#e7ee5bb5d7d225b4887f874e61a13f4527331f03"
+  integrity sha512-76umZNxfmrGPguebytu9t1PIkyd5wOsHk/sA+5/T9qLpCtKYOvAY9QGGNKTgQSKpTtqv7CWWht8RZ14CSRodMg==
+  dependencies:
+    prop-types "^15.7.2"
+
 react-vega-lite@^6.1.0:
   version "6.1.0"
   resolved "https://registry.yarnpkg.com/react-vega-lite/-/react-vega-lite-6.1.0.tgz#f77ed9ca7b5cfc46d71a0bb7af724f31e6657341"
