@@ -36,8 +36,11 @@ export default class Recorder {
                     mimeType : 'video/webm;'
                 }
 
-                var audioTrack = this.extractAudio(['audiotest']);
-                stream.addTrack(audioTrack);
+                if (document.getElementById('audiotest') !== null) {
+                    var audioTrack = this.extractAudio(['audiotest']);
+                    stream.addTrack(audioTrack);
+                }
+                
 
                 var recorder = new MediaRecorder(stream, options);
 
