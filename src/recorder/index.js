@@ -6,8 +6,10 @@ export default class Recorder {
             this.recorder = null; // for stop recording
             this.recorder_timeout = null;
             this.isCompleted = false;
-            this.ctx = null;
-
+            this.ctx = new AudioContext();;
+            this.dest = null;
+            this.MEDIA_ELEMENT_NODES = [];
+            this.MEDIA_ELEMENT_Map = new WeakMap();
             this.isRecording = false;
             Recorder.instance = this;
         } else {
@@ -36,6 +38,7 @@ export default class Recorder {
                     mimeType : 'video/webm;'
                 }
 
+                var audios = ['audiotest']
                 if (document.getElementById('audiotest') !== null) {
                     var audioTrack = this.extractAudio(['audiotest']);
                     stream.addTrack(audioTrack);
@@ -112,10 +115,12 @@ export default class Recorder {
                     this.recorder = null; 
                     this.isRecording = false;
                     this.isCompleted = false;
-                    if(this.ctx !== null) {
-                        this.ctx.close();
-                        this.ctx = null;
-                    } 
+                    // if(this.ctx !== null) {
+                    //     this.MEDIA_ELEMENT_NODES.forEach((node) => {
+                    //         node.disconnect();
+                    //     })
+                    //     console.log('ctx', this.ctx)
+                    // } 
                 }
                 recorder.start(timeSlice);
                 var startTime = Date.now();
@@ -132,18 +137,38 @@ export default class Recorder {
     }
 
     extractAudio(audios) {
-        let ctx = new AudioContext();
-        this.ctx = ctx;
+        let ctx = this.ctx;
+        // this.ctx = ctx;
         let dest = ctx.createMediaStreamDestination();
+        // this.dest = dest
         audios.forEach((audio) => {
             let videoOrAudioElement = document.getElementById(audio);
-            console.log(videoOrAudioElement);
-            let sourceNode = ctx.createMediaElementSource(videoOrAudioElement);
-            sourceNode.connect(dest);
-            sourceNode.connect(ctx.destination);
+            if(this.MEDIA_ELEMENT_Map.has(videoOrAudioElement)){
+                let sourceNode = this.MEDIA_ELEMENT_Map.get(videoOrAudioElement);
+                sourceNode.connect(dest);
+                sourceNode.connect(ctx.destination);
+                this.MEDIA_ELEMENT_NODES.push(sourceNode);
+            }
+            else {
+                let sourceNode = ctx.createMediaElementSource(videoOrAudioElement);
+                console.log(ctx)
+                sourceNode.connect(dest);
+                sourceNode.connect(ctx.destination);
+                this.MEDIA_ELEMENT_NODES.push(sourceNode);
+                this.MEDIA_ELEMENT_Map.set(videoOrAudioElement, sourceNode);
+            }
+            // let videoOrAudioElement = document.getElementById(audio);
+            // let sourceNode = ctx.createMediaElementSource(videoOrAudioElement);
+            // console.log(ctx)
+            // sourceNode.connect(dest);
+            // sourceNode.connect(ctx.destination);
+            // this.MEDIA_ELEMENT_NODES.push(sourceNode);
+            // this.MEDIA_ELEMENT_NODES.set(videoOrAudioElement, sourceNode);
         });
         let audioTrack = dest.stream.getAudioTracks()[0];
         console.log("audiotrack", audioTrack)
+        this.ctx = ctx;
+        // this.dest = dest
         return audioTrack;
     }
 }
