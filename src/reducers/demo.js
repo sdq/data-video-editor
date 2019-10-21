@@ -49,24 +49,20 @@ const demoimage2 = new ImageInfo(
 )
 const demochart2 = new ChartInfo(
     0,
-    ChartCategory.D3,
+    ChartCategory.VEGALITE,
     ChartType.BARCHART,
     {
         "mark": "bar",
         "encoding": {
-          "x": {"field": "Origin", "type": "ordinal"},
-          "y": {"field": "Horsepower", "type": "quantitative"},
-          "color": {"field": "Origin", "type": "ordinal"},// no use
-        },
-        "configure": {
-            "showAxisX": true,
-            "showAxisY": true,
+            "x": {"field": "Origin", "type": "ordinal"},
+            "y": {"field": "Horsepower", "type": "quantitative"},
+            "color": {"value": Color.DEEP_ORANGE},
         }
     },
     45,
     100,
-    300,
-    300,
+    260,
+    260,
     0,
 )
 const demotext21 = new TextInfo(
