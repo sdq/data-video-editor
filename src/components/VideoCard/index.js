@@ -35,6 +35,12 @@ const videoSource = {
                 const newVideo = new VideoInfo(item.name, item.src, videoElement.duration, 240, 100, videoElement.clientWidth, videoElement.clientHeight, 0);
                 const newElement = new Element(ElementType.VIDEO, newVideo);
                 newScene.addElement(newElement);
+                //add videoResource to audioList
+                let videoResource = {};
+                videoResource.id = newElement.id();
+                //console.log("newElement.id",newElement.id())
+                videoResource.element = props.info.videoElement
+                newScene.addVideo(videoResource);
                 props.addElement(newElement);
                 props.updateScene(dropResult.sceneIndex, newScene);
             }

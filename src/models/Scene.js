@@ -10,6 +10,7 @@ export default class Scene {
         // this.dataurl = dataurl;
         this._elements = []; //TODO: move to track
         this._audios = [];
+        this._videos = [];
         this._backgroundColor = '#ffffff';
         this._backgroundImage = '';
     }
@@ -64,6 +65,13 @@ export default class Scene {
     };  
     addAudio = function(audio){
         this._audios.push(audio);
+    };
+    videos = function(){
+        console.log("videos",this._videos)
+        return this._videos;
+    };  
+    addVideo = function(video){
+        this._videos.push(video);
     };
     addElement = function(element) {
         element.start(0);
