@@ -9,6 +9,8 @@ export default {
     ENCODING: 'ADD_ENCODING',
     MODIFY_ENCODING: 'MODIFY_ENCODING',
     REMOVE_ENCODING: 'REMOVE_ENCODING',
+    // Design
+    CONFIGURE: 'CONFIGURE',
     // Meta
     UNDO_VIS: 'UNDO_VIS',
     REDO_VIS: 'REDO_VIS',

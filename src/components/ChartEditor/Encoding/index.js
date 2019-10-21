@@ -3,10 +3,13 @@ import Shelf from '../Shelf';
 
 export default class Encoding extends Component {
     render() {
+        const shelves = [];
+        for (const channel in this.props.channels) {
+            shelves.push(<Shelf key={channel} channel={this.props.channels[channel]} dropAvailable={true} {...this.props}/>);
+        }
         return (
             <div style={{marginTop:"25px"}}>
-                <Shelf channel={this.props.channels.x} dropAvailable={true} {...this.props}/>
-                <Shelf channel={this.props.channels.y} dropAvailable={true} {...this.props}/>
+                {shelves}
             </div>
         )
     }

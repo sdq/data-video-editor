@@ -51,6 +51,11 @@ export const removeEncoding = (channel, field) => ({
     field
 })
 
+export const configure = (configuration) => ({
+    type: VisActionType.CONFIGURE,
+    configuration
+})
+
 // Meta
 export const undo = () => ({
     type: VisActionType.UNDO_VIS
