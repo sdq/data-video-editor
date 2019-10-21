@@ -23,9 +23,14 @@ export default class TextEditor extends Component {
                 if(this.props.currentElements[i].id()===this.state.currentTextId){
                 const newScene = Object.assign({},this.props.currentScene);
                 this.props.currentElements[i].info().text = e.target.value; 
+                //text编辑 换行实时显示
+                if(e.target.value.indexOf('\n') !== -1){
+                    this.props.currentElement.info().height += this.props.currentElement.info().textSize;
+                }
                 return this.props.updateScene(this.props.sceneIndex, newScene);  
                 }       
         } 
+        
     }
 
     render() {
@@ -42,7 +47,7 @@ export default class TextEditor extends Component {
             } //判断是否Firefox浏览器
             if (userAgent.indexOf("Chrome") > -1){
                 offsetX = 2;
-                offsetY = 6.4965;
+                offsetY = 2;
             }
             if (userAgent.indexOf("Safari") > -1 && !(userAgent.indexOf("Chrome") > -1) ) {
                 //在Mac主机电脑上通过测试
@@ -55,6 +60,7 @@ export default class TextEditor extends Component {
             }; //判断是否IE浏览器
             //仍然需要更精准测试
 
+            offsetW = (this.props.currentElement) ? this.props.currentElement.info().textSize:20;//一个字的偏差
 
         return (
              <div className="TextEditor" style={{display: (this.state.isShowTextArea) ? "block" : "none"}} > 
@@ -68,6 +74,7 @@ export default class TextEditor extends Component {
               border: "0px",
               background:'none',
               color:'black',
+              lineHeight:(this.props.currentElement) ? this.props.currentElement.info().textSize+'px':'20px',//需要和当前字号相等
               //Elimination of displacement error between textTransform and textEditor
               //判断当前element是否存在，保证编辑时切换scene运行正确
               fontFamily:(this.props.currentElement) ? this.props.currentElement.info().fontFamily:"Arial",

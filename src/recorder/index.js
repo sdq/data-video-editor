@@ -38,12 +38,13 @@ export default class Recorder {
                 var audiolist = [];
                 for(let k=0;k<this.scenesCount;k++){
                     let audios = this.currentScene(k).audios();
-                    if(audios){
-                        audios.map(audio=>{ 
-                            // console.log("audio对象",audio.element) 
-                            // console.log("audio对象id",audio.element.id)
-                            audiolist.push(audio.element.id)
-                        })                    
+                    if (audios){
+                        // audios.map(audio=>{ 
+                        //     // console.log("audio对象",audio.element) 
+                        //     // console.log("audio对象id",audio.element.id)
+                        //     audiolist.push(audio.element.id)
+                        // })
+                        audiolist = audios.map(audio=>audio.element.id)                      
                     }                
                 }
                 // console.log(audiolist)
