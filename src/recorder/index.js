@@ -7,11 +7,7 @@ export default class Recorder {
             this.recorder = null; // for stop recording
             this.recorder_timeout = null;
             this.isCompleted = false;
-<<<<<<< HEAD
             this.ctx = null;
-=======
-            this.ctx = new AudioContext();;
->>>>>>> f2f182cd7c7f05649bb1875353fd5d8816c7c1ae
             this.dest = null;
             this.MEDIA_ELEMENT_NODES = [];
             this.MEDIA_ELEMENT_Map = new WeakMap();
@@ -114,13 +110,8 @@ export default class Recorder {
                     }
                 };
 
-<<<<<<< HEAD
                 recorder.ondataavailable = function (event) {
                     videoData.push(event.data);
-=======
-                recorder.ondataavailable = function(event) {
-                    videoData.push(event.data); 
->>>>>>> f2f182cd7c7f05649bb1875353fd5d8816c7c1ae
                     // console.log(event.data);  
                     // console.log('data available');
                 }
@@ -148,21 +139,12 @@ export default class Recorder {
                     this.recorder = null;
                     this.isRecording = false;
                     this.isCompleted = false;
-<<<<<<< HEAD
-                    if (this.ctx !== null) {
-                        this.MEDIA_ELEMENT_NODES.forEach((node) => {
-                            node.disconnect();
-                        })
-                        // console.log('ctx', this.ctx)
-                    }
-=======
-                    // if(this.ctx !== null) {
+                    // if (this.ctx !== null) {
                     //     this.MEDIA_ELEMENT_NODES.forEach((node) => {
                     //         node.disconnect();
                     //     })
-                    //     console.log('ctx', this.ctx)
-                    // } 
->>>>>>> f2f182cd7c7f05649bb1875353fd5d8816c7c1ae
+                    //     // console.log('ctx', this.ctx)
+                    // }
                 }
                 recorder.start(timeSlice);
                 var startTime = Date.now();
@@ -185,11 +167,7 @@ export default class Recorder {
         // this.dest = dest
         audios.forEach((audio) => {
             let videoOrAudioElement = document.getElementById(audio);
-<<<<<<< HEAD
             if (this.MEDIA_ELEMENT_Map.has(videoOrAudioElement)) {
-=======
-            if(this.MEDIA_ELEMENT_Map.has(videoOrAudioElement)){
->>>>>>> f2f182cd7c7f05649bb1875353fd5d8816c7c1ae
                 let sourceNode = this.MEDIA_ELEMENT_Map.get(videoOrAudioElement);
                 sourceNode.connect(dest);
                 sourceNode.connect(ctx.destination);
@@ -197,11 +175,7 @@ export default class Recorder {
             }
             else {
                 let sourceNode = ctx.createMediaElementSource(videoOrAudioElement);
-<<<<<<< HEAD
                 // console.log(ctx)
-=======
-                console.log(ctx)
->>>>>>> f2f182cd7c7f05649bb1875353fd5d8816c7c1ae
                 sourceNode.connect(dest);
                 sourceNode.connect(ctx.destination);
                 this.MEDIA_ELEMENT_NODES.push(sourceNode);
@@ -216,11 +190,7 @@ export default class Recorder {
             // this.MEDIA_ELEMENT_NODES.set(videoOrAudioElement, sourceNode);
         });
         let audioTrack = dest.stream.getAudioTracks()[0];
-<<<<<<< HEAD
         // console.log("audiotrack", audioTrack)
-=======
-        console.log("audiotrack", audioTrack)
->>>>>>> f2f182cd7c7f05649bb1875353fd5d8816c7c1ae
         this.ctx = ctx;
         // this.dest = dest
         return audioTrack;
