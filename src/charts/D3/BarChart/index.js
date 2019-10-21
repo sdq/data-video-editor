@@ -21,12 +21,13 @@ export default class BarChart extends Component {
         }
     }
 
-    componentDidUpdate(preProps) {
-        if (preProps.spec !== this.props.spec) {
+    componentDidUpdate(oldProps) {
+        if (oldProps.spec !== this.props.spec) {
             const chartImageUrl = draw(this.props);
             this.chartImage = new window.Image();
             this.chartImage.src = chartImageUrl;
             this.chartImage.addEventListener('load', this.handleLoad);
+            // TODO: fix update
         }
     }
 
@@ -40,6 +41,7 @@ export default class BarChart extends Component {
         var canvas = document.createElement('canvas');
         canvas.width = this.props.width;
         canvas.height = this.props.height;
+        source = '<svg>' + source + '</svg>';
         canvg(canvas, source);
         return canvas.toDataURL('image/png');
     }

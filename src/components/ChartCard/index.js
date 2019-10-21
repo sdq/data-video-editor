@@ -4,6 +4,7 @@ import DNDType from '@/constants/DNDType';
 import ElementType from '@/constants/ElementType';
 //import ChartType from '@/constants/ChartType';
 import {Element, ChartInfo} from '@/models/Element';
+import {getDefaultSpec} from '@/charts/Info';
 // import Scene from '@/models/Scene';
 import './chartcard.css';
 
@@ -40,7 +41,7 @@ const chartSource = {
                     0,
                     item.category, // category
                     item.type, //type
-                    {}, //spec
+                    getDefaultSpec(item.category, item.type), //spec
                     x,
                     y,
                     w,

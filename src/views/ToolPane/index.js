@@ -56,6 +56,7 @@ const mapDispatchToProps = dispatch => {
             }
         },
         removeEncoding: (channel, field) => dispatch(visActions.removeEncoding(channel, field)),
+        visConfigure: (configuration) => dispatch(visActions.configure(configuration)),
     }
 }
 

@@ -142,6 +142,24 @@ export default (state = initialState, action) => {
             newState.specIndex ++;
             newState.displaySpec = newSpec;
             return newState
+
+        case VisActionType.CONFIGURE:
+            // state
+            newSpecHistory = newState.specHistory.slice(0,newState.specIndex+1);
+            newSpec.configuration = action.configuration;
+            newSpecHistory.push(JSON.stringify(newSpec));
+            newState.specHistory = newSpecHistory
+            // action
+            newActionHistory = newState.actionHistory.slice();
+            newActionHistory.push({
+                "type": VisActionType.CONFIGURATION,
+                "description": "change configuration",
+                "detail": action.configuration,
+            });
+            newState.actionHistory = newActionHistory;
+            newState.specIndex ++;
+            newState.displaySpec = newSpec;
+            return newState
         
         // Meta
 

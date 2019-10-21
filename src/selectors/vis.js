@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect';
 import ElementType from '@/constants/ElementType';
+import { getChannels } from '@/charts/Info';
 import _ from 'lodash';
 
 // Data
@@ -47,30 +48,40 @@ export const currentVis = createSelector(
 
 export const channels = createSelector(
     displaySpec,
-    (displaySpec) => {
-        const channels = {
-            x: {
-                name: 'x',
-                isEncoded: false,
-                field: ''
-            },
-            y: {
-                name: 'y',
-                isEncoded: false,
-                field: ''
-            },
+    scenes,
+    sceneIndex,
+    elementIndex,
+    (displaySpec, scenes, sceneIndex, elementIndex) => {
+        if (elementIndex === -1) {
+            return {}
+        }
+        const currentElement = scenes[sceneIndex].elements()[elementIndex];
+        if (currentElement.type() !== ElementType.CHART) {
+            return {}
+        }
+        const chartInfo = currentElement.info();
+        const channels = getChannels(chartInfo.category, chartInfo.type)
+        // const channels = {
+        //     x: {
+        //         name: 'x',
+        //     },
+        //     y: {
+        //         name: 'y',
+        //     },
+        // }
+        for (const key in channels) {
+            channels[key].isEncoded = false;
+            channels[key].field = '';
         }
         if (_.isEmpty(displaySpec) || displaySpec === "") {
             return channels;
         }
         const encoding = displaySpec["encoding"];
-        if ("x" in encoding && "field" in encoding["x"]) {
-            channels.x.isEncoded = true;
-            channels.x.field = encoding["x"]["field"];
-        }
-        if ("y" in encoding && "field" in encoding["y"]) {
-            channels.y.isEncoded = true;
-            channels.y.field = encoding["y"]["field"];
+        for (const channel in encoding) {
+            if (channels.hasOwnProperty(channel) && "field" in encoding[channel]) {
+                channels[channel].isEncoded = true;
+                channels[channel].field = encoding[channel]["field"];
+            }
         }
         return channels;
     }

@@ -29,6 +29,10 @@ const demochart = new ChartInfo(
           "x": {"field": "Origin", "type": "ordinal"},
           "y": {"field": "Horsepower", "type": "quantitative"},
           "color": {"value": Color.DEEP_ORANGE},
+        },
+        "configure": {
+            "showAxisX": true,
+            "showAxisY": true,
         }
     },
     100,
