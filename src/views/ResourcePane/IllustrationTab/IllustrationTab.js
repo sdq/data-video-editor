@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Button, Row, Col, Input, Collapse, List } from 'antd';
 import LazyLoad from 'react-lazyload';
 import ImageCard from '@/components/ImageCard';
+import UndrawCard from '@/components/UndrawCard';
 import './illustrationtab.css';
 import data from './data';
 import undrawdata from './undrawdata';
@@ -127,7 +128,10 @@ export default class ImageTab extends Component {
                         renderItem={item => (
                         <List.Item>
                                <LazyLoad>
-                               <Undraw name={item} primaryColor={primaryColor} height={"120"}/>
+                               {/* <Undraw name={item} primaryColor={primaryColor} height={"120"}/> */}
+                               <LazyLoad><UndrawCard name={item} primaryColor={primaryColor} {...this.props}/>
+                               </LazyLoad>
+                               {/* <LazyLoad><UndrawCard info={item} {...this.props}/></LazyLoad> */}
                                <p className="card-text mb-0 text-center">{item}</p>
                                </LazyLoad>  
                                </List.Item>

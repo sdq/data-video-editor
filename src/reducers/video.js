@@ -3,8 +3,8 @@ import scenes from './demo';
 import _ from 'lodash';
 
 const initialState = {
-    past:[[],[]],
-    future:[[],[]],
+    past:[[],[],[]],
+    future:[[],[],[]],
     scenes: scenes,
     index: 1,
 };
@@ -19,7 +19,7 @@ export default (state = initialState, action) => {
             return newState;
         case ActionType.ADD_SCENE:
             newState.past.push([]);
-            newState.past.future([]);
+            newState.future.push([]);
             newScenes.push(action.scene);
             newState.scenes = newScenes;
             // newState.video.add(action.scene)
