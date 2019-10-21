@@ -25,6 +25,14 @@ export default class VideoElement extends Component {
     componentDidMount() {
         if (this.props.showAnimation) {
             this.loadVideo();
+        }else{
+            //EditableLayer中传来的tag，用来显示第一帧
+            //console.log("tag.....",this.props.tag)
+            if(this.props.tag){
+                this.setState({
+                    video: this.props.tag
+                });
+            }
         }
         const animations = this.props.element.animations(); 
         if (this.props.showAnimation && animations.length !== 0) {
@@ -227,7 +235,7 @@ export default class VideoElement extends Component {
                     opacity={this.props.element.info().opacity}
                     visible={true}
                 />
-                <Rect
+                {/* <Rect
                     name={this.props.name}
                     x={this.props.element.info().x}
                     y={this.props.element.info().y}
@@ -235,7 +243,7 @@ export default class VideoElement extends Component {
                     height={this.props.element.info().height}
                     fill={Color.VIDEO_BAR}
                     visible = {!showAnimation}
-                />
+                /> */}
             </Group>
         )
     }
