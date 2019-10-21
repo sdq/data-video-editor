@@ -12,11 +12,11 @@ import Color from '../constants/Color';
 // Demo
 const demoimage = new ImageInfo(
     'work.png',
-    MyURL.OSS+'/images/work.png',
+    MyURL.OSS+'/images/vehicle.png',
     250,
     90,
     300,
-    253,
+    167,
     0,
 )
 
@@ -40,11 +40,11 @@ scene1.addElement(element2);
 
 const demoimage2 = new ImageInfo(
     'sport.png',
-    MyURL.OSS+'/images/sport.png',
+    MyURL.OSS+'/images/blue-car.png',
     382,
     130,
     350,
-    210,
+    252,
     0,
 )
 const demochart2 = new ChartInfo(
@@ -56,7 +56,11 @@ const demochart2 = new ChartInfo(
         "encoding": {
           "x": {"field": "Origin", "type": "ordinal"},
           "y": {"field": "Horsepower", "type": "quantitative"},
-          "color": {"value": '#FFA500'},// no use
+          "color": {"field": "Origin", "type": "ordinal"},// no use
+        },
+        "configure": {
+            "showAxisX": true,
+            "showAxisY": true,
         }
     },
     45,
@@ -116,11 +120,11 @@ video.add(scene2);
 
 const demoimage3 = new ImageInfo(
     'woman.png',
-    MyURL.OSS+'/images/woman.png',
+    MyURL.OSS+'/images/red-car.png',
     82,
     172,
-    276,
-    198,
+    300,
+    224,
     0,
 )
 

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Rect, Image, Group } from 'react-konva';
-import Color from '@/constants/Color';
+import { Image, Group } from 'react-konva';
 import { AnimationCreator } from '@/animation';
 import _ from 'lodash';
 
@@ -201,7 +200,6 @@ export default class VideoElement extends Component {
 
     render() {
         let { video } = this.state;
-        let { showAnimation } = this.props;
         //console.log("render",this.props.element.info().x,this.props.element.info().y)
         return (
             <Group name={this.props.name}

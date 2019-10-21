@@ -6,7 +6,6 @@ import UndrawCard from '@/components/UndrawCard';
 import './illustrationtab.css';
 import data from './data';
 import undrawdata from './undrawdata';
-import Undraw from 'react-undraw';
 
 const { Panel } = Collapse;
 const { Search } = Input;

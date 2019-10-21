@@ -41,11 +41,21 @@ const data = [
         style: "cartoon",
         src: MyURL.OSS+"/images/sport.png"
     },
-    // {
-    //     name: "pika",
-    //     style: "cartoon",
-    //     src: URL.OSS+"/images/pika.gif"
-    // }
+    {
+        name: "vehicle",
+        style: "cartoon",
+        src: MyURL.OSS+"/images/vehicle.png"
+    },
+    {
+        name: "red-car",
+        style: "cartoon",
+        src: MyURL.OSS+"/images/red-car.png"
+    },
+    {
+        name: "blue-car",
+        style: "cartoon",
+        src: MyURL.OSS+"/images/blue-car.png"
+    }
 ];
 
 export default data;
