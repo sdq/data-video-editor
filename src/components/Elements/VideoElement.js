@@ -205,6 +205,8 @@ export default class VideoElement extends Component {
         return (
             <Group name={this.props.name}
                 draggable={this.props.draggable}
+                x={this.props.element.info().x}
+                y={this.props.element.info().y}
                 width={this.props.element.info().width}
                 height={this.props.element.info().height}
                 rotation={this.props.element.info().rotation}
@@ -227,8 +229,6 @@ export default class VideoElement extends Component {
                     ref={node => this.imageref = node}
                     name={this.props.name}
                     image={video}
-                    x={this.props.element.info().x}
-                    y={this.props.element.info().y}
                     width={this.props.element.info().width}
                     height={this.props.element.info().height}
                     opacity={this.props.element.info().opacity}
