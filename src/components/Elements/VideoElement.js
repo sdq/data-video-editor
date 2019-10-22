@@ -159,7 +159,8 @@ export default class VideoElement extends Component {
         this.props.edit(newEle);
     };
 
-    onTransformStart() {
+    onTransformStart(e) {
+        lastScale = e.currentTarget.scaleX();//initial scaleX
         this.props.editStart();
     };
 
