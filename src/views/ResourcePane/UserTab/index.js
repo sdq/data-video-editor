@@ -37,7 +37,7 @@ export default class UserTab extends Component {
                 {
                     uid: '-3',
                     name: "90mp3",
-                    src: "https://datavideo.idvxlab.com/audios/90mp3"
+                    src: "https://datavideo.idvxlab.com/audios/90mp3.mp3"
                 },
                 {
                     uid: '-4',
