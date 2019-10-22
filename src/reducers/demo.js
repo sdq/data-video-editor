@@ -1,6 +1,6 @@
 import Scene from '../models/Scene';
 import Video from '../models/Video';
-import { Element, ImageInfo, ChartInfo, TextInfo , AudioInfo} from '../models/Element';
+import { Element, ImageInfo, ChartInfo, TextInfo } from '../models/Element';
 import MyURL from '../constants/MyURL';
 import ElementType from '../constants/ElementType';
 import ChartType from '../constants/ChartType';
@@ -30,7 +30,7 @@ const demoimage002 = new ImageInfo(
     'usa.png',
     MyURL.OSS+'/images/usa.png',
     200,
-    150,
+    155,
     80,
     50,
     0,
@@ -50,7 +50,7 @@ const demoimage = new ImageInfo(
     'work.png',
     MyURL.OSS+'/images/vehicle.png',
     320,
-    90,
+    100,
     300,
     167,
     0,
@@ -58,7 +58,7 @@ const demoimage = new ImageInfo(
 
 const demotext = new TextInfo(
     "英美日三国小轿车比较",
-    220,
+    210,
     350,
     0,
     'black',
@@ -88,6 +88,7 @@ scene1.addElement(element03);
 scene1.addElement(element1);
 scene1.addElement(element2);
 // scene1.backgroundColor(Color.CLEAR_BLUE);
+scene1.backgroundImage(MyURL.OSS+"/backgroundImages/t-earth.png");
 
 
 // const demoaudio222 = new AudioInfo(
@@ -99,7 +100,7 @@ const demoimage2 = new ImageInfo(
     'sport.png',
     MyURL.OSS+'/images/blue-car.png',
     382,
-    130,
+    50,
     350,
     252,
     0,
@@ -117,15 +118,15 @@ const demochart2 = new ChartInfo(
         }
     },
     45,
-    100,
+    30,
     260,
     260,
     0,
 )
 const demotext21 = new TextInfo(
     "英美日小轿车马力比较",
-    45,
-    45,
+    60,
+    370,
     0,
     'black',
     30,
@@ -133,8 +134,8 @@ const demotext21 = new TextInfo(
 
 const demotext22 = new TextInfo(
     "美国马力远超另两国",
-    400,
-    50,
+    440,
+    375,
     0,
     'black',
     20,
@@ -195,6 +196,8 @@ element02.add(animation1);
 
 
 const scene2 = new Scene("Comparison of car horsepower in three countries", 10.0);
+scene2.backgroundImage(MyURL.OSS+"/backgroundImages/t-earth.png");
+
 // scene2.addElement(element2222);
 scene2.addElement(element02);
 scene2.addElement(element12);
@@ -247,7 +250,7 @@ const demoimage3 = new ImageInfo(
     'woman.png',
     MyURL.OSS+'/images/red-car.png',
     82,
-    172,
+    60,
     300,
     224,
     0,
@@ -266,7 +269,7 @@ const demochart3 = new ChartInfo(
         }
     },
     450,
-    100,
+    40,
     250,
     250,
     0,
@@ -275,7 +278,7 @@ const demochart3 = new ChartInfo(
 const demotext3 = new TextInfo(
     "三国小轿车加速度比较",
     450,
-    45,
+    370,
     0,
     'black',
     30,
@@ -285,8 +288,8 @@ const demotext3 = new TextInfo(
 
 const demotext31 = new TextInfo(
     "美国加速度范围略大",
-    200,
-    50,
+    150,
+    375,
     0,
     'black',
     20,
@@ -303,11 +306,13 @@ element32.duration(10.0);
 element33.duration(10.0);
 element34.duration(10.0);
 
- const animation2 = new AnimationModel(AnimationType.PRESENTATION_ZOOMIN, 'Zoomin');
-animation2.start(0);
-animation2.duration(10);
-element31.add(animation2);
+// const animation2 = new AnimationModel(AnimationType.PRESENTATION_ZOOMIN, 'Zoomin');
+// animation2.start(0);
+// animation2.duration(10);
+// element31.add(animation2);
 const scene3 = new Scene("Comparison of car acceleration in three countries", 10.0);
+scene3.backgroundImage(MyURL.OSS+"/backgroundImages/t-earth.png");
+
 // scene3.addElement(element333);
 scene3.addElement(element31);
 scene3.addElement(element32);
