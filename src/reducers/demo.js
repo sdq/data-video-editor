@@ -11,11 +11,11 @@ import Color from '../constants/Color';
 //var gifFrames = require('gif-frames');
 // Demo
 
-const demoaudio1 = new AudioInfo(
-    '88mp3.mp3',
-    MyURL.OSS+'/images/88mp3.mp3',
-    4,
-)
+// const demoaudio1 = new AudioInfo(
+//     '88mp3.mp3',
+//     MyURL.OSS+'/images/88mp3.mp3',
+//     4,
+// )
 
 const demoimage01 = new ImageInfo(
     'eu.png',
@@ -65,7 +65,7 @@ const demotext = new TextInfo(
     40,
 )
 
-const element00 = new Element(ElementType.AUDIO, demoaudio1);
+// const element00 = new Element(ElementType.AUDIO, demoaudio1);
 const element01 = new Element(ElementType.IMAGE, demoimage01);
 const element002 = new Element(ElementType.IMAGE, demoimage002);
 const element03 = new Element(ElementType.IMAGE, demoimage03);
@@ -81,7 +81,7 @@ animation0.start(0);
 animation0.duration(3);
 element2.add(animation0);
 const scene1 = new Scene("Comparison of cars in three countries", 4.0);
-scene1.addElement(element00);
+// scene1.addElement(element00);
 scene1.addElement(element01);
 scene1.addElement(element002);
 scene1.addElement(element03);
@@ -90,11 +90,11 @@ scene1.addElement(element2);
 // scene1.backgroundColor(Color.CLEAR_BLUE);
 
 
-const demoaudio222 = new AudioInfo(
-    '90mp3.mp3',
-    MyURL.OSS+'/images/90mp3.mp3', 
-    4,
-)
+// const demoaudio222 = new AudioInfo(
+//     '90mp3.mp3',
+//     MyURL.OSS+'/images/90mp3.mp3', 
+//     4,
+// )
 const demoimage2 = new ImageInfo(
     'sport.png',
     MyURL.OSS+'/images/blue-car.png',
@@ -168,7 +168,7 @@ const demotext22 = new TextInfo(
 //     100,
 //     100,
 // )
-const element2222 = new Element(ElementType.AUDIO, demoaudio222);
+// const element2222 = new Element(ElementType.AUDIO, demoaudio222);
 const element02 = new Element(ElementType.CHART, demochart2);
 const element12 = new Element(ElementType.IMAGE, demoimage2);
 const element21 = new Element(ElementType.TEXT, demotext21);
@@ -176,7 +176,7 @@ const element22 = new Element(ElementType.TEXT, demotext22);
 
 element02.start(1.0);  //没用
 element12.start(1.0);
-element2222.duration(10.0);
+// element2222.duration(10.0);
 element02.duration(10.0);
 element12.duration(10.0);
 element21.duration(10.0);
@@ -195,7 +195,7 @@ element02.add(animation1);
 
 
 const scene2 = new Scene("Comparison of car horsepower in three countries", 10.0);
-scene2.addElement(element2222);
+// scene2.addElement(element2222);
 scene2.addElement(element02);
 scene2.addElement(element12);
 scene2.addElement(element22);
@@ -237,11 +237,11 @@ video.add(scene1);
 video.add(scene2);
 
 
-const demoaudio333 = new AudioInfo(
-    '91mp3.mp3',
-    MyURL.OSS+'/images/91mp3.mp3', 
-    4,
-)
+// const demoaudio333 = new AudioInfo(
+//     '91mp3.mp3',
+//     MyURL.OSS+'/images/91mp3.mp3', 
+//     4,
+// )
 
 const demoimage3 = new ImageInfo(
     'woman.png',
@@ -292,12 +292,12 @@ const demotext31 = new TextInfo(
     20,
 )
 
-const element333 = new Element(ElementType.AUDIO, demoaudio333);
+// const element333 = new Element(ElementType.AUDIO, demoaudio333);
 const element31 = new Element(ElementType.CHART, demochart3);
 const element32 = new Element(ElementType.IMAGE, demoimage3);
 const element33 = new Element(ElementType.TEXT, demotext3);
 const element34 = new Element(ElementType.TEXT, demotext31);
-element333.duration(10.0);
+// element333.duration(10.0);
 element31.duration(10.0);
 element32.duration(10.0);
 element33.duration(10.0);
@@ -308,7 +308,7 @@ animation2.start(0);
 animation2.duration(10);
 element31.add(animation2);
 const scene3 = new Scene("Comparison of car acceleration in three countries", 10.0);
-scene3.addElement(element333);
+// scene3.addElement(element333);
 scene3.addElement(element31);
 scene3.addElement(element32);
 scene3.addElement(element33);

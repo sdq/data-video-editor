@@ -29,6 +29,21 @@ export default class UserTab extends Component {
                     name: "column-anon",
                     src: "https://datavideo.idvxlab.com/audios/column-anon.mp3"
                 },
+                {
+                    uid: '-2',
+                    name: "88mp3",
+                    src: "https://datavideo.idvxlab.com/audios/88mp3.mp3"
+                },
+                {
+                    uid: '-3',
+                    name: "90mp3",
+                    src: "https://datavideo.idvxlab.com/audios/90mp3"
+                },
+                {
+                    uid: '-4',
+                    name: "91mp3",
+                    src: "https://datavideo.idvxlab.com/audios/91mp3.mp3"
+                },
             ],
             videoList: [
                 {
@@ -42,6 +57,16 @@ export default class UserTab extends Component {
                     uid: '-1',
                     name: "walking",
                     src: "https://datavideo.idvxlab.com/gifs/walking.gif"
+                },
+                {
+                    uid: '-2',
+                    name: "car-run",
+                    src: "https://datavideo.idvxlab.com/gifs/car-run.gif"
+                },
+                {
+                    uid: '-3',
+                    name: "star-flicker",
+                    src: "https://datavideo.idvxlab.com/gifs/star-flicker.gif"
                 },
             ],
         }
