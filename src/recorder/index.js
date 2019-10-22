@@ -38,13 +38,14 @@ export default class Recorder {
                 var audiolist = [];
                 for(let k=0;k<this.scenesCount;k++){
                     let audios = this.currentScene(k).audios();
-                    if (audios){
+                    // console.log(audios)
+                    if (audios.length !== 0){
                         // audios.map(audio=>{ 
                         //     // console.log("audio对象",audio.element) 
                         //     // console.log("audio对象id",audio.element.id)
                         //     audiolist.push(audio.element.id)
                         // })
-                        audiolist = audios.map(audio=>audio.element.id)                      
+                        audiolist.push(...audios.map(audio=>audio.element.id))                      
                     }                
                 }
                 // console.log(audiolist)
@@ -191,7 +192,6 @@ export default class Recorder {
             // this.MEDIA_ELEMENT_NODES.set(videoOrAudioElement, sourceNode);
         });
         let audioTrack = dest.stream.getAudioTracks()[0];
-        // console.log("audiotrack", audioTrack)
         this.ctx = ctx;
         // this.dest = dest
         return audioTrack;
