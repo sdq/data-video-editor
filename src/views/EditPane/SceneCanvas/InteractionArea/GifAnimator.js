@@ -7,7 +7,7 @@ export default class GifAnimator extends Component {
     }
 
     render() {
-
+        if(!this._gifInfo) return null;
         return (
             <img
                 style={{
@@ -19,7 +19,7 @@ export default class GifAnimator extends Component {
                     left: this._gifInfo.x,
                 }}
                 crossOrigin='anonymous'
-                src={this._gifInfo.src}
+                src={this._gifInfo.src+"?"+ Math.random()}
                 alt={this._gifInfo.name}>
             </img>
         )
