@@ -18,6 +18,7 @@ export default class EditCanvas extends Component {
             showGifEditor:false,
             showVideoEditor:false,
             dbClickedElementIndex: -1,
+            lastscene : 1,//进入界面的第一个scene编号
         };
         this.handleStageDblClick = this.handleStageDblClick.bind(this);
     }
@@ -105,7 +106,16 @@ export default class EditCanvas extends Component {
 
     render() {
         const { isPerforming } = this.props;
-        const editable = !isPerforming;
+        let editable = !isPerforming;  
+        if (this.props.sceneIndex!==this.state.lastscene)
+        {
+            //切换屏幕时，保证交互层不显示，双击元素置空
+            this.state.dbClickedElementIndex = -1;
+            this.state.lastscene = this.props.sceneIndex;
+        }
+
+
+
         const editableLayer = <EditableLayer 
                 displayAssistLines={(active) => this.displayAssistLines(active)}
                 dbClickedElementIndex={this.state.dbClickedElementIndex}
