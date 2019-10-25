@@ -16,7 +16,7 @@ export default class ImageTab extends Component {
         this.state = {
             activeKey: "",          //激活标签
             search:"",              //搜索内容
-            limit: 10,              //显示素材数
+            limit: 10,              //单次加载素材数量
             primaryColor:"#6c63ff", //显示颜色
         }
         this.onSearch = this.onSearch.bind(this);
@@ -128,7 +128,7 @@ export default class ImageTab extends Component {
                         <List.Item>
                                <LazyLoad>
                                {/* <Undraw name={item} primaryColor={primaryColor} height={"120"}/> */}
-                               <LazyLoad><UndrawCard name={item} primaryColor={primaryColor} {...this.props}/>
+                               <LazyLoad><UndrawCard name={item} primaryColor={primaryColor}  {...this.props}/>
                                </LazyLoad>
                                {/* <LazyLoad><UndrawCard info={item} {...this.props}/></LazyLoad> */}
                                <p className="card-text mb-0 text-center">{item}</p>

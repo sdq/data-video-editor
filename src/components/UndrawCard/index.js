@@ -3,67 +3,87 @@ import { DragSource } from 'react-dnd';
 import DNDType from '@/constants/DNDType';
 import ElementType from '@/constants/ElementType';
 import {Element, ImageInfo} from '@/models/Element';
-import canvg from 'canvg';
 // import Scene from '@/models/Scene';
 import './undrawcard.css';
-// import draw from './vis';
 import Undraw from 'react-undraw';
+import html2canvas from 'html2canvas';
 
 
-//img size
-let w = 0;
-let h = 0;
+
+//undraw default size
+
+let w = 200;
+let h = 200;
 //drag end pos
-let x = 240;
-let y = 100;
+let x = 0;
+let y = 0;
+
+let newimage;
 
 
 const imageSource = {
 
+
 	beginDrag(props,monitor) {
-        // 拖拽开始，转换undraw为png
-        // const visSource = draw(this.props);
-        //const item = monitor.getItem();
-        //console.log(item);
-        //如何拽到undraw的src源头进行转换？
-         //this.undrawImage = new window.Image();
-         //this.undrawImage.src = this.getImageUrl(item);
-        console.log("begin");
+    let dragSVG = 0;//获取当前拖拽的svg在列表中的序号
+    let alldiv = document.querySelectorAll("p[class='card-text mb-0 text-center']");
+    for (let i = 0;i<alldiv.length;i++){
+        if(alldiv[i].innerText.indexOf(props.name) != -1){
+            dragSVG = i;
+            break;
+        }
+    }
+     //TODO: 如何避免拖拽非素材而报错
+     //TODO: 拖拽时的缩略图怎么不在了？
+
+
+    //转换svghtml为png 
+    let  svghtml = document.querySelectorAll("svg[data-name='Layer 1']")[dragSVG]; 
+    html2canvas( svghtml , {
+    allowTaint: false,   //允许污染
+    taintTest: true,    //在渲染前测试图片(没整明白有啥用)
+    useCORS: true,      //使用跨域(当allowTaint为true时，无需设置跨域)
+    backgroundColor:'transparent',
+    }).then(function(canvas) {
+    //回调
+    newimage=new window.Image();
+    newimage.name = props.name;
+
+    //TODO:获取拖拽的svg真实大小，按比例转成合理的尺寸赋值给w，h，但好像无论多大都是按1:1比例呈现图像，所以不需要获取真实比例
+    //newimage.width = 150;
+    //newimage.height = 100;
+    newimage.src =  canvas.toDataURL('image/png');
+})
         props.displayResourceTargetArea(true);
 		return props;
 	},
 
 	endDrag(props, monitor) {
         props.displayResourceTargetArea(false);
-		const item = monitor.getItem();
         const dropResult = monitor.getDropResult();
-        //TODO:获取实时拖拽位置，写入x，y
+
+        ////获取鼠标结束拖拽的位置，基于canvas基点计算位置
+        let e = window.event;       //Firefox下是没有event这个对象的！！
+        let canvas=document.getElementsByTagName("canvas")[0];
+        let pos = canvas.getBoundingClientRect();//获取canvas基于父页面的位差
+        if((Number(e.clientX)-Number(pos.left))>0){
+        x = Number(e.clientX)-Number(pos.left)-w/2; //根据鼠标位置计算画布上元素位置,强制类型转换
+        y = Number(e.clientY)-Number(pos.top)-h/2;
+       }
+
+
 		if (dropResult) {
-            // console.log(item);
-            // console.log(dropResult);
             if (dropResult.target === "canvas") {
                 //add element to scene
                 const newScene = Object.assign({},dropResult.currentScene);
-                //svg-png  无法获取undraw素材的源
-                //this.undrawImage = new window.Image();
-                //console.log(item);
-                //this.undrawImage.src = this.getImageUrl(item);
-                //
-                const newImage = new ImageInfo(item.name,item.src, x, y, w, h, 0);
-                //const newImage = new ImageInfo(this.undrawImage.name,this.undrawImage.src, x, y, w, h, 0);
+                const newImage = new ImageInfo(newimage.name,newimage.src, x, y, w, h, 0);
                 const newElement = new Element(ElementType.IMAGE, newImage);
                 newScene.addElement(newElement);
                 props.addElement(newElement);
                 props.updateScene(dropResult.sceneIndex, newScene);
                 // props.displayTrackEditor();
             } 
-            // else if (dropResult.target === "track") {
-            //     //add new scene
-            //     const newImage = new ImageInfo(item.src, 240, 100, 100, 100, 0);
-            //     const newElement = new Element(ElementType.IMAGE, newImage);
-            //     const newScene = new Scene([newElement], 2);
-            //     props.addScene(newScene);
-            // }
+
 		}
     },
 }
@@ -80,12 +100,11 @@ class UndrawCard extends Component {
 
 
     componentDidMount() {
-        //
 
     }
 
     componentWillUpdate() {
-        //get img size after drag , 有一定时间延迟
+        // //get img size after drag 
         // let img = new Image();
         // img.src = this.props.info.src;
         // img.onload = async function(){
@@ -94,22 +113,15 @@ class UndrawCard extends Component {
         // };
     }
 
-    getImageUrl = (source) => {
-        var canvas = document.createElement('canvas');
-        canvas.width = this.props.width;
-        canvas.height = this.props.height;
-        canvg(canvas, source);
-        return canvas.toDataURL('image/png');
-    }
+
+    
 
     render() {
         const { connectDragSource } = this.props;
         return connectDragSource(
-            <div className="undrawcard" align="center">
-                {/* <img src={this.props.info.src} 
-                 alt={this.props.info.name} /> */}
-              {/* <Undraw name={item} primaryColor={primaryColor} height={"120"}/> */}
-              <Undraw name={this.props.name} 
+            <div className="undrawcard" id = "undrawcard" align="center">
+              <Undraw 
+              name={this.props.name} 
               primaryColor={this.props.primaryColor} 
               height = {'80'}/>
             </div>
@@ -122,6 +134,6 @@ export default DragSource(
     imageSource,
 	(connect, monitor) => ({
 		connectDragSource: connect.dragSource(),
-		isDragging: monitor.isDragging()
+        isDragging: monitor.isDragging()
 	}),
 )(UndrawCard)
