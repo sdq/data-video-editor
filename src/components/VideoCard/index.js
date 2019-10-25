@@ -7,12 +7,10 @@ import { Element, VideoInfo } from '@/models/Element';
 import './videocard.css';
 import { Player, ControlBar } from 'video-react';
 
-//img size
-// let w = 0;
-// let h = 0;
-// //drag end pos
-// let x = 240;
-// let y = 100;
+
+//drag end pos
+let x = 240;
+let y = 100;
 
 const videoSource = {
 
@@ -25,14 +23,24 @@ const videoSource = {
         props.displayResourceTargetArea(false);
 		const item = monitor.getItem();
         const dropResult = monitor.getDropResult();
-        //TODO:获取实时拖拽位置，写入x，y
+
+
 		if (dropResult) {
             if (dropResult.target === "canvas") {
                 //add element to scene
                 const newScene = Object.assign({}, dropResult.currentScene);
                 let videoElement = props.info.videoElement;
                 //console.log("videoElement.duration...",videoElement.duration)
-                const newVideo = new VideoInfo(item.name, item.src, videoElement.duration, 240, 100, videoElement.clientWidth, videoElement.clientHeight, 0);
+                 ////获取鼠标结束拖拽的位置，基于canvas基点计算位置
+                 let e = window.event;       //Firefox下是没有event这个对象的！！
+                 let canvas=document.getElementsByTagName("canvas")[0];
+                 let pos = canvas.getBoundingClientRect();//获取canvas基于父页面的位差
+                 if((Number(e.clientX)-Number(pos.left))>0){
+                 x = Number(e.clientX)-Number(pos.left)-videoElement.clientWidth/2; //根据鼠标位置计算画布上元素位置,强制类型转换
+                 y = Number(e.clientY)-Number(pos.top)-videoElement.clientHeight/2;
+                 }
+
+                const newVideo = new VideoInfo(item.name, item.src, videoElement.duration, x, y, videoElement.clientWidth, videoElement.clientHeight, 0);
                 const newElement = new Element(ElementType.VIDEO, newVideo);
                 newScene.addElement(newElement);
                 //add videoResource to audioList
@@ -50,16 +58,6 @@ const videoSource = {
 
 class VideoCard extends Component {
 
-    componentWillUpdate() {
-        //get img size after drag , 有一定时间延迟, 对video也按照img读取尺寸
-        //TODO:需要验证是否可行
-        // let img = new Image();
-        // img.src = this.props.info.src;
-        // img.onload = async function () {
-        //     w = img.width;
-        //     h = img.height;
-        // };
-    }
 
     constructor(props) {
         super(props);

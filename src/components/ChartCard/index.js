@@ -30,7 +30,15 @@ const chartSource = {
         props.displayResourceTargetArea(false);
 		const item = monitor.getItem();
         const dropResult = monitor.getDropResult();
-        //TODO:获取实时拖拽位置，写入x，y
+        
+        ////获取鼠标结束拖拽的位置，基于canvas基点计算位置
+        let e = window.event;       //Firefox下是没有event这个对象的！！
+        let canvas=document.getElementsByTagName("canvas")[0];
+        let pos = canvas.getBoundingClientRect();//获取canvas基于父页面的位差
+        if((Number(e.clientX)-Number(pos.left))>0){
+            x = Number(e.clientX)-Number(pos.left)-w/2; //根据鼠标位置计算画布上元素位置,强制类型转换
+            y = Number(e.clientY)-Number(pos.top)-h/2;
+        }
 		if (dropResult) {
             console.log(item);
             // console.log(dropResult);

@@ -7,8 +7,8 @@ import { Element, GifInfo } from '@/models/Element';
 import './gifcard.css';
 
 //gif size
-let w = 0;
-let h = 0;
+let w = 100;
+let h = 100;
 //drag end pos
 let x = 240;
 let y = 100;
@@ -24,7 +24,17 @@ const imageSource = {
         props.displayResourceTargetArea(false);
         const item = monitor.getItem();
         const dropResult = monitor.getDropResult();
-        //TODO:获取实时拖拽位置，写入x，y
+
+
+        ////获取鼠标结束拖拽的位置，基于canvas基点计算位置
+        let e = window.event;       //Firefox下是没有event这个对象的！！
+        let canvas=document.getElementsByTagName("canvas")[0];
+        let pos = canvas.getBoundingClientRect();//获取canvas基于父页面的位差
+        if((Number(e.clientX)-Number(pos.left))>0){
+            x = Number(e.clientX)-Number(pos.left)-w; //为什么gif不能减去二分之一宽高度？
+            y = Number(e.clientY)-Number(pos.top);
+       }
+
         if (dropResult) {
             // console.log(item);
             // console.log(dropResult);
@@ -40,9 +50,7 @@ const imageSource = {
                     //console.log("gifDuration", item.gifData[0].frameInfo.delay);
                 }
                 //console.log("endDrag",w,h)
-                //gif 尺寸太大，要设置100*100，按照自身尺寸显示会溢出画布
-                w=100;
-                h=100;
+
                 const newImage = new GifInfo(item.name, item.src, delay, gifFrames, x, y, w, h, 0);
                 const newElement = new Element(ElementType.GIF, newImage);
                 newScene.addElement(newElement);
@@ -70,7 +78,12 @@ class GifCard extends Component {
          img.onload = async function(){
              w = img.width;
              h = img.height;
-         };
+         if(h>100){
+             //gif尺寸太大，按比例拉伸到较小的比例
+             w = 100*(w/h);
+             h = 100;
+         }
+         };   
      }
  
 
