@@ -22,15 +22,53 @@ export default class VideoElement extends Component {
     }
 
     componentDidMount() {
+        if(typeof this.props.showAnimation === 'undefined'){
+         return;
+        }
         if (this.props.showAnimation) {
-            this.loadVideo();
-        }else{
+            //console.log("元素...", this.props.element.id())
+            const { scenePosition, element } = this.props;
+            this.props.scenes[this.props.sceneIndex].videos().map(video => {
+                //查找要播放的元素
+                if ('video-' + this.props.element.id() === video.id) {
+                    this.setState({
+                        video: video
+                    })
+                    video.currentTime=0;
+                    //设置播放位置
+                    if (scenePosition < (element.start() + element.duration()) && scenePosition > element.start()) {
+                        let playpos = scenePosition - element.start();
+                        //console.log("playpos...",playpos)
+                        video.currentTime = playpos;
+                    }
+                    //console.log("播放...", video)
+                    video.play();
+                }
+                return video;
+            })
+        } else {
             //EditableLayer中传来的tag，用来显示第一帧
-            //console.log("tag.....",this.props.tag)
-            if(this.props.tag){
+            //console.log("tag.....", this.props.tag)
+            if (this.props.tag) {
                 this.setState({
                     video: this.props.tag
                 });
+                let currentVideoList = this.props.scenes[this.props.sceneIndex] && this.props.scenes[this.props.sceneIndex].videos();
+                //console.log("currentVideoList",currentVideoList)
+                let isInList = false;
+                if(currentVideoList.length !== 0){
+                    currentVideoList.map(video => {
+                        if(video.id==="video-"+this.props.element.id()){
+                            isInList=true;
+                        }
+                        return video;
+                    })    
+                }
+                
+                if(!isInList){
+                //准备可以播放的资源,并且添加到播放列表中
+                this.loadVideo();
+                }
             }
         }
         const animations = this.props.element.animations(); 
@@ -43,69 +81,26 @@ export default class VideoElement extends Component {
             }
         }
     }
-    componentDidUpdate(oldProps) {
-        if (oldProps.element.info().src !== this.props.element.info().src) {
-            this.loadVideo();
-        }
-    }
 
     componentWillUnmount() {
-        if (this.state.isPlaying) {
-            this.pause();
+        if (this.state.video) {
+            this.state.video.pause();
+            //console.log("pause....")
         }
     }
 
     loadVideo() {
         this.video = document.createElement('video');
         this.video.setAttribute("id", "video-"+this.props.element.id());
-        // var rand = '?' + Math.random();
-        this.video.src = this.props.element.info().src //+ rand;
+        var rand = '?' + Math.random();
+        this.video.src = this.props.element.info().src + rand;
         // console.log("src",this.video.src )
-        // this.video.crossOrigin='anonymous';
+        this.video.crossOrigin='anonymous';
         this.video.addEventListener('loadedmetadata', this.handleLoad);
     }
     handleLoad = () => {
-        this.setState({
-            video: this.video
-        });
-        if (this.props.showAnimation) {
-            this.play();
-        } else {
-            this.pause();
-        }
-    }
-
-    play = () => {
-        const {video, isPlaying} = this.state;
-        const {scenePosition, element} = this.props;
-        if (video === null || isPlaying === true || scenePosition > (element.start() + element.duration())) {
-            return;
-        }
-        if (scenePosition < (element.start() + element.duration()) && scenePosition > element.start()) {
-            let playpos = scenePosition - element.start();
-            //console.log("playpos...",playpos)
-            this.video.currentTime = playpos;
-        }
-        this.setState({
-            isPlaying: true
-        })
-        this._startTimeout = setTimeout(function () {
-            this.video.play();
-        }.bind(this), (element.start() - scenePosition) * 1000)
-        this._stopTimeout = setTimeout(function () {
-            this.pause()
-        }.bind(this), (element.start() + element.duration() - scenePosition) * 1000)
-    }
-    pause = () => {
-        let { video, isPlaying } = this.state;
-        if (video !== null && isPlaying === true) {
-            this.video.pause();
-            this.setState({
-                isPlaying: false
-            })
-        }
-        clearTimeout(this._startTimeout);
-        clearTimeout(this._stopTimeout);
+        //通过addVideo存放在场景里的，供视频录制获取播放video的id
+        this.props.scenes[this.props.sceneIndex].addVideo(this.video);
     }
 
     // edit

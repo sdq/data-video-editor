@@ -40,7 +40,7 @@ const videoSource = {
                 videoResource.id = newElement.id();
                 //console.log("newElement.id",newElement.id())
                 videoResource.element = props.info.videoElement
-                newScene.addVideo(videoResource);
+                newScene.addVideoTag(videoResource);
                 props.addElement(newElement);
                 props.updateScene(dropResult.sceneIndex, newScene);
             }

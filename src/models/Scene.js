@@ -10,6 +10,7 @@ export default class Scene {
         // this.dataurl = dataurl;
         this._elements = []; //TODO: move to track
         this._audios = [];
+        this._videoTags = [];
         this._videos = [];
         this._backgroundColor = '#ffffff';
         this._backgroundImage = '';
@@ -67,11 +68,18 @@ export default class Scene {
         this._audios.push(audio);
     };
     videos = function(){
-        console.log("videos",this._videos)
+       // console.log("videos",this._videos)
         return this._videos;
     };  
     addVideo = function(video){
+        //console.log("addVideo",video)
         this._videos.push(video);
+    };
+    videoTags = function(){
+        return this._videoTags;
+    };  
+    addVideoTag = function(tag){
+        this._videoTags.push(tag);
     };
     addElement = function(element) {
         element.start(0);
