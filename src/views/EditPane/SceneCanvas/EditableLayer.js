@@ -145,13 +145,13 @@ export default class EditableLayer extends Component {
                             if (this.isElementDisplay(element)) {
                                 let elementTag;
                                 //find video by id in scene
-                                this.props.currentScene.videos().map(item => {
+                                this.props.currentScene.videoTags().map(item => {
                                     if (item.id === element.id()) {
                                         elementTag = item.element;
                                     }
                                     return item;
                                 })
-
+                                
                                 return <VideoElement 
                                     key={this.props.sceneIndex+"-"+index} 
                                     edit={ele => this.editElement(index, ele)} 

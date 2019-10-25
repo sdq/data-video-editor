@@ -38,7 +38,7 @@ export const currentVis = createSelector(
             return {}
         }
         const currentElement = scenes[sceneIndex].elements()[elementIndex];
-        if (currentElement.type() === ElementType.CHART) {
+        if (currentElement && currentElement.type() === ElementType.CHART) {
             return scenes[sceneIndex].elements()[elementIndex].info();
         } else {
             return {}
@@ -56,7 +56,7 @@ export const channels = createSelector(
             return {}
         }
         const currentElement = scenes[sceneIndex].elements()[elementIndex];
-        if (currentElement.type() !== ElementType.CHART) {
+        if (currentElement && currentElement.type() !== ElementType.CHART) {
             return {}
         }
         const chartInfo = currentElement.info();

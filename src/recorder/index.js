@@ -36,6 +36,7 @@ export default class Recorder {
                     this.ctx = new AudioContext();
                 }
                 var audiolist = [];
+                var videoList = [];
                 for(let k=0;k<this.scenesCount;k++){
                     let audios = this.currentScene(k).audios();
                     // console.log(audios)
@@ -46,8 +47,19 @@ export default class Recorder {
                         //     audiolist.push(audio.element.id)
                         // })
                         audiolist.push(...audios.map(audio=>audio.element.id))                      
-                    }                
+                    }  
+                   let videos = this.currentScene(k).videos();
+                    //console.log(videos)
+                   if (videos.length !== 0){
+                       videos.map(video=>{ 
+                            //console.log("video对象",video) 
+                            //console.log("video对象id",video.id)
+                            videoList.push(video.id);
+                            return video;
+                       })                      
+                   }       
                 }
+                //console.log(111,videoList);
                 // console.log(audiolist)
                 
 

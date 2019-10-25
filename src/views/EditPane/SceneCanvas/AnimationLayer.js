@@ -147,16 +147,20 @@ export default class AnimationLayer extends Component {
                                 {...this.props}
                             />
                         case ElementType.VIDEO:
-                            return <VideoElement 
-                                ref={node => (this.elementNodes[index] = node)}
-                                key={this.props.sceneIndex+"-"+index} 
-                                element={element} 
-                                name={this.props.sceneIndex+"-"+index}
-                                draggable={false} 
-                                visible={this.isElementDisplay(element)}
-                                showAnimation={true}
-                                {...this.props}
-                            />
+                            if (this.isElementDisplay(element)) {
+                                return <VideoElement
+                                    ref={node => (this.elementNodes[index] = node)}
+                                    key={this.props.sceneIndex + "-" + index}
+                                    element={element}
+                                    name={this.props.sceneIndex + "-" + index}
+                                    draggable={false}
+                                    visible={this.isElementDisplay(element)}
+                                    showAnimation={true}
+                                    {...this.props}
+                                />
+                            } else {
+                                return null;
+                            }
                         case ElementType.AUDIO:
                             return null;
                         default:
