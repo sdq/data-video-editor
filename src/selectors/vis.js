@@ -7,7 +7,7 @@ import _ from 'lodash';
 export const dataNameList = state => state.vis.dataNameList;
 export const dataList = state => state.vis.dataList;
 export const fieldsList = state => state.vis.fieldsList;
-export const dataIndex = state => state.vis.dataIndex;
+const dataIndex = state => state.vis.dataIndex;
 
 // Chart
 const elementIndex = state => state.canvas.elementIndex;
@@ -22,6 +22,7 @@ export const currentData = createSelector(
     fieldsList,
     (dataIndex, dataNameList, dataList, fieldsList) => {
         return {
+            'dataIndex': dataIndex,
             'name': dataNameList[dataIndex],
             'data': dataList[dataIndex],
             'fields': fieldsList[dataIndex]
@@ -56,7 +57,7 @@ export const channels = createSelector(
             return {}
         }
         const currentElement = scenes[sceneIndex].elements()[elementIndex];
-        if (currentElement && currentElement.type() !== ElementType.CHART) {
+        if (!currentElement || currentElement.type() !== ElementType.CHART) {
             return {}
         }
         const chartInfo = currentElement.info();
