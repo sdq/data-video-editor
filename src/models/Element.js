@@ -114,7 +114,7 @@ export class Element {
         if (fragmentIndex === -1) {
             return; // not in the fragments 
         }
-        console.log(fragmentIndex);
+        //console.log(fragmentIndex);
         // first, move all later fragments delay 1s
         for (let index = 0; index < this._fragments.length; index++) {
             if (this._fragments[index].start() > position) {

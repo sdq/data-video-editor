@@ -75,7 +75,8 @@ class VideoCard extends Component {
         return connectDragSource(
             <div className="videocard" align="center">
                 <p>{this.props.info.name}</p>
-                <Player ref={(player) => { this.videoPlayer = player }}>
+                <Player ref={(player) => { this.videoPlayer = player }}
+                preload={'auto'}>
                     <source src={this.props.info.src} />
                     <ControlBar disableCompletely={true}></ControlBar>
                 </Player>
