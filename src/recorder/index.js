@@ -60,26 +60,41 @@ export default class Recorder {
 
                 if(audiolist.length !== 0){
                     if (this.ctx == null) {
-                        this.ctx = new AudioContext();
+                        var AudioContext_ = window.AudioContext // Default
+                            || window.webkitAudioContext // Safari and old versions of Chrome
+                            || false; 
+
+                        if (AudioContext_) {
+                            // Do whatever you want using the Web Audio API
+                            this.ctx = new AudioContext_();
+                            // ...
+                        } else {
+                            // Web Audio API is not supported
+                            // Alert the user
+                            alert("Sorry, but the Web Audio API is not supported by your browser. Please, consider upgrading to the latest version or downloading Google Chrome or Mozilla Firefox");
+                        }
+                        // this.ctx = new AudioContext();
                     }
                     var audioTrack = this.extractAudio(audiolist);
                     stream.addTrack(audioTrack);
                 }
 
                 var recorder = new MediaRecorder(stream, options);
-
+                // console.log(MediaRecorder.prototype)
                 this.recorder = recorder;
 
+                // recorder.addEventListener('start', () => {
+                //     playCanvas();
+                //     // 根据时间停止录制
+                //     // this.recorder_timeout = 
+                //     console.log(duration)
+                //     setTimeout(() => {
+                //         console.log('timeout now ')
+                //         this.isCompleted = true;
+                //         this.recorder.stop();
+                //     }, duration); // +1000
+                // })
 
-                recorder.onstart = () => {
-                    // 播放视频
-                    playCanvas();
-                    // 根据时间停止录制
-                    this.recorder_timeout = setTimeout(() => {
-                        this.isCompleted = true;
-                        recorder.stop();
-                    }, duration); // +1000
-                }
 
                 recorder.onerror = function (event) {
                     let error = event.error;
@@ -134,7 +149,28 @@ export default class Recorder {
                     //     // console.log('ctx', this.ctx)
                     // }
                 }
-                recorder.start(timeSlice);
+                recorder.onstart = () => {
+                    // 播放视频
+                    // playCanvas();
+                    // 根据时间停止录制
+                    this.recorder_timeout = setTimeout(() => {
+                        this.isCompleted = true;
+                        this.recorder.stop();
+                    }, duration-1000); // +1000
+                    
+                }
+                this.recorder.start(timeSlice); 
+                if(this.isSafari()) {
+                    this.recorder_timeout = setTimeout(() => {
+                    this.isCompleted = true;
+                    this.recorder.stop();
+                }, duration-1000);
+                }
+                 // +1000
+                // console.log('state', recorder.state)
+                // var check = setInterval(() => {
+                //     console.log('state', this.recorder_timeout)
+                // }, 1000)
                 var startTime = Date.now();
             })
         }
@@ -181,5 +217,11 @@ export default class Recorder {
         this.ctx = ctx;
         // this.dest = dest
         return audioTrack;
+    }
+
+    isSafari() {
+        var chr = window.navigator.userAgent.toLowerCase().indexOf("chrome") > -1;
+        var sfri = window.navigator.userAgent.toLowerCase().indexOf("safari") > -1;
+        return !chr && sfri;
     }
 }
