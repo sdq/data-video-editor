@@ -123,6 +123,11 @@ export default class HeaderBar extends Component {
         }
         return result;
     }
+    isSafari() {
+        var chr = window.navigator.userAgent.toLowerCase().indexOf("chrome") > -1;
+        var sfri = window.navigator.userAgent.toLowerCase().indexOf("safari") > -1;
+        return !chr && sfri;
+    }
 
     render() {
         return (
@@ -139,6 +144,12 @@ export default class HeaderBar extends Component {
                 >
                     <p>Do you want to export the video?</p>
                     <p>This might take several minutes.</p>
+                    {this.isSafari() &&
+                        <p>
+                            We have noticed that you are using Safari.<br/>
+                            Make sure the <b>allow autoplay option </b>is enabled. (right-click the address bar)
+                        </p>
+                    }
                 </Modal>
                 <Modal
                     className='recordConfirm'
