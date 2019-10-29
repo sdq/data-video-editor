@@ -146,7 +146,8 @@ export default class HeaderBar extends Component {
                     <p>This might take several minutes.</p>
                     {this.isSafari() &&
                         <p>
-                            We have noticed that you are using Safari. Make sure the allow autoplay option is enabled. (double-click the address bar)
+                            We have noticed that you are using Safari.<br/>
+                            Make sure the <b>allow autoplay option </b>is enabled. (right-click the address bar)
                         </p>
                     }
                 </Modal>
