@@ -47,7 +47,7 @@ class AudioCard extends Component {
     }
     
     onCanPlay=() => {
-        this.playerElement.audioEl.id = 'audiotest-' + Math.random();
+        this.playerElement.audioEl.id = 'audiotest'+ "-" + Math.random();
         // this.playerElement.audioEl.crossOrigin = 'anonymous';
         // this.playerElement.audioEl.src = this.props.info.src + "?" + Math.random();
         this.props.info.audio = this.playerElement.audioEl;
@@ -64,6 +64,7 @@ class AudioCard extends Component {
                     ref={(element) => { this.playerElement = element}}
                     onCanPlay={this.onCanPlay}
                     controls
+                    preload = {'auto'}
                 />
             </div>
         )
