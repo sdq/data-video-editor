@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import ToolPane from './ToolPane';
 import {currentScene, sceneIndex, scenes} from '@/selectors/video';
 import {currentElement, elementIndex, isElementSelected, dragPos,transformInfo} from '@/selectors/canvas';
-import { dataNameList, dataList, fieldsList, displaySpec, currentData, currentVis, channels, dataIndex } from '@/selectors/vis';
+import { dataNameList, dataList, fieldsList, displaySpec, currentData, currentVis, channels } from '@/selectors/vis';
 import * as videoActions from '@/actions/videoAction';
 import * as canvasActions from '@/actions/canvasAction';
 import * as visActions from '@/actions/visAction';
@@ -23,7 +23,6 @@ const mapStateToProps = state => {
         dataList: dataList(state),
         fieldsList: fieldsList(state),
         currentData: currentData(state),
-        dataIndex: dataIndex(state),
         // vis
         displaySpec: displaySpec(state),
         currentVis: currentVis(state),
@@ -56,7 +55,6 @@ const mapDispatchToProps = dispatch => {
             }
         },
         removeEncoding: (channel, field) => dispatch(visActions.removeEncoding(channel, field)),
-        visConfigure: (configuration) => dispatch(visActions.configure(configuration)),
     }
 }
 

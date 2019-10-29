@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Upload, Button, Icon, Select, Alert } from 'antd';
+import { Upload, Button, Icon, Select, Alert, Popconfirm, message } from 'antd';
 import DataPreview from '@/components/DataPreview';
 import ChartEditor from '@/components/ChartEditor';
 import SimpleDataPreview from '@/components/DataPreview/SimpleDataPreview';
@@ -16,13 +16,35 @@ export default class DataTool extends Component {
         this.state = {
             datavisible: false,
             chartvisible: false,
-            alertvisible: false
+            alertvisible: false,
+            confirmVisible: false
         };
         this.handleDataPreview = this.handleDataPreview.bind(this);
         this.handleDataOk = this.handleDataOk.bind(this);
         this.handleChartOk = this.handleChartOk.bind(this);
         this.handleCancel = this.handleCancel.bind(this);
     };
+
+    componentWillMount() {
+        let { currentVis } = this.props;
+        let encoding = currentVis.spec.encoding;
+        let hasEncoding = encoding && (JSON.stringify(encoding.x) !== "{}" || JSON.stringify(encoding.y) !== "{}")
+        if (hasEncoding) {
+            this.props.switchData(currentVis.dataIndex)
+        }
+    }
+
+    componentDidUpdate(preProps) {
+        if (preProps.currentElement.id !== this.props.currentElement.id) {
+            let { currentVis } = this.props;
+            let encoding = currentVis.spec.encoding;
+            let hasEncoding = encoding && (JSON.stringify(encoding.x) !== "{}" || JSON.stringify(encoding.y) !== "{}")
+            if (hasEncoding) {
+                this.props.switchData(currentVis.dataIndex)
+            }
+        }
+
+    }
 
     handleDataPreview = () => {
         this.setState({
@@ -39,12 +61,41 @@ export default class DataTool extends Component {
     }
 
     handleDataUpdate = (data) => {
-        this.props.updateData(this.props.dataIndex, data, this.props.fieldsList[this.props.dataIndex])
+        this.props.updateData(this.props.currentData.dataIndex, data, this.props.fieldsList[this.props.currentData.dataIndex])
     }
 
 
     handleChartEditor = () => {
-        this.props.openEditor(this.props.currentVis.dataIndex, this.props.currentVis.spec);
+        let encoding = this.props.currentVis.spec.encoding;
+        let hasEncoding = encoding && (JSON.stringify(encoding.x) !== "{}" || JSON.stringify(encoding.y) !== "{}")
+        let index = hasEncoding ? this.props.currentVis.dataIndex : this.props.currentData.dataIndex;
+        if (index !== this.props.currentData.dataIndex && hasEncoding) {
+            this.setState({ confirmVisible: true })
+        } else {
+            this.setState({ confirmVisible: false })
+            this.props.openEditor(index, this.props.currentVis.spec);
+            this.setState({
+                chartvisible: true,
+            });
+        }
+    }
+
+    changeDataConfirm = () => {
+        message.info('You have changed the chart data.');
+        this.setState({ confirmVisible: false })
+        let spec = {}
+        this.props.openEditor(this.props.currentData.dataIndex, spec);
+        this.setState({
+            chartvisible: true,
+        });
+    }
+
+    changeDataCancel = () => {
+        let encoding = this.props.currentVis.spec.encoding;
+        let hasEncoding = encoding && (JSON.stringify(encoding.x) !== "{}" || JSON.stringify(encoding.y) !== "{}")
+        let index = hasEncoding ? this.props.currentVis.dataIndex : this.props.currentData.dataIndex;
+        this.setState({ confirmVisible: false })
+        this.props.openEditor(index, this.props.currentVis.spec);
         this.setState({
             chartvisible: true,
         });
@@ -54,6 +105,8 @@ export default class DataTool extends Component {
         // Update chart on canvas
         const newScene = Object.assign({}, this.props.currentScene);
         let newEle = Object.assign({}, this.props.currentElement);
+        // update info dataIndex
+        newEle.info().dataIndex = this.props.currentData.dataIndex;
         newEle.info().spec = this.props.displaySpec;
         newScene.updateElement(newEle, this.props.elementIndex);
         this.props.updateScene(this.props.sceneIndex, newScene);
@@ -77,6 +130,7 @@ export default class DataTool extends Component {
         dataProcessor.process(fileURL)
             .then((dataItem) => {
                 this.props.addData(file.name, dataItem.data, dataItem.schema);
+                this.props.switchData(this.props.dataNameList.length - 1)
             }).catch((reason) => {
                 this.setState({
                     alertvisible: true,
@@ -97,7 +151,8 @@ export default class DataTool extends Component {
     }
 
     render() {
-        let { dataNameList, currentData } = this.props;
+        let { dataNameList, currentData} = this.props;
+        const text = 'Are you sure to change chart data?（All the encodings will be emptied.）';
         return (
             <div style={{ padding: '10px 10px 10px 10px', fontSize: '14px', backgroundColor: 'white' }}>
                 <Dragger
@@ -133,7 +188,10 @@ export default class DataTool extends Component {
 
                 <Button block style={{ marginTop: '8px' }} onClick={this.handleDataPreview} type="primary">Preview & Edit Data</Button>
 
-                <Button block style={{ marginTop: '8px' }} onClick={this.handleChartEditor} type="primary">Data Mapping</Button>
+                <Popconfirm placement="top" title={text} visible={this.state.confirmVisible} onConfirm={this.changeDataConfirm} onCancel={this.changeDataCancel} okText="Yes" cancelText="No">
+                    <Button block style={{ marginTop: '8px' }} onClick={this.handleChartEditor} type="primary">Data Mapping</Button>
+                </Popconfirm>
+                {/* <Button block style={{ marginTop: '8px' }} onClick={this.handleChartEditor} type="primary">Data Mapping</Button> */}
 
                 <DataPreview
                     currentData={currentData}
@@ -145,12 +203,13 @@ export default class DataTool extends Component {
                 />
 
                 <ChartEditor
+                    currentData={currentData}
                     visible={this.state.chartvisible}
                     handleOk={this.handleChartOk}
                     handleCancel={this.handleCancel}
                     {...this.props}
                 />
-                <Alert style={{display:this.state.alertvisible === false? 'none' : 'block',position:'fixed', top: 110, width :280}} message="Error: Failed to load data." type="error" showIcon closable />
+                <Alert style={{ display: this.state.alertvisible === false ? 'none' : 'block', position: 'fixed', top: 110, width: 280 }} message="Error: Failed to load data." type="error" showIcon closable />
                 {/* <Alert style={{position:'fixed', top: 10}} type="error" message="Error text" banner /> */}
             </div>
         )

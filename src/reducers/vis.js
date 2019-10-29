@@ -41,8 +41,6 @@ export default (state = initialState, action) => {
             console.log("open editor!");
             newState.dataIndex = action.dataIndex;
             newState.displaySpec = action.spec;
-            console.log(action);
-            console.log(newState.displaySpec);
             if (!("encoding" in newState.displaySpec)) {
                 newState.displaySpec.encoding = {}
             }
@@ -51,7 +49,6 @@ export default (state = initialState, action) => {
             };
             newState.specIndex = 0;
             newState.specHistory = [JSON.stringify(action.spec)];
-            console.log(newState);
             return newState;
 
         // Data
