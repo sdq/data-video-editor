@@ -15,12 +15,24 @@ export default class TrackBar extends Component {
             isBarDragging: false,
             isBarResizing: false,
             showClip: false,
+            dragOffsetX: [],
+            clipBtnWidth: 12,
         };
+        this.splitIndex = -1;
+        this.updateIdx = 0;
+        this.fragLength = 0;
+        this.dragMoveX = 0;
+        this.dragStartX = 0;
+        this.preX = 0;
+
         this.clickBar = this.clickBar.bind(this);
         this.leaveBar = this.leaveBar.bind(this);
         this.clipBar = this.clipBar.bind(this);
         this.dragBar = this.dragBar.bind(this);
         this.resizeBar = this.resizeBar.bind(this);
+        this.dragStartClipBtn = this.dragStartClipBtn.bind(this);
+        this.dragClipBtn = this.dragClipBtn.bind(this);
+        this.dragEndClipBtn = this.dragEndClipBtn.bind(this);
     }
 
     clickBar() {
@@ -60,7 +72,61 @@ export default class TrackBar extends Component {
 
         // check other fragments make sure to merge
     }
+    //在红的剪刀图标上的切割交互
+    //dragStart 进行切割
+    //onDragEnd 更新fragment
+    dragStartClipBtn(x){
+        this.splitIndex = this.props.element.findFragment(this.props.scenePosition);
+        this.dragStartX = x;
 
+        const newScene = Object.assign({}, this.props.currentScene);
+        const newElement = Object.assign({}, this.props.element);
+        newElement.split(this.props.scenePosition);
+        newScene.updateElement(newElement, this.props.index);
+        newScene.duration(newScene.duration() + 1);
+        this.props.updateScene(this.props.sceneIndex, newScene);
+        const elementName = this.props.sceneIndex + '-' + this.props.index;
+        this.props.updateElement(newElement, this.props.index, elementName);
+
+        //console.log("dragStart",this.dragStartX)
+        if (this.splitIndex === -1) return;
+        //更新当前切割的元素以后的元素
+        this.updateIdx = this.splitIndex + 1;
+        this.fragLength = this.props.element.fragments().length;
+    }
+    dragClipBtn(x) {
+        if (this.preX === x) return;
+        if (this.splitIndex === -1) return;
+        this.preX = x;
+        //console.log("x", x)
+        this.dragMoveX = x - this.dragStartX;
+        for (let k = this.updateIdx; k < this.fragLength; k++) {
+            this.state.dragOffsetX.splice(k, 1, this.dragMoveX);
+        }
+      
+        this.setState({
+            dragOffsetX: this.state.dragOffsetX,
+            clipBtnWidth: this.dragMoveX
+        })
+        //console.log("setState...",this.state.clipBtnWidth)
+    }
+    dragEndClipBtn(x) {
+        this.dragMoveX = x - this.dragStartX;
+        let fragments = this.props.element.fragments();
+        if (this.splitIndex === -1) return;
+        //更新当前切割的元素以后的元素
+        let updateIdx = this.splitIndex + 1;
+        for (let k = updateIdx; k < fragments.length; k++) {
+            //更新
+            //console.log("更新..移动距离..." + this.dragMoveX / this.props.sceneScale);
+            this.adjustFragment(fragments[k].start() + this.dragMoveX / this.props.sceneScale, null, k);
+            this.state.dragOffsetX.splice(k, 1, 0);
+        }
+        this.setState({
+            dragOffsetX: this.state.dragOffsetX,
+            clipBtnWidth: 12
+        })
+    }
     resizeBar(x, width, fragmentIndex) {
         const newStart = x / this.props.sceneScale;
         const newDuration = width / this.props.sceneScale;
@@ -146,8 +212,8 @@ export default class TrackBar extends Component {
     }
 
     render() {
-        let {element, isBarActive, isPerforming, scenePosition, sceneScale} = this.props;
-        let {showClip} = this.state;
+        let { element, isBarActive, isPerforming, scenePosition, sceneScale } = this.props;
+        let { showClip, dragOffsetX } = this.state;
         const scenePositionWithScale = scenePosition * sceneScale;
         var color = Color.LIGHT_ORANGE;
         switch (element.type()) {
@@ -182,12 +248,16 @@ export default class TrackBar extends Component {
             let fragmentX = fragment.start() * sceneScale;
             let fragmentWidth = fragment.duration() * sceneScale;
             if (isBarActive && !isPerforming) {
+                if (!dragOffsetX[index]) {
+                    dragOffsetX[index] = 0;
+                }
+                //console.log("render...", index, dragOffsetX[index])
                 bars.push(<Rnd
                     id={"bar-"+this.props.element.id()+'-'+index}
                     key={"bar-"+this.props.element.id()+'-'+index}
                     style={{backgroundColor: color}}
                     size={{ width: fragmentWidth, height: height }}
-                    position={{ x: fragmentX, y: y }}
+                    position={{ x: fragmentX + dragOffsetX[index], y: y }}
                     bounds='parent'
                     enableResizing={{
                         left: true,
@@ -234,7 +304,7 @@ export default class TrackBar extends Component {
             }
         }
         // clip
-        let clipButton = !isPerforming&&showClip?<ClipButton onClick={this.clipBar} x={7+scenePositionWithScale}/>:null;
+        let clipButton = !isPerforming&&showClip?<ClipButton onClick={this.clipBar} x={7+scenePositionWithScale} clipBtnWidth={this.state.clipBtnWidth} dragStartClipBtn={this.dragStartClipBtn} dragClipBtn={this.dragClipBtn} dragEndClipBtn={this.dragEndClipBtn}/>:null;
         return (
             <div 
                 style={{position: 'relative', left: -this.props.screenX}}

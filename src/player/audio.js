@@ -136,6 +136,9 @@ export default class AudioController {
 
     playAudio() {
         this._audioResources.map((item, index) => {
+            if(!item.element){
+              return item;
+            }
             let playState = this.getAudioPlayState(item, index)
             //console.log("beforeState====", index,this.beforeState[index])
             //console.log("playState====", index,playState)

@@ -21,6 +21,10 @@ const audioSource = {
             // console.log(item);
             // console.log(dropResult);
             if (dropResult.target === "canvas") {
+                if(!props.info.audio){
+                    //console.log("音频对象为空")
+                    return null;
+                }
                 //add element to scene
                 const newScene = Object.assign({},dropResult.currentScene);
                 const newAudio = new AudioInfo(item.name,item.src,Math.round( props.info.audio && props.info.audio.duration));
@@ -64,6 +68,7 @@ class AudioCard extends Component {
                     ref={(element) => { this.playerElement = element}}
                     onCanPlay={this.onCanPlay}
                     controls
+                    preload={'auto'}
                 />
             </div>
         )
