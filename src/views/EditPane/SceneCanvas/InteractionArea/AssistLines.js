@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Color from '@/constants/Color';
+import ElementType from '@/constants/ElementType';
 
 export default class AssistLines extends Component {
 
@@ -10,13 +11,25 @@ export default class AssistLines extends Component {
         let y = 0;
         let w = 0;
         let h = 0;
+        let smallW = false;//较小的素材不显示中间辅助线
+        let smallH = false;//较小的素材不显示中间辅助线
+        let isChartLine = false;//chart暂时不显示中间辅助线
         //console.log(w,h)
         if(this.props.currentElement && this.props.currentElement.info()){
              x = this.props.currentElement.info().x;
              y = this.props.currentElement.info().y;
              w = this.props.currentElement.info().width;
              h = this.props.currentElement.info().height;
+             if(w<100){smallW=true;}
+             if(h<100){smallH=true;}
         }
+
+        if(this.props.currentElement.type()=== ElementType.CHART){
+            isChartLine = true;
+        }
+
+
+
         //判定显示辅助线的margin
         let margin = 40;
 
@@ -57,14 +70,14 @@ export default class AssistLines extends Component {
                 <div style={{ display: marginRightC < margin ? 'block' : 'none', position: 'absolute', zIndex: 1, marginLeft: 400, height: 450, width: 1, borderLeftColor: Color.ORANGE, borderLeftWidth: 1, borderLeftStyle: 'dashed' }} />
                 <div style={{ display: marginBottomC < margin ? 'block' : 'none', position: 'absolute', zIndex: 2, marginTop: 225, height: 1, width: 800, borderTopColor: Color.ORANGE, borderTopWidth: 1, borderTopStyle: 'dashed' }} />
 
-                <div style={{ position: 'absolute', zIndex: 1, marginLeft: x - 1 || 0, marginTop: y-25 || 0,height: h+50, width: 1, borderLeftColor: Color.ORANGE, borderLeftWidth: 1, borderLeftStyle: 'dashed' }} />
-                <div style={{ position: 'absolute', zIndex: 2, marginTop: y - 1 || 0, marginLeft: x-25 || 0,height: 1, width: w+50, borderTopColor: Color.ORANGE, borderTopWidth: 1, borderTopStyle: 'dashed' }} />
+                <div style={{ position: 'absolute', zIndex: 1, marginLeft: x - 1 || 0, marginTop: y-10 || 0,height: h+20, width: 1, borderLeftColor: Color.ORANGE, borderLeftWidth: 1, borderLeftStyle: 'dashed' }} />
+                <div style={{ position: 'absolute', zIndex: 2, marginTop: y - 1 || 0, marginLeft: x-10 || 0,height: 1, width: w+20, borderTopColor: Color.ORANGE, borderTopWidth: 1, borderTopStyle: 'dashed' }} />
 
-                <div style={{ position: 'absolute', zIndex: 1, marginLeft: x+w/2 || 0, marginTop: y-25 || 0,height: h+50, width: 1, borderLeftColor: Color.ORANGE, borderLeftWidth: 1, borderLeftStyle: 'dashed' }} />
-                <div style={{ position: 'absolute', zIndex: 2, marginTop: y+h/2 || 0, marginLeft: x-25 || 0,height: 1, width: w+50, borderTopColor: Color.ORANGE, borderTopWidth: 1, borderTopStyle: 'dashed' }} />
+                <div style={{ display: !smallW && !isChartLine ? 'block' : 'none',position: 'absolute', zIndex: 1, marginLeft: x+w/2 || 0, marginTop: y-10 || 0,height: h+20, width: 1, borderLeftColor: Color.ORANGE, borderLeftWidth: 1, borderLeftStyle: 'dashed' }} />
+                <div style={{ display: !smallH && !isChartLine ? 'block' : 'none',position: 'absolute', zIndex: 2, marginTop: y+h/2 || 0, marginLeft: x-10 || 0,height: 1, width: w+20, borderTopColor: Color.ORANGE, borderTopWidth: 1, borderTopStyle: 'dashed' }} />
 
-                <div style={{ position: 'absolute', zIndex: 1, marginLeft: x+w - 1 || 0, marginTop: y-25 || 0,height: h+50, width: 1, borderLeftColor: Color.ORANGE, borderLeftWidth: 1, borderLeftStyle: 'dashed' }} />
-                <div style={{ position: 'absolute', zIndex: 2, marginTop: y+h - 1 || 0, marginLeft: x-25 || 0,height: 1, width: w+50, borderTopColor: Color.ORANGE, borderTopWidth: 1, borderTopStyle: 'dashed' }} />
+                <div style={{ display: !isChartLine ? 'block' : 'none',position: 'absolute', zIndex: 1, marginLeft: x+w - 1 || 0, marginTop: y-10 || 0,height: h+20, width: 1, borderLeftColor: Color.ORANGE, borderLeftWidth: 1, borderLeftStyle: 'dashed' }} />
+                <div style={{ display: !isChartLine ? 'block' : 'none',position: 'absolute', zIndex: 2, marginTop: y+h - 1 || 0, marginLeft: x-10 || 0,height: 1, width: w+20, borderTopColor: Color.ORANGE, borderTopWidth: 1, borderTopStyle: 'dashed' }} />
                 
             </div>
         )

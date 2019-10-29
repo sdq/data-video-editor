@@ -5,7 +5,8 @@ import ImageCard from '@/components/ImageCard';
 import UndrawCard from '@/components/UndrawCard';
 import './illustrationtab.css';
 import data from './data';
-import undrawdata from './undrawdata';
+//import undrawdata from './undrawdata/undrawdata';
+import test from './undrawdata/test';
 
 const { Panel } = Collapse;
 const { Search } = Input;
@@ -16,7 +17,7 @@ export default class ImageTab extends Component {
         this.state = {
             activeKey: "",          //激活标签
             search:"",              //搜索内容
-            limit: 10,              //单次加载素材数量
+            limit: 10,              //单次加载素材数量,单次操作
             primaryColor:"#6c63ff", //显示颜色
         }
         this.onSearch = this.onSearch.bind(this);
@@ -33,9 +34,34 @@ export default class ImageTab extends Component {
                     activeKey: "oldMaterial"
                 })
                 break;
-            case "undrawMaterial":
+            case "C1":
                 this.setState({
-                    activeKey: "undrawMaterial"
+                    limit: 10, //limit重置
+                    activeKey: "C1"
+                })
+                break;
+            case "C2":
+                this.setState({
+                    limit: 10,
+                    activeKey: "C2"
+                });
+                break;
+            case "C3":
+                this.setState({
+                    limit: 10,
+                    activeKey: "C3"
+                });
+                break;
+            case "C4":
+                this.setState({
+                    limit: 10,
+                    activeKey: "C4"
+                });
+                break;
+            case "C5":
+                this.setState({
+                    limit: 10,
+                    activeKey: "C5"
                 });
                 break;
 
@@ -78,23 +104,40 @@ export default class ImageTab extends Component {
 
 
     render() {
+
+        //define
         const { limit, primaryColor, search  } = this.state;
-        let undrawData = [...undrawdata];//...取值
-        const total = undrawdata.length;
-        let shown = total;
-        let hasMore = false;
+        let undrawData =  new Array(0);
+        let total = new Array(0);
+        let shown = new Array(0);
+        let hasMore = new Array(0);
 
+        //init       
+        for(let i =0;i<test.length;i++){
+            undrawData.push([...test[i]]);
+            total.push (test[i].length);
+            shown.push(total[i]);
+            hasMore.push(false);
+            }
+
+         //search
         if (search!=="") {
-            undrawData = undrawdata.filter(item => item.indexOf(search) !== -1);
-            shown = undrawData.length;
+            for(let i =0;i<test.length;i++){
+            undrawData[i] = test[i].filter(item => item.indexOf(search) !== -1);
+            shown[i] = [undrawData[i].length];
+            console.log(i+":"+shown[i]);
+            }
           }
 
-        if (undrawData.length > limit) {
-            undrawData.length = limit;
-            hasMore = true;
+        //load
+        for(let i = 0;i<test.length;i++){
+        if (undrawData[i].length > limit) {
+            undrawData[i].length = limit;
+            hasMore[i] = true;
           }else{
-            hasMore = false;
+            hasMore[i] = false;
           }
+        }
 
         return (
             <div className="imagetab">
@@ -119,11 +162,11 @@ export default class ImageTab extends Component {
                 </Col>
                 </Row>
                 <Collapse className="collaspe" id = "collaspe" ref="collaspe" accordion bordered={false} activeKey={this.state.activeKey} onChange={this.callback}>
-                <Panel header={"Undraw Material"} key="undrawMaterial" className="collaspe-panel">
+                <Panel header={search!==""?"C1 (" + shown[0] + ")":"C1"} key="C1" className="collaspe-panel">
                         <List
                         className="collaspe-list"
                         grid={{ gutter: undrawData.length/2, column: 2 }}
-                        dataSource={undrawData}
+                        dataSource={undrawData[0]}
                         renderItem={item => (
                         <List.Item>
                                <LazyLoad>
@@ -135,13 +178,95 @@ export default class ImageTab extends Component {
                                </LazyLoad>  
                                </List.Item>
                            )}></List>
-                        {hasMore &&(
-                        <Button size = "small" display = { hasMore ?"block":"none"} icon="caret-down"  onClick={this.onLoadMore} style={{margin:0, fontSize: '12px'}}>
-                        Showing {limit} of {shown} , Click to load more...  
+                        {hasMore[0] &&(
+                        <Button size = "small" display = { hasMore[0] ?"block":"none"} icon="caret-down"  onClick={this.onLoadMore} style={{margin:0, fontSize: '12px'}}>
+                        Showing {limit} of {shown[0]} , Click to load more...  
                         </Button>)}
                 </Panel>
+
+                <Panel  header={search!==""?"C2 (" + shown[1] + ")":"C2"} key="C2" className="collaspe-panel">
+                        <List
+                        className="collaspe-list"
+                        grid={{ gutter: undrawData.length/2, column: 2 }}
+                        dataSource={undrawData[1]}
+                        renderItem={item => (
+                        <List.Item>
+                               <LazyLoad>
+                               <LazyLoad><UndrawCard name={item} primaryColor={primaryColor}  {...this.props}/>
+                               </LazyLoad>
+                               <p className="card-text mb-0 text-center">{item}</p>
+                               </LazyLoad>  
+                               </List.Item>
+                           )}></List>
+                        {hasMore[1] &&(
+                        <Button size = "small" display = { hasMore[1] ?"block":"none"} icon="caret-down"  onClick={this.onLoadMore} style={{margin:0, fontSize: '12px'}}>
+                        Showing {limit} of {shown[1]} , Click to load more...  
+                        </Button>)}
+                </Panel>
+
+
+                <Panel  header={search!==""?"C3 (" + shown[2] + ")":"C3"} key="C3" className="collaspe-panel">
+                        <List
+                        className="collaspe-list"
+                        grid={{ gutter: undrawData.length/2, column: 2 }}
+                        dataSource={undrawData[2]}
+                        renderItem={item => (
+                        <List.Item>
+                               <LazyLoad>
+                               <LazyLoad><UndrawCard name={item} primaryColor={primaryColor}  {...this.props}/>
+                               </LazyLoad>
+                               <p className="card-text mb-0 text-center">{item}</p>
+                               </LazyLoad>  
+                               </List.Item>
+                           )}></List>
+                        {hasMore[2] &&(
+                        <Button size = "small" display = { hasMore[2] ?"block":"none"} icon="caret-down"  onClick={this.onLoadMore} style={{margin:0, fontSize: '12px'}}>
+                        Showing {limit} of {shown[2]} , Click to load more...  
+                        </Button>)}
+                </Panel>
+
+                <Panel  header={search!==""?"C4 (" + shown[3] + ")":"C4"} key="C4" className="collaspe-panel">
+                        <List
+                        className="collaspe-list"
+                        grid={{ gutter: undrawData.length/2, column: 2 }}
+                        dataSource={undrawData[3]}
+                        renderItem={item => (
+                        <List.Item>
+                               <LazyLoad>
+                               <LazyLoad><UndrawCard name={item} primaryColor={primaryColor}  {...this.props}/>
+                               </LazyLoad>
+                               <p className="card-text mb-0 text-center">{item}</p>
+                               </LazyLoad>  
+                               </List.Item>
+                           )}></List>
+                        {hasMore[3] &&(
+                        <Button size = "small" display = { hasMore[3] ?"block":"none"} icon="caret-down"  onClick={this.onLoadMore} style={{margin:0, fontSize: '12px'}}>
+                        Showing {limit} of {shown[3]} , Click to load more...  
+                        </Button>)}
+                </Panel>
+
+                <Panel  header={search!==""?"C5 (" + shown[4] + ")":"C5"} key="C5" className="collaspe-panel">
+                        <List
+                        className="collaspe-list"
+                        grid={{ gutter: undrawData.length/2, column: 2 }}
+                        dataSource={undrawData[4]}
+                        renderItem={item => (
+                        <List.Item>
+                               <LazyLoad>
+                               <LazyLoad><UndrawCard name={item} primaryColor={primaryColor}  {...this.props}/>
+                               </LazyLoad>
+                               <p className="card-text mb-0 text-center">{item}</p>
+                               </LazyLoad>  
+                               </List.Item>
+                           )}></List>
+                        {hasMore[4] &&(
+                        <Button size = "small" display = { hasMore[4] ?"block":"none"} icon="caret-down"  onClick={this.onLoadMore} style={{margin:0, fontSize: '12px'}}>
+                        Showing {limit} of {shown[4]} , Click to load more...  
+                        </Button>)}
+                </Panel>
+
                     
-                <Panel header={"Old Material"} key="oldMaterial" className="collaspe-panel">
+                <Panel header={"Other"} key="oldMaterial" className="collaspe-panel">
                         <List
                         className="collaspe-list"
                         grid={{ gutter: 17, column: 3 }}

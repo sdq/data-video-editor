@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { Group } from 'react-konva';
 import _ from 'lodash';
 import ChartContainer from '@/charts/ChartContainer';
+//import ReactDOM from 'react-dom';
+//import {UIManager,findNodeHandle} from 'react-native';
+
 
 let lastScale = '';
 
@@ -14,7 +17,30 @@ export default class ChartElement extends Component {
         this.onTransformStart = this.onTransformStart.bind(this);
         this.onTransformEnd = this.onTransformEnd.bind(this);
         this.onTransform = this.onTransform.bind(this);
+        this.clickSize = this.clickSize.bind(this);
+        this.saveRef = ref => {this.refDom = ref};
     }
+
+    clickSize(e){   
+        // //TODO:在点击时重新测算group大小，并赋给chartinfo
+
+        // //ref dom 方法
+        // console.log(ReactDOM.findDOMNode(this));
+        // console.log(this.refDom);
+        // const {clientWidth, clientHeight} = this.refDom;
+        // console.log('====================================');
+        // console.log(clientWidth, clientHeight, this.refDom);
+        // console.log('====================================');
+
+        //uimannager方法
+        // UIManager.measure(findNodeHandle(this.myComponent),(x,y,width,height,pageX,pageY)=>{
+        //     //todo
+        //     console.log(width);  
+        // })
+        //console.log(this.);  
+
+    }
+
 
     dragstart() {
         this.props.editStart();
@@ -27,8 +53,9 @@ export default class ChartElement extends Component {
         this.props.currentElement.info().y = y;
         //更改toolbar实时位置显示
         let dragpos = { x, y };
-        this.props.dragElement(dragpos);
+        this.props.dragElement(dragpos);      
     }
+
     dragend(x,y) {
         //基础吸附功能
         let w = this.props.currentElement.info().width;
@@ -113,7 +140,7 @@ export default class ChartElement extends Component {
         if (!_.isEmpty(this.props.dataList)) {
             data = this.props.dataList[chartInfo.dataIndex];
         }
-        return  <ChartContainer 
+        return  <ChartContainer  
                     category={chartInfo.category}
                     type={chartInfo.type}
                     name={this.props.name} 
@@ -128,15 +155,36 @@ export default class ChartElement extends Component {
                 />
     }
 
+
+    // //监听窗口大小变化的方法
+    // handleResize = e => {
+    //     console.log('浏览器窗口大小改变事件', e.target.innerWidth)
+    //   }
+    // componentDidMount() {
+    //     window.addEventListener('resize', this.handleResize.bind(this)) //监听窗口大小改变
+    //   }
+    //   componentWillUnmount() { //一定要最后移除监听器，以防多个组件之间导致this的指向紊乱
+    //     window.removeEventListener('resize', this.handleResize.bind(this))
+    //   }
+
+
+
     render() {
         return (
-            <Group name={this.props.name}
+            <Group 
+                ref={this.saveRef}
+                //ref={(ref)=>this.myComponent=ref}
+                name={this.props.name}
                 draggable = {this.props.draggable}
                 x={this.props.element.info().x}
                 y={this.props.element.info().y}
                 width={this.props.element.info().width}
                 height={this.props.element.info().height}
                 rotation={this.props.element.info().rotation}
+                //click
+                onClick= {e => {
+                    this.clickSize(e)
+                }}
                 //draggable
                 onDragStart={this.dragstart}  
                 onDragMove= {e => {

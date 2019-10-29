@@ -23,37 +23,38 @@ let newimage;
 
 const imageSource = {
 
-
-	beginDrag(props,monitor) {
-    let dragSVG = 0;//获取当前拖拽的svg在列表中的序号
-    let alldiv = document.querySelectorAll("p[class='card-text mb-0 text-center']");
-    for (let i = 0;i<alldiv.length;i++){
-        if(alldiv[i].innerText.indexOf(props.name) != -1){
-            dragSVG = i;
-            break;
+    canDrag(props){
+        let dragSVG = 0;//获取当前拖拽的svg在列表中的序号
+        let alldiv = document.querySelectorAll("p[class='card-text mb-0 text-center']");
+        for (let i = 0;i<alldiv.length;i++){
+            if(alldiv[i].innerText.indexOf(props.name) !== -1){
+                dragSVG = i;
+                break;
+            }
         }
-    }
-     //TODO: 如何避免拖拽非素材而报错
-     //TODO: 拖拽时的缩略图怎么不在了？
+         //TODO: 如何避免拖拽非素材而报错
+         //TODO: 拖拽时的缩略图怎么不在了?是异步生成png的问题
+        //转换svghtml为png 
+        let  svghtml = document.querySelectorAll("svg[data-name='Layer 1']")[dragSVG]; 
+        html2canvas( svghtml , {
+        allowTaint: false,   //允许污染
+        taintTest: true,    //在渲染前测试图片(没整明白有啥用)
+        useCORS: true,      //使用跨域(当allowTaint为true时，无需设置跨域)
+        backgroundColor:'transparent',
+        }).then(function(canvas) {
+        //回调
+        newimage=new window.Image();
+        newimage.name = props.name;
+    
+        //TODO:获取拖拽的svg真实大小，按比例转成合理的尺寸赋值给w，h，但好像无论多大都是按1:1比例呈现图像，所以不需要获取真实比例
+        //newimage.width = 150;
+        //newimage.height = 100;
+        newimage.src =  canvas.toDataURL('image/png');
+    })
+          return true;
+    },
 
-
-    //转换svghtml为png 
-    let  svghtml = document.querySelectorAll("svg[data-name='Layer 1']")[dragSVG]; 
-    html2canvas( svghtml , {
-    allowTaint: false,   //允许污染
-    taintTest: true,    //在渲染前测试图片(没整明白有啥用)
-    useCORS: true,      //使用跨域(当allowTaint为true时，无需设置跨域)
-    backgroundColor:'transparent',
-    }).then(function(canvas) {
-    //回调
-    newimage=new window.Image();
-    newimage.name = props.name;
-
-    //TODO:获取拖拽的svg真实大小，按比例转成合理的尺寸赋值给w，h，但好像无论多大都是按1:1比例呈现图像，所以不需要获取真实比例
-    //newimage.width = 150;
-    //newimage.height = 100;
-    newimage.src =  canvas.toDataURL('image/png');
-})
+	beginDrag(props) {
         props.displayResourceTargetArea(true);
 		return props;
 	},

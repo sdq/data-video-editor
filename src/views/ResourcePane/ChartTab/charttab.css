@@ -1,6 +1,6 @@
 .charttab {
-    overflow-x: hidden;
-    overflow-y: auto;
-    height: 500px;
-    padding: 10px;
+    height: 500px; 
+    border-style: none;
+    overflow: auto;
+    padding:0px 10px 0px 10px; 
 }
