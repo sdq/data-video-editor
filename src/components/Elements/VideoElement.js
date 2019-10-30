@@ -107,44 +107,114 @@ export default class VideoElement extends Component {
     dragstart() {
         this.props.editStart();
     };
-    dragmove(x, y) {
-        //实时更改素材的真实X,Y，以便吸附
-        this.props.currentElement.info().x = x;
-        this.props.currentElement.info().y = y;
-        //更改toolbar实时位置显示
-        let dragpos = { x, y };
-        this.props.dragElement(dragpos);
-    }
-    dragend(x, y) {
-
-        //基础吸附功能
+  
+    dragmove(x,y,e){
+        
+        let normal = true;  //正常
+        //主动吸附功能
         let w = this.props.currentElement.info().width;
         let h = this.props.currentElement.info().height;        
         let margin = 10;
 
         let marginLeftL = Math.abs(x - 0); //素材左-画布左
         let marginTopT = Math.abs(y - 0);  //素材上-画布上
-        let marginRightR = Math.abs(x + w - 800);  //素材右-画布右
-        let marginBottomB = Math.abs(y + h - 450);  //素材下-画布下
+        let marginRightR = Math.abs(x+w - 800);  //素材右-画布右
+        let marginBottomB = Math.abs(y+h - 450);  //素材下-画布下
 
-        let marginCenterXC = Math.abs(x + w / 2 - 400);  //素材中-画布中
-        let marginCenterYC = Math.abs(y + h / 2 - 225);  //素材中-画布中
+        let marginCenterXC = Math.abs(x+w/2 - 400);  //素材中-画布中
+        let marginCenterYC = Math.abs(y+h/2 - 225);  //素材中-画布中
         let marginLeftC = Math.abs(x - 400); //素材左-画布中
         let marginTopC = Math.abs(y - 225);  //素材上-画布中
-        let marginRightC = Math.abs(x + w - 400);  //素材右-画布中
-        let marginBottomC = Math.abs(y + h - 225);  //素材下-画布中
+        let marginRightC = Math.abs(x+w - 400);  //素材右-画布中
+        let marginBottomC = Math.abs(y+h - 225);  //素材下-画布中
 
-        if (marginLeftL < margin) { x = 0; }//素材左-画布左
-        if (marginTopT < margin) { y = 0; }//素材上-画布上
-        if (marginRightR < margin) { x = 800 - w; }//素材右-画布右
-        if (marginBottomB < margin) { y = 450 - h; }//素材下-画布下
 
-        if (marginCenterXC < margin) { x = 400 - w / 2; }//素材中-画布中
-        if (marginCenterYC < margin) { y = 225 - h / 2; }//素材中-画布中
-        if (marginLeftC < margin) { x = 400; }//素材左-画布中
-        if (marginTopC < margin) { y = 225; }//素材上-画布中
-        if (marginRightC < margin) { x = 400 - w; }//素材右-画布中
-        if (marginBottomC < margin) { y = 225 - h; }//素材下-画布中
+        // 逻辑：在靠近辅助线的时候，位置直接更改，可以再次拖动, 直接改动系统级当前抓取的元素
+
+        if( marginLeftL < margin){       
+            e.target.attrs.x = 0;
+            this.props.currentElement.info().x = 0;
+            this.props.currentElement.info().y = y;
+            this.props.dragElement([0,y]);//素材左-画布左
+            normal = false;
+        }
+        if( marginTopT < margin){
+            e.target.attrs.y = 0;
+            this.props.currentElement.info().x = x;
+            this.props.currentElement.info().y = 0;
+            this.props.dragElement([x,0]);//素材上-画布上
+            normal = false;
+        }
+        if( marginRightR < margin){
+            e.target.attrs.x = 800-w;
+            this.props.currentElement.info().x = 800-w;
+            this.props.currentElement.info().y = y;
+            this.props.dragElement([800-w,y]); 
+            normal = false;
+        }//素材右-画布右
+        if( marginBottomB < margin){
+            e.target.attrs.y = 450-h;
+            this.props.currentElement.info().x = x;
+            this.props.currentElement.info().y = 450-h;
+            this.props.dragElement([x,450-h]);  
+            normal = false;
+        }//素材下-画布下
+        if( marginCenterXC < margin){
+            e.target.attrs.x = 400-w/2;
+            this.props.currentElement.info().x = 400-w/2;
+            this.props.currentElement.info().y = y;
+            this.props.dragElement([400-w/2,y]);  
+            normal = false;
+        }//素材中-画布中
+        if( marginCenterYC < margin){
+            e.target.attrs.y = 225-h/2;
+            this.props.currentElement.info().x = x;
+            this.props.currentElement.info().y = 225-h/2;
+            this.props.dragElement([x,225-h/2]);  
+            normal = false;
+        }//素材中-画布中
+        if( marginLeftC < margin){
+            e.target.attrs.x = 400;
+            this.props.currentElement.info().x = 400;
+            this.props.currentElement.info().y = y;
+            this.props.dragElement([400,y]);
+            normal = false;
+        }//素材左-画布中
+        if( marginTopC < margin){y=225;
+            e.target.attrs.y = 225;
+            this.props.currentElement.info().x = x;
+            this.props.currentElement.info().y = 225;
+            this.props.dragElement([x,225]); 
+            normal = false;
+        }//素材上-画布中
+        if( marginRightC < margin){x=400-w;
+            e.target.attrs.x = 400-w;
+            this.props.currentElement.info().x = 400-w;
+            this.props.currentElement.info().y = y;
+            this.props.dragElement([400-w,y]); 
+            normal = false;
+        }//素材右-画布中
+        if( marginBottomC < margin){y=225-h;
+            e.target.attrs.y = 225-h;
+            this.props.currentElement.info().x = x;
+            this.props.currentElement.info().y = 225-h;
+            this.props.dragElement([x,225-h]); 
+            normal = false;
+        }//素材下-画布中
+        if(normal){
+        //实时更改素材的真实X,Y，以便吸附
+        this.props.currentElement.info().x = x;
+        this.props.currentElement.info().y = y;
+        // let showPosX = e.target.attrs.x;
+        // let showPosY = e.target.attrs.y;
+        let dragpos = {x,y};
+        this.props.dragElement(dragpos);
+        normal = true;
+        }
+    }
+
+
+    dragend(x,y) {
         //更新右侧ToolPane的值 
         let dragPos = { x, y };
         this.props.dragElement(dragPos);
@@ -208,7 +278,7 @@ export default class VideoElement extends Component {
                 //draggable
                 onDragStart={this.dragstart}
                 onDragMove={e => {
-                    this.dragmove(e.target.x(), e.target.y())
+                    this.dragmove(e.target.x(), e.target.y(),e)
                 }}
                 onDragEnd={e => {
                     this.dragend(e.target.x(), e.target.y())
