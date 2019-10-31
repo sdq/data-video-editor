@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Collapse } from 'antd';
+// import { Collapse } from 'antd';
 import { AnimationList } from '@/animation';
 import AnimationCard from '@/components/AnimationCard';
 
-const { Panel } = Collapse;
+// const { Panel } = Collapse;
 
 const paneHeight = 290;
 
