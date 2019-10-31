@@ -8,35 +8,59 @@ import ChartElement from '@/components/Elements/ChartElement';
 import ElementType from '@/constants/ElementType';
 
 export default class CanvasPreview extends Component {
+    // constructor(props) {
+    //     super(props);
+    //     this.state = {
+    //         image: null,
+    //     };
+    // }
+    // componentDidMount() {
+    //     this.loadImage();
+    // }
+    // componentWillUnmount() {
+    //     this.image.removeEventListener('load', this.handleLoad);
+    // }
+    // loadImage() {
+    //     // save to "this" to remove "load" handler on unmount
+    //     this.image = new window.Image();
+    //     this.image.src = scene.backgroundImage();
+    //     this.image.addEventListener('load', this.handleLoad);
+    // }
+    // handleLoad = () => {
+    //     this.setState({
+    //         image: this.image
+    //     });
+    // };
     render() {
+        const { scene, sceneIndex } = this.props;
         return (
             <div>
                 <Stage width={192} height={108} scale={{x: 192/800, y:192/800}} 
-                 style={{
-                     backgroundColor:this.props.scene.backgroundColor(),
-                     backgroundImage:`url(${ this.props.scene.backgroundImage()})`,
-                     }}>
+                    style={{
+                        backgroundColor:scene.backgroundColor(),
+                        backgroundImage:`url(${ scene.backgroundImage()})`,}}
+                >
                     <Layer>
                         
-                        {this.props.scene.elements().map(function(element, index) {
+                        {scene.elements().map(function(element, index) {
                             //console.log(element.info());
                             switch (element.type()) {
                                 case ElementType.TEXT:
-                                    return <TextElement key={this.props.sceneIndex+"-"+index} element={element} name={this.props.sceneIndex+"-"+index} draggable = {false} {...this.props}/>
+                                    return <TextElement key={sceneIndex+"-"+index} element={element} name={sceneIndex+"-"+index} draggable = {false} {...this.props}/>
                                 case ElementType.IMAGE:
-                                    return <ImageElement key={this.props.sceneIndex+"-"+index} element={element} name={this.props.sceneIndex+"-"+index} draggable = {false} {...this.props}/>
+                                    return <ImageElement key={sceneIndex+"-"+index} element={element} name={sceneIndex+"-"+index} draggable = {false} {...this.props}/>
                                 case ElementType.GIF:
-                                    return <GifElement key={this.props.sceneIndex + "-" + index} element={element} name={this.props.sceneIndex + "-" + index} draggable={false} {...this.props} />
+                                    return <GifElement key={sceneIndex + "-" + index} element={element} name={sceneIndex + "-" + index} draggable={false} {...this.props} />
                                 case ElementType.CHART:
-                                    return <ChartElement key={this.props.sceneIndex+"-"+index} element={element} name={this.props.sceneIndex+"-"+index}  width={200} height={200} draggable = {false} {...this.props}/>
+                                    return <ChartElement key={sceneIndex+"-"+index} element={element} name={sceneIndex+"-"+index}  width={200} height={200} draggable = {false} {...this.props}/>
                                 case ElementType.VIDEO:
-                                    return <VideoElement key={this.props.sceneIndex + "-" + index} element={element} name={this.props.sceneIndex + "-" + index} draggable={false} {...this.props} />
+                                    return <VideoElement key={sceneIndex + "-" + index} element={element} name={sceneIndex + "-" + index} draggable={false} {...this.props} />
                                 case ElementType.AUDIO:
                                     return null;
                                 default:
                                     //TODO: remove
                                     console.log("wrong!!!!!!!");
-                                    console.log(this.props.currentScene.elements());
+                                    console.log(scene.elements());
                                     console.log(element);
                                     return;
                             }
