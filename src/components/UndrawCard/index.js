@@ -6,8 +6,7 @@ import {Element, ImageInfo} from '@/models/Element';
 // import Scene from '@/models/Scene';
 import './undrawcard.css';
 import Undraw from 'react-undraw';
-import html2canvas from 'html2canvas';
-
+import canvg from 'canvg';
 
 
 //undraw default size
@@ -38,33 +37,26 @@ const imageSource = {
             console.log("no image");
             return false;
         }
-
-
-        //TODO: 如何避免拖拽非素材而报错
-        //TODO: 拖拽时的缩略图怎么不在了?是异步生成png的问题
-        //转换svghtml为png 
-        let  svghtml = document.querySelectorAll("svg[data-name='Layer 1']")[dragSVG]; 
-        html2canvas( svghtml , {
-        allowTaint: false,   //允许污染
-        taintTest: true,    //在渲染前测试图片(没整明白有啥用)
-        useCORS: true,      //使用跨域(当allowTaint为true时，无需设置跨域)
-        backgroundColor:'transparent',
-        scale:3.0,
-        //width:130,
-        //height:80,
-        windowWidth:svghtml.viewBox.animVal.width,//svg的内置宽高
-        windowHeight:svghtml.viewBox.animVal.width,
-        }).then(function(canvas) {
-        //回调
-        newimage=new window.Image();
-        newimage.name = props.name;
+       
+       let  svghtml = document.querySelectorAll("svg[data-name='Layer 1']")[dragSVG]; 
+       svghtml.style.width = svghtml.clientWidth;
+       svghtml.style.height = svghtml.clientHeight;
+       console.log("svghtml",svghtml)
+       
+        var canvas = document.createElement('canvas');
+        //转换成字符串
+        svghtml = svghtml.outerHTML;
+        canvg(canvas, svghtml, {
+            renderCallback: function() {
+              console.log("canvas.toDataURL('image/png')",canvas.toDataURL('image/png'),svghtml)
+              newimage = new window.Image();
+              newimage.name = props.name;
+              newimage.src = canvas.toDataURL('image/png');
+              w = canvas.width;
+              h = canvas.height;
+            },
+            });
     
-        //TODO:获取拖拽的svg真实大小，按比例转成合理的尺寸赋值给w，h，但好像无论多大都是按1:1比例呈现图像，
-        newimage.width = w;
-        newimage.height = h;
-        newimage.src =  canvas.toDataURL('image/png',1);
-    })
-
           return true;
     },
 
@@ -91,6 +83,7 @@ const imageSource = {
             if (dropResult.target === "canvas") {
                 //add element to scene
                 const newScene = Object.assign({},dropResult.currentScene);
+                console.log("endDrag",w,h)
                 const newImage = new ImageInfo(newimage.name,newimage.src, x, y, w, h, 0);
                 const newElement = new Element(ElementType.IMAGE, newImage);
                 newScene.addElement(newElement);
