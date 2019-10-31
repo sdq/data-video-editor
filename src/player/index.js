@@ -13,9 +13,13 @@ export default class Player {
             this._videoTimeouts = [];
             this._worker = worker()  // `new` is optional
             this._worker.addEventListener('message', function (e) {
-                console.log('MAIN: ', 'RECEIVE', e.data);
-            });
-            this._worker.postMessage('Hello Worker, I am main.js');
+                //console.log('MAIN: ', 'RECEIVE', e.data);
+                let {position, index, n} = e.data;
+                if (e.data.status === 'scene') {
+                    this.setPositionInScene(position, index, n);
+                }
+            }.bind(this));
+            //this._worker.postMessage('Hello Worker, I am main.js');
             Player.instance = this;
         } else {
             return Player.instance;
@@ -38,6 +42,10 @@ export default class Player {
         return this.sceneDuration(this.sceneIndex);
     }
 
+    get sceneDurations() {
+        return store.getState().video.scenes.map(x => x.duration());
+    }
+
     sceneDuration(index) {
         return store.getState().video.scenes[index].duration();
     }
@@ -49,28 +57,50 @@ export default class Player {
     playScene() {
         if (!this.isPerforming) {
             store.dispatch(playerActions.playScene(this.sceneIndex));
-            this._clearTimeouts();
+            //this._clearTimeouts();
+            this._worker.postMessage({
+                status: 'end',
+            });
             const current = this.scenePosition;
             const end = this.currentSceneDuration;
             const msOffset = (end - current) * 1000;
             AudioController.init(this.sceneIndex,current);
             const n = Math.round(msOffset / 100) + 1; // update every 100ms
             for (let index = 0; index < n; index++) {
-                this._timeouts.push(setTimeout(function () {
-                    const position = current + index / 10 ;
-                    store.dispatch(sceneActions.setPosition(position));
-                    AudioController.playAudio();
-                    if (index === (n-1)) {
-                        this.pauseScene();
-                        store.dispatch(sceneActions.setPosition(0));
-                    }
-                }.bind(this), index * 100));
+                this._worker.postMessage({
+                    status: 'start',
+                    duration: index * 100,
+                    position: current + index / 10,
+                    index: index,
+                    n: n,
+                });
+                // this._timeouts.push(setTimeout(function () {
+                //     const position = current + index / 10 ;
+                //     store.dispatch(sceneActions.setPosition(position));
+                //     AudioController.playAudio();
+                //     if (index === (n-1)) {
+                //         this.pauseScene();
+                //         store.dispatch(sceneActions.setPosition(0));
+                //     }
+                // }.bind(this), index * 100));
             }
         }
     }
 
+    setPositionInScene(position, index, n) {
+        store.dispatch(sceneActions.setPosition(position));
+        AudioController.playAudio();
+        if (index === (n-1)) {
+            this.pauseScene();
+            store.dispatch(sceneActions.setPosition(0));
+        }
+    }
+
     pauseScene() {
-        this._clearTimeouts();
+        //this._clearTimeouts();
+        this._worker.postMessage({
+            status: 'end',
+        });
         store.dispatch(playerActions.stopScene(this.sceneIndex));
         AudioController.pauseAudio(this.sceneIndex)       
     }
@@ -113,6 +143,7 @@ export default class Player {
     }
 
     pauseVideo() {
+        this._worker.postMessage('end');
         this._clearTimeouts();
         this._clearVideoTimeouts();
         store.dispatch(playerActions.stopVideo());

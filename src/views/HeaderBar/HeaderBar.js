@@ -40,15 +40,18 @@ export default class HeaderBar extends Component {
         console.log('save video');
         // console.log(this.props)
         this.setState({
-            remainTime: this.props.videoDuration
+            //remainTime: this.props.videoDuration
+            remainTime: 10
         });
         this.interval = setInterval(() => this.tick(), 1000); // 一秒一次
         // console.log('duration', this.props.videoDuration);
-        player.playVideo();
+        //player.playVideo();
+        player.playScene();
         // 显示加载动画
         setTimeout(() => {
             recorder.start('animation-layer', // canvas id
-                (this.props.videoDuration) * 1000, // duration: ms
+                //(this.props.videoDuration) * 1000, // duration: ms
+                10 * 1000, //TODO: to remove
                 10, // per xxx ms
                 () => {
                     //player.playVideo();
