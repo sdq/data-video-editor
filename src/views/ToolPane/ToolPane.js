@@ -11,6 +11,8 @@ import ChartTool from './Tools/ChartTool';
 import TextTool from './Tools/TextTool';
 import DataTool from './Tools/DataTool';
 import AnimationTool from './Tools/AnimationTool';
+import PosTool from './Tools/PosTool';
+import './toolpane.css';
 
 const { TabPane } = Tabs;
 
@@ -31,34 +33,45 @@ export default class ToolPane extends Component {
         if (this.props.isElementSelected && this.props.currentElement) {
             switch (this.props.currentElement.type()) {
                 case ElementType.IMAGE:
-                    return <Tabs type="card">
-                        <TabPane tab="Design" key="Design">
+                    return <div className="card-container">
+                    <PosTool {...this.props}/>
+                    <Tabs type="card">
+                        <TabPane tab="Design" key="Design" >
                             <ImageTool {...this.props}/>
                         </TabPane>
                         <TabPane tab="Animation" key="Animation">
                             <AnimationTool {...this.props}/>
                         </TabPane>
-                    </Tabs>;
+                    </Tabs>
+                    </div>
                 case ElementType.GIF:
-                        return <Tabs type="card">
+                        return <div className="card-container">
+                        <PosTool {...this.props}/>
+                        <Tabs type="card">
                         <TabPane tab="Design" key="Design">
                             <GifTool {...this.props}/>
                         </TabPane>
                         <TabPane tab="Animation" key="Animation">
                             <AnimationTool {...this.props}/>
                         </TabPane>
-                    </Tabs>;
+                    </Tabs>
+                    </div>
                  case ElementType.VIDEO:
-                    return <Tabs type="card">
+                    return <div className="card-container">
+                    <PosTool {...this.props}/>
+                    <Tabs type="card">
                     <TabPane tab="Design" key="Design">
                         <VideoTool {...this.props}/>
                     </TabPane>
                     <TabPane tab="Animation" key="Animation">
                         <AnimationTool {...this.props}/>
                     </TabPane>
-                </Tabs>;
+                </Tabs>
+                </div>
                 case ElementType.CHART:
-                    return <Tabs type="card">
+                    return <div className="card-container">
+                    <PosTool {...this.props}/>
+                    <Tabs type="card">
                         <TabPane tab="Data" key="Data">
                             <DataTool {...this.props}/>
                         </TabPane>
@@ -68,16 +81,20 @@ export default class ToolPane extends Component {
                         <TabPane tab="Animation" key="Animation">
                             <AnimationTool {...this.props}/>
                         </TabPane>
-                    </Tabs>;
+                    </Tabs>
+                    </div>
                 case ElementType.TEXT:
-                    return <Tabs type="card">
+                    return <div className="card-container">
+                    <PosTool {...this.props}/>
+                    <Tabs type="card">
                         <TabPane tab="Text" key="Text">
                             <TextTool {...this.props}/>
                         </TabPane>
                         <TabPane tab="Animation" key="Animation">
                             <AnimationTool {...this.props}/>
                         </TabPane>
-                    </Tabs>;
+                    </Tabs>
+                    </div>
                 default:
                     return <SceneTool {...this.props}/>
             }

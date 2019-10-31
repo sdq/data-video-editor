@@ -1,0 +1,13 @@
+.card-container > .ant-tabs-card > .ant-tabs-content {
+    height: 500px;
+    margin-top: -6px;
+}
+
+.card-container > .ant-tabs-card > .ant-tabs-content > .ant-tabs-tabpane {
+    background: #fff;
+}
+
+.card-container > .ant-tabs-card > .ant-tabs-bar .ant-tabs-tab {
+    border-color: transparent;
+    background: transparent;
+}

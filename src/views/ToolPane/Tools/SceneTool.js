@@ -165,7 +165,7 @@ export default class SceneTool extends Component {
 
 
         return (
-            <div style={{padding: '5px 10px 0px 10px', fontSize: '14px',height:'500px',overflow: 'auto'}}>
+            <div style={{padding: '0px 10px 0px 10px', fontSize: '14px',height:'500px',overflow: 'auto'}}>
                 <Divider>Script</Divider> 
                 {/* <Row style={{margin: '5px 0px 0px 0px', fontSize: '14px'}}>
                 <Input placeholder="title" style={{ padding: '0px 5px 0 5px'}} value={this.props.currentScene.title()} onChange={this.handleTitleChange}  />
@@ -175,7 +175,7 @@ export default class SceneTool extends Component {
                 </Row>
                 
                 <Divider>Background</Divider>
-                <Row style={{margin: '0px 10px 10px 10px', fontSize: '14px'}}>
+                <Row style={{margin: '0px 10px 0px 10px', fontSize: '14px'}}>
                 <Col span={4} style={{margin: '0px 0px 0px 6px'}}>
                 Color
                 </Col>

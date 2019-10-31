@@ -154,11 +154,13 @@ export default class DataTool extends Component {
         let { dataNameList, currentData} = this.props;
         const text = 'Are you sure to change chart data?（All the encodings will be emptied.）';
         return (
-            <div style={{ padding: '10px 10px 10px 10px', fontSize: '14px', backgroundColor: 'white' }}>
+            <div style={{ padding: '0px 10px 10px 10px', fontSize: '14px', backgroundColor: 'white',height:'400px',overflow: 'auto' }}>
+                <div  style={{height:'120px'}} >
                 <Dragger
                     accept=".csv"
                     showUploadList={false}
-                    beforeUpload={this.beforeUpload}>
+                    beforeUpload={this.beforeUpload}
+                    >
                     <p className="ant-upload-drag-icon">
                         <Icon type="inbox" />
                     </p>
@@ -167,6 +169,7 @@ export default class DataTool extends Component {
                         Click or drag csv file to this area
                     </p>
                 </Dragger>
+                </div>
                 <Select id="data-selection"
                     value={currentData.name}
                     defaultValue={currentData.name}

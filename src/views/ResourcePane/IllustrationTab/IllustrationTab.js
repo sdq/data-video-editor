@@ -3,10 +3,12 @@ import { Button, Row, Col, Input, Collapse, List } from 'antd';
 import LazyLoad from 'react-lazyload';
 import ImageCard from '@/components/ImageCard';
 import UndrawCard from '@/components/UndrawCard';
+import { SketchPicker } from 'react-color';
 import './illustrationtab.css';
 import data from './data';
 //import undrawdata from './undrawdata/undrawdata';
 import test from './undrawdata/test';
+
 
 const { Panel } = Collapse;
 const { Search } = Input;
@@ -15,6 +17,7 @@ export default class ImageTab extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            displayColorPicker: false,
             activeKey: "C1",        //激活标签
             search:"",              //搜索内容
             limit: 10,              //单次加载素材数量,单次操作
@@ -22,7 +25,7 @@ export default class ImageTab extends Component {
         }
         this.onSearch = this.onSearch.bind(this);
         this.onLoadMore = this.onLoadMore.bind(this);
-        this.onChange = this.onChange.bind(this);
+        this.handleColorClick = this.handleColorClick.bind(this);  //bind
     }
 
     componentDidMount() {}
@@ -73,11 +76,33 @@ export default class ImageTab extends Component {
         }
     };
 
-    onChange(event) {
+
+    handleColorClick () {
+        let {displayColorPicker} =this.state;
+        displayColorPicker = displayColorPicker==="none"?"block":"none";
+        this.setState({displayColorPicker})
+        if(displayColorPicker){
+            //this.props.updateColor(key,color)
+        }
+        this.setState({ displayColorPicker: !this.state.displayColorPicker })
+    };
+
+
+    handleColorChange = (value)=>{
+        let color = value.hex;  
         this.setState({
-            primaryColor: event.target.value
+            primaryColor: color
         });
-      }
+    }
+  
+
+    handleColorClose = () => {
+        this.setState({ displayColorPicker: false })
+    };
+    
+
+
+
     
     onSearch(e) {
         let value = e.target.value;
@@ -104,6 +129,20 @@ export default class ImageTab extends Component {
 
 
     render() {
+
+        const popover = {
+            //position: 'relative',
+            position: 'fixed',
+            zIndex: '66',
+            float:'right',
+            margin:'10px 15px 0px 0px',
+            left: '120px',
+        }
+        const cover = {
+            position: 'absolute',
+            //left: '0px',
+        }
+
 
         //define
         const { limit, primaryColor, search  } = this.state;
@@ -149,15 +188,13 @@ export default class ImageTab extends Component {
                 />
                 </Col>
                 <Col span={3} style={{margin: '1px 0px 0px 7px', fontSize: '14px'}}>
-                <input
-                    type="color"
-                    className="form-control"
-                    name="primaryColor"
-                    onChange={this.onChange}
-                    value={primaryColor}
-                    width = {50}
-                    height = {50}
-                />
+                <Button type="danger" block  style={{width: '100%',height:'24px',margin: '0px 0px 0px 0px',
+                    backgroundColor:primaryColor}} onClick={ this.handleColorClick } ></Button>
+                    { this.state.displayColorPicker ? <div style={ popover }>
+                    <div style={ cover } onClick={ this.handleColorClose }/>
+                    <SketchPicker  
+                    onChange={this.handleColorChange} />
+                    </div> : null }
                 </Col>
                 </Row>
                 <Collapse 

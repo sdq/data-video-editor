@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import Color from '@/constants/Color';
 import ElementType from '@/constants/ElementType';
+
+
+let assistlinecolor = '#DCDCDC';
 
 export default class AssistLines extends Component {
 
@@ -55,29 +57,29 @@ export default class AssistLines extends Component {
         return (
             <div style={{ position: 'absolute', zIndex: 1 }}>
                 
-                <div style={{ display: marginLeftL < margin ? 'block' : 'none', position: 'absolute', zIndex: 1, marginLeft: 1, height: 450, width: 1, borderLeftColor: Color.ORANGE, borderLeftWidth: 1, borderLeftStyle: 'dashed' }} />
-                <div style={{ display: marginTopT < margin ? 'block' : 'none', position: 'absolute', zIndex: 2, marginTop: 1, height: 1, width: 800, borderTopColor: Color.ORANGE, borderTopWidth: 1, borderTopStyle: 'dashed' }} />
+                <div style={{ display: marginLeftL < margin ? 'block' : 'none', position: 'absolute', zIndex: 1, marginLeft: 1, height: 450, width: 1, borderLeftColor: assistlinecolor, borderLeftWidth: 1, borderLeftStyle: 'dashed' }} />
+                <div style={{ display: marginTopT < margin ? 'block' : 'none', position: 'absolute', zIndex: 2, marginTop: 1, height: 1, width: 800, borderTopColor: assistlinecolor, borderTopWidth: 1, borderTopStyle: 'dashed' }} />
 
-                <div style={{ display: marginRightR < margin ? 'block' : 'none', position: 'absolute', zIndex: 1, marginLeft: 799, height: 450, width: 1, borderLeftColor: Color.ORANGE, borderLeftWidth: 1, borderLeftStyle: 'dashed' }} />
-                <div style={{ display: marginBottomB < margin ? 'block' : 'none', position: 'absolute', zIndex: 2, marginTop: 449, height: 1, width: 800, borderTopColor: Color.ORANGE, borderTopWidth: 1, borderTopStyle: 'dashed' }} />
+                <div style={{ display: marginRightR < margin ? 'block' : 'none', position: 'absolute', zIndex: 1, marginLeft: 799, height: 450, width: 1, borderLeftColor: assistlinecolor, borderLeftWidth: 1, borderLeftStyle: 'dashed' }} />
+                <div style={{ display: marginBottomB < margin ? 'block' : 'none', position: 'absolute', zIndex: 2, marginTop: 449, height: 1, width: 800, borderTopColor: assistlinecolor, borderTopWidth: 1, borderTopStyle: 'dashed' }} />
               
-                <div style={{ display: marginCenterXC < margin ? 'block' : 'none', position: 'absolute', zIndex: 1, marginLeft: 400, height: 450, width: 1, borderLeftColor: Color.ORANGE, borderLeftWidth: 1, borderLeftStyle: 'dashed' }} />
-                <div style={{ display: marginCenterYC < margin ? 'block' : 'none', position: 'absolute', zIndex: 2, marginTop: 225, height: 1, width: 800, borderTopColor: Color.ORANGE, borderTopWidth: 1, borderTopStyle: 'dashed' }} />
+                <div style={{ display: marginCenterXC < margin ? 'block' : 'none', position: 'absolute', zIndex: 1, marginLeft: 400, height: 450, width: 1, borderLeftColor: assistlinecolor, borderLeftWidth: 1, borderLeftStyle: 'dashed' }} />
+                <div style={{ display: marginCenterYC < margin ? 'block' : 'none', position: 'absolute', zIndex: 2, marginTop: 225, height: 1, width: 800, borderTopColor: assistlinecolor, borderTopWidth: 1, borderTopStyle: 'dashed' }} />
 
-                <div style={{ display: marginLeftC < margin ? 'block' : 'none', position: 'absolute', zIndex: 1, marginLeft: 400, height: 450, width: 1, borderLeftColor: Color.ORANGE, borderLeftWidth: 1, borderLeftStyle: 'dashed' }} />
-                <div style={{ display: marginTopC < margin ? 'block' : 'none', position: 'absolute', zIndex: 2, marginTop: 225, height: 1, width: 800, borderTopColor: Color.ORANGE, borderTopWidth: 1, borderTopStyle: 'dashed' }} />
+                <div style={{ display: marginLeftC < margin ? 'block' : 'none', position: 'absolute', zIndex: 1, marginLeft: 400, height: 450, width: 1, borderLeftColor: assistlinecolor, borderLeftWidth: 1, borderLeftStyle: 'dashed' }} />
+                <div style={{ display: marginTopC < margin ? 'block' : 'none', position: 'absolute', zIndex: 2, marginTop: 225, height: 1, width: 800, borderTopColor: assistlinecolor, borderTopWidth: 1, borderTopStyle: 'dashed' }} />
 
-                <div style={{ display: marginRightC < margin ? 'block' : 'none', position: 'absolute', zIndex: 1, marginLeft: 400, height: 450, width: 1, borderLeftColor: Color.ORANGE, borderLeftWidth: 1, borderLeftStyle: 'dashed' }} />
-                <div style={{ display: marginBottomC < margin ? 'block' : 'none', position: 'absolute', zIndex: 2, marginTop: 225, height: 1, width: 800, borderTopColor: Color.ORANGE, borderTopWidth: 1, borderTopStyle: 'dashed' }} />
+                <div style={{ display: marginRightC < margin ? 'block' : 'none', position: 'absolute', zIndex: 1, marginLeft: 400, height: 450, width: 1, borderLeftColor: assistlinecolor, borderLeftWidth: 1, borderLeftStyle: 'dashed' }} />
+                <div style={{ display: marginBottomC < margin ? 'block' : 'none', position: 'absolute', zIndex: 2, marginTop: 225, height: 1, width: 800, borderTopColor: assistlinecolor, borderTopWidth: 1, borderTopStyle: 'dashed' }} />
 
-                <div style={{ position: 'absolute', zIndex: 1, marginLeft: x - 1 || 0, marginTop: y-10 || 0,height: h+20, width: 1, borderLeftColor: Color.ORANGE, borderLeftWidth: 1, borderLeftStyle: 'dashed' }} />
-                <div style={{ position: 'absolute', zIndex: 2, marginTop: y - 1 || 0, marginLeft: x-10 || 0,height: 1, width: w+20, borderTopColor: Color.ORANGE, borderTopWidth: 1, borderTopStyle: 'dashed' }} />
+                <div style={{ position: 'absolute', zIndex: 1, marginLeft: x - 1 || 0, marginTop: y-10 || 0,height: h+20, width: 1, borderLeftColor: assistlinecolor, borderLeftWidth: 1, borderLeftStyle: 'dashed' }} />
+                <div style={{ position: 'absolute', zIndex: 2, marginTop: y - 1 || 0, marginLeft: x-10 || 0,height: 1, width: w+20, borderTopColor: assistlinecolor, borderTopWidth: 1, borderTopStyle: 'dashed' }} />
 
-                <div style={{ display: !smallW && !isChartLine ? 'block' : 'none',position: 'absolute', zIndex: 1, marginLeft: x+w/2 || 0, marginTop: y-10 || 0,height: h+20, width: 1, borderLeftColor: Color.ORANGE, borderLeftWidth: 1, borderLeftStyle: 'dashed' }} />
-                <div style={{ display: !smallH && !isChartLine ? 'block' : 'none',position: 'absolute', zIndex: 2, marginTop: y+h/2 || 0, marginLeft: x-10 || 0,height: 1, width: w+20, borderTopColor: Color.ORANGE, borderTopWidth: 1, borderTopStyle: 'dashed' }} />
+                <div style={{ display: !smallW && !isChartLine ? 'block' : 'none',position: 'absolute', zIndex: 1, marginLeft: x+w/2 || 0, marginTop: y-10 || 0,height: h+20, width: 1, borderLeftColor: assistlinecolor, borderLeftWidth: 1, borderLeftStyle: 'dashed' }} />
+                <div style={{ display: !smallH && !isChartLine ? 'block' : 'none',position: 'absolute', zIndex: 2, marginTop: y+h/2 || 0, marginLeft: x-10 || 0,height: 1, width: w+20, borderTopColor: assistlinecolor, borderTopWidth: 1, borderTopStyle: 'dashed' }} />
 
-                <div style={{ display: !isChartLine ? 'block' : 'none',position: 'absolute', zIndex: 1, marginLeft: x+w - 1 || 0, marginTop: y-10 || 0,height: h+20, width: 1, borderLeftColor: Color.ORANGE, borderLeftWidth: 1, borderLeftStyle: 'dashed' }} />
-                <div style={{ display: !isChartLine ? 'block' : 'none',position: 'absolute', zIndex: 2, marginTop: y+h - 1 || 0, marginLeft: x-10 || 0,height: 1, width: w+20, borderTopColor: Color.ORANGE, borderTopWidth: 1, borderTopStyle: 'dashed' }} />
+                <div style={{ display: !isChartLine ? 'block' : 'none',position: 'absolute', zIndex: 1, marginLeft: x+w - 1 || 0, marginTop: y-10 || 0,height: h+20, width: 1, borderLeftColor: assistlinecolor, borderLeftWidth: 1, borderLeftStyle: 'dashed' }} />
+                <div style={{ display: !isChartLine ? 'block' : 'none',position: 'absolute', zIndex: 2, marginTop: y+h - 1 || 0, marginLeft: x-10 || 0,height: 1, width: w+20, borderTopColor: assistlinecolor, borderTopWidth: 1, borderTopStyle: 'dashed' }} />
                 
             </div>
         )
