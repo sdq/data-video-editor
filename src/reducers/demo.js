@@ -88,7 +88,7 @@ scene1.addElement(element03);
 scene1.addElement(element1);
 scene1.addElement(element2);
 // scene1.backgroundColor(Color.CLEAR_BLUE);
-scene1.backgroundImage(MyURL.OSS+"/backgroundImages/t-earth.png");
+//scene1.backgroundImage(MyURL.OSS+"/backgroundImages/t-point.png");
 
 
 // const demoaudio222 = new AudioInfo(
@@ -196,7 +196,7 @@ element02.add(animation1);
 
 
 const scene2 = new Scene("Comparison of car horsepower in three countries", 10.0);
-scene2.backgroundImage(MyURL.OSS+"/backgroundImages/t-earth.png");
+//scene2.backgroundImage(MyURL.OSS+"/backgroundImages/t-point.png");
 
 // scene2.addElement(element2222);
 scene2.addElement(element02);
@@ -311,7 +311,7 @@ element34.duration(10.0);
 // animation2.duration(10);
 // element31.add(animation2);
 const scene3 = new Scene("Comparison of car acceleration in three countries", 10.0);
-scene3.backgroundImage(MyURL.OSS+"/backgroundImages/t-earth.png");
+//scene3.backgroundImage(MyURL.OSS+"/backgroundImages/t-point.png");
 
 // scene3.addElement(element333);
 scene3.addElement(element31);

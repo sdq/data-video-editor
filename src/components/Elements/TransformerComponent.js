@@ -43,8 +43,8 @@ export default class TransformerComponent extends Component {
                 ref={node => {
                     this.transformer = node;
                 }}
-                borderStroke={Color.DEEP_ORANGE}
-                anchorStroke={Color.DEEP_ORANGE}
+                borderStroke="#DCDCDC"
+                anchorStroke="#DCDCDC"
                 anchorFill={Color.LIGHT_ORANGE}
                 enabledAnchors= {  (selectedElementType==="text_element")  ? ['middle-right'] : ['top-left', 'top-right', 'bottom-left', 'bottom-right']}
             />

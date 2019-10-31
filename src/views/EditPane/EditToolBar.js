@@ -7,16 +7,19 @@ import './editpane.css';
 
 const ButtonGroup = Button.Group;
 
+//目前仅支持中文长度识别
 const defaultText = new TextInfo(
-    "please input your text",
-    300,
-    250,
+    "输入文字",
+    390,
+    220,
     0,
     'black',
     20,
     'Kavivanar',
     'normal',
-    '',
+    'normal',
+    1,
+    'left',
 )
 
 
@@ -75,6 +78,9 @@ export default class EditToolBar extends Component {
         });
       };
 
+
+      //TODO:该功能待测试
+      /*
       setElementPos = pos =>{  
       //use the real material‘s  size
         switch (pos) {
@@ -121,6 +127,7 @@ export default class EditToolBar extends Component {
         newScene.updateElement(this.props.currentElement, this.props.elementIndex);
         this.props.updateScene(this.props.sceneIndex, newScene);
       }
+      */
   
 
 
@@ -159,7 +166,7 @@ export default class EditToolBar extends Component {
                 </ButtonGroup>
 
                 <ButtonGroup id = "assist-position" style = { {margin: '10px 20px 0px 0px', float:'right'} }>
-                <Button id = "quickalign" icon="pic-center" style = { {padding: '0 20px 0 20px'} } disabled={!isElementSelected || isPerforming} onClick={this.showModal}/> 
+                {/* <Button id = "quickalign" icon="pic-center" style = { {padding: '0 20px 0 20px'} } disabled={!isElementSelected || isPerforming} onClick={this.showModal}/>  */}
                 <Modal
                      //title="Quick Align"
                      visible={this.state.visible}

@@ -1,32 +1,18 @@
 import React, { Component } from 'react';
-import { Collapse, Input } from 'antd';
+import { Collapse } from 'antd';
 import { AnimationList } from '@/animation';
 import AnimationCard from '@/components/AnimationCard';
 
 const { Panel } = Collapse;
-const { Search } = Input;
 
 const paneHeight = 290;
 
 export default class AnimationTool extends Component {
 
-    constructor(props) {
-        super(props);
-        this.searchAnimation = this.searchAnimation.bind(this);
-    }
-
-    searchAnimation(value) {
-        console.log(value)
-    }
 
     render() {
         return (
-            <div>
-                <Search
-                    placeholder="input search text"
-                    onSearch={this.searchAnimation}
-                    style={{ width: 284, margin: 8 }}
-                />
+            <div style={{padding: '0px 10px 10px 10px', fontSize: '14px', backgroundColor: 'white',height:'400px',overflow: 'auto'}}>
                 <div style={{height:1, width: 300, backgroundColor: '#d8d8d8'}}/>
                 <Collapse defaultActiveKey={['Presentation']} bordered={false} accordion>
                     <Panel header="Presentation" key="Presentation">
