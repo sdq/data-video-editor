@@ -34,21 +34,26 @@ const imageSource = {
         }
 
         if(!alldiv){
-            console.log("no image");
+            //console.log("no image");
             return false;
         }
        
-       let  svghtml = document.querySelectorAll("svg[data-name='Layer 1']")[dragSVG]; 
-       svghtml.style.width = svghtml.clientWidth;
-       svghtml.style.height = svghtml.clientHeight;
-       console.log("svghtml",svghtml)
-       
+       let  svghtml = document.querySelectorAll("svg[data-name='Layer 1']")[dragSVG].cloneNode(true); 
+       svghtml.style.width = 160;
+       svghtml.style.height = 90;
+       //console.log("svghtml",svghtml)
+       var defsNodes = svghtml.getElementsByTagName("defs")[0];
+       if(defsNodes){
+        svghtml.removeChild(defsNodes);
+       }
         var canvas = document.createElement('canvas');
+        canvas.width = 160;
+        canvas.height = 90;
         //转换成字符串
         svghtml = svghtml.outerHTML;
         canvg(canvas, svghtml, {
             renderCallback: function() {
-              console.log("canvas.toDataURL('image/png')",canvas.toDataURL('image/png'),svghtml)
+              //console.log("canvas.toDataURL('image/png')",canvas.toDataURL('image/png'),svghtml)
               newimage = new window.Image();
               newimage.name = props.name;
               newimage.src = canvas.toDataURL('image/png');
@@ -83,7 +88,7 @@ const imageSource = {
             if (dropResult.target === "canvas") {
                 //add element to scene
                 const newScene = Object.assign({},dropResult.currentScene);
-                console.log("endDrag",w,h)
+                //console.log("endDrag",w,h)
                 const newImage = new ImageInfo(newimage.name,newimage.src, x, y, w, h, 0);
                 const newElement = new Element(ElementType.IMAGE, newImage);
                 newScene.addElement(newElement);
