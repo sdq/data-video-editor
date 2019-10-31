@@ -3,16 +3,14 @@ import { Image, Group } from 'react-konva';
 import { AnimationCreator } from '@/animation';
 import _ from 'lodash';
 
-// record last scale when transform
-let lastScale = '';  
-
 export default class ImageElement extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            image: null,
-            dragX: this.props.element.info().x
+            image: null
         };
+        this.originWidth = props.element.info().width;
+        this.originHeight = props.element.info().height;
         this.dragstart = this.dragstart.bind(this);
         this.dragmove = this.dragmove.bind(this);
         this.dragend = this.dragend.bind(this);
@@ -182,29 +180,15 @@ export default class ImageElement extends Component {
     };
 
     onTransformStart(e) {
-        lastScale = e.currentTarget.scaleX();//initial scaleX
         this.props.editStart();
     }
 
     onTransform(e) {
-        let currentWidth = this.props.currentElement.info().width;
-        let currentHeight = this.props.currentElement.info().height;
-        let w,h,r = '';
-        //Determine whether scale is equal to last time(Rotation only)
-        //So scale calculation is not performed at this time
-        if(lastScale!==e.currentTarget.scaleX()){
-             w = currentWidth*e.currentTarget.scaleX();
-             h = currentHeight*e.currentTarget.scaleY();
-             //实时更改素材的真实w,h，以便显示正确边框和辅助线
-             this.props.currentElement.info().width = w;
-             this.props.currentElement.info().height = h;
-        }else{
-             w = currentWidth;
-             h = currentHeight;
-        }
-             r = e.currentTarget.rotation();
-        //实时更改素材的真实r，以便显示正确边框和辅助线
-        this.props.currentElement.info().rotation = r;
+        let {x, y, scaleX, scaleY} = e.currentTarget.attrs;
+        let r = e.currentTarget.rotation();
+        this.props.dragElement({x, y});
+        let w = scaleX * this.originWidth;
+        let h = scaleY * this.originHeight;
         let transforminfo = {w,h,r};
         this.props.transformElement(transforminfo);
      }
@@ -213,10 +197,8 @@ export default class ImageElement extends Component {
         const newEle = _.cloneDeep(this.props.element);
         newEle.info().x = e.target.x();
         newEle.info().y = e.target.y();
-        if(lastScale!==e.target.scaleX()){
-            newEle.info().width = newEle.info().width*e.target.scaleX(); 
-            newEle.info().height = newEle.info().height*e.target.scaleY(); 
-        }
+        newEle.info().width = this.originWidth*e.target.scaleX(); 
+        newEle.info().height = this.originHeight*e.target.scaleY(); 
         newEle.info().rotation = e.target.rotation();
         this.props.edit(newEle);
     }
@@ -245,8 +227,8 @@ export default class ImageElement extends Component {
             >
                 <Image 
                     ref={node=>this.imageref=node}
-                    width={this.props.element.info().width}
-                    height={this.props.element.info().height}
+                    width={this.originWidth}
+                    height={this.originHeight}
                     name={this.props.name}
                     image={this.state.image} 
                     opacity = {this.props.element.info().opacity}
