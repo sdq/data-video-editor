@@ -39,16 +39,16 @@ const imageSource = {
         }
        
        let  svghtml = document.querySelectorAll("svg[data-name='Layer 1']")[dragSVG].cloneNode(true); 
-       svghtml.style.width = 160;
-       svghtml.style.height = 90;
+       svghtml.style.width = 480;
+       svghtml.style.height = 274;
        //console.log("svghtml",svghtml)
        var defsNodes = svghtml.getElementsByTagName("defs")[0];
        if(defsNodes){
         svghtml.removeChild(defsNodes);
        }
         var canvas = document.createElement('canvas');
-        canvas.width = 160;
-        canvas.height = 90;
+        canvas.width = 480;
+        canvas.height = 274;
         //转换成字符串
         svghtml = svghtml.outerHTML;
         canvg(canvas, svghtml, {
