@@ -1,6 +1,12 @@
 const { override, fixBabelImports, addLessLoader, addWebpackAlias } = require('customize-cra');
 const path = require("path");
 
+const enableRequireEnsure = () => config => {
+    config.output.globalObject = 'this'
+    //config.module.rules[0].parser.requireEnsure = true
+    return config
+}
+
 module.exports = override(
     fixBabelImports('import', {
         libraryName: 'antd',
@@ -16,4 +22,5 @@ module.exports = override(
     addWebpackAlias({
         '@': path.resolve(__dirname, './src')
     }),
+    enableRequireEnsure(),
 );

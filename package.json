@@ -42,7 +42,8 @@
     "vega": "^5.4.0",
     "vega-lib": "^4.4.0",
     "vega-lite": "^3.4.0",
-    "video-react": "^0.14.1"
+    "video-react": "^0.14.1",
+    "workerize-loader": "^1.1.0"
   },
   "scripts": {
     "start": "react-app-rewired start",

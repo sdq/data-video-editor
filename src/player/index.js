@@ -2,14 +2,20 @@ import store from '@/store';
 import * as videoActions from '@/actions/videoAction';
 import * as sceneActions from '@/actions/sceneAction';
 import * as playerActions from '@/actions/playerAction';
+import worker from 'workerize-loader!./worker';// eslint-disable-line import/no-webpack-loader-syntax
 import AudioInstance from './audio';
-
 const AudioController = new AudioInstance();
+
 export default class Player {
     constructor() {
         if (!Player.instance) {
             this._timeouts = [];
             this._videoTimeouts = [];
+            this._worker = worker()  // `new` is optional
+            this._worker.addEventListener('message', function (e) {
+                console.log('MAIN: ', 'RECEIVE', e.data);
+            });
+            this._worker.postMessage('Hello Worker, I am main.js');
             Player.instance = this;
         } else {
             return Player.instance;
