@@ -11,6 +11,8 @@ let lastScale = '';
 export default class ChartElement extends Component {
     constructor(props) {
         super(props);
+        this.originWidth = props.element.info().width;
+        this.originHeight = props.element.info().height;
         this.dragstart = this.dragstart.bind(this);
         this.dragmove = this.dragmove.bind(this);
         this.dragend = this.dragend.bind(this);
@@ -213,9 +215,9 @@ export default class ChartElement extends Component {
                     type={chartInfo.type}
                     name={this.props.name} 
                     data={data} 
-                    spec={chartInfo.spec} 
-                    width={chartInfo.width} 
-                    height={chartInfo.height} 
+                    spec={chartInfo.spec}
+                    width={this.originWidth}
+                    height={this.originHeight}
                     onCanvas={true} 
                     showAnimation={this.props.showAnimation} 
                     animations={this.props.element.animations()} 
@@ -246,8 +248,8 @@ export default class ChartElement extends Component {
                 draggable = {this.props.draggable}
                 x={this.props.element.info().x}
                 y={this.props.element.info().y}
-                width={this.props.element.info().width}
-                height={this.props.element.info().height}
+                width={this.originWidth}
+                height={this.originHeight}
                 rotation={this.props.element.info().rotation}
                 //click
                 onClick= {e => {
