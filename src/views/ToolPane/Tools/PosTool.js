@@ -59,6 +59,8 @@ export default class PosTool extends Component {
 
     render() {
         const {currentElement} = this.props;
+//console.log(this.props.dragPos.x);
+
         return (
             <div style={{padding: '0px 10px 5px 10px', fontSize: '14px', backgroundColor: 'white',height:'90px',overflow: 'auto'}}>
 
