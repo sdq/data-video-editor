@@ -22,6 +22,7 @@ export default class TrackBar extends Component {
         this.updateIdx = 0;
         this.fragLength = 0;
         this.dragMoveX = 0;
+        this.clipBtnOffsetX = 0;
         this.dragStartX = 0;
         this.preX = 0;
 
@@ -76,6 +77,7 @@ export default class TrackBar extends Component {
     //dragStart 进行切割
     //onDragEnd 更新fragment
     dragStartClipBtn(x){
+        //console.log('dragStartClipBtn',x)
         this.splitIndex = this.props.element.findFragment(this.props.scenePosition);
         this.dragStartX = x;
 
@@ -95,11 +97,15 @@ export default class TrackBar extends Component {
         this.fragLength = this.props.element.fragments().length;
     }
     dragClipBtn(x) {
+        //console.log('dragClipBtn',x)
         if (this.preX === x) return;
         if (this.splitIndex === -1) return;
         this.preX = x;
         //console.log("x", x)
         this.dragMoveX = x - this.dragStartX;
+        //clipBtn position x 实时更新
+        this.clipBtnOffsetX = this.dragMoveX;
+        //console.log("dragClipBtn",this.clipBtnOffsetX)
         for (let k = this.updateIdx; k < this.fragLength; k++) {
             this.state.dragOffsetX.splice(k, 1, this.dragMoveX);
         }
@@ -111,6 +117,7 @@ export default class TrackBar extends Component {
         //console.log("setState...",this.state.clipBtnWidth)
     }
     dragEndClipBtn(x) {
+        //console.log("dragEndClipBtn",x)
         this.dragMoveX = x - this.dragStartX;
         let fragments = this.props.element.fragments();
         if (this.splitIndex === -1) return;
@@ -126,6 +133,8 @@ export default class TrackBar extends Component {
             dragOffsetX: this.state.dragOffsetX,
             clipBtnWidth: 12
         })
+        this.clipBtnOffsetX = 0;
+        //console.log("dragEndClipBtn",this.clipBtnOffsetX)
     }
     resizeBar(x, width, fragmentIndex) {
         const newStart = x / this.props.sceneScale;
@@ -215,6 +224,7 @@ export default class TrackBar extends Component {
         let { element, isBarActive, isPerforming, scenePosition, sceneScale } = this.props;
         let { showClip, dragOffsetX } = this.state;
         const scenePositionWithScale = scenePosition * sceneScale;
+        //console.log("render",scenePosition,sceneScale,scenePosition * sceneScale)
         var color = Color.LIGHT_ORANGE;
         switch (element.type()) {
             case ElementType.IMAGE:
@@ -303,8 +313,9 @@ export default class TrackBar extends Component {
                 bars.push(<div key={"bar-"+this.props.element.id()+'-'+index} style={{float: 'left', position: 'absolute', marginLeft: fragmentX, height: 22, width: fragmentWidth ,backgroundColor: color}} onClick = {this.clickBar} onMouseOver = {this.clickBar}/>);
             }
         }
+        //console.log("dragMoveX...",this.clipBtnOffsetX)
         // clip
-        let clipButton = !isPerforming&&showClip?<ClipButton onClick={this.clipBar} x={7+scenePositionWithScale} clipBtnWidth={this.state.clipBtnWidth} dragStartClipBtn={this.dragStartClipBtn} dragClipBtn={this.dragClipBtn} dragEndClipBtn={this.dragEndClipBtn}/>:null;
+        let clipButton = !isPerforming&&showClip?<ClipButton onClick={this.clipBar} x={7+scenePositionWithScale + this.clipBtnOffsetX} clipBtnWidth={this.state.clipBtnWidth} dragStartClipBtn={this.dragStartClipBtn} dragClipBtn={this.dragClipBtn} dragEndClipBtn={this.dragEndClipBtn}/>:null;
         return (
             <div 
                 style={{position: 'relative', left: -this.props.screenX}}
