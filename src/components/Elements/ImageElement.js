@@ -225,8 +225,7 @@ export default class ImageElement extends Component {
         return (
             <Group name={this.props.name} 
                 draggable = {this.props.draggable}
-                //x={this.props.element.info().x}
-                x={this.props.element.info().x} 
+                x={this.props.element.info().x}
                 y={this.props.element.info().y} 
                 rotation={this.props.element.info().rotation}
                 //draggable

@@ -31,8 +31,8 @@ class AnimationTargetArea extends Component {
                     position: 'absolute',
                     top: currentElement.info().y,
                     left: currentElement.info().x,
-                    width: 250,
-                    height: 250,
+                    width: currentElement.info().width,
+                    height: currentElement.info().height,
                     backgroundColor: backgroundColor,
                     opacity: 0.5,
                 }}

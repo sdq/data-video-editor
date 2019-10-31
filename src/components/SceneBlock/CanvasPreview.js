@@ -11,17 +11,13 @@ export default class CanvasPreview extends Component {
     render() {
         return (
             <div>
-                <Stage width={192} height={108} scale={{x: 192/800, y:192/800}}>
-                    {/* <Layer>
-                        <Rect
-                            x={0}
-                            y={0}
-                            width={800}
-                            height={450}
-                            fill={this.props.scene.backgroundColor()}
-                        />
-                    </Layer> */}
+                <Stage width={192} height={108} scale={{x: 192/800, y:192/800}} 
+                 style={{
+                     backgroundColor:this.props.scene.backgroundColor(),
+                     backgroundImage:`url(${ this.props.scene.backgroundImage()})`,
+                     }}>
                     <Layer>
+                        
                         {this.props.scene.elements().map(function(element, index) {
                             //console.log(element.info());
                             switch (element.type()) {
