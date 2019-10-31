@@ -89,7 +89,8 @@ export default class TextTool extends Component {
         this.setState({color})
         const newScene = Object.assign({},this.props.currentScene);
         this.props.currentElement.info().color = color;
-        this.props.updateScene(this.props.sceneIndex, newScene); 
+        this.props.updateScene(this.props.sceneIndex, newScene);
+        this.handleColorClose();
     }
   
 
@@ -177,15 +178,21 @@ export default class TextTool extends Component {
 
 
     render() {
+        //TODO:目前让颜色选择器居中后，就无法点击其他区域消失，冲突需要解决
         const popover = {
+            //position: 'absolute',
             position: 'relative',
-            zIndex: '66',
-            float:'right',
-            margin:'10px 15px 0px 0px',
-            left: '0px',
+            zIndex: '2',
+            //float:'right',
+            left: '-165px',
         }
         const cover = {
-            position: 'fixed',
+           // position: 'fixed',
+            position:'relative',
+            // top: '0px',
+            // right: '0px',
+            // bottom: '0px',
+            // left: '0px',
         }
 
         return (
@@ -241,14 +248,11 @@ export default class TextTool extends Component {
                 </Col>
 
                 <Col span={6} style={{margin: '0px 0px 0px 0px',float:'right'}}>
-                <Button type="danger" block  style={{width: '100%',margin: '0px 0px 0px 0px',
-                    backgroundColor:this.props.currentElement.info().color}} onClick={ this.handleColorClick } ></Button>
-                    { this.state.displayColorPicker ? <div style={ popover }>
-                    <div style={ cover } onClick={ this.handleColorClose }/>
-                    <SketchPicker 
-                     //color={this.state.color}  
-                    onChange={this.handleColorChange} />
-                    </div> : null }
+                    <Button  onClick={ this.handleColorClick} style={{width: '100%',margin: '0px 0px 0px 0px',background:this.props.currentElement.info().color,border:"#ffffff",verticalAlign: "middle"}}></Button> 
+                     {this.state.displayColorPicker ? <div style={ popover }>
+                     <div style={ cover } onClick={ this.handleColorClose } />
+                     <SketchPicker color={this.props.currentElement.info().color}  onChange={this.handleColorChange}  />
+                     </div>:null }
                     </Col>
                 </Row>
 

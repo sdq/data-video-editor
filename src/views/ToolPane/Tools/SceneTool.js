@@ -116,7 +116,6 @@ export default class SceneTool extends Component {
         this.props.updateScene(this.props.sceneIndex, newScene); 
     }
   
-
     handleColorClose = () => {
         this.setState({ displayColorPicker: false })
     };
@@ -153,6 +152,8 @@ export default class SceneTool extends Component {
             left: '0px',
         }
 
+
+
         const customPanelStyle = {
             background: '#f7f7f7',
             borderRadius: 4,
@@ -182,8 +183,8 @@ export default class SceneTool extends Component {
                     <Col span={5} style={{margin: '0px 0px 0px 0px'}}>
                     <Button size='small' icon="bg-colors" onClick={ this.handleColorClick } style={{width: '100%',margin: '0px 0px 0px 0px',background:this.props.currentScene.backgroundColor(),border:"#ffffff",verticalAlign: "middle"}}></Button> 
                      {this.state.displayColorPicker ? <div style={ popover }>
-                     <div style={ cover } onClick={ this.handleColorClose }/>
-                     <SketchPicker color={this.props.currentScene.backgroundColor()}  onChange={this.handleColorChange} />
+                     <div style={ cover } onClick={ this.handleColorClose } />
+                     <SketchPicker color={this.props.currentScene.backgroundColor()}  onChange={this.handleColorChange}  />
                      </div>:null }
                     </Col>
                 </Row>
@@ -220,7 +221,7 @@ export default class SceneTool extends Component {
                                 dataSource={bglistcharacter}
                                  renderItem={item => (
                                     <List.Item key ={item} value={item.src} onClick={this.handleBGClick.bind(this,item)}>                
-                                    <div style ={{height: '74px',borderStyle:'solid', borderColor:'#D8D8D8',borderWidth:'1px',padding: '5px'}}> 
+                                    <div  style ={{height: '74px',borderStyle:'solid', borderColor:'#D8D8D8',borderWidth:'1px',padding: '5px'}}> 
                                     <img  src={item.src} alt={item.name}  style ={{maxWidth:'100%',maxHeight:'100%'}}/>
                                     </div>
                                     </List.Item>

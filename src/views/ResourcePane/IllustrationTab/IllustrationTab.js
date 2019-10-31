@@ -93,6 +93,7 @@ export default class ImageTab extends Component {
         this.setState({
             primaryColor: color
         });
+        this.handleColorClose();
     }
   
 
@@ -131,16 +132,18 @@ export default class ImageTab extends Component {
     render() {
 
         const popover = {
+            position: 'absolute',
             //position: 'relative',
-            position: 'fixed',
-            zIndex: '66',
-            float:'right',
-            margin:'10px 15px 0px 0px',
-            left: '120px',
+            left: '-180px',
+            zIndex: '2',
         }
         const cover = {
-            position: 'absolute',
-            //left: '0px',
+            position: 'fixed',
+            //position:
+            // top: '0px',
+            //right: '0px',
+            // bottom: '0px',
+            // left: '0px',
         }
 
 
@@ -188,13 +191,11 @@ export default class ImageTab extends Component {
                 />
                 </Col>
                 <Col span={3} style={{margin: '1px 0px 0px 7px', fontSize: '14px'}}>
-                <Button type="danger" block  style={{width: '100%',height:'24px',margin: '0px 0px 0px 0px',
-                    backgroundColor:primaryColor}} onClick={ this.handleColorClick } ></Button>
-                    { this.state.displayColorPicker ? <div style={ popover }>
-                    <div style={ cover } onClick={ this.handleColorClose }/>
-                    <SketchPicker  
-                    onChange={this.handleColorChange} />
-                    </div> : null }
+                <Button onClick={ this.handleColorClick } style={{width: '100%',height:"24px",margin: '0px 0px 0px 0px',background:primaryColor,border:"#ffffff",verticalAlign: "middle"}}></Button> 
+                     {this.state.displayColorPicker ? <div style={ popover }>
+                     <div style={ cover } onClick={ this.handleColorClose } />
+                     <SketchPicker color={primaryColor}  onChange={this.handleColorChange}  />
+                     </div>:null }
                 </Col>
                 </Row>
                 <Collapse 
