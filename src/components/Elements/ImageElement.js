@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Image, Group } from 'react-konva';
 import { AnimationCreator } from '@/animation';
 import _ from 'lodash';
-import { VirtualTimeScheduler } from 'rxjs';
 
 // record last scale when transform
 let lastScale = '';  
