@@ -14,7 +14,12 @@ export default class AnimationTool extends Component {
         return (
             <div style={{padding: '0px 10px 10px 10px', fontSize: '14px', backgroundColor: 'white',height:'400px',overflow: 'auto'}}>
                 <div style={{height:1, width: 300, backgroundColor: '#d8d8d8'}}/>
-                <Collapse defaultActiveKey={['Presentation']} bordered={false} accordion>
+                <div style={{height: paneHeight}}>
+                    {AnimationList.all.map((animation, index) =>
+                        <AnimationCard key={index} animation={animation} {...this.props}/>
+                    )}
+                </div>
+                {/* <Collapse defaultActiveKey={['Presentation']} bordered={false} accordion>
                     <Panel header="Presentation" key="Presentation">
                         <div style={{height: paneHeight}}>
                             {AnimationList.presentation.map((animation, index) =>
@@ -36,7 +41,7 @@ export default class AnimationTool extends Component {
                             )}
                         </div>
                     </Panel>
-                </Collapse>
+                </Collapse> */}
             </div>
         )
     }
