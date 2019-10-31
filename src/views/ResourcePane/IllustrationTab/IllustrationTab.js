@@ -15,7 +15,7 @@ export default class ImageTab extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            activeKey: "",          //激活标签
+            activeKey: "C1",        //激活标签
             search:"",              //搜索内容
             limit: 10,              //单次加载素材数量,单次操作
             primaryColor:"#6c63ff", //显示颜色
@@ -160,7 +160,14 @@ export default class ImageTab extends Component {
                 />
                 </Col>
                 </Row>
-                <Collapse className="collaspe" id = "collaspe" ref="collaspe" accordion bordered={false} activeKey={this.state.activeKey} onChange={this.callback}>
+                <Collapse 
+                className="collaspe" 
+                id="collaspe" 
+                ref="collaspe" 
+                accordion bordered={false} 
+                //defaultActiveKey={['C1']}
+                activeKey={this.state.activeKey} 
+                onChange={this.callback}>
                 <Panel header={search!==""?"C1 (" + shown[0] + ")":"C1"} key="C1" className="collaspe-panel">
                         <List
                         className="collaspe-list"
@@ -173,7 +180,7 @@ export default class ImageTab extends Component {
                                <LazyLoad><UndrawCard name={item} primaryColor={primaryColor}  {...this.props}/>
                                </LazyLoad>
                                {/* <LazyLoad><UndrawCard info={item} {...this.props}/></LazyLoad> */}
-                               <p className="card-text mb-0 text-center">{item}</p>
+                               <p className="card-text mb-0 text-center" style={{ fontSize: '10px'}}>{item}</p>
                                </LazyLoad>  
                                </List.Item>
                            )}></List>
@@ -193,7 +200,7 @@ export default class ImageTab extends Component {
                                <LazyLoad>
                                <LazyLoad><UndrawCard name={item} primaryColor={primaryColor}  {...this.props}/>
                                </LazyLoad>
-                               <p className="card-text mb-0 text-center">{item}</p>
+                               <p className="card-text mb-0 text-center" style={{ fontSize: '10px'}}>{item}</p>
                                </LazyLoad>  
                                </List.Item>
                            )}></List>
@@ -214,7 +221,7 @@ export default class ImageTab extends Component {
                                <LazyLoad>
                                <LazyLoad><UndrawCard name={item} primaryColor={primaryColor}  {...this.props}/>
                                </LazyLoad>
-                               <p className="card-text mb-0 text-center">{item}</p>
+                               <p className="card-text mb-0 text-center" style={{ fontSize: '10px'}}>{item}</p>
                                </LazyLoad>  
                                </List.Item>
                            )}></List>
@@ -234,7 +241,7 @@ export default class ImageTab extends Component {
                                <LazyLoad>
                                <LazyLoad><UndrawCard name={item} primaryColor={primaryColor}  {...this.props}/>
                                </LazyLoad>
-                               <p className="card-text mb-0 text-center">{item}</p>
+                               <p className="card-text mb-0 text-center" style={{ fontSize: '10px'}}>{item}</p>
                                </LazyLoad>  
                                </List.Item>
                            )}></List>
@@ -254,7 +261,7 @@ export default class ImageTab extends Component {
                                <LazyLoad>
                                <LazyLoad><UndrawCard name={item} primaryColor={primaryColor}  {...this.props}/>
                                </LazyLoad>
-                               <p className="card-text mb-0 text-center">{item}</p>
+                               <p className="card-text mb-0 text-center" style={{ fontSize: '10px'}}>{item}</p>
                                </LazyLoad>  
                                </List.Item>
                            )}></List>

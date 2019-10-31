@@ -187,7 +187,7 @@ export default class SceneTool extends Component {
                      </div>:null }
                     </Col>
                 </Row>
-                <Collapse accordion bordered={false} expandIconPosition="right" >
+                <Collapse accordion bordered={false} expandIconPosition="right" defaultActiveKey={['1']} >
                 <Panel header="Geometric Texture" key="1" style={customPanelStyle} >
                 <List         
                     grid={{ gutter: 3, column: 2 }}

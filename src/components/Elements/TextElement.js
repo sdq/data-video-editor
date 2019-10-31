@@ -205,6 +205,7 @@ export default class TextElement extends Component {
                 draggable = {this.props.draggable}
                 x={this.props.element.info().x}
                 y={this.props.element.info().y}
+                rotation={this.props.element.info().rotation}
                 onDragStart={() => {
                     this.dragstart();
                     this.setState({
