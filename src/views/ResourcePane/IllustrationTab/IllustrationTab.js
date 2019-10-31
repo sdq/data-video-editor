@@ -125,7 +125,6 @@ export default class ImageTab extends Component {
             for(let i =0;i<test.length;i++){
             undrawData[i] = test[i].filter(item => item.indexOf(search) !== -1);
             shown[i] = [undrawData[i].length];
-            console.log(i+":"+shown[i]);
             }
           }
 

@@ -180,7 +180,7 @@ export default class SceneTool extends Component {
                 Color
                 </Col>
                     <Col span={5} style={{margin: '0px 0px 0px 0px'}}>
-                     <Button size='small' type="Default" onClick={ this.handleColorClick } style={{width: '100%',margin: '0px 0px 0px 0px',background:this.props.currentScene.backgroundColor(),border:"none",lineHeight:"31px",verticalAlign: "middle"}}></Button>  
+                    <Button size='small' icon="bg-colors" onClick={ this.handleColorClick } style={{width: '100%',margin: '0px 0px 0px 0px',background:this.props.currentScene.backgroundColor(),border:"#ffffff",verticalAlign: "middle"}}></Button> 
                      {this.state.displayColorPicker ? <div style={ popover }>
                      <div style={ cover } onClick={ this.handleColorClose }/>
                      <SketchPicker color={this.props.currentScene.backgroundColor()}  onChange={this.handleColorChange} />

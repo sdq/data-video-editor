@@ -18,9 +18,9 @@ export default class EditCanvas extends Component {
             showGifEditor:false,
             showVideoEditor:false,
             dbClickedElementIndex: -1,
-            lastscene : 1,//进入界面的第一个scene编号
         };
         this.handleStageDblClick = this.handleStageDblClick.bind(this);
+        this.lastscene = props.sceneIndex; //进入界面的第一个scene编号
     }
 
     displayAssistLines(active) {
@@ -107,36 +107,42 @@ export default class EditCanvas extends Component {
     render() {
         const { isPerforming } = this.props;
         let editable = !isPerforming;  
-        if (this.props.sceneIndex!==this.state.lastscene)
+        let { dbClickedElementIndex, showTextEditor, showChartPreview, showGifEditor, showVideoEditor, showAssistLines } = this.state;
+        if (this.props.sceneIndex!==this.lastscene)
         {
             //切换屏幕时，保证交互层不显示，双击元素置空
-            this.state.dbClickedElementIndex = -1;
-            this.state.lastscene = this.props.sceneIndex;
+            dbClickedElementIndex = -1;
+            this.lastscene = this.props.sceneIndex;
+            showTextEditor = false;
+            showChartPreview = false;
+            showGifEditor = false;
+            showVideoEditor = false;
+            showAssistLines = false;
         }
 
 
 
         const editableLayer = <EditableLayer 
                 displayAssistLines={(active) => this.displayAssistLines(active)}
-                dbClickedElementIndex={this.state.dbClickedElementIndex}
+                dbClickedElementIndex={dbClickedElementIndex}
                 {...this.props}
             />;
         const backgroundLayer = <BackgroundLayer 
                 {...this.props}
             />
         const animationLayer = <AnimationLayer
-                dbClickedElementIndex={this.state.dbClickedElementIndex}
+                dbClickedElementIndex={dbClickedElementIndex}
                 {...this.props}
             />
         return (
             <div id="canvasContainer">
                 {editable?
                 <InteractionArea 
-                    showTextEditor={this.state.showTextEditor}
-                    showChartPreview={this.state.showChartPreview}
-                    showGifEditor={this.state.showGifEditor}
-                    showVideoEditor={this.state.showVideoEditor}
-                    showAssistLines={this.state.showAssistLines} 
+                    showTextEditor={showTextEditor}
+                    showChartPreview={showChartPreview}
+                    showGifEditor={showGifEditor}
+                    showVideoEditor={showVideoEditor}
+                    showAssistLines={showAssistLines} 
                     {...this.props}
                 />: 
                 null}
