@@ -36,6 +36,12 @@ export default class EditCanvas extends Component {
     }
 
     handleStageMouseDown = e => {
+         
+        //每当切换元素时，清空公用dragpos,transinfo
+        this.props.dragElement('');
+        this.props.transformElement('');
+
+
         // remove animation
         this.setState({
             showTextEditor: false,

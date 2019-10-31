@@ -20,41 +20,31 @@ import Color from '../constants/Color';
 const demoimage01 = new ImageInfo(
     'eu.png',
     MyURL.OSS+'/images/eu.png',
-    200,
-    90,
-    80,
-    50,
+    150,
+    100,
+    150,
+    100,
     0,
 )
 const demoimage002 = new ImageInfo(
     'usa.png',
     MyURL.OSS+'/images/usa.png',
-    200,
-    155,
-    80,
-    50,
+    350,
+    100,
+    150,
+    100,
     0,
 )
 const demoimage03 = new ImageInfo(
     'japan.png',
     MyURL.OSS+'/images/japan.png',
-    200,
-    220,
-    80,
-    50,
-    0,
-)
-
-
-const demoimage = new ImageInfo(
-    'work.png',
-    MyURL.OSS+'/images/vehicle.png',
-    320,
+    550,
     100,
-    300,
-    167,
+    150,
+    100,
     0,
 )
+
 
 const demotext = new TextInfo(
     "英美日三国小轿车比较",
@@ -65,27 +55,22 @@ const demotext = new TextInfo(
     40,
 )
 
-// const element00 = new Element(ElementType.AUDIO, demoaudio1);
 const element01 = new Element(ElementType.IMAGE, demoimage01);
 const element002 = new Element(ElementType.IMAGE, demoimage002);
 const element03 = new Element(ElementType.IMAGE, demoimage03);
-const element1 = new Element(ElementType.IMAGE, demoimage);
 const element2 = new Element(ElementType.TEXT, demotext);
 element01.duration(4.0);
 element002.duration(4.0);
 element03.duration(4.0);
-element1.duration(4.0);
 element2.duration(4.0);
 const animation0 = new AnimationModel(AnimationType.PRESENTATION_FADEIN, 'Zoomin');//改成flicker
 animation0.start(0);
 animation0.duration(3);
 element2.add(animation0);
 const scene1 = new Scene("Comparison of cars in three countries", 4.0);
-// scene1.addElement(element00);
 scene1.addElement(element01);
 scene1.addElement(element002);
 scene1.addElement(element03);
-scene1.addElement(element1);
 scene1.addElement(element2);
 // scene1.backgroundColor(Color.CLEAR_BLUE);
 //scene1.backgroundImage(MyURL.OSS+"/backgroundImages/t-point.png");
