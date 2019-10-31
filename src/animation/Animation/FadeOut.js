@@ -5,7 +5,7 @@ export default class Fade extends AnimationBase {
     constructor(start, duration, node) {
         super(start, duration, node);
         this._animation = new Konva.Animation(function(frame) {
-            this._node.opacity((duration * 1000 - frame.time) / (duration * 1000));
+            this._node.opacity((this._duration * 1000 - frame.time) / (this._duration * 1000));
         }.bind(this), this._layer);
     }
 }

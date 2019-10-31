@@ -14,7 +14,7 @@ export default class VegaLite extends Component {
                 onCanvas={this.props.onCanvas} 
                 showAnimation={this.props.showAnimation} 
                 animations={this.props.animations} 
-                current={this.props.scenePosition}
+                current={this.props.current}
             />
         )
     }

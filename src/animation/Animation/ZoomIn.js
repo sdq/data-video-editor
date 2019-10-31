@@ -5,7 +5,7 @@ export default class Zoom extends AnimationBase {
     constructor(start, duration, node) {
         super(start, duration, node);
         this._animation = new Konva.Animation(function(frame) {
-            let scale = frame.time / (duration * 1000);
+            let scale = frame.time / (this._duration * 1000);
             this._scale({ x: scale, y: scale });
         }.bind(this), this._layer);
     }
