@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Spin } from 'antd';
-import { Button, Modal } from 'antd';
+import { Button, Modal, Spin } from 'antd';
 import Recorder from '@/recorder';
 import Player from '@/player';
 import './headerbar.css';
@@ -15,6 +14,16 @@ export default class HeaderBar extends Component {
         loading: false,
         remainTime: 0
     };
+
+    showMedia = () => {
+        const {showResourcePane} = this.props;
+        this.props.displayResourcePane(!showResourcePane);
+    }
+
+    showTool = () => {
+        const {showToolPane} = this.props;
+        this.props.displayToolPane(!showToolPane);
+    }
 
     showModal = () => {
         this.setState({
@@ -136,6 +145,10 @@ export default class HeaderBar extends Component {
                 <Button type="primary" icon="export" shape="round" style={{ float: 'right', marginLeft: 12 }} onClick={this.showModal}>
                     Export
                 </Button>
+                <Button.Group style={{ float: 'right', marginLeft: 40 }}>
+                    <Button type="primary" shape="round" onClick={this.showMedia}>Media</Button>
+                    <Button type="primary" shape="round" onClick={this.showTool}>Tool</Button>
+                </Button.Group>
                 <Modal
                     title="Export Video"
                     visible={this.state.visible}

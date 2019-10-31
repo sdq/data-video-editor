@@ -43,8 +43,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        displayResourcePane: () => dispatch(uiActions.displayResourcePane()),
-        displayToolPane: () => dispatch(uiActions.displayToolPane()),
         displayTrackEditor: () => dispatch(uiActions.displayTrackEditor()),
         selectScene: (index) => dispatch(videoActions.selectScene(index)),
         updateScene: (index, scene) => dispatch(videoActions.updateScene(index, scene)),
