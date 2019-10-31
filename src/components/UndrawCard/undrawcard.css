@@ -1,9 +1,9 @@
 .undrawcard {
-    height: 98px;
+    height: 90px;
     border-style: solid;
     border-color: #D8D8D8;
     border-width: 1px;
-    padding: 5px;
+    padding:5px;
 }
 
 img {

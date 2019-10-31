@@ -34,9 +34,11 @@ export default class TextEditor extends Component {
     }
 
     render() {
-        //取得浏览器的userAgent字符串
-            var userAgent = navigator.userAgent; 
-            var isOpera = userAgent.indexOf("Opera") > -1;
+             //不同字体textarea与tranformer的变换伸缩度（暂时忽略其余浏览器）
+            let offwidth = 0; 
+             //取得浏览器的userAgent字符串
+            let userAgent = navigator.userAgent; 
+            let isOpera = userAgent.indexOf("Opera") > -1;
             if (isOpera) {
                 offsetX = 0.5;
                 offsetY = 7;
@@ -60,7 +62,9 @@ export default class TextEditor extends Component {
             }; //判断是否IE浏览器
             //仍然需要更精准测试
 
-            offsetW = (this.props.currentElement) ? this.props.currentElement.info().textSize:20;//一个字的偏差
+            offsetW = (this.props.currentElement) ? this.props.currentElement.info().textSize:20;//基础偏差：一个字的偏差
+            offwidth = 0.25-offsetW/500;  //次级偏差：计算伸缩，假定为线性函数
+            //console.log(offwidth);
 
         return (
              <div className="TextEditor" style={{display: (this.state.isShowTextArea) ? "block" : "none"}} > 
@@ -74,6 +78,8 @@ export default class TextEditor extends Component {
               border: "0px",
               background:'none',
               color:'black',
+              resize: 'none',
+              autofocus:"autofocus",//设置光标，无效
               lineHeight:(this.props.currentElement) ? this.props.currentElement.info().textSize+'px':'20px',//需要和当前字号相等
               //Elimination of displacement error between textTransform and textEditor
               //判断当前element是否存在，保证编辑时切换scene运行正确
@@ -81,7 +87,7 @@ export default class TextEditor extends Component {
               fontSize:(this.props.currentElement) ? this.props.currentElement.info().textSize:20,
               top:(this.props.currentElement) ? this.props.currentElement.info().y-offsetY : 0,
               left:(this.props.currentElement) ? this.props.currentElement.info().x-offsetX : 0,
-              width:(this.props.currentElement) ? this.props.currentElement.info().width+offsetW : 0, 
+              width:(this.props.currentElement) ? this.props.currentElement.info().width+offsetW*offwidth: 0, 
               height:(this.props.currentElement) ? this.props.currentElement.info().height+offsetH : 0,
               fillOpacity:0.5
             }}
