@@ -10,6 +10,7 @@ export default class TrackInfo extends Component {
         super(props);
         this.onOver = this.onOver.bind(this);
         this.setShowAnimations = this.setShowAnimations.bind(this);
+        this.deleteElement = this.deleteElement.bind(this);
     }
 
     onOver() {
@@ -18,6 +19,14 @@ export default class TrackInfo extends Component {
 
     setShowAnimations() {
         this.props.setShowAnimations(!this.props.showAnimations);
+    }
+
+    deleteElement() {
+        this.props.unselectElement();
+        const deleteIndex = this.props.index;
+        const newScene = Object.assign({},this.props.currentScene);
+        newScene.elements().splice(deleteIndex, 1);
+        this.props.updateScene(this.props.sceneIndex, newScene);
     }
 
     render() {
@@ -59,9 +68,12 @@ export default class TrackInfo extends Component {
                 <div  style={{float: 'left',display:isArrowHidden?'none':'block', marginLeft: 8}} onClick={this.setShowAnimations}>
                     {this.props.showAnimations?<Icon type="caret-down" />:<Icon type="caret-right" />}
                 </div>
-                <p style={{float: 'left', marginLeft: 8, width: 140, whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis'}}>
+                <p style={{float: 'left', marginLeft: 8, width: 120, whiteSpace:'nowrap', overflow:'hidden', textOverflow:'ellipsis'}}>
                     {name}
                 </p>
+                <div style={{float: 'right', marginLeft: 8}} onClick={this.deleteElement}>
+                    <Icon type="delete" />
+                </div>
             </div>
         )
     }
