@@ -72,7 +72,7 @@ scene1.addElement(element01);
 scene1.addElement(element002);
 scene1.addElement(element03);
 scene1.addElement(element2);
-// scene1.backgroundColor(Color.CLEAR_BLUE);
+scene1.backgroundColor('#FCDCDC');
 //scene1.backgroundImage(MyURL.OSS+"/backgroundImages/t-point.png");
 
 
@@ -188,7 +188,7 @@ scene2.addElement(element02);
 scene2.addElement(element12);
 scene2.addElement(element22);
 scene2.addElement(element21);
-
+scene2.backgroundColor('#FCDCDC');
 
 // let demogif21;
 // (async () => {
@@ -303,7 +303,7 @@ scene3.addElement(element31);
 scene3.addElement(element32);
 scene3.addElement(element33);
 scene3.addElement(element34);
-
+scene3.backgroundColor('#FCDCDC');
 
 
 const scenes = [scene1, scene2,scene3];
