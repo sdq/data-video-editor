@@ -179,7 +179,6 @@ export default class ImageTab extends Component {
                 hasMore[i] = false;
             }
         }
-
         return (
             <div className="imagetab">
                 <Row>
@@ -208,104 +207,89 @@ export default class ImageTab extends Component {
                     onChange={this.callback}>
                     <Panel header={search !== "" ? "C1 (" + shown[0] + ")" : "C1"} key="C1" className="collaspe-panel">
                         <List
-                            className="collaspe-list"
-                            grid={{ gutter: undrawData.length / 2, column: 2 }}
-                            dataSource={undrawData[0]}
-                            renderItem={item => (
-                                <List.Item>
-                                    <LazyLoad>
-                                        {/* <Undraw name={item} primaryColor={primaryColor} height={"120"}/> */}
-                                        <LazyLoad><UndrawCard name={item} primaryColor={primaryColor}  {...this.props} />
-                                        </LazyLoad>
-                                        {/* <LazyLoad><UndrawCard info={item} {...this.props}/></LazyLoad> */}
-                                        <p className="card-text mb-0 text-center" style={{ fontSize: '10px' }}>{item}</p>
-                                    </LazyLoad>
-                                </List.Item>
-                            )}></List>
-                        {hasMore[0] && (
-                            <Button size="small" display={hasMore[0] ? "block" : "none"} icon="caret-down" onClick={this.onLoadMore} style={{ margin: 0, fontSize: '12px' }}>
-                                Showing {limit} of {shown[0]} , Click to load more...
+                        className="collaspe-list"
+                        grid={{ gutter: undrawData.length/2, column: 2 }}
+                        dataSource={undrawData[0]}
+                        renderItem={item => (
+                        <List.Item>
+                               {/* <Undraw name={item} primaryColor={primaryColor} height={"120"}/> */}
+                               <UndrawCard name={item} primaryColor={primaryColor}  {...this.props}/>
+                               {/* <LazyLoad><UndrawCard info={item} {...this.props}/></LazyLoad> */}
+                               <p className="card-text mb-0 text-center" style={{ fontSize: '10px'}}>{item}</p>
+                               </List.Item>
+                           )}></List>
+                        {hasMore[0] &&(
+                        <Button size = "small" display = { hasMore[0] ?"block":"none"} icon="caret-down"  onClick={this.onLoadMore} style={{margin:0, fontSize: '12px'}}>
+                        Showing {limit} of {shown[0]} , Click to load more...  
                         </Button>)}
                     </Panel>
 
                     <Panel header={search !== "" ? "C2 (" + shown[1] + ")" : "C2"} key="C2" className="collaspe-panel">
                         <List
-                            className="collaspe-list"
-                            grid={{ gutter: undrawData.length / 2, column: 2 }}
-                            dataSource={undrawData[1]}
-                            renderItem={item => (
-                                <List.Item>
-                                    <LazyLoad>
-                                        <LazyLoad><UndrawCard name={item} primaryColor={primaryColor}  {...this.props} />
-                                        </LazyLoad>
-                                        <p className="card-text mb-0 text-center" style={{ fontSize: '10px' }}>{item}</p>
-                                    </LazyLoad>
-                                </List.Item>
-                            )}></List>
-                        {hasMore[1] && (
-                            <Button size="small" display={hasMore[1] ? "block" : "none"} icon="caret-down" onClick={this.onLoadMore} style={{ margin: 0, fontSize: '12px' }}>
-                                Showing {limit} of {shown[1]} , Click to load more...
+                        className="collaspe-list"
+                        grid={{ gutter: undrawData.length/2, column: 2 }}
+                        dataSource={undrawData[1]}
+                        renderItem={item => (
+                        <List.Item>
+                            <UndrawCard name={item} primaryColor={primaryColor}  {...this.props}/>
+                               <p className="card-text mb-0 text-center" style={{ fontSize: '10px'}}>{item}</p>
+                               </List.Item>
+                           )}></List>
+                        {hasMore[1] &&(
+                        <Button size = "small" display = { hasMore[1] ?"block":"none"} icon="caret-down"  onClick={this.onLoadMore} style={{margin:0, fontSize: '12px'}}>
+                        Showing {limit} of {shown[1]} , Click to load more...  
                         </Button>)}
                     </Panel>
 
 
                     <Panel header={search !== "" ? "C3 (" + shown[2] + ")" : "C3"} key="C3" className="collaspe-panel">
                         <List
-                            className="collaspe-list"
-                            grid={{ gutter: undrawData.length / 2, column: 2 }}
-                            dataSource={undrawData[2]}
-                            renderItem={item => (
-                                <List.Item>
-                                    <LazyLoad>
-                                        <LazyLoad><UndrawCard name={item} primaryColor={primaryColor}  {...this.props} />
-                                        </LazyLoad>
-                                        <p className="card-text mb-0 text-center" style={{ fontSize: '10px' }}>{item}</p>
-                                    </LazyLoad>
-                                </List.Item>
-                            )}></List>
-                        {hasMore[2] && (
-                            <Button size="small" display={hasMore[2] ? "block" : "none"} icon="caret-down" onClick={this.onLoadMore} style={{ margin: 0, fontSize: '12px' }}>
-                                Showing {limit} of {shown[2]} , Click to load more...
+                        className="collaspe-list"
+                        grid={{ gutter: undrawData.length/2, column: 2 }}
+                        dataSource={undrawData[2]}
+                        renderItem={item => (
+                        <List.Item>
+                            <UndrawCard name={item} primaryColor={primaryColor}  {...this.props}/>
+                               <p className="card-text mb-0 text-center" style={{ fontSize: '10px'}}>{item}</p>
+                               </List.Item>
+                           )}></List>
+                        {hasMore[2] &&(
+                        <Button size = "small" display = { hasMore[2] ?"block":"none"} icon="caret-down"  onClick={this.onLoadMore} style={{margin:0, fontSize: '12px'}}>
+                        Showing {limit} of {shown[2]} , Click to load more...  
                         </Button>)}
                     </Panel>
 
                     <Panel header={search !== "" ? "C4 (" + shown[3] + ")" : "C4"} key="C4" className="collaspe-panel">
                         <List
-                            className="collaspe-list"
-                            grid={{ gutter: undrawData.length / 2, column: 2 }}
-                            dataSource={undrawData[3]}
-                            renderItem={item => (
-                                <List.Item>
-                                    <LazyLoad>
-                                        <LazyLoad><UndrawCard name={item} primaryColor={primaryColor}  {...this.props} />
-                                        </LazyLoad>
-                                        <p className="card-text mb-0 text-center" style={{ fontSize: '10px' }}>{item}</p>
-                                    </LazyLoad>
-                                </List.Item>
-                            )}></List>
-                        {hasMore[3] && (
-                            <Button size="small" display={hasMore[3] ? "block" : "none"} icon="caret-down" onClick={this.onLoadMore} style={{ margin: 0, fontSize: '12px' }}>
-                                Showing {limit} of {shown[3]} , Click to load more...
+                        className="collaspe-list"
+                        grid={{ gutter: undrawData.length/2, column: 2 }}
+                        dataSource={undrawData[3]}
+                        renderItem={item => (
+                        <List.Item>
+                               <UndrawCard name={item} primaryColor={primaryColor}  {...this.props}/>
+                               <p className="card-text mb-0 text-center" style={{ fontSize: '10px'}}>{item}</p>
+                               </List.Item>
+                           )}></List>
+                        {hasMore[3] &&(
+                        <Button size = "small" display = { hasMore[3] ?"block":"none"} icon="caret-down"  onClick={this.onLoadMore} style={{margin:0, fontSize: '12px'}}>
+                        Showing {limit} of {shown[3]} , Click to load more...  
                         </Button>)}
                     </Panel>
 
                     <Panel header={search !== "" ? "C5 (" + shown[4] + ")" : "C5"} key="C5" className="collaspe-panel">
                         <List
-                            className="collaspe-list"
-                            grid={{ gutter: undrawData.length / 2, column: 2 }}
-                            dataSource={undrawData[4]}
-                            renderItem={item => (
-                                <List.Item>
-                                    <LazyLoad>
-                                        <LazyLoad><UndrawCard name={item} primaryColor={primaryColor}  {...this.props} />
-                                        </LazyLoad>
-                                        <p className="card-text mb-0 text-center" style={{ fontSize: '10px' }}>{item}</p>
-                                    </LazyLoad>
-                                </List.Item>
-                            )}></List>
-                        {hasMore[4] && (
-                            <Button size="small" display={hasMore[4] ? "block" : "none"} icon="caret-down" onClick={this.onLoadMore} style={{ margin: 0, fontSize: '12px' }}>
-                                Showing {limit} of {shown[4]} , Click to load more...
+                        className="collaspe-list"
+                        grid={{ gutter: undrawData.length/2, column: 2 }}
+                        dataSource={undrawData[4]}
+                        renderItem={item => (
+                        <List.Item>
+                               <UndrawCard name={item} primaryColor={primaryColor}  {...this.props}/>
+                               <p className="card-text mb-0 text-center" style={{ fontSize: '10px'}}>{item}</p>  
+                               </List.Item>
+                           )}></List>
+                        {hasMore[4] &&(
+                        <Button size = "small" display = { hasMore[4] ?"block":"none"} icon="caret-down"  onClick={this.onLoadMore} style={{margin:0, fontSize: '12px'}}>
+                        Showing {limit} of {shown[4]} , Click to load more...  
                         </Button>)}
                     </Panel>
 
