@@ -12,7 +12,6 @@ const initialState = {
 export default (state = initialState, action) => {
     const newState = Object.assign({},state);
     const newScenes = newState.scenes.slice();
-    console.log(newScenes[action.index])
     const newPast = newState.past.slice();
     switch (action.type) {
         case ActionType.SELECT_SCENE:
@@ -35,7 +34,6 @@ export default (state = initialState, action) => {
             newState.index = 0;
             return newState
         case ActionType.UPDATE_SCENE:
-            console.log(newScenes[action.index].elements())
             newPast[action.index].push(_.cloneDeep(newScenes[action.index]));
             newState.past = newPast;
             newScenes[action.index] = action.scene;

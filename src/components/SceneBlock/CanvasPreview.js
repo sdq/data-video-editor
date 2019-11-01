@@ -7,7 +7,7 @@ import TextElement from '@/components/Elements/TextElement';
 import ChartElement from '@/components/Elements/ChartElement';
 import ElementType from '@/constants/ElementType';
 
-export default class CanvasPreview extends Component {
+export default class  extends Component {
     // constructor(props) {
     //     super(props);
     //     this.state = {
@@ -33,6 +33,7 @@ export default class CanvasPreview extends Component {
     // };
     render() {
         const { scene, sceneIndex } = this.props;
+
         return (
             <div>
                 <Stage width={192} height={108} scale={{x: 192/800, y:192/800}} 
@@ -41,9 +42,7 @@ export default class CanvasPreview extends Component {
                         backgroundImage:`url(${ scene.backgroundImage()})`,}}
                 >
                     <Layer>
-                        
                         {scene.elements().map(function(element, index) {
-                            //console.log(element.info());
                             switch (element.type()) {
                                 case ElementType.TEXT:
                                     return <TextElement key={sceneIndex+"-"+index} element={element} name={sceneIndex+"-"+index} draggable = {false} {...this.props}/>
@@ -54,7 +53,16 @@ export default class CanvasPreview extends Component {
                                 case ElementType.CHART:
                                     return <ChartElement key={sceneIndex+"-"+index} element={element} name={sceneIndex+"-"+index}  width={200} height={200} draggable = {false} {...this.props}/>
                                 case ElementType.VIDEO:
-                                    return <VideoElement key={sceneIndex + "-" + index} element={element} name={sceneIndex + "-" + index} draggable={false} {...this.props} />
+                                        let elementTag;
+                                        //find video by id in scene
+                                        scene.videoTags().map(item => {
+                                            if (item.id === element.id()) {
+                                                elementTag = item.element;
+                                            }
+                                            return item;
+                                        })
+                                    //TODO:解析视频元素第一帧，给sceneblock
+                                    return <VideoElement key={sceneIndex + "-" + index} element={element} tag={elementTag} name={sceneIndex + "-" + index} draggable={false} {...this.props} showAnimation={false} />
                                 case ElementType.AUDIO:
                                     return null;
                                 default:
