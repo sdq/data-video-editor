@@ -4,6 +4,7 @@ import ImageCard from '@/components/ImageCard';
 import AudioCard from '@/components/AudioCard';
 import GifCard from '@/components/GifCard';
 import VideoCard from '@/components/VideoCard';
+import MyURL from '@/constants/MyURL';
 import './usertab.css';
 var gifFrames = require('gif-frames');
 
@@ -17,10 +18,28 @@ export default class UserTab extends Component {
         this.state = {
             activeKey: "image", //default
             imageList: [
+                // {
+                //     uid: '-1',
+                //     name: "woman",
+                //     src: "https://datavideo.idvxlab.com/images/woman.png"
+                // },
                 {
                     uid: '-1',
-                    name: "woman",
-                    src: "https://datavideo.idvxlab.com/images/woman.png"
+                    name: "man",
+                    style: "cartoon",
+                    src: MyURL.OSS+"/images/man.png"
+                },
+                {
+                    uid: '-2',
+                    name: "chair",
+                    style: "cartoon",
+                    src: MyURL.OSS+"/images/chair.png"
+                },
+                {
+                    uid: '-3',
+                    name: "light",
+                    style: "cartoon",
+                    src: MyURL.OSS+"/images/light.png"
                 },
             ],
             audioList: [
