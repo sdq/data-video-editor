@@ -110,6 +110,7 @@ export default class Player {
         this._clearTimeouts();
         this._clearVideoTimeouts();
         store.dispatch(playerActions.stopVideo());
+        AudioController.pauseAudio(this.sceneIndex)
     }
 
     _clearTimeouts() {
