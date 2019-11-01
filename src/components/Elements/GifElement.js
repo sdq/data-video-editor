@@ -264,8 +264,8 @@ export default class GifElement extends Component {
             >
                 <Image 
                     ref={node=>this.imageref=node}
-                    width={this.originWidth}
-                    height={this.originHeight}
+                    width={this.props.draggable?this.originWidth:this.props.element.info().width}
+                    height={this.props.draggable?this.originHeight:this.props.element.info().height}
                     name={this.props.name}
                     crossOrigin='anonymous'
                     image={canvas}

@@ -279,20 +279,11 @@ export default class VideoElement extends Component {
                     ref={node => this.imageref = node}
                     name={this.props.name}
                     image={video}
-                    width={this.originWidth}
-                    height={this.originHeight}
+                    width={this.props.draggable?this.originWidth:this.props.element.info().width}
+                    height={this.props.draggable?this.originHeight:this.props.element.info().height}
                     opacity={this.props.element.info().opacity}
                     visible={true}
                 />
-                {/* <Rect
-                    name={this.props.name}
-                    x={this.props.element.info().x}
-                    y={this.props.element.info().y}
-                    width={this.props.element.info().width}
-                    height={this.props.element.info().height}
-                    fill={Color.VIDEO_BAR}
-                    visible = {!showAnimation}
-                /> */}
             </Group>
         )
     }
