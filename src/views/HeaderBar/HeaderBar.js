@@ -7,6 +7,8 @@ import './headerbar.css';
 const recorder = new Recorder();
 const player = new Player();
 
+const prepareTime = 100; //TODO: 100ms for preparation
+
 export default class HeaderBar extends Component {
 
     state = {
@@ -83,7 +85,7 @@ export default class HeaderBar extends Component {
                 .catch(function (error) {
                     console.log(error);
                 });
-        }, 1000); // TODO: show animation layer before record
+        }, prepareTime); // TODO: show animation layer before record
     };
 
     handleCancel = () => {

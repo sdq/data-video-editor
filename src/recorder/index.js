@@ -1,6 +1,8 @@
 import ysFixWebmDuration from 'fix-webm-duration'
 import store from '@/store';
 
+const prepareTime = 100; //TODO: 100ms for preparation
+
 export default class Recorder {
     constructor() {
         if (!Recorder.instance) {
@@ -156,7 +158,7 @@ export default class Recorder {
                     this.recorder_timeout = setTimeout(() => {
                         this.isCompleted = true;
                         this.recorder.stop();
-                    }, duration-1000); // +1000
+                    }, duration-prepareTime);
                     
                 }
                 this.recorder.start(timeSlice); 
@@ -164,7 +166,7 @@ export default class Recorder {
                     this.recorder_timeout = setTimeout(() => {
                     this.isCompleted = true;
                     this.recorder.stop();
-                }, duration-1000);
+                }, duration-prepareTime);
                 }
                  // +1000
                 // console.log('state', recorder.state)
