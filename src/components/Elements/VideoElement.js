@@ -48,7 +48,7 @@ export default class VideoElement extends Component {
             })
         } else {
             //EditableLayer中传来的tag，用来显示第一帧
-            //console.log("tag.....", this.props.tag)
+            console.log("tag.....", this.props.tag)
             if (this.props.tag) {
                 this.setState({
                     video: this.props.tag
@@ -251,7 +251,6 @@ export default class VideoElement extends Component {
 
     render() {
         let { video } = this.state;
-        //console.log("render",this.props.element.info().x,this.props.element.info().y)
         return (
             <Group name={this.props.name}
                 draggable={this.props.draggable}
@@ -281,6 +280,7 @@ export default class VideoElement extends Component {
                     image={video}
                     width={this.props.draggable?this.originWidth:this.props.element.info().width}
                     height={this.props.draggable?this.originHeight:this.props.element.info().height}
+                    crossOrigin='anonymous'
                     opacity={this.props.element.info().opacity}
                     visible={true}
                 />
