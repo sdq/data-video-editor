@@ -216,8 +216,8 @@ export default class ChartElement extends Component {
                     name={this.props.name} 
                     data={data} 
                     spec={chartInfo.spec}
-                    width={this.originWidth}
-                    height={this.originHeight}
+                    width={this.props.draggable?this.originWidth:this.props.element.info().width}
+                    height={this.props.draggable?this.originHeight:this.props.element.info().height}
                     onCanvas={true} 
                     showAnimation={this.props.showAnimation} 
                     animations={this.props.element.animations()} 
