@@ -3,7 +3,7 @@ import { Table } from 'antd';
 import './datapreview.css';
 
 const width = 280;
-const height = 160;
+const height = 80;
 
 export default class SimpleDataPreview extends Component {
     render() {
