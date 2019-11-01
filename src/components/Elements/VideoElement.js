@@ -48,7 +48,6 @@ export default class VideoElement extends Component {
             })
         } else {
             //EditableLayer中传来的tag，用来显示第一帧
-            console.log("tag.....", this.props.tag)
             if (this.props.tag) {
                 this.setState({
                     video: this.props.tag
