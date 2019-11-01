@@ -3,6 +3,7 @@ import {Button,Modal,Col,Row} from 'antd';
 import {Element,TextInfo} from '@/models/Element';
 import ElementType from '@/constants/ElementType';
 import Color from '@/constants/Color';
+import _ from 'lodash';
 import './editpane.css';
 
 const ButtonGroup = Button.Group;
@@ -55,7 +56,7 @@ export default class EditToolBar extends Component {
 
     addText = () => {        
         const newTextElement = new Element(ElementType.TEXT, defaultText);
-        const newScene = Object.assign({},this.props.currentScene);
+        const newScene = _.cloneDeep(this.props.currentScene);
         newScene.addElement(newTextElement);
         this.props.updateScene(this.props.sceneIndex, newScene);
     }
@@ -123,7 +124,7 @@ export default class EditToolBar extends Component {
             default :
                     return null     
         }
-        const newScene = Object.assign({},this.props.currentScene);
+        const newScene = _.cloneDeep(this.props.currentScene);
         newScene.updateElement(this.props.currentElement, this.props.elementIndex);
         this.props.updateScene(this.props.sceneIndex, newScene);
       }
@@ -141,6 +142,7 @@ export default class EditToolBar extends Component {
 
     undoCanvas = () => {
         this.props.undoCanvas(this.props.sceneIndex);
+        this.props.updateElement()
     }
 
     redoCanvas = () => {        

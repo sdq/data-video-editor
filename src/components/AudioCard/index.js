@@ -4,6 +4,7 @@ import { DragSource } from 'react-dnd';
 import DNDType from '@/constants/DNDType';
 import ElementType from '@/constants/ElementType';
 import {Element, AudioInfo} from '@/models/Element';
+import _ from 'lodash';
 import './audiocard.css';
 
 const audioSource = {
@@ -26,7 +27,7 @@ const audioSource = {
                     return null;
                 }
                 //add element to scene
-                const newScene = Object.assign({},dropResult.currentScene);
+                const newScene = _.cloneDeep(dropResult.currentScene);
                 const newAudio = new AudioInfo(item.name,item.src,Math.round( props.info.audio && props.info.audio.duration));
                 const newElement = new Element(ElementType.AUDIO, newAudio);
                 newScene.addElement(newElement);

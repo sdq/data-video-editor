@@ -5,6 +5,7 @@ import EditToolBar from './EditToolBar';
 import PlayControlBar from './PlayControlBar';
 import SceneCanvas from './SceneCanvas';
 import { Element } from '@/models/Element';
+import _ from 'lodash';
 import './editpane.css';
 
 export default class EditPane extends Component {
@@ -55,14 +56,14 @@ export default class EditPane extends Component {
         this.setState({
             copiedElement: this.props.currentScene.elements()[cutIndex]
         });
-        const newScene = Object.assign({},this.props.currentScene);
+        const newScene = _.cloneDeep(this.props.currentScene);
         newScene.elements().splice(cutIndex, 1);
         this.props.updateScene(this.props.sceneIndex, newScene);
     }
 
     pasteElement() {
-        const newScene = Object.assign({},this.props.currentScene);
-        const newInfo = Object.assign({},this.state.copiedElement.info());
+        const newScene = _.cloneDeep(this.props.currentScene);
+        const newInfo = _.cloneDeep(this.state.copiedElement.info());
         newInfo.x = newInfo.x + 10; // offset
         newInfo.y = newInfo.y + 10;
         const type = this.state.copiedElement.type();
@@ -77,7 +78,7 @@ export default class EditPane extends Component {
             return
         }
         const deleteIndex = this.props.elementName.split('-')[1];
-        const newScene = Object.assign({},this.props.currentScene);
+        const newScene = _.cloneDeep(this.props.currentScene);
         newScene.elements().splice(deleteIndex, 1);
         this.props.updateScene(this.props.sceneIndex, newScene);
     }

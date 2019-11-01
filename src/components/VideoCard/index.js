@@ -6,6 +6,7 @@ import { Element, VideoInfo } from '@/models/Element';
 // import Scene from '@/models/Scene';
 import './videocard.css';
 import { Player, ControlBar } from 'video-react';
+import _ from 'lodash';
 
 
 //drag end pos
@@ -28,7 +29,7 @@ const videoSource = {
 		if (dropResult) {
             if (dropResult.target === "canvas") {
                 //add element to scene
-                const newScene = Object.assign({}, dropResult.currentScene);
+                const newScene = _.cloneDeep( dropResult.currentScene);
                 let videoElement = props.info.videoElement;
                 //console.log("videoElement.duration...",videoElement.duration)
                  ////获取鼠标结束拖拽的位置，基于canvas基点计算位置

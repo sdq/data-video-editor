@@ -6,6 +6,7 @@ import ElementType from '@/constants/ElementType';
 import {Element, ChartInfo} from '@/models/Element';
 import {getDefaultSpec} from '@/charts/Info';
 // import Scene from '@/models/Scene';
+import _ from 'lodash';
 import './chartcard.css';
 
 
@@ -44,7 +45,7 @@ const chartSource = {
             // console.log(dropResult);
             if (dropResult.target === "canvas") {
                 //add element to scene
-                const newScene = Object.assign({},dropResult.currentScene);
+                const newScene = _.cloneDeep(dropResult.currentScene);
                 const newChart = new ChartInfo(
                     0,
                     item.category, // category
