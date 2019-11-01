@@ -4,6 +4,7 @@ import DNDType from '@/constants/DNDType';
 import ElementType from '@/constants/ElementType';
 import { Element, GifInfo } from '@/models/Element';
 // import Scene from '@/models/Scene';
+import _ from 'lodash';
 import './gifcard.css';
 
 //gif size
@@ -40,7 +41,7 @@ const imageSource = {
             // console.log(dropResult);
             if (dropResult.target === "canvas") {
                 //add element to scene
-                const newScene = Object.assign({}, dropResult.currentScene);
+                const newScene = _.cloneDeep( dropResult.currentScene);
 
                 //console.log("gifData", item.gifData);
                 let delay = 1;

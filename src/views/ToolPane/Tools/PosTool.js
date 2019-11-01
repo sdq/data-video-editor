@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { InputNumber, Row, Col,Icon } from 'antd';
+import _ from 'lodash';
 
 export default class PosTool extends Component {
 
@@ -8,7 +9,7 @@ export default class PosTool extends Component {
         let dragPos = {x,y}; 
         this.props.dragElement(dragPos);
         this.props.currentElement.info().x = x;
-        const newScene = Object.assign({},this.props.currentScene);
+        const newScene = _.cloneDeep(this.props.currentScene);
         newScene.updateElement(this.props.currentElement, this.props.elementIndex);
         this.props.updateScene(this.props.sceneIndex, newScene);
     }
@@ -18,7 +19,7 @@ export default class PosTool extends Component {
         let dragPos = {x,y}; 
         this.props.dragElement(dragPos);
         this.props.currentElement.info().y = y;
-        const newScene = Object.assign({},this.props.currentScene);
+        const newScene = _.cloneDeep(this.props.currentScene);
         newScene.updateElement(this.props.currentElement, this.props.elementIndex);
         this.props.updateScene(this.props.sceneIndex, newScene);
  
@@ -26,7 +27,7 @@ export default class PosTool extends Component {
 
      changeR = (r) => {
         this.props.currentElement.info().rotation = r;
-        const newScene = Object.assign({},this.props.currentScene);
+        const newScene = _.cloneDeep(this.props.currentScene);
         newScene.updateElement(this.props.currentElement, this.props.elementIndex);
         this.props.updateScene(this.props.sceneIndex, newScene);
 
@@ -38,7 +39,7 @@ export default class PosTool extends Component {
         let transformInfo = {w,h,r}; 
         this.props.transformElement(transformInfo);
         this.props.currentElement.info().width = w;
-        const newScene = Object.assign({},this.props.currentScene);
+        const newScene = _.cloneDeep(this.props.currentScene);
         newScene.updateElement(this.props.currentElement, this.props.elementIndex);
         this.props.updateScene(this.props.sceneIndex, newScene);
 
@@ -49,7 +50,7 @@ export default class PosTool extends Component {
         let transformInfo = {w,h,r}; 
         this.props.transformElement(transformInfo);    
         this.props.currentElement.info().height = h;
-        const newScene = Object.assign({},this.props.currentScene);
+        const newScene = _.cloneDeep(this.props.currentScene);
         newScene.updateElement(this.props.currentElement, this.props.elementIndex);
         this.props.updateScene(this.props.sceneIndex, newScene);
      }

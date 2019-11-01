@@ -7,6 +7,7 @@ import {Element, ImageInfo} from '@/models/Element';
 import './undrawcard.css';
 import Undraw from 'react-undraw';
 import canvg from 'canvg';
+import _ from 'lodash';
 
 
 //undraw default size
@@ -87,7 +88,7 @@ const imageSource = {
 		if (dropResult) {
             if (dropResult.target === "canvas") {
                 //add element to scene
-                const newScene = Object.assign({},dropResult.currentScene);
+                const newScene = _.cloneDeep(dropResult.currentScene);
                 //console.log("endDrag",w,h)
                 const newImage = new ImageInfo(newimage.name,newimage.src, x, y, w, h, 0);
                 const newElement = new Element(ElementType.IMAGE, newImage);

@@ -4,6 +4,7 @@ import DNDType from '@/constants/DNDType';
 import ElementType from '@/constants/ElementType';
 import {Element, ImageInfo} from '@/models/Element';
 // import Scene from '@/models/Scene';
+import _ from 'lodash';
 import './imagecard.css';
 
 //img size
@@ -41,7 +42,7 @@ const imageSource = {
             // console.log(dropResult);
             if (dropResult.target === "canvas") {
                 //add element to scene
-                const newScene = Object.assign({},dropResult.currentScene);
+                const newScene = _.cloneDeep(dropResult.currentScene);
                 const newImage = new ImageInfo(item.name,item.src, x, y, w, h, 0);
                 const newElement = new Element(ElementType.IMAGE, newImage);
                 newScene.addElement(newElement);
