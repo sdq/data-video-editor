@@ -15,6 +15,7 @@ export default class VegaLite extends Component {
                 showAnimation={this.props.showAnimation} 
                 animations={this.props.animations} 
                 current={this.props.current}
+                isVideoPerforming = {this.props.isVideoPerforming}
             />
         )
     }

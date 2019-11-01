@@ -64,7 +64,7 @@ export default class Histogram extends Component {
 
     render() {
         if (this.props.onCanvas) {
-            return (<VegaLiteChart name={this.props.name} spec={this.spec} data={this.data} showAnimation={this.props.showAnimation} animations={this.props.animations}  current={this.props.current}/>);
+            return (<VegaLiteChart name={this.props.name} spec={this.spec} data={this.data} showAnimation={this.props.showAnimation} animations={this.props.animations}  current={this.props.current} isVideoPerforming={this.props.isVideoPerforming}/>);
         } else {
             return (<VegaLite data={this.data} spec={this.spec}/>);
         }

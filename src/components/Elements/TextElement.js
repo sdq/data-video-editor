@@ -27,6 +27,9 @@ export default class TextElement extends Component {
         if (this.props.showAnimation && animations.length !== 0) {
             let animationCreator = new AnimationCreator(this.textref);
             let current = this.props.scenePosition;
+            if (this.props.isVideoPerforming) {
+                current = 0;
+            }
             for (let index = 0; index < animations.length; index++) {
                 const animation = animations[index];
                 animationCreator.fromModel(animation).play(current);

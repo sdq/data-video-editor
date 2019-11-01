@@ -21,8 +21,12 @@ export default class VegaLiteChart extends Component {
         if (this.props.showAnimation && animations.length !== 0) {
             let animationCreator = new AnimationCreator(this.imageref);
             for (let index = 0; index < animations.length; index++) {
+                let current = this.props.current;
+                if (this.props.isVideoPerforming) {
+                    current = 0;
+                }
                 const animation = animations[index];
-                animationCreator.fromModel(animation).play(this.props.current);
+                animationCreator.fromModel(animation).play(current);
             }
         }
     }

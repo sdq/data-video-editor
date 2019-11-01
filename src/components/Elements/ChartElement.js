@@ -222,6 +222,7 @@ export default class ChartElement extends Component {
                     showAnimation={this.props.showAnimation} 
                     animations={this.props.element.animations()} 
                     current={this.props.scenePosition}
+                    isVideoPerforming={this.props.isVideoPerforming}
                 />
     }
 

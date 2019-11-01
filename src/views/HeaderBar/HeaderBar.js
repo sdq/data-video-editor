@@ -175,6 +175,7 @@ export default class HeaderBar extends Component {
                     <Spin id='spin' size="large"></Spin>
                     <p>Recording...</p>
                     <p>{this.formatSeconds(this.state.remainTime)} remaining</p>
+                    <p>Please don't leave this page!</p>
                 </Modal>
             </div>
         )

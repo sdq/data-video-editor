@@ -42,7 +42,7 @@ export default class AreaChart extends Component {
 
     render() {
         if (this.props.onCanvas) {
-            return (<VegaLiteChart name={this.props.name} data={this.data} spec={this.spec} showAnimation={this.props.showAnimation} animations={this.props.animations} current={this.props.current}/>);
+            return (<VegaLiteChart name={this.props.name} data={this.data} spec={this.spec} showAnimation={this.props.showAnimation} animations={this.props.animations} current={this.props.current} isVideoPerforming={this.props.isVideoPerforming}/>);
         } else {
             return (<VegaLite data={this.data} spec={this.spec}/>);
         }
