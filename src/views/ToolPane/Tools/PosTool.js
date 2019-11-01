@@ -7,30 +7,28 @@ export default class PosTool extends Component {
     changeX (x)  { 
         let y = this.props.currentElement.info().y;  //console conflict
         let dragPos = {x,y}; 
-        this.props.dragElement(dragPos);
-        this.props.currentElement.info().x = x;
+        this.props.dragElement(dragPos);       
         const newScene = _.cloneDeep(this.props.currentScene);
         newScene.updateElement(this.props.currentElement, this.props.elementIndex);
         this.props.updateScene(this.props.sceneIndex, newScene);
+        this.props.currentElement.info().x = x;
     }
 
     changeY = (y) => {
         let x = this.props.currentElement.info().x;  //console conflict
         let dragPos = {x,y}; 
-        this.props.dragElement(dragPos);
-        this.props.currentElement.info().y = y;
+        this.props.dragElement(dragPos);       
         const newScene = _.cloneDeep(this.props.currentScene);
         newScene.updateElement(this.props.currentElement, this.props.elementIndex);
         this.props.updateScene(this.props.sceneIndex, newScene);
- 
+        this.props.currentElement.info().y = y;
      }
 
      changeR = (r) => {
-        this.props.currentElement.info().rotation = r;
         const newScene = _.cloneDeep(this.props.currentScene);
         newScene.updateElement(this.props.currentElement, this.props.elementIndex);
         this.props.updateScene(this.props.sceneIndex, newScene);
-
+        this.props.currentElement.info().rotation = r;
      }
 
      changeW = (w) => {
@@ -38,29 +36,24 @@ export default class PosTool extends Component {
         let h = this.props.currentElement.info().height; 
         let transformInfo = {w,h,r}; 
         this.props.transformElement(transformInfo);
-        this.props.currentElement.info().width = w;
         const newScene = _.cloneDeep(this.props.currentScene);
         newScene.updateElement(this.props.currentElement, this.props.elementIndex);
         this.props.updateScene(this.props.sceneIndex, newScene);
-
+        this.props.currentElement.info().width = w;
      };
      changeH = (h) => {
         let r = this.props.currentElement.info().rotation;  // need a real size to effect
         let w = this.props.currentElement.info().width; 
         let transformInfo = {w,h,r}; 
         this.props.transformElement(transformInfo);    
-        this.props.currentElement.info().height = h;
         const newScene = _.cloneDeep(this.props.currentScene);
         newScene.updateElement(this.props.currentElement, this.props.elementIndex);
         this.props.updateScene(this.props.sceneIndex, newScene);
+        this.props.currentElement.info().height = h;
      }
-
-    
-
 
     render() {
         const {currentElement} = this.props;
-//console.log(this.props.dragPos.x);
 
         return (
             <div style={{padding: '0px 10px 5px 10px', fontSize: '14px', backgroundColor: 'white',height:'90px',overflow: 'auto'}}>
