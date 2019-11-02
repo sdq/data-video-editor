@@ -38,7 +38,6 @@ export default (state = initialState, action) => {
     switch (action.type) {
         // Select Chart
         case VisActionType.OPEN_EDITOR:
-            console.log("open editor!");
             newState.dataIndex = action.dataIndex;
             newState.displaySpec = action.spec;
             if (!("encoding" in newState.displaySpec)) {
