@@ -41,7 +41,6 @@ const chartSource = {
             y = Number(e.clientY)-Number(pos.top)-h/2;
         }
 		if (dropResult) {
-            console.log(item);
             // console.log(dropResult);
             if (dropResult.target === "canvas") {
                 //add element to scene

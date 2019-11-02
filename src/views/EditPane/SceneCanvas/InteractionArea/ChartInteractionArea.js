@@ -5,7 +5,6 @@ export default class ChartInteractionArea extends Component {
     render() {
         const chartInfo = this.props.currentElement.info();
         const data = this.props.dataList[chartInfo.dataIndex];
-        console.log(chartInfo);
         return (
             <div style={{position:'absolute', zIndex:1, marginLeft: chartInfo.x, marginTop: chartInfo.y}}>
                 <ChartContainer 

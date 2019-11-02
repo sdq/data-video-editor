@@ -15,8 +15,6 @@ const boxSource = {
 		const dropResult = monitor.getDropResult();
 
 		if (dropResult) {
-            console.log(`You dropped ${item.field.name} into ${dropResult.name}!`);
-            //TODO: encoding
 			props.encoding(dropResult.name, item.field, dropResult.isEncoded);
 		}
 	},
