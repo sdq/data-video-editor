@@ -62,14 +62,6 @@ export const channels = createSelector(
         }
         const chartInfo = currentElement.info();
         const channels = getChannels(chartInfo.category, chartInfo.type)
-        // const channels = {
-        //     x: {
-        //         name: 'x',
-        //     },
-        //     y: {
-        //         name: 'y',
-        //     },
-        // }
         for (const key in channels) {
             channels[key].isEncoded = false;
             channels[key].field = '';

@@ -43,9 +43,6 @@ export default (state = initialState, action) => {
             if (!("encoding" in newState.displaySpec)) {
                 newState.displaySpec.encoding = {}
             }
-            newState.displaySpec.encoding.color = {
-                "value": Color.DEEP_ORANGE
-            };
             newState.specIndex = 0;
             newState.specHistory = [JSON.stringify(action.spec)];
             return newState;
