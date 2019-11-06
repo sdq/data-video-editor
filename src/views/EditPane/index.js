@@ -2,10 +2,10 @@ import { connect } from 'react-redux';
 import EditPane from './EditPane';
 import {currentScene, sceneIndex, scenes, isFirstScene, isLastScene, past, future} from '@/selectors/video';
 import {currentElement, currentElements, elementIndex, elementName, isElementSelected, dragPos, transformInfo} from '@/selectors/canvas';
-import { dataList } from '@/selectors/vis';
 import { scenePosition } from '@/selectors/scene';
 import { isPerforming, isScenePerforming, isVideoPerforming } from '@/selectors/player';
 import { showAnimationTargetArea, showResourceTargetArea } from '@/selectors/ui';
+import { dataNameList, dataList, fieldsList, displaySpec, currentData, currentVis, channels } from '@/selectors/vis';
 import * as uiActions from '@/actions/uiAction';
 import * as videoActions from '@/actions/videoAction';
 import * as canvasActions from '@/actions/canvasAction';
@@ -33,11 +33,18 @@ const mapStateToProps = state => {
         scenePosition: scenePosition(state),
         showAnimationTargetArea: showAnimationTargetArea(state),
         showResourceTargetArea: showResourceTargetArea(state),
-        // vis
-        dataList: dataList(state),
+        // canvas
         dragPos:dragPos(state),
         transformInfo:transformInfo(state),
-
+        // data
+        dataNameList: dataNameList(state),
+        dataList: dataList(state),
+        fieldsList: fieldsList(state),
+        currentData: currentData(state),
+        // vis
+        displaySpec: displaySpec(state),
+        currentVis: currentVis(state),
+        channels: channels(state),
     }
 }
 

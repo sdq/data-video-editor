@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Row, Col, Divider } from 'antd';
-import FieldList from '../FieldList';
-import Encoding from '../Encoding';
+import FieldList from './FieldList';
+import Encoding from './Encoding';
 import './mappingpanel.css';
 
 export default class MappingPanel extends Component {

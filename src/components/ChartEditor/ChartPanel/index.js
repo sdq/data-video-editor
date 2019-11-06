@@ -13,9 +13,11 @@ export default class ChartPanel extends Component {
                     type={chartInfo.type}
                     data={this.props.data}
                     spec={this.props.spec}
-                    width={530} 
-                    height={530}
+                    width={600} 
+                    height={600}
                     current={this.props.scenePosition}
+                    onCanvas={false} 
+                    showAnimation={this.props.showAnimation}
                 />
             </div>
         )

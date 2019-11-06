@@ -1,23 +1,7 @@
 import React, { Component } from 'react';
-import { Divider} from 'antd';
 import { ChartStyleConfigure } from '@/charts/Info';
 
-export default class ChartTool extends Component {
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            displayColorPicker: false,
-        };
-    };
-
-    handleClick = () => {
-        this.setState({ displayColorPicker: !this.state.displayColorPicker })
-    };
-
-    handleClose = () => {
-        this.setState({ displayColorPicker: false })
-    };
+export default class StylePanel extends Component {
 
     handleConfigureOk = (spec) => {
         this.props.visConfigure(spec.configure);
@@ -30,16 +14,12 @@ export default class ChartTool extends Component {
         const elementName = this.props.sceneIndex + '-' + this.props.elementIndex;
         this.props.updateElement(newEle, this.props.elementIndex, elementName);
     }
-
+    
     render() {
         const {currentElement} = this.props;
         const chartInfo = currentElement.info();
         return (
-            <div style={{padding: '5px 10px 10px 10px', fontSize: '14px', backgroundColor: 'white',overflow: 'auto'}}>
-                <Divider>Configure</Divider>
-                <ChartStyleConfigure chartCategory={chartInfo.category} chartType={chartInfo.type} spec={chartInfo.spec} handleConfigureOk={this.handleConfigureOk} {...this.props}/>
-            </div>
+            <ChartStyleConfigure chartCategory={chartInfo.category} chartType={chartInfo.type} spec={chartInfo.spec} handleConfigureOk={this.handleConfigureOk} {...this.props}/>
         )
     }
 }
-

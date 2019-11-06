@@ -1,5 +1,5 @@
 import * as d3 from 'd3';
-import {getMinRows, getMaxRows} from './helper';
+import {getMinRows, getMaxRows} from '../helper';
 import _ from 'lodash';
 
 const offset = 20; // To show whole chart
@@ -85,6 +85,17 @@ const draw = (props) => {
             svg.append("g").call(d3.axisLeft(y));
         }
     }
+
+    // Animation
+    if ('color' in encoding) {
+        svg.selectAll("rect")
+        .transition()
+        .duration(800)
+        .attr("fill", "pink")
+        //.attr("fill", function (d){ return color(d[encoding.color.field]); });
+        .delay(function(d,i){ return(i*600)} )
+    }
+    
 
     return svg;
 }
