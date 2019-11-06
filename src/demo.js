@@ -1,13 +1,13 @@
-import Scene from '../models/Scene';
-import Video from '../models/Video';
-import { Element, ImageInfo, ChartInfo, TextInfo } from '../models/Element';
-import MyURL from '../constants/MyURL';
-import ElementType from '../constants/ElementType';
-import ChartType from '../constants/ChartType';
-import ChartCategory from '../constants/ChartCategory';
-import AnimationType from '../animation/AnimationType';
-import AnimationModel from '../animation/AnimationModel';
-import Color from '../constants/Color';
+import Scene from './models/Scene';
+import Video from './models/Video';
+import { Element, ImageInfo, ChartInfo, TextInfo } from './models/Element';
+import MyURL from './constants/MyURL';
+import ElementType from './constants/ElementType';
+import ChartType from './constants/ChartType';
+import ChartCategory from './constants/ChartCategory';
+import AnimationType from './animation/AnimationType';
+import AnimationModel from './animation/AnimationModel';
+import Color from './constants/Color';
 //var gifFrames = require('gif-frames');
 // Demo
 
@@ -95,16 +95,25 @@ const demochart2 = new ChartInfo(
     ChartCategory.D3,
     ChartType.BARCHART,
     {
-        "mark": "bar",
         "encoding": {
             "x": {"field": "Origin", "type": "ordinal"},
             "y": {"field": "Horsepower", "type": "quantitative"},
             "color": {"field": "Origin", "type": "ordinal"},
         },
-        "configure": {
+        "style": {
             "showAxisX": true,
             "showAxisY": true,
-        }
+        },
+        "animation": [
+            {
+                "type": "grow",
+                "duration": 800,
+            },
+            {
+                "type": "emphasize",
+                "duration": 800,
+            }
+        ]
     },
     45,
     30,

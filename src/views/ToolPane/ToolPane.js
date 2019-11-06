@@ -7,7 +7,7 @@ import ImageTool from './Tools/ImageTool';
 import GifTool from './Tools/GifTool';
 import VideoTool from './Tools/VideoTool';
 // import AudioTool from './Tools/AudioTool';
-import ChartTool from './Tools/ChartTool';
+import StyleTool from './Tools/StyleTool';
 import TextTool from './Tools/TextTool';
 import DataTool from './Tools/DataTool';
 import AnimationTool from './Tools/AnimationTool';
@@ -17,13 +17,6 @@ import './toolpane.css';
 const { TabPane } = Tabs;
 
 export default class ToolPane extends Component {
-
-    // constructor(props) {
-    //     super(props);
-    //     this.state = {
-    //         title: "Scene Tool"
-    //     }
-    // }
 
     chooseTool() {
 
@@ -72,8 +65,8 @@ export default class ToolPane extends Component {
                         <TabPane tab="Data" key="Data">
                             <DataTool {...this.props}/>
                         </TabPane>
-                        <TabPane tab="Chart" key="Chart">
-                            <ChartTool {...this.props}/>
+                        <TabPane tab="Style" key="Style">
+                            <StyleTool {...this.props}/>
                         </TabPane>
                         <TabPane tab="Animation" key="Animation">
                             <AnimationTool {...this.props}/>

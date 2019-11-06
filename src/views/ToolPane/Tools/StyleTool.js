@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { Divider} from 'antd';
-import { ChartConfigure } from '@/charts/Info';
+import { ChartStyleConfigure } from '@/charts/Info';
 
-export default class ChartTool extends Component {
+export default class StyleTool extends Component {
 
     constructor(props) {
         super(props);
@@ -20,7 +19,7 @@ export default class ChartTool extends Component {
     };
 
     handleConfigureOk = (spec) => {
-        this.props.visConfigure(spec.configure);
+        this.props.configureStyle(spec.style);
         // Update chart on canvas
         const newScene = Object.assign({}, this.props.currentScene);
         let newEle = Object.assign({}, this.props.currentElement);
@@ -36,8 +35,7 @@ export default class ChartTool extends Component {
         const chartInfo = currentElement.info();
         return (
             <div style={{padding: '5px 10px 10px 10px', fontSize: '14px', backgroundColor: 'white',overflow: 'auto'}}>
-                <Divider>Configure</Divider>
-                <ChartConfigure chartCategory={chartInfo.category} chartType={chartInfo.type} spec={chartInfo.spec} handleConfigureOk={this.handleConfigureOk} {...this.props}/>
+                <ChartStyleConfigure chartCategory={chartInfo.category} chartType={chartInfo.type} spec={chartInfo.spec} handleConfigureOk={this.handleConfigureOk} {...this.props}/>
             </div>
         )
     }

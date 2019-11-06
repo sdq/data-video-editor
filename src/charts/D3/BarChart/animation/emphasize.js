@@ -1,6 +1,5 @@
 import * as d3 from 'd3';
-import {getMinRows, getMaxRows} from './helper';
-import {grow, emphasize} from './animation';
+import {getMinRows, getMaxRows} from '../helper';
 import _ from 'lodash';
 
 const offset = 20; // To show whole chart
@@ -26,7 +25,7 @@ const draw = (props) => {
 
     // get encoding
     const encoding = props.spec.encoding;
-    if (_.isEmpty(encoding) || !('x' in encoding) || !('y' in encoding) || _.isEmpty(encoding.x) || _.isEmpty(encoding.y) ) {
+    if (_.isEmpty(encoding) || !('x' in encoding) || !('y' in encoding)) {
         svg.append("rect")
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
@@ -35,7 +34,7 @@ const draw = (props) => {
     }
 
     // Process Data
-    // const data = props.data;
+    //const data = props.data;
     const data = getMaxRows(props.data, encoding);
 
     // X channel
@@ -79,6 +78,7 @@ const draw = (props) => {
                 .call(d3.axisBottom(x))
                 .selectAll("text")
                 .attr("transform", "translate(-10,0)rotate(-45)")
+                .style('stroke-width','1')
                 .style("text-anchor", "end");
         }
         if (style.showAxisY) {
@@ -87,6 +87,14 @@ const draw = (props) => {
     }
 
     // Animation
+    if ('color' in encoding) {
+        svg.selectAll("rect")
+        .transition()
+        .duration(800)
+        .attr("fill", "pink")
+        //.attr("fill", function (d){ return color(d[encoding.color.field]); });
+        .delay(function(d,i){ return(i*600)} )
+    }
     
 
     return svg;

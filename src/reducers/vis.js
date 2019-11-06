@@ -2,6 +2,7 @@ import VisActionType from '@/actions/visTypes';
 import cars from '@/datasets/cars';
 import carsSchema from '@/datasets/carsSchema';
 import Color from '@/constants/Color';
+import _ from 'lodash';
 
 const originSpec = {
     "mark": "line",
@@ -136,24 +137,108 @@ export default (state = initialState, action) => {
             newState.displaySpec = newSpec;
             return newState
 
-        case VisActionType.CONFIGURE:
+        case VisActionType.CONFIGURE_STYLE:
             // state
             newSpecHistory = newState.specHistory.slice(0,newState.specIndex+1);
-            newSpec.configuration = action.configuration;
+            newSpec.style = action.style;
             newSpecHistory.push(JSON.stringify(newSpec));
             newState.specHistory = newSpecHistory
             // action
             newActionHistory = newState.actionHistory.slice();
             newActionHistory.push({
-                "type": VisActionType.CONFIGURATION,
-                "description": "change configuration",
-                "detail": action.configuration,
+                "type": VisActionType.CONFIGURE_STYLE,
+                "description": "change style configuration",
+                "detail": action.style,
             });
             newState.actionHistory = newActionHistory;
             newState.specIndex ++;
             newState.displaySpec = newSpec;
             return newState
-        
+
+        case VisActionType.ADD_CHART_ANIMATION:
+            // state
+            newSpecHistory = newState.specHistory.slice(0,newState.specIndex+1);
+            if (!newSpec.animation) {
+                newSpec.animation = [];
+            }
+            newSpec.animation.push(_.cloneDeep(action.animation));
+            newSpecHistory.push(JSON.stringify(newSpec));
+            newState.specHistory = newSpecHistory
+            // action
+            newActionHistory = newState.actionHistory.slice();
+            newActionHistory.push({
+                "type": VisActionType.ADD_CHART_ANIMATION,
+                "description": "add chart animation",
+                "detail": action.animation,
+            });
+            newState.actionHistory = newActionHistory;
+            newState.specIndex ++;
+            newState.displaySpec = newSpec;
+            return newState;
+
+        case VisActionType.MODIFY_CHART_ANIMATION:
+            // state
+            newSpecHistory = newState.specHistory.slice(0,newState.specIndex+1);
+            if (!newSpec.animation || action.index >= newSpec.animation.length()) {
+                return newState;
+            }
+            newSpec.animation[action.index] = action.animation;
+            newSpecHistory.push(JSON.stringify(newSpec));
+            newState.specHistory = newSpecHistory
+            // action
+            newActionHistory = newState.actionHistory.slice();
+            newActionHistory.push({
+                "type": VisActionType.MODIFY_CHART_ANIMATION,
+                "description": "add chart animation",
+                "detail": {
+                    "index": action.index,
+                    "animation": action.animation,
+                },
+            });
+            newState.actionHistory = newActionHistory;
+            newState.specIndex ++;
+            newState.displaySpec = newSpec;
+            return newState;
+
+        case VisActionType.REMOVE_CHART_ANIMATION:
+            // state
+            newSpecHistory = newState.specHistory.slice(0,newState.specIndex+1);
+            if (!newSpec.animation || action.index >= newSpec.animation.length()) {
+                return newState;
+            }
+            newSpec.animation.splice(action.index, 1);
+            newSpecHistory.push(JSON.stringify(newSpec));
+            newState.specHistory = newSpecHistory
+            // action
+            newActionHistory = newState.actionHistory.slice();
+            newActionHistory.push({
+                "type": VisActionType.REMOVE_CHART_ANIMATION,
+                "description": "remove chart animation",
+                "detail": action.index,
+            });
+            newState.actionHistory = newActionHistory;
+            newState.specIndex ++;
+            newState.displaySpec = newSpec;
+            return newState;
+
+        case VisActionType.REORDER_CHART_ANIMATION:
+            // state
+            newSpecHistory = newState.specHistory.slice(0,newState.specIndex+1);
+            newSpec.animation = _.cloneDeep(action.animations);
+            newSpecHistory.push(JSON.stringify(newSpec));
+            newState.specHistory = newSpecHistory
+            // action
+            newActionHistory = newState.actionHistory.slice();
+            newActionHistory.push({
+                "type": VisActionType.REORDER_CHART_ANIMATION,
+                "description": "reorder chart animation",
+                "detail": action.animations,
+            });
+            newState.actionHistory = newActionHistory;
+            newState.specIndex ++;
+            newState.displaySpec = newSpec;
+            return newState;
+
         // Meta
 
         default:

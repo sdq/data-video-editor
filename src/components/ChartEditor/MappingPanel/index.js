@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Row, Col, Divider } from 'antd';
-import FieldList from '../FieldList';
-import Encoding from '../Encoding';
+import FieldList from './FieldList';
+import Encoding from './Encoding';
 import './mappingpanel.css';
 
 export default class MappingPanel extends Component {
@@ -14,7 +14,7 @@ export default class MappingPanel extends Component {
                     <FieldList  { ...this.props }/>
                 </Col>
                 <Col span={13} className="encodingPanel">
-                    <Divider>Mappings</Divider>
+                    <Divider>Channels</Divider>
                     <Encoding { ...this.props }/>
                 </Col>
             </Row>

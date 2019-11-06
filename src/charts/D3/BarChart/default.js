@@ -1,9 +1,10 @@
 const defaultSpec = {
     "encoding": {},
-    "configure": {
+    "style": {
         "showAxisX": true,
         "showAxisY": true,
-    }
+    },
+    "animation": {}
 }
 
 export default defaultSpec;

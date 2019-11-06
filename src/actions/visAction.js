@@ -33,6 +33,7 @@ export const deleteData = (index) => ({
 })
 
 // Exploration
+// Mapping
 export const encoding = (channel, field) => ({
     type: VisActionType.ENCODING,
     channel,
@@ -51,9 +52,32 @@ export const removeEncoding = (channel, field) => ({
     field
 })
 
-export const configure = (configuration) => ({
-    type: VisActionType.CONFIGURE,
-    configuration
+// Style
+export const configureStyle = (style) => ({
+    type: VisActionType.CONFIGURE_STYLE,
+    style
+})
+
+// Animation
+export const addChartAnimation = (animation) => ({
+    type: VisActionType.ADD_CHART_ANIMATION,
+    animation
+})
+
+export const modifyChartAnimation = (index, animation) => ({
+    type: VisActionType.MODIFY_CHART_ANIMATION,
+    index,
+    animation
+})
+
+export const removeChartAnimation = (index) => ({
+    type: VisActionType.REMOVE_CHART_ANIMATION,
+    index
+})
+
+export const reorderChartAnimation = (animations) => ({
+    type: VisActionType.REORDER_CHART_ANIMATION,
+    animations
 })
 
 // Meta
