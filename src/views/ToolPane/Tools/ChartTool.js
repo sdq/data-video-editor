@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Divider} from 'antd';
-import { ChartConfigure } from '@/charts/Info';
+import { ChartStyleConfigure } from '@/charts/Info';
 
 export default class ChartTool extends Component {
 
@@ -37,7 +37,7 @@ export default class ChartTool extends Component {
         return (
             <div style={{padding: '5px 10px 10px 10px', fontSize: '14px', backgroundColor: 'white',overflow: 'auto'}}>
                 <Divider>Configure</Divider>
-                <ChartConfigure chartCategory={chartInfo.category} chartType={chartInfo.type} spec={chartInfo.spec} handleConfigureOk={this.handleConfigureOk} {...this.props}/>
+                <ChartStyleConfigure chartCategory={chartInfo.category} chartType={chartInfo.type} spec={chartInfo.spec} handleConfigureOk={this.handleConfigureOk} {...this.props}/>
             </div>
         )
     }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Checkbox } from 'antd';
 
-export default class configure extends Component {
+export default class Style extends Component {
 
     onChangeX = (e) => {
         let {spec} = this.props;
