@@ -54,8 +54,8 @@ const draw = (props) => {
         .append("rect")
         .attr("x", function(d) { return x(d[encoding.x.field]); })
         .attr("width", x.bandwidth())
-        .attr("height", function(d) { return height - y(d[encoding.y.field]); }) 
-        .attr("y", function(d) { return y(d[encoding.y.field]); })
+        .attr("height", function(d) { return height - y(0); }) 
+        .attr("y", function(d) { return y(0); })
         .attr("fill", function (d){ return color(d[encoding.color.field]); });
 
     // Style Configure
@@ -74,7 +74,13 @@ const draw = (props) => {
         }
     }
 
-    return svg.node().parentNode.innerHTML;
+    // Animation
+    svg.selectAll("rect")
+        .transition()
+        .duration(800)
+        .attr("y", function(d) { return y(d[encoding.y.field]); })
+        .attr("height", function(d) { return height - y(d[encoding.y.field]); })
+        .delay(function(d,i){ return(i*100)} )
 }
 
 export default draw;

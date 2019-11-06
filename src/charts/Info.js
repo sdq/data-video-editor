@@ -33,7 +33,7 @@ export function getDefaultSpec(chartCategory, chartType) {
     }
 }
 
-export class ChartConfigure extends Component {
+export class ChartStyleConfigure extends Component {
     render() {
         let {chartCategory, chartType} = this.props;
         let configure = (chartCategory === ChartCategory.D3)?
