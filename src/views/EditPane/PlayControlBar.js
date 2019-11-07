@@ -10,23 +10,23 @@ const ButtonGroup = Button.Group;
 export default class PlayControlBar extends Component {
     constructor(props) {
         super(props);
-        this.play = this.play.bind(this);
+        this.playScene = this.playScene.bind(this);
         this.nextScene = this.nextScene.bind(this);
         this.lastScene = this.lastScene.bind(this);
     };
 
-    play() {
+    playScene() {
         this.props.unselectElement();
         this.props.displayTrackEditor();
         if (this.props.isPerforming === false) {
-            player.playVideo();
+            player.playScene();
         } else {
-            this.pause();
+            player.pauseScene();
         }
     };
 
     pause() {
-        player.pauseVideo();
+        player.pauseScene();
     }
 
     nextScene() {
@@ -49,7 +49,7 @@ export default class PlayControlBar extends Component {
             <div id='playcontrol' style = { { background: Color.LIGHT_ORANGE} }>
                 <ButtonGroup style = { {margin: '10px 0 0 0'}}>
                     <Button icon="step-backward" style = { {padding: '0 20px 0 20px'} } disabled = {isFirstScene || isPerforming} onClick={this.lastScene}/>
-                    <Button icon={isVideoPerforming?"pause":"caret-right"} disabled = {this.props.isScenePerforming} onClick={this.play} style = { {padding: '0 20px 0 20px'} }/>
+                    <Button icon={isPerforming?"pause":"caret-right"} disabled = {isVideoPerforming} onClick={this.playScene} style = { {padding: '0 20px 0 20px'} }/>
                     <Button icon="step-forward" style = { {padding: '0 20px 0 20px'} } disabled = {isLastScene || isPerforming} onClick={this.nextScene}/>
                 </ButtonGroup>
             </div>

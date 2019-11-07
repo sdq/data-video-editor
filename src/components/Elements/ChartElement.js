@@ -6,8 +6,6 @@ import ChartContainer from '@/charts/ChartContainer';
 //import {UIManager,findNodeHandle} from 'react-native';
 
 
-let lastScale = '';
-
 export default class ChartElement extends Component {
     constructor(props) {
         super(props);
@@ -49,119 +47,14 @@ export default class ChartElement extends Component {
     };
 
 
-    
     dragmove(x,y,e){
-        
-        let normal = true;  //正常
-        //主动吸附功能
-        let w = this.props.currentElement.info().width;
-        let h = this.props.currentElement.info().height;        
-        let margin = 10;
-
-        let marginLeftL = Math.abs(x - 0); //素材左-画布左
-        let marginTopT = Math.abs(y - 0);  //素材上-画布上
-        let marginRightR = Math.abs(x+w - 800);  //素材右-画布右
-        let marginBottomB = Math.abs(y+h - 450);  //素材下-画布下
-
-        let marginCenterXC = Math.abs(x+w/2 - 400);  //素材中-画布中
-        let marginCenterYC = Math.abs(y+h/2 - 225);  //素材中-画布中
-        let marginLeftC = Math.abs(x - 400); //素材左-画布中
-        let marginTopC = Math.abs(y - 225);  //素材上-画布中
-        let marginRightC = Math.abs(x+w - 400);  //素材右-画布中
-        let marginBottomC = Math.abs(y+h - 225);  //素材下-画布中
-
-
-         // 逻辑：在靠近辅助线的时候，位置直接更改，可以再次拖动, 直接改动系统级当前抓取的元素
-
-         if( marginLeftL < margin){   
-            x = 0;    
-            e.target.attrs.x = 0;
-            let dragpos = {x,y};
-            this.props.dragElement(dragpos);
-            //素材左-画布左
-            normal = false;
-        }
-        if( marginTopT < margin){
-            y = 0;
-            e.target.attrs.y = 0;
-            let dragpos = {x,y};
-            this.props.dragElement(dragpos);
-            //素材上-画布上
-            normal = false;
-        }
-        if( marginRightR < margin){
-            x = 800 -w;
-            e.target.attrs.x = 800-w;
-            let dragpos = {x,y};
-            this.props.dragElement(dragpos);
-            normal = false;
-        }//素材右-画布右
-        if( marginBottomB < margin){
-            y = 450-h;
-            e.target.attrs.y = 450-h;
-            let dragpos = {x,y};
-            this.props.dragElement(dragpos); 
-            normal = false;
-        }//素材下-画布下
-        if( marginCenterXC < margin){
-            x = 400-w/2;
-            e.target.attrs.x = 400-w/2;
-            let dragpos = {x,y};
-            this.props.dragElement(dragpos); 
-            normal = false;
-        }//素材中-画布中
-        if( marginCenterYC < margin){
-            y = 225-h/2;
-            e.target.attrs.y = 225-h/2;
-            let dragpos = {x,y};
-            this.props.dragElement(dragpos);
-            normal = false;
-        }//素材中-画布中
-        if( marginLeftC < margin){
-            x = 400;
-            e.target.attrs.x = 400;
-            let dragpos = {x,y};
-            this.props.dragElement(dragpos);
-            normal = false;
-        }//素材左-画布中
-        if( marginTopC < margin){
-            y=225;
-            e.target.attrs.y = 225;
-            let dragpos = {x,y};
-            this.props.dragElement(dragpos);
-            normal = false;
-        }//素材上-画布中
-        if( marginRightC < margin){
-            x=400-w;
-            e.target.attrs.x = 400-w;
-            let dragpos = {x,y};
-            
-            this.props.dragElement(dragpos); 
-            normal = false;
-        }//素材右-画布中
-        if( marginBottomC < margin){
-            y=225-h;
-            e.target.attrs.y = 225-h;
-            let dragpos = {x,y};
-            this.props.dragElement(dragpos);
-            normal = false;
-        }//素材下-画布中
-        if(normal){
-        let dragpos = {x,y};
-        this.props.dragElement(dragpos);
-        normal = true;
-        }
+        this.props.dragMoving(x,y,e);
     }
 
 
     dragend(x,y) {
-        //更新右侧ToolPane的值 
-        let dragPos = { x, y };
-        this.props.dragElement(dragPos);
-        const newEle = _.cloneDeep(this.props.element);
-        newEle.info().x = x;
-        newEle.info().y = y;
-        this.props.edit(newEle);
+        let index = this.props.elementIndex;
+        this.props.dragEnding(x,y,index);
     };
     
 
@@ -169,39 +62,17 @@ export default class ChartElement extends Component {
         this.props.editStart();
     }
 
-    
     onTransform(e) {
-        let currentWidth = this.props.currentElement.info().width;
-        let currentHeight = this.props.currentElement.info().height;
-        let w,h,r = '';
-        //Determine whether scale is equal to last time(Rotation only)
-        //So scale calculation is not performed at this time
-        if(lastScale!==e.currentTarget.scaleX()){
-             w = currentWidth*e.currentTarget.scaleX();
-             h = currentHeight*e.currentTarget.scaleY();
-             //实时更改素材的真实w,h，以便显示正确边框和辅助线
-             this.props.currentElement.info().width = w;
-             this.props.currentElement.info().height = h;
-        }else{
-             w = currentWidth;
-             h = currentHeight;
-        }
-             r = e.currentTarget.rotation();
-        //实时更改素材的真实r，以便显示正确边框和辅助线
-        this.props.currentElement.info().rotation = r;
-        let transforminfo = {w,h,r};
-        this.props.transformElement(transforminfo);
+        let originWidth = this.originWidth;
+        let originHeight = this.originHeight;
+        this.props.transforming(e,originWidth,originHeight);
      }
-   
+
     onTransformEnd(e) {
-        // console.log("end transform");
-        const newEle = _.cloneDeep(this.props.element);
-        newEle.info().x = e.target.x();
-        newEle.info().y = e.target.y();
-        newEle.info().width = e.target.width()*e.target.scaleX();
-        newEle.info().height = e.target.height()*e.target.scaleY();
-        newEle.info().rotation = e.target.rotation();
-        this.props.edit(newEle);
+        let index = this.props.elementIndex;
+        let originWidth = this.originWidth;
+        let originHeight = this.originHeight;
+        this.props.transformEnding(e,index,originWidth,originHeight);
     }
 
     chooseChart() {

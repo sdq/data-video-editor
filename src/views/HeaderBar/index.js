@@ -15,6 +15,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
+        displayTrackEditor: () => dispatch(uiActions.displayTrackEditor()),
         displayResourcePane: (isActive) => dispatch(uiActions.displayResourcePane(isActive)),
         displayToolPane: (isActive) => dispatch(uiActions.displayToolPane(isActive)),
     }
