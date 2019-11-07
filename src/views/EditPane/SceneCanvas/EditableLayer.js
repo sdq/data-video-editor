@@ -64,7 +64,7 @@ export default class EditableLayer extends Component {
             >
                 {this.props.currentScene.elements().map(function(element, index) {
                     if (index === this.props.dbClickedElementIndex) {
-                        if (element.type() !== ElementType.IMAGE) {
+                        if (element.type() !== ElementType.IMAGE && element.type() !== ElementType.CHART) {
                             return null; // dbclick element for preview
                         } 
                     } 

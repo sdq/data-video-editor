@@ -4,7 +4,7 @@ import useImage from 'use-image';
 
 const ChartImage = (props) => {
     const [image] = useImage(props.src);
-    return <Image name={props.name} image={image} />;
+    return <Image ref={node=>props.getImageRef(node)} name={props.name} image={image} />;
 };
 
 export default ChartImage;
