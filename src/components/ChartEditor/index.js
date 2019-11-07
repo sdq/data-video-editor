@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, Layout, Tabs, Upload, Button, Icon, Select, Alert, Popconfirm, message } from 'antd';
+import { Modal, Layout, Tabs, Upload, Button, Icon, Select } from 'antd';
 import FieldType from '@/constants/FieldType';
 import EditableFormTable from '@/components/DataPreview/EditableFormTable';
 import DataProcessor from '@/components/DataPreview/processor';
