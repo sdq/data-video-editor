@@ -9,6 +9,7 @@ export default class D3Chart extends Component {
         super(props);
         this.state = {
             specString: '',
+            showAnimation: false,
             chartImageUrl: '',
         };
     }
@@ -18,13 +19,16 @@ export default class D3Chart extends Component {
     }
 
     componentDidUpdate() {
-        if (this.state.specString !== JSON.stringify(this.props.spec)) {
+        if (this.state.specString !== JSON.stringify(this.props.spec) || this.props.showAnimation !== this.state.showAnimation) {
             this.renderChart();
         }
     }
 
     renderChart = () => {
         const svg = this.props.draw(this.props);
+        this.setState({
+            showAnimation: this.props.showAnimation
+        });
         if (svg) {
             const visSource = svg.node().parentNode.innerHTML;
             const chartImageUrl = this.getImageUrl(visSource);
