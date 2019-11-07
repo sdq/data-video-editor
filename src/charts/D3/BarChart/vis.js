@@ -43,10 +43,6 @@ const draw = (props) => {
             .domain([0, d3.max(data, function(d) { return d[encoding.y.field]; })])
             .range([ height, 0]);
 
-    // Color channel
-    let colorScale = d3.scaleOrdinal(d3.schemeCategory10);
-    let color = colorScale.domain(data.map(function (d){ return d[encoding.color.field]; }));
-
     // Bars
     svg.selectAll(".bar")
         .data(data)
@@ -56,7 +52,16 @@ const draw = (props) => {
         .attr("width", x.bandwidth())
         .attr("height", function(d) { return height - y(d[encoding.y.field]); }) 
         .attr("y", function(d) { return y(d[encoding.y.field]); })
-        .attr("fill", function (d){ return color(d[encoding.color.field]); });
+        //.attr("fill", function (d){ return color(d[encoding.color.field]); });
+
+    // Color channel: Not necessary
+    if ('color' in encoding) {
+        let colorScale = d3.scaleOrdinal(d3.schemeCategory10);
+        let color = colorScale.domain(data.map(function (d){ return d[encoding.color.field]; }));
+        svg.selectAll("rect")
+            .data(data)
+            .attr("fill", function (d){ return color(d[encoding.color.field]); });
+    }
 
     // Style Configure
     const configure = props.spec.configure;
