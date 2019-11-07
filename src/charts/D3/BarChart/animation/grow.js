@@ -4,13 +4,13 @@ import _ from 'lodash';
 const offset = 20; // To show whole chart
 
 const draw = (props) => {
-    // console.log('draw')
     let a = document.createElement("div");
     if (!props.onCanvas) {
         d3.select('.vis-barchart > *').remove();
         a = '.vis-barchart';
     }
     const data = props.data;
+
     // console.log(data);
     const margin = {top: 10, right: -10, bottom: 40, left: 40};
     const width = props.width - margin.left - margin.right - offset;

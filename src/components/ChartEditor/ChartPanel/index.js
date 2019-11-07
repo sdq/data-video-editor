@@ -16,6 +16,8 @@ export default class ChartPanel extends Component {
                     width={600} 
                     height={600}
                     current={this.props.scenePosition}
+                    onCanvas={false} 
+                    showAnimation={this.props.showAnimation}
                 />
             </div>
         )
