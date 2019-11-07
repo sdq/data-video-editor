@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Modal } from 'antd';
 import FieldType from '@/constants/FieldType';
-import EditableFormTable from './EditableFormTable.js'
+import EditableFormTable from './EditableFormTable';
 
 export default class DataPreview extends Component {
 
