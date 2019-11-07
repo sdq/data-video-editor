@@ -16,12 +16,8 @@ class DataProcessor {
 
     process = (fileURL) => {
         return new Promise((resolve, reject) => {
-            d3.csv(fileURL, (error, data) => {
-                //reject
-                if (error) {
-                    reject(error);
-                } else {
-                //resolve
+            d3.csv(fileURL)
+                .then(function (data) {
                     let schema = [];
                     for (let key in data[0]) {
                         if (!isNaN(data[0][key])) {
@@ -36,8 +32,10 @@ class DataProcessor {
                         data: data
                     }
                     resolve(dataItem);
-                }
-            })
+                })
+                .catch(function (error) {
+                    reject(error);
+                })
         });
     }
 }
