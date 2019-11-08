@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { Text, Group } from 'react-konva';
 import Color from '@/constants/Color';
 import { AnimationCreator } from '@/animation';
-import _ from 'lodash';
-
 
 export default class TextElement extends Component {
     constructor(props) {

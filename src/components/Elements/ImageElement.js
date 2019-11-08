@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Image, Group } from 'react-konva';
 import { AnimationCreator } from '@/animation';
-import _ from 'lodash';
 
 export default class ImageElement extends Component {
     constructor(props) {
