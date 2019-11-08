@@ -89,7 +89,7 @@ export default class AssistLines extends Component {
                 <div style={{ display: marginRightC < margin ? 'block' : 'none', position: 'absolute', zIndex: 1, marginLeft: 400, height: 450, width: 1, borderLeftColor: assistlinecolor, borderLeftWidth: 1, borderLeftStyle: 'dashed' }} />
                 <div style={{ display: marginBottomC < margin ? 'block' : 'none', position: 'absolute', zIndex: 2, marginTop: 225, height: 1, width: 800, borderTopColor: assistlinecolor, borderTopWidth: 1, borderTopStyle: 'dashed' }} />
 
-                <div style={{  display:  (r===0) ? 'block' : 'none',position: 'absolute', zIndex: 1, marginLeft: x - 1 || 0, marginTop: y-10 || 0,height: h+20, width: 1, borderLeftColor: assistlinecolor, borderLeftWidth: 1, borderLeftStyle: 'dashed' }} />
+                <div style={{  display:  r===0 ? 'block' : 'none',position: 'absolute', zIndex: 1, marginLeft: x - 1 || 0, marginTop: y-10 || 0,height: h+20, width: 1, borderLeftColor: assistlinecolor, borderLeftWidth: 1, borderLeftStyle: 'dashed' }} />
                 <div style={{  display:  r===0 ? 'block' : 'none',position: 'absolute', zIndex: 2, marginTop: y - 1 || 0, marginLeft: x-10 || 0,height: 1, width: w+20, borderTopColor: assistlinecolor, borderTopWidth: 1, borderTopStyle: 'dashed' }} />
 
                 <div style={{ display: !smallW && ! isChartLine && r===0 ? 'block' : 'none',position: 'absolute', zIndex: 1, marginLeft: x+w/2 || 0, marginTop: y-10 || 0,height: h+20, width: 1, borderLeftColor: assistlinecolor, borderLeftWidth: 1, borderLeftStyle: 'dashed' }} />

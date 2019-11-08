@@ -111,7 +111,7 @@ export default class TextTool extends Component {
         let textFamily = value;   
         this.setState({textFamily}); //record
         const newScene = Object.assign({},this.props.currentScene);
-        this.props.currentElement.info().fontfamily = textFamily;
+        this.props.currentElement.info().fontFamily = textFamily;
         this.props.updateScene(this.props.sceneIndex, newScene);
     }
 
@@ -200,22 +200,28 @@ export default class TextTool extends Component {
 
                 <Divider>Properties</Divider>
                 <Row style={{margin: '0px 15px 0px 15px', fontSize: '14px'}}> 
-                    <Select defaultValue={this.props.currentElement.info().fontfamily ? this.props.currentElement.info().fontfamily : "Font"}
+                    <Select defaultValue={this.props.currentElement.info().fontFamily ? this.props.currentElement.info().fontFamily : "Font"}
                     style={{ width: '100%' , align :'center' }}
                     onChange={value => this.onTextFamilyChange(value)}
                     >
                     <OptGroup label="中文">
-                        <Option value="SimSun">宋体</Option>
-                        <Option value="SimHei">黑体</Option>
+                        <Option value="STSong">华文宋体</Option>
+                        <Option value="STHeiti">华文黑体</Option>
                         <Option value="STHeiti Light">华文细黑</Option>
-                        <Option value="FangSong">仿宋</Option>
-                        <Option value="KaiTi">楷体</Option>
-                        <Option value="LiSu">隶书</Option>
+                        <Option value="STFangsong">华文仿宋</Option>
+                        <Option value="STKaiti">华文楷体</Option>
+                        <Option value="PingFang SC">苹方</Option>
+                        <Option value="Songti SC">宋体-简</Option>
+                        <Option value="Heiti SC">黑体-简</Option>
+                        <Option value="Xingkai SC">行楷-简</Option>
+                        <Option value="Yuanti SC">圆体-简</Option>
                     </OptGroup>
                     <OptGroup label="English">
                         <Option value="Helvetica">Helvetica</Option>
-                        <Option value="Pingfang">Pingfang SC</Option>
-                        </OptGroup>
+                        <Option value="San Francisco">San Francisco</Option>
+                        <Option value="Arial">Arial</Option>
+                        <Option value="Times New Roman">Times NewRoman</Option>
+                    </OptGroup>
                     </Select>
                 </Row>
 

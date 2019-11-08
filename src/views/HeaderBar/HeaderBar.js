@@ -10,12 +10,16 @@ const player = new Player();
 const prepareTime = 100; //TODO: 100ms for preparation
 
 export default class HeaderBar extends Component {
-
-    state = {
+    constructor(props) {
+        super(props);
+        this.state = {
         visible: false,
         loading: false,
-        remainTime: 0
+        remainTime: 0,
+        isVideoPerforming: false,
     };
+    this.play = this.play.bind(this);
+};
 
     showMedia = () => {
         const {showResourcePane} = this.props;
@@ -43,13 +47,32 @@ export default class HeaderBar extends Component {
         }
     }
 
+    play() {
+        // this.props.unselectElement();
+        // this.props.displayTrackEditor();
+        if (this.state.isVideoPerforming === false) {
+            this.setState({
+                isVideoPerforming : true
+            });
+            this.props.displayTrackEditor();
+            player.playVideo(); 
+        } else {
+            this.setState({
+                isVideoPerforming : false
+            });
+            this.pause();   
+        }
+    };
+
+    pause() {
+        player.pauseVideo();
+    }
+
     handleOk = () => {
         this.setState({
             visible: false,
             loading: true
         });
-        console.log('save video');
-        // console.log(this.props)
         this.setState({
             remainTime: this.props.videoDuration
         });
@@ -147,7 +170,10 @@ export default class HeaderBar extends Component {
                 <Button type="primary" icon="export" shape="round" style={{ float: 'right', marginLeft: 12 }} onClick={this.showModal}>
                     Export
                 </Button>
-                <Button.Group style={{ float: 'right', marginLeft: 40 }}>
+                <Button type="primary" shape="round" icon={this.state.isVideoPerforming?"pause":"caret-right"} onClick={this.play} style={{ float: 'right', marginLeft: 12 } }>
+                    Preview
+                </Button>
+                <Button.Group style={{ float: 'right', marginLeft: 12 }}>
                     <Button type="primary" shape="round" onClick={this.showMedia}>Media</Button>
                     <Button type="primary" shape="round" onClick={this.showTool}>Tool</Button>
                 </Button.Group>

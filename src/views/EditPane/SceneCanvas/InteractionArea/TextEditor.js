@@ -63,8 +63,11 @@ export default class TextEditor extends Component {
             //仍然需要更精准测试
 
             offsetW = (this.props.currentElement) ? this.props.currentElement.info().textSize:20;//基础偏差：一个字的偏差
-            offwidth = 0.25-offsetW/500;  //次级偏差：计算伸缩，假定为线性函数
-            //console.log(offwidth);
+            offwidth = 0.25-offsetW/500;  //次级偏差：计算伸缩，假定为线性函数（中文） 
+            
+            //TODO://识别换行前是英文还是中文
+            //假如换行的是英文，那么换行时就会出现跳行偏差
+
 
         return (
              <div className="TextEditor" style={{display: (this.state.isShowTextArea) ? "block" : "none"}} > 
