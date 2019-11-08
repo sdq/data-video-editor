@@ -5,12 +5,14 @@ import _ from 'lodash';
 const offset = 20; // To show whole chart
 
 const draw = (props) => {
+    // console.log('draw')
     let a = document.createElement("div");
     if (!props.onCanvas) {
         d3.select('.vis-barchart > *').remove();
         a = '.vis-barchart';
     }
 
+    // console.log(data);
     const margin = {top: 10, right: -10, bottom: 40, left: 40};
     const width = props.width - margin.left - margin.right - offset;
     const height = props.height - margin.top - margin.bottom - offset;
@@ -28,7 +30,7 @@ const draw = (props) => {
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
             .attr("fill", "pink");
-        return svg.node().parentNode.innerHTML;
+        return svg;
     }
 
     // Process Data
@@ -46,20 +48,26 @@ const draw = (props) => {
             .domain([0, d3.max(data, function(d) { return d[encoding.y.field]; })])
             .range([ height, 0]);
 
-    // Color channel
-    let colorScale = d3.scaleOrdinal(d3.schemeCategory10);
-    let color = colorScale.domain(data.map(function (d){ return d[encoding.color.field]; }));
-
     // Bars
     svg.selectAll(".bar")
         .data(data)
         .enter()
         .append("rect")
+        .style('stroke-width','0')
         .attr("x", function(d) { return x(d[encoding.x.field]); })
         .attr("width", x.bandwidth())
-        .attr("height", function(d) { return height - y(0); }) 
-        .attr("y", function(d) { return y(0); })
-        .attr("fill", function (d){ return color(d[encoding.color.field]); });
+        .attr("height", function(d) { return height - y(d[encoding.y.field]); }) 
+        .attr("y", function(d) { return y(d[encoding.y.field]); })
+        .attr("fill", "pink");
+
+    // Color channel: Not necessary
+    if ('color' in encoding) {
+        let colorScale = d3.scaleOrdinal(d3.schemeCategory10);
+        let color = colorScale.domain(data.map(function (d){ return d[encoding.color.field]; }));
+        svg.selectAll("rect")
+            .data(data)
+            .attr("fill", function (d){ return color(d[encoding.color.field]); });
+    }
 
     // Style Configure
     const configure = props.spec.configure;
@@ -70,6 +78,7 @@ const draw = (props) => {
                 .call(d3.axisBottom(x))
                 .selectAll("text")
                 .attr("transform", "translate(-10,0)rotate(-45)")
+                .style('stroke-width','1')
                 .style("text-anchor", "end");
         }
         if (configure.showAxisY) {
@@ -78,12 +87,17 @@ const draw = (props) => {
     }
 
     // Animation
-    svg.selectAll("rect")
+    if ('color' in encoding) {
+        svg.selectAll("rect")
         .transition()
         .duration(800)
-        .attr("y", function(d) { return y(d[encoding.y.field]); })
-        .attr("height", function(d) { return height - y(d[encoding.y.field]); })
+        .attr("fill", "pink")
+        //.attr("fill", function (d){ return color(d[encoding.color.field]); });
         .delay(function(d,i){ return(i*600)} )
+    }
+    
+
+    return svg;
 }
 
 export default draw;
