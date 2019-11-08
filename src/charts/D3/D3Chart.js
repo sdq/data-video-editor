@@ -15,12 +15,20 @@ export default class D3Chart extends Component {
     }
 
     componentDidMount() {
-        this.renderChart();
+        if (this.props.animate) {
+            this.renderAnimation();
+        } else {
+            this.renderChart();
+        }
     }
 
     componentDidUpdate() {
         if (this.state.specString !== JSON.stringify(this.props.spec) || this.props.showAnimation !== this.state.showAnimation) {
-            this.renderChart();
+            if (this.props.animate) {
+                this.renderAnimation();
+            } else {
+                this.renderChart();
+            }
         }
     }
 
@@ -37,6 +45,17 @@ export default class D3Chart extends Component {
                 chartImageUrl: chartImageUrl
             });
         }
+    }
+
+    renderAnimation = () => {
+        for (let index = 0; index < this.props.animate.length; index++) {
+            setTimeout(function () {
+                this.props.animate[index](this.props);
+            }.bind(this), index * 2000)
+        }
+        this.setState({
+            showAnimation: this.props.showAnimation
+        });
     }
 
     getImageUrl = (source) => {

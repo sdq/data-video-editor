@@ -1,4 +1,5 @@
 import * as d3 from 'd3';
+import {getMinRows, getMaxRows} from './helper';
 import _ from 'lodash';
 
 const offset = 20; // To show whole chart
@@ -10,7 +11,7 @@ const draw = (props) => {
         d3.select('.vis-barchart > *').remove();
         a = '.vis-barchart';
     }
-    const data = props.data;
+
     // console.log(data);
     const margin = {top: 10, right: -10, bottom: 40, left: 40};
     const width = props.width - margin.left - margin.right - offset;
@@ -31,6 +32,10 @@ const draw = (props) => {
             .attr("fill", "pink");
         return svg;
     }
+
+    // Process Data
+    //const data = props.data;
+    const data = getMaxRows(props.data, encoding);
 
     // X channel
     let x = d3.scaleBand()
