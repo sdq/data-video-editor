@@ -205,7 +205,7 @@ export default class ImageTab extends Component {
                     //defaultActiveKey={['C1']}
                     activeKey={this.state.activeKey}
                     onChange={this.callback}>
-                    <Panel header={search !== "" ? "C1 (" + shown[0] + ")" : "C1"} key="C1" className="collaspe-panel">
+                    <Panel header={search !== "" ? "Business&Technology (" + shown[0] + ")" : "Business&Technology"} key="C1" className="collaspe-panel">
                         <List
                         className="collaspe-list"
                         grid={{ gutter: undrawData.length/2, column: 2 }}
@@ -224,7 +224,7 @@ export default class ImageTab extends Component {
                         </Button>)}
                     </Panel>
 
-                    <Panel header={search !== "" ? "C2 (" + shown[1] + ")" : "C2"} key="C2" className="collaspe-panel">
+                    <Panel header={search !== "" ? "Society&Humanity (" + shown[1] + ")" : "Society&Humanity"} key="C2" className="collaspe-panel">
                         <List
                         className="collaspe-list"
                         grid={{ gutter: undrawData.length/2, column: 2 }}
@@ -242,7 +242,7 @@ export default class ImageTab extends Component {
                     </Panel>
 
 
-                    <Panel header={search !== "" ? "C3 (" + shown[2] + ")" : "C3"} key="C3" className="collaspe-panel">
+                    <Panel header={search !== "" ? "Sports&Fitness (" + shown[2] + ")" : "Sports&Fitness"} key="C3" className="collaspe-panel">
                         <List
                         className="collaspe-list"
                         grid={{ gutter: undrawData.length/2, column: 2 }}
@@ -259,7 +259,7 @@ export default class ImageTab extends Component {
                         </Button>)}
                     </Panel>
 
-                    <Panel header={search !== "" ? "C4 (" + shown[3] + ")" : "C4"} key="C4" className="collaspe-panel">
+                    <Panel header={search !== "" ? "Animal&Nature (" + shown[3] + ")" : "Animal&Nature"} key="C4" className="collaspe-panel">
                         <List
                         className="collaspe-list"
                         grid={{ gutter: undrawData.length/2, column: 2 }}
@@ -276,7 +276,7 @@ export default class ImageTab extends Component {
                         </Button>)}
                     </Panel>
 
-                    <Panel header={search !== "" ? "C5 (" + shown[4] + ")" : "C5"} key="C5" className="collaspe-panel">
+                    <Panel header={search !== "" ? "Culture&Art (" + shown[4] + ")" : "Culture&Art"} key="C5" className="collaspe-panel">
                         <List
                         className="collaspe-list"
                         grid={{ gutter: undrawData.length/2, column: 2 }}
