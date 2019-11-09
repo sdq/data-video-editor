@@ -68,7 +68,7 @@ export default class ChartEditor extends Component {
                 bodyStyle={{ height: 600, padding: 0 }}
                 onCancel={this.props.handleCancel}
             >
-                <Layout style={{ height: '600px' }}>
+                <Layout style={{ height: '600px'}}>
                     <Sider width={420} className="pane">
                         <Tabs defaultActiveKey='Mapping' onChange={this.changeTab}>
                             <TabPane tab="Data" key="Data" style={{ padding: 8 }}>

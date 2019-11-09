@@ -3419,6 +3419,7 @@ d3-format@1, d3-format@^1.3.2:
   resolved "https://registry.yarnpkg.com/d3-format/-/d3-format-1.3.2.tgz#6a96b5e31bcb98122a30863f7d92365c00603562"
   integrity sha512-Z18Dprj96ExragQ0DeGi+SYPQ7pPfRMtUXtsg/ChVIKNBCzjO8XYJvRTC1usblx52lqge56V5ect+frYTQc8WQ==
 
+<<<<<<< HEAD
 d3-geo@1:
   version "1.11.7"
   resolved "https://registry.yarnpkg.com/d3-geo/-/d3-geo-1.11.7.tgz#715c9e754725854b2ab64fb053b0971baf4a7273"
@@ -3427,6 +3428,9 @@ d3-geo@1:
     d3-array "1 - 2"
 
 d3-geo@^1.11.3:
+=======
+d3-geo@1, d3-geo@^1.11.3:
+>>>>>>> fd181384565b7b66a6e18953c1d27ade0b687ae0
   version "1.11.6"
   resolved "https://registry.yarnpkg.com/d3-geo/-/d3-geo-1.11.6.tgz#134f2ef035ff75a448075fafdea92702a2e0e0cf"
   integrity sha512-z0J8InXR9e9wcgNtmVnPTj0TU8nhYT6lD/ak9may2PdKqXIeHUr8UbFLoCtrPYNsjv6YaLvSDQVl578k6nm7GA==
