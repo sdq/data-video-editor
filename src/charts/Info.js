@@ -36,12 +36,12 @@ export function getDefaultSpec(chartCategory, chartType) {
 export class ChartStyleConfigure extends Component {
     render() {
         let {chartCategory, chartType} = this.props;
-        let configure = (chartCategory === ChartCategory.D3)?
+        let styleConfigure = (chartCategory === ChartCategory.D3)?
         <D3Configure chartType={chartType} {...this.props}/>:
         <VegaliteConfigure chartType={chartType} {...this.props}/>
         return (
             <div>
-                {configure}
+                {styleConfigure}
             </div>
         )
     }

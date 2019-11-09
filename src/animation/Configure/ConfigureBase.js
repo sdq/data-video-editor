@@ -13,7 +13,7 @@ export default class ConfigureBase extends Component {
                 onOk={this.props.handleOk}
                 onCancel={this.props.handleCancel}
             >
-                <p>Configure</p>
+                <p>Animation Setting</p>
                 <p>Coming soon...</p>
             </Modal>
         )

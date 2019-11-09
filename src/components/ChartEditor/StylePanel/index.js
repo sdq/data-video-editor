@@ -4,7 +4,8 @@ import { ChartStyleConfigure } from '@/charts/Info';
 export default class StylePanel extends Component {
 
     handleConfigureOk = (spec) => {
-        this.props.visConfigure(spec.configure);
+        console.log('change style');
+        this.props.visConfigure(spec.style);
         // Update chart on canvas
         const newScene = Object.assign({}, this.props.currentScene);
         let newEle = Object.assign({}, this.props.currentElement);
@@ -14,7 +15,7 @@ export default class StylePanel extends Component {
         const elementName = this.props.sceneIndex + '-' + this.props.elementIndex;
         this.props.updateElement(newEle, this.props.elementIndex, elementName);
     }
-    
+
     render() {
         const {currentElement} = this.props;
         const chartInfo = currentElement.info();

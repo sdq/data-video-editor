@@ -1,17 +1,19 @@
 import React, { Component } from 'react';
-import { Checkbox } from 'antd';
+import { Checkbox, Divider } from 'antd';
 
 export default class Style extends Component {
 
     onChangeX = (e) => {
         let {spec} = this.props;
-        spec.configure.showAxisX = e.target.checked;
+        spec.style.showAxisX = e.target.checked;
+        console.log('onChangeX');
+        console.log(spec);
         this.props.handleConfigureOk(spec);
     }
 
     onChangeY = (e) => {
         let {spec} = this.props;
-        spec.configure.showAxisY = e.target.checked;
+        spec.style.showAxisY = e.target.checked;
         this.props.handleConfigureOk(spec);
     }
 
@@ -19,11 +21,9 @@ export default class Style extends Component {
         let {spec} = this.props;
         return (
             <div>
-                D3 BarChart Configure
-                <br/>
-                <Checkbox defaultChecked={spec.configure.showAxisX} onChange={this.onChangeX}>Show Axis X</Checkbox>
-                <br/>
-                <Checkbox defaultChecked={spec.configure.showAxisY} onChange={this.onChangeY}>Show Axis Y</Checkbox>
+                <Divider>Axis Style</Divider>
+                <Checkbox defaultChecked={spec.style.showAxisX} onChange={this.onChangeX}>Show Axis X</Checkbox>
+                <Checkbox defaultChecked={spec.style.showAxisY} onChange={this.onChangeY}>Show Axis Y</Checkbox>
             </div>
         )
     }

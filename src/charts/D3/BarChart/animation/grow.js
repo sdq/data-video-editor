@@ -61,10 +61,10 @@ const draw = (props) => {
         .attr("height", function(d) { return height - y(d[encoding.y.field]); })
         .attr("fill", function (d){ return color(d[encoding.color.field]); });
 
-    // Style Configure
-    const configure = props.spec.configure;
-    if (!_.isEmpty(configure)) {
-        if (configure.showAxisX) {
+    // Style
+    const style = props.spec.style;
+    if (!_.isEmpty(style)) {
+        if (style.showAxisX) {
             svg.append("g")
                 .attr("transform", "translate(0," + height + ")")
                 .call(d3.axisBottom(x))
@@ -72,7 +72,7 @@ const draw = (props) => {
                 .attr("transform", "translate(-10,0)rotate(-45)")
                 .style("text-anchor", "end");
         }
-        if (configure.showAxisY) {
+        if (style.showAxisY) {
             svg.append("g").call(d3.axisLeft(y));
         }
     }

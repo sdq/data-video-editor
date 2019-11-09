@@ -137,17 +137,19 @@ export default (state = initialState, action) => {
             return newState
 
         case VisActionType.CONFIGURE:
+            console.log('configfure')
+            console.log(newSpec);
             // state
             newSpecHistory = newState.specHistory.slice(0,newState.specIndex+1);
-            newSpec.configuration = action.configuration;
+            newSpec.configure = action.configure;
             newSpecHistory.push(JSON.stringify(newSpec));
             newState.specHistory = newSpecHistory
             // action
             newActionHistory = newState.actionHistory.slice();
             newActionHistory.push({
                 "type": VisActionType.CONFIGURATION,
-                "description": "change configuration",
-                "detail": action.configuration,
+                "description": "change style configuration",
+                "detail": action.configure,
             });
             newState.actionHistory = newActionHistory;
             newState.specIndex ++;

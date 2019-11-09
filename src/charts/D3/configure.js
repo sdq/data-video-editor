@@ -4,7 +4,7 @@ import BarchartStyle from './BarChart/style';
 
 export default class D3Configure extends Component {
 
-    chooseConfigure = (chartType) => {
+    chooseConfigureStyle = (chartType) => {
         switch (chartType) {
             case ChartType.BARCHART:
                 return <BarchartStyle  {...this.props}/>;
@@ -15,7 +15,7 @@ export default class D3Configure extends Component {
     }
 
     render() {
-        let conf = this.chooseConfigure(this.props.chartType)
+        let conf = this.chooseConfigureStyle(this.props.chartType)
         return (
             <div>
                 {conf}

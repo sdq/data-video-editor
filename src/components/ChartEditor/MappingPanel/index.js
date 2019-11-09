@@ -14,7 +14,7 @@ export default class MappingPanel extends Component {
                     <FieldList  { ...this.props }/>
                 </Col>
                 <Col span={13} className="encodingPanel">
-                    <Divider>Mappings</Divider>
+                    <Divider>Channels</Divider>
                     <Encoding { ...this.props }/>
                 </Col>
             </Row>

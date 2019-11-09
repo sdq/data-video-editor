@@ -1,6 +1,6 @@
 const defaultSpec = {
     "encoding": {},
-    "configure": {
+    "style": {
         "showAxisX": true,
         "showAxisY": true,
     }

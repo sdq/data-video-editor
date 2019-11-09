@@ -25,7 +25,7 @@ const draw = (props) => {
 
     // get encoding
     const encoding = props.spec.encoding;
-    if (_.isEmpty(encoding) || !('x' in encoding) || !('y' in encoding)) {
+    if (_.isEmpty(encoding) || !('x' in encoding) || !('y' in encoding) || _.isEmpty(encoding.x) || _.isEmpty(encoding.y) ) {
         svg.append("rect")
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
@@ -34,8 +34,8 @@ const draw = (props) => {
     }
 
     // Process Data
-    //const data = props.data;
-    const data = getMaxRows(props.data, encoding);
+    const data = props.data;
+    //const data = getMaxRows(props.data, encoding);
 
     // X channel
     let x = d3.scaleBand()
@@ -69,10 +69,10 @@ const draw = (props) => {
             .attr("fill", function (d){ return color(d[encoding.color.field]); });
     }
 
-    // Style Configure
-    const configure = props.spec.configure;
-    if (!_.isEmpty(configure)) {
-        if (configure.showAxisX) {
+    // Style
+    const style = props.spec.style;
+    if (!_.isEmpty(style)) {
+        if (style.showAxisX) {
             svg.append("g")
                 .attr("transform", "translate(0," + height + ")")
                 .call(d3.axisBottom(x))
@@ -81,7 +81,7 @@ const draw = (props) => {
                 .style('stroke-width','1')
                 .style("text-anchor", "end");
         }
-        if (configure.showAxisY) {
+        if (style.showAxisY) {
             svg.append("g").call(d3.axisLeft(y));
         }
     }

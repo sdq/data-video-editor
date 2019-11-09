@@ -51,9 +51,9 @@ export const removeEncoding = (channel, field) => ({
     field
 })
 
-export const configure = (configuration) => ({
-    type: VisActionType.CONFIGURE,
-    configuration
+export const configureStyle = (style) => ({
+    type: VisActionType.CONFIGURE_STYLE,
+    style
 })
 
 // Meta
