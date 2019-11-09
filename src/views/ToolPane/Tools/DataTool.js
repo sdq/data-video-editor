@@ -164,13 +164,12 @@ export default class DataTool extends Component {
                     <p className="ant-upload-drag-icon">
                         <Icon type="inbox" />
                     </p>
-                    {/* <p className="ant-upload-text">Click or drag csv file to this area</p> */}
                     <p className="ant-upload-hint">
                         Click or drag csv file to this area
                     </p>
                 </Dragger>
                 </div>
-                <Select id="data-selection"
+                <Select id="data-selection-"
                     value={currentData.name}
                     defaultValue={currentData.name}
                     onChange={(e) => this.handleDataSelect(e)}
