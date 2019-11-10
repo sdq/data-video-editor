@@ -34,8 +34,8 @@ const draw = (props) => {
     }
 
     // Process Data
-    const data = props.data;
-    //const data = getMaxRows(props.data, encoding);
+    // const data = props.data;
+    const data = getMaxRows(props.data, encoding);
 
     // X channel
     let x = d3.scaleBand()
