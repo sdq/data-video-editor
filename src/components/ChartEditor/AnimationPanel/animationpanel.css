@@ -1,0 +1,29 @@
+.animation-list-container {
+    overflow: auto;
+    padding: 0px 0px;
+    height: 220px;
+}
+
+.animation-plan-container {
+    overflow: auto;
+    padding: 0px 0px;
+    height: 280px;
+}
+
+.animation-card {
+    background-color: #edededcc;
+    padding: 6px;
+    width: 124px;
+    height: 36px;
+    text-align: left;
+    box-shadow: 2px 2px 2px #dddddd;
+}
+
+.animation-step {
+    background-color: #edededcc;
+    padding: 6px;
+    width: 400px;
+    height: 36px;
+    text-align: left;
+    box-shadow: 2px 2px 2px #dddddd;
+}

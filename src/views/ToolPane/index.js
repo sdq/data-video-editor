@@ -56,6 +56,10 @@ const mapDispatchToProps = dispatch => {
         },
         removeEncoding: (channel, field) => dispatch(visActions.removeEncoding(channel, field)),
         configureStyle: (style) => dispatch(visActions.configureStyle(style)),
+        addChartAnimation: (animation) => dispatch(visActions.addChartAnimation(animation)),
+        modifyChartAnimation: (index, animation) => dispatch(visActions.modifyChartAnimation(index, animation)),
+        removeChartAnimation: (index) => dispatch(visActions.removeChartAnimation(index)),
+        reorderChartAnimation: (animations) => dispatch(visActions.reorderChartAnimation(animations)),
     }
 }
 
