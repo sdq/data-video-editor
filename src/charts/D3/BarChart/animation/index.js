@@ -1,15 +1,15 @@
 import grow from './grow';
 import emphasize from './emphasize';
 
-const animate = (animation) => {
+const animate = (animation, props) => {
 
     switch (animation.type) {
         case 'grow':
-            grow()
+            grow(props)
             break;
 
         case 'emphasize':
-            emphasize()
+            emphasize(props)
             break;
     
         default:
@@ -17,6 +17,4 @@ const animate = (animation) => {
     }
 }
 
-export default grow;
-
-export {grow, emphasize, animate};
+export default animate;

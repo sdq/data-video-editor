@@ -9,28 +9,25 @@ export default class D3Chart extends Component {
         super(props);
         this.state = {
             specString: '',
-            showAnimation: false,
             chartImageUrl: '',
         };
     }
 
     componentDidMount() {
-        this.renderChart();
-        // if (this.props.animate) {
-        //     this.renderAnimation();
-        // } else {
-        //     this.renderChart();
-        // }
+        if (this.props.showAnimation) {
+            this.renderAnimation();
+        } else {
+            this.renderChart();
+        }
     }
 
     componentDidUpdate() {
-        if (this.state.specString !== JSON.stringify(this.props.spec) || this.props.showAnimation !== this.state.showAnimation) {
-            this.renderChart();
-            // if (this.props.animate) {
-            //     this.renderAnimation();
-            // } else {
-            //     this.renderChart();
-            // }
+        if (this.state.specString !== JSON.stringify(this.props.spec)) {
+            if (this.props.showAnimation) {
+                this.renderAnimation();
+            } else {
+                this.renderChart();
+            }
         }
     }
 
@@ -49,16 +46,15 @@ export default class D3Chart extends Component {
         }
     }
 
-    // renderAnimation = () => {
-    //     for (let index = 0; index < this.props.animate.length; index++) {
-    //         setTimeout(function () {
-    //             this.props.animate[index](this.props);
-    //         }.bind(this), index * 2000)
-    //     }
-    //     this.setState({
-    //         showAnimation: this.props.showAnimation
-    //     });
-    // }
+    renderAnimation = () => {
+        const animations = this.props.spec.animation;
+        for (let index = 0; index < animations.length; index++) {
+            const animation = animations[index];
+            setTimeout(function () {
+                this.props.animate(animation, this.props);
+            }.bind(this), index * 2000)
+        }
+    }
 
     getImageUrl = (source) => {
         var canvas = document.createElement('canvas');
