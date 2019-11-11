@@ -6,8 +6,6 @@ export default class Style extends Component {
     onChangeX = (e) => {
         let {spec} = this.props;
         spec.style.showAxisX = e.target.checked;
-        console.log('onChangeX');
-        console.log(spec);
         this.props.handleConfigureOk(spec);
     }
 

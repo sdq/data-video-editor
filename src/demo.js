@@ -105,14 +105,14 @@ const demochart2 = new ChartInfo(
             "showAxisY": true,
         },
         "animation": [
-            {
-                "type": "grow",
-                "duration": 800,
-            },
-            {
-                "type": "emphasize",
-                "duration": 800,
-            }
+            // {
+            //     "type": "grow",
+            //     "duration": 800,
+            // },
+            // {
+            //     "type": "emphasize",
+            //     "duration": 800,
+            // }
         ]
     },
     45,

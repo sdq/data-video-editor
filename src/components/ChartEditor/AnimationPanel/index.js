@@ -1,17 +1,20 @@
 import React, { Component } from 'react';
 import AnimationList from './AnimationList';
 import AnimationPlan from './AnimationPlan';
+import './animationpanel.css';
 
 export default class AnimationPanel extends Component {
     render() {
         return (
             <div>
-                <div style={{height: 250, backgroundColor: 'yellow'}}>
+                <AnimationList {...this.props}/>
+                <AnimationPlan {...this.props}/>
+                {/* <div className={'animation-list-container'} style={{backgroundColor: 'yellow'}}>
                     <AnimationList />
                 </div>
-                <div style={{height: 250, backgroundColor: 'red'}}>
+                <div className={'animation-plan-container'} style={{backgroundColor: 'red'}}>
                     <AnimationPlan />
-                </div>
+                </div> */}
             </div>
         )
     }

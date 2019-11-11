@@ -4,7 +4,7 @@ export default class VegaliteConfigure extends Component {
     render() {
         return (
             <div>
-                VegaLite Style
+                
             </div>
         )
     }

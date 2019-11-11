@@ -179,7 +179,7 @@ export default (state = initialState, action) => {
         case VisActionType.MODIFY_CHART_ANIMATION:
             // state
             newSpecHistory = newState.specHistory.slice(0,newState.specIndex+1);
-            if (!newSpec.animation || action.index >= newSpec.animation.length()) {
+            if (!newSpec.animation || action.index >= newSpec.animation.length) {
                 return newState;
             }
             newSpec.animation[action.index] = action.animation;
@@ -203,7 +203,7 @@ export default (state = initialState, action) => {
         case VisActionType.REMOVE_CHART_ANIMATION:
             // state
             newSpecHistory = newState.specHistory.slice(0,newState.specIndex+1);
-            if (!newSpec.animation || action.index >= newSpec.animation.length()) {
+            if (!newSpec.animation || action.index >= newSpec.animation.length) {
                 return newState;
             }
             newSpec.animation.splice(action.index, 1);

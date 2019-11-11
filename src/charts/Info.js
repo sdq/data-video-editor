@@ -6,6 +6,7 @@ import d3DefaultSpec from './D3/default';
 import vegaliteDefaultSpec from './VegaLite/default';
 import D3Configure from './D3/configure';
 import VegaliteConfigure from './VegaLite/configure';
+import d3Animations from './D3/animations';
 
 export function getChannels(chartCategory, chartType) {
     switch (chartCategory) {
@@ -17,6 +18,16 @@ export function getChannels(chartCategory, chartType) {
     
         default:
             return {};
+    }
+}
+
+export function getAnimations(chartCategory, chartType) {
+    switch (chartCategory) {
+        case ChartCategory.D3:
+            return d3Animations(chartType);
+    
+        default:
+            return [];
     }
 }
 

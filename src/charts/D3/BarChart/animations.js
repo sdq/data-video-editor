@@ -1,10 +1,12 @@
-const animations = {
-    grow: {
+const animations = [
+    {
         type: 'grow',
+        spec: {}
     },
-    emphasize: {
+    {
         type: 'emphasize',
+        spec: {}
     },
-};
+];
 
 export default animations;
