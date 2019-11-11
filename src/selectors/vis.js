@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
-import ElementType from '@/constants/ElementType';
 import { getChannels } from '@/charts/Info';
+import ChartType from '@/constants/ChartType';
 import _ from 'lodash';
 
 // Data
@@ -10,9 +10,6 @@ export const fieldsList = state => state.vis.fieldsList;
 const dataIndex = state => state.vis.dataIndex;
 
 // Chart
-const elementIndex = state => state.canvas.elementIndex;
-const scenes = state => state.video.scenes;
-const sceneIndex = state => state.video.index;
 export const displaySpec = state => state.vis.displaySpec;
 
 export const currentData = createSelector(
@@ -29,39 +26,23 @@ export const currentData = createSelector(
         }
     }
 )
+const chartInfo = {
+    dataIndex: 0,
+    type: ChartType.BARCHART,
+    spec: {}
+}
+
 
 export const currentVis = createSelector(
-    scenes,
-    sceneIndex,
-    elementIndex,
-    function (scenes, sceneIndex, elementIndex) {
-        if (elementIndex === -1) {
-            return {}
-        }
-        const currentElement = scenes[sceneIndex].elements()[elementIndex];
-        if (currentElement && currentElement.type() === ElementType.CHART) {
-            return scenes[sceneIndex].elements()[elementIndex].info();
-        } else {
-            return {}
-        }
+    function () {
+        return chartInfo
     }
 )
 
 export const channels = createSelector(
     displaySpec,
-    scenes,
-    sceneIndex,
-    elementIndex,
-    (displaySpec, scenes, sceneIndex, elementIndex) => {
-        if (elementIndex === -1) {
-            return {}
-        }
-        const currentElement = scenes[sceneIndex].elements()[elementIndex];
-        if (!currentElement || currentElement.type() !== ElementType.CHART) {
-            return {}
-        }
-        const chartInfo = currentElement.info();
-        const channels = getChannels(chartInfo.category, chartInfo.type)
+    (displaySpec) => {
+        const channels = getChannels("D3", chartInfo.type)
         for (const key in channels) {
             channels[key].isEncoded = false;
             channels[key].field = '';
@@ -79,3 +60,5 @@ export const channels = createSelector(
         return channels;
     }
 )
+
+

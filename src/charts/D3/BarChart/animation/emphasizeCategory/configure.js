@@ -24,9 +24,9 @@ export default class configure extends Component {
     }
 
     render() {
-        const {animation, currentData, currentVis} = this.props;
+        const {animation, currentData, displaySpec} = this.props;
         let data = currentData.data;
-        let encoding = currentVis.spec.encoding;
+        let encoding = displaySpec.encoding;
         let dataCategories = getCategories(data, encoding);
         let categories = Object.keys(dataCategories);
         return (

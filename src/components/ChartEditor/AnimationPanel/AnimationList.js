@@ -5,9 +5,8 @@ import { getAnimations } from '@/charts/Info';
 
 export default class AnimationList extends Component {
     render() {
-        const {currentElement} = this.props;
-        const chartInfo = currentElement.info();
-        const animations = getAnimations(chartInfo.category, chartInfo.type);
+        const {currentVis} = this.props;
+        const animations = getAnimations("D3", currentVis.type);
         // if (animations.length === 0) {
         //     return (
         //         <div className={'animation-list-container'}>

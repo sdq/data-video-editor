@@ -4,7 +4,7 @@ import ChartAnimationTask from '@/charts/D3/ChartAnimationTask';
 
 export default class AnimationSetting extends Component {
     render() {
-        const {chartInfo, animation, index} = this.props;
+        const {currentVis, animation, index} = this.props;
         let color = 'FFFFFF';
         let taskIcon = '';
 		switch (animation.task) {
@@ -39,7 +39,7 @@ export default class AnimationSetting extends Component {
                     </div>
                 </div>
                 <div style={{height: 464, padding: 8, overflowY: 'auto'}}>
-                    {animationSetting(chartInfo.type, animation, index, this.props)}
+                    {animationSetting(currentVis.type, animation, index, this.props)}
                 </div>
             </div>
         )

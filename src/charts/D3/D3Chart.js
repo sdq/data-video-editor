@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import ChartImage from '../ChartImage';
-import { AnimationCreator } from '@/animation';
 import canvg from 'canvg';
 
 export default class D3Chart extends Component {
@@ -85,18 +84,6 @@ export default class D3Chart extends Component {
     getImageRef = (ref) => {
         if (!this.imageref && ref) {
             this.imageref = ref;
-            const animations = this.props.animations; 
-            if (this.props.showAnimation && animations.length !== 0) {
-                let animationCreator = new AnimationCreator(ref);
-                for (let index = 0; index < animations.length; index++) {
-                    let current = this.props.current;
-                    if (this.props.isVideoPerforming) {
-                        current = 0;
-                    }
-                    const animation = animations[index];
-                    animationCreator.fromModel(animation).play(current);
-                }
-            }
         } 
     }
 

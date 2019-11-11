@@ -6,19 +6,15 @@ import Color from '@/constants/Color';
 import './chartpanel.css';
 
 const animationTarget = {
-	drop: (props) => ({ 
+	drop: () => ({ 
         target: "animation",
-        sceneIndex: props.sceneIndex,
-        currentScene: props.currentScene,
-        elementIndex: props.elementIndex,
-        currentElement: props.currentElement,
     })
 }
 
 class ChartPanel extends Component {
 
     render() {
-        const { canDrop, isOver, connectDropTarget, chartInfo } = this.props;
+        const { canDrop, isOver, connectDropTarget, currentVis } = this.props;
         const isActive = canDrop && isOver;
         let backgroundColor = 'white';
         if (isActive) {
@@ -30,8 +26,8 @@ class ChartPanel extends Component {
         return connectDropTarget(
             <div style={{textAlign: 'center', backgroundColor: backgroundColor}}>
                 <ChartContainer 
-                    category={chartInfo.category}
-                    type={chartInfo.type}
+                    category={"D3"}
+                    type={currentVis.type}
                     data={this.props.data}
                     spec={this.props.spec}
                     width={600} 

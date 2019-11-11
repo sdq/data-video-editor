@@ -1,17 +1,8 @@
 import VisActionType from '@/actions/visTypes';
 import cars from '@/datasets/cars';
 import carsSchema from '@/datasets/carsSchema';
-import Color from '@/constants/Color';
+import {spec} from '@/chart';
 import _ from 'lodash';
-
-const originSpec = {
-    "mark": "line",
-    "encoding": {
-        "color": {
-            "value": Color.ORANGE
-        }
-    }
-}
 
 const initialState = {
     // data
@@ -21,8 +12,8 @@ const initialState = {
     fieldsList: [carsSchema],
     // vis
     specIndex: 0,
-    specHistory: [JSON.stringify(originSpec)],
-    displaySpec: {},
+    specHistory: [JSON.stringify(spec)],
+    displaySpec: spec,
     // history
     actionHistory: [{
         "type": "none",

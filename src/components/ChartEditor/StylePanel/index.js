@@ -16,10 +16,9 @@ export default class StylePanel extends Component {
     }
 
     render() {
-        const {currentElement} = this.props;
-        const chartInfo = currentElement.info();
+        const {currentVis, displaySpec} = this.props;
         return (
-            <ChartStyleConfigure chartCategory={chartInfo.category} chartType={chartInfo.type} spec={chartInfo.spec} handleConfigureOk={this.handleConfigureOk} {...this.props}/>
+            <ChartStyleConfigure chartCategory={"D3"} chartType={currentVis.type} spec={displaySpec} handleConfigureOk={this.handleConfigureOk} {...this.props}/>
         )
     }
 }

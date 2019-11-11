@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, Layout, Tabs} from 'antd';
+import {Layout, Tabs } from 'antd';
 import DataPanel from './DataPanel';
 import MappingPanel from './MappingPanel';
 import StylePanel from './StylePanel';
@@ -9,7 +9,7 @@ import TablePanel from './TablePanel';
 import carsSchema from '@/datasets/carsSchema';
 import './charteditor.css';
 
-const { Sider, Content } = Layout;
+const { Sider, Content, Footer, Header } = Layout;
 const { TabPane } = Tabs;
 
 export default class ChartEditor extends Component {
@@ -23,12 +23,12 @@ export default class ChartEditor extends Component {
     }
 
     changeTab = (key) => {
-        if (key==='Data') {
+        if (key === 'Data') {
             this.setState({
                 showChart: false,
                 showAnimation: false,
             })
-        } else if (key==='Animation') {
+        } else if (key === 'Animation') {
             this.setState({
                 showChart: true,
                 showAnimation: true,
@@ -42,45 +42,39 @@ export default class ChartEditor extends Component {
     }
 
     render() {
-        const {showChart, showAnimation} = this.state;
-        const {currentData, currentElement, displaySpec} = this.props;
+        const { showChart, showAnimation } = this.state;
+        const { currentData, displaySpec } = this.props;
         if (!currentData.data) return null;
-        const datapreview = <TablePanel {...this.props}/>
-        const chartInfo = currentElement.info();
-        const chart = <ChartPanel data={currentData.data} chartInfo={chartInfo} spec={displaySpec} showAnimation={showAnimation} {...this.props}/>;
+        const datapreview = <TablePanel {...this.props} />
+        const chart = <ChartPanel data={currentData.data} spec={displaySpec} showAnimation={showAnimation} {...this.props} />;
         return (
-            <Modal
-                title="Chart Editor"
-                visible={this.props.visible}
-                onOk={this.props.handleOk}
-                width={1200}
-                bodyStyle={{height: 600, padding: 0}}
-                onCancel={this.props.handleCancel}
-            >
-                <Layout style={{ height: '600px'}}>
+            <div>
+                <Header><div style={{width: 200, height: 31, float: 'left', color: 'white'}}>Animated Chart Development</div></Header>
+                <Layout style={{ height: '600px' }}>
                     <Sider width={420} className="pane">
                         <Tabs defaultActiveKey='Mapping' onChange={this.changeTab}>
-                            <TabPane tab="Data" key="Data" style={{padding: 8}}>
-                                <DataPanel {...this.props}/>
+                            <TabPane tab="Data" key="Data" style={{ padding: 8 }}>
+                                <DataPanel {...this.props} />
                             </TabPane>
-                            <TabPane tab="Mapping" key="Mapping" style={{padding: 8}}>
-                                <MappingPanel currentFields={carsSchema} channels={this.props.channels}  {...this.props}/>
+                            <TabPane tab="Mapping" key="Mapping" style={{ padding: 8 }}>
+                                <MappingPanel currentFields={carsSchema} channels={this.props.channels}  {...this.props} />
                             </TabPane>
-                            <TabPane tab="Style" key="Style" style={{padding: 8}}>
-                                <StylePanel {...this.props}/>
+                            <TabPane tab="Style" key="Style" style={{ padding: 8 }}>
+                                <StylePanel {...this.props} />
                             </TabPane>
-                            <TabPane tab="Animation" key="Animation" style={{padding: 8}}>
-                                <AnimationPanel chartInfo={chartInfo} {...this.props}/>
+                            <TabPane tab="Animation" key="Animation" style={{ padding: 8 }}>
+                                <AnimationPanel {...this.props} />
                             </TabPane>
                         </Tabs>
                     </Sider>
                     <Layout>
-                    <Content className="pane">
-                        {showChart?chart:datapreview}
-                    </Content>
+                        <Content className="pane">
+                                {showChart ? chart : datapreview}
+                            </Content>
                     </Layout>
                 </Layout>
-            </Modal>
+                <Footer style={{ textAlign: 'center' }}>Animated Chart Development. iDVX Lab, Tongji University</Footer>
+            </div>
         )
     }
 }

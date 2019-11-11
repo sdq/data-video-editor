@@ -106,8 +106,11 @@ const draw = (props) => {
             .range([ height, 0]);
 
     // Color channel
-    let colorScale = d3.scaleOrdinal(d3.schemeCategory10);
-    let color = colorScale.domain(data.map(function (d){ return d[encoding.color.field]; }));
+    let color;
+    if ('color' in encoding) {
+        let colorScale = d3.scaleOrdinal(d3.schemeCategory10);
+        color = colorScale.domain(data.map(function (d){ return d[encoding.color.field]; }));
+    }
 
     // Bars
     svg.selectAll(".bar")
