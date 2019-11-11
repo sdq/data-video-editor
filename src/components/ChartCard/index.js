@@ -11,8 +11,8 @@ import './chartcard.css';
 
 
 //img size
-let w = 300;
-let h = 300;
+let w = 400;
+let h = 400;
 //drag end pos
 let x = 240;
 let y = 100;

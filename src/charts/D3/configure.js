@@ -1,24 +1,13 @@
-import ChartType from '@/constants/ChartType';
-import BarchartConfigure from './BarChart/configure';
-
-// export default function d3Configure(chartType) {
-//     switch (chartType) {
-//         case ChartType.BARCHART:
-//             return barchartConfigure;
-    
-//         default:
-//             return null
-//     }
-// }
-
 import React, { Component } from 'react';
+import ChartType from '@/constants/ChartType';
+import BarchartStyle from './BarChart/style';
 
 export default class D3Configure extends Component {
 
-    chooseConfigure = (chartType) => {
+    chooseConfigureStyle = (chartType) => {
         switch (chartType) {
             case ChartType.BARCHART:
-                return <BarchartConfigure  {...this.props}/>;
+                return <BarchartStyle  {...this.props}/>;
         
             default:
                 return null
@@ -26,7 +15,7 @@ export default class D3Configure extends Component {
     }
 
     render() {
-        let conf = this.chooseConfigure(this.props.chartType)
+        let conf = this.chooseConfigureStyle(this.props.chartType)
         return (
             <div>
                 {conf}

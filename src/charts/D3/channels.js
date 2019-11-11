@@ -7,10 +7,6 @@ export default function d3Channels(chartType) {
             return barchartChannels;
     
         default:
-            return {
-                x: {
-                    name: 'x',
-                },
-            }
+            return {}
     }
 }

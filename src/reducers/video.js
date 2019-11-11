@@ -1,5 +1,5 @@
 import ActionType from '../actions/types';
-import scenes from './demo';
+import scenes from '../demo';
 import _ from 'lodash';
 
 const initialState = {

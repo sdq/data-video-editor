@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 
-export default class VegaliteConfigure extends Component {
+export default class AnimationPlan extends Component {
     render() {
         return (
             <div>
-                VegaLite Style
+                Animation Plan
             </div>
         )
     }
