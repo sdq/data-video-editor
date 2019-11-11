@@ -1,6 +1,5 @@
 import * as d3 from 'd3';
-import {getMinRows, getMaxRows} from './helper';
-import {grow, emphasize} from './animation';
+import {getMaxRows} from './helper';
 import _ from 'lodash';
 
 const offset = 20; // To show whole chart
