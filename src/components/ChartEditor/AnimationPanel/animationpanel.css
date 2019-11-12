@@ -1,11 +1,13 @@
 .animation-list-container {
-    overflow: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
     padding: 0px 0px;
     height: 220px;
 }
 
 .animation-plan-container {
-    overflow: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
     padding: 0px 0px;
     height: 280px;
 }
@@ -22,7 +24,7 @@
 .animation-step {
     background-color: #edededcc;
     padding: 6px;
-    width: 400px;
+    width: 376px;
     height: 36px;
     text-align: left;
     box-shadow: 2px 2px 2px #dddddd;

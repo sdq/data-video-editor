@@ -1,5 +1,10 @@
-import grow from './grow';
-import emphasize from './emphasize';
+import React from 'react';
+import grow from './grow/animate';
+import GrowConf from './grow/configure';
+import emphasize from './emphasize/animate';
+import EmphasizeConf from './emphasize/configure';
+import sort from './sort/animate';
+import SortConf from './sort/configure';
 
 const animate = (animation, props) => {
 
@@ -11,10 +16,31 @@ const animate = (animation, props) => {
         case 'emphasize':
             emphasize(props)
             break;
+
+        case 'sort':
+            sort(props)
+            break;
     
         default:
             break;
     }
 }
 
-export default animate;
+const configure = (animation, props) => {
+
+    switch (animation.type) {
+        case 'grow':
+            return <GrowConf {...props}/>
+
+        case 'emphasize':
+            return <EmphasizeConf {...props}/>
+
+        case 'sort':
+            return <SortConf {...props}/>
+    
+        default:
+            return null;
+    }
+}
+
+export {animate, configure};

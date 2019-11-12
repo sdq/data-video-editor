@@ -7,6 +7,12 @@ const animations = [
         type: 'emphasize',
         spec: {}
     },
+    {
+        type: 'sort',
+        spec: {
+            "order": "ascending"
+        }
+    },
 ];
 
 export default animations;

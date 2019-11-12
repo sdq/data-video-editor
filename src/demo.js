@@ -96,9 +96,9 @@ const demochart2 = new ChartInfo(
     ChartType.BARCHART,
     {
         "encoding": {
-            "x": {"field": "Origin", "type": "ordinal"},
+            "x": {"field": "Cylinders", "type": "ordinal"},
             "y": {"field": "Horsepower", "type": "quantitative"},
-            "color": {"field": "Origin", "type": "ordinal"},
+            "color": {"field": "Origin", "type": "nordinal"},
         },
         "style": {
             "showAxisX": true,

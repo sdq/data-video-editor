@@ -5,14 +5,12 @@ import _ from 'lodash';
 const offset = 20; // To show whole chart
 
 const draw = (props) => {
-    // console.log('draw')
     let a = document.createElement("div");
     if (!props.onCanvas) {
         d3.select('.vis-barchart > *').remove();
         a = '.vis-barchart';
     }
 
-    // console.log(data);
     const margin = {top: 10, right: -10, bottom: 40, left: 40};
     const width = props.width - margin.left - margin.right - offset;
     const height = props.height - margin.top - margin.bottom - offset;
@@ -23,7 +21,7 @@ const draw = (props) => {
                 .append("g")
                 .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    // get encoding
+    // Get Encoding
     const encoding = props.spec.encoding;
     if (_.isEmpty(encoding) || !('x' in encoding) || !('y' in encoding) || _.isEmpty(encoding.x) || _.isEmpty(encoding.y) ) {
         svg.append("rect")
@@ -84,9 +82,6 @@ const draw = (props) => {
             svg.append("g").call(d3.axisLeft(y));
         }
     }
-
-    // Animation
-    
 
     return svg;
 }

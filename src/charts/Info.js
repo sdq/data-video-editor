@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import ChartCategory from '@/constants/ChartCategory';
 import d3Channels from './D3/channels';
 import vegaliteChannels from './VegaLite/channels';
-import d3DefaultSpec from './D3/default';
+import d3DefaultSpec from './D3/spec';
 import vegaliteDefaultSpec from './VegaLite/default';
-import D3Configure from './D3/configure';
+import D3ConfigureStyle from './D3/style';
 import VegaliteConfigure from './VegaLite/configure';
 import d3Animations from './D3/animations';
 
@@ -48,7 +48,7 @@ export class ChartStyleConfigure extends Component {
     render() {
         let {chartCategory, chartType} = this.props;
         let styleConfigure = (chartCategory === ChartCategory.D3)?
-        <D3Configure chartType={chartType} {...this.props}/>:
+        <D3ConfigureStyle chartType={chartType} {...this.props}/>:
         <VegaliteConfigure chartType={chartType} {...this.props}/>
         return (
             <div>

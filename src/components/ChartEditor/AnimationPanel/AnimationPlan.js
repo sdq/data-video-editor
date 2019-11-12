@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { List, Divider } from 'antd';
+import { List, Divider, Button } from 'antd';
 import AnimationStep from './AnimationStep';
 
 export default class AnimationPlan extends Component {
+
     render() {
         const {displaySpec} = this.props;
         const animationSteps = displaySpec.animation;
@@ -17,7 +18,14 @@ export default class AnimationPlan extends Component {
                     split = {false}
                     dataSource={animationSteps}
                     renderItem={(animation, index) => <List.Item>
-                        <AnimationStep animation={animation} index={index} { ...this.props }/>
+                        <div style={{display: 'inline-block'}}>
+                            <div style={{ float: 'left'}} onClick={() => this.props.selectAnimation(animation)}>
+                                <AnimationStep animation={animation} index={index} { ...this.props }/>
+                            </div>
+                            <div style={{ float: 'right', marginTop: 6}}>
+                                <Button shape="circle" type="link" size="small" icon="close" onClick={()=>this.props.removeChartAnimation(index)}/>
+                            </div>
+                        </div>
                     </List.Item>}
                 />
             </div>
