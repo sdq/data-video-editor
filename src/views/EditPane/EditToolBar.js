@@ -80,7 +80,7 @@ export default class EditToolBar extends Component {
       };
 
 
-      //TODO:该功能待测试
+      //TODO:快速对齐功能待测试
       /*
       setElementPos = pos =>{  
       //use the real material‘s  size

@@ -13,6 +13,7 @@ export default class EditCanvas extends Component {
         super(props);
         this.state = {
             showAssistLines: false,
+            dynamicAssistLines:"",
             showTextEditor: false, 
             showChartPreview: false, 
             showGifEditor:false,
@@ -26,6 +27,12 @@ export default class EditCanvas extends Component {
     displayAssistLines(active) {
         this.setState({
             showAssistLines: active
+        })
+    }
+
+    setDynamicAssistLines = value => {
+        this.setState({
+            dynamicAssistLines: value
         })
     }
 
@@ -131,6 +138,8 @@ export default class EditCanvas extends Component {
         const editableLayer = <EditableLayer 
                 displayAssistLines={(active) => this.displayAssistLines(active)}
                 dbClickedElementIndex={dbClickedElementIndex}
+                dynamicAssistLines = {this.state.dynamicAssistLines}///////////
+                setDynamicAssistLines = {this.setDynamicAssistLines}/////////////
                 {...this.props}
             />;
         const backgroundLayer = <BackgroundLayer 
@@ -149,6 +158,7 @@ export default class EditCanvas extends Component {
                     showGifEditor={showGifEditor}
                     showVideoEditor={showVideoEditor}
                     showAssistLines={showAssistLines} 
+                    dynamicAssistLines = {this.state.dynamicAssistLines}///
                     {...this.props}
                 />: 
                 null}
@@ -166,3 +176,4 @@ export default class EditCanvas extends Component {
         )
     }
 }
+
