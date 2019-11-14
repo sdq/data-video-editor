@@ -5,7 +5,7 @@ import ElementType from '@/constants/ElementType';
 let assistlinecolor = '#DCDCDC';
 
 export default class AssistLines extends Component {
-
+ 
 
     render() {
         //获取当前元素信息（不考虑旋转情况）
@@ -44,13 +44,15 @@ export default class AssistLines extends Component {
              if(h<100){smallH=true;}
         }
 
+
+        //TODO:优化图表高宽度，才可以正确使用辅助线
         if(this.props.currentElement.type()=== ElementType.CHART){
             isChartLine = true;
         }
 
 
-        //判定显示辅助线的margin
-        let margin = 40;
+        //判定显示辅助线的margin（略大于显示margin）
+        let margin = 30;
 
         //判断素材四周和中央是否靠近画布中央和边侧辅助线
         let marginLeftL = Math.abs(x - 0); //素材左-画布左
@@ -67,10 +69,8 @@ export default class AssistLines extends Component {
         let marginBottomC = Math.abs(y+h - 225);  //素材下-画布中
 
 
-        //TODO:显示动态辅助线，显示全部素材四周辅助线（较为简单的策略） //矩形相交判定周围一定距离素材的四周辅助线（较为复杂的策略）
 
-
-        //显示固定辅助线，包括：画布四周、中央、当前素材四周和中央，要求素材尺寸正确
+        //显示固定辅助线和动态辅助线
         return (
             <div style={{ position: 'absolute', zIndex: 1 }}>
                 
@@ -98,7 +98,17 @@ export default class AssistLines extends Component {
                 <div style={{ display: !isChartLine && r===0 ? 'block' : 'none',position: 'absolute', zIndex: 1, marginLeft: x+w - 1 || 0, marginTop: y-10 || 0,height: h+20, width: 1, borderLeftColor: assistlinecolor, borderLeftWidth: 1, borderLeftStyle: 'dashed' }} />
                 <div style={{ display: !isChartLine && r===0 ? 'block' : 'none',position: 'absolute', zIndex: 2, marginTop: y+h - 1 || 0, marginLeft: x-10 || 0,height: 1, width: w+20, borderTopColor: assistlinecolor, borderTopWidth: 1, borderTopStyle: 'dashed' }} />
                 
-            </div>
+                <div>
+                    {this.props.dynamicAssistLines && this.props.dynamicAssistLines.map(function(lines, index) {
+                    let isRow = lines&&(lines[0]===-1);
+                    if(isRow){
+                        return <div key={index} index={index} style={{ position: 'absolute', zIndex: 3, marginTop: lines[1] ,width: 800, height: 1, borderTopColor: assistlinecolor, borderTopWidth: 1, borderTopStyle: 'dashed' }} />  
+                    }else{
+                        return <div key={index} index={index} style={{ position: 'absolute', zIndex: 4, marginLeft: lines[0], width: 10, height: 450, borderLeftColor: assistlinecolor, borderLeftWidth: 1, borderLeftStyle: 'dashed' }} />  
+                    }})}
+                    </div>        
+                </div>
         )
     }
 }
+

@@ -11,6 +11,8 @@ import _ from 'lodash';
 
 
 let lastScale = '';
+let xPosArray= [];
+let yPosArray = [];
 
 export default class EditableLayer extends Component {
 
@@ -21,7 +23,7 @@ export default class EditableLayer extends Component {
             canvasPosition: {
                 left: 0,
                 top: 0
-            }
+            },
         };
         this.elementNodes = new Array(props.currentElements.length).fill({});
         this.editStart = this.editStart.bind(this);
@@ -38,6 +40,16 @@ export default class EditableLayer extends Component {
 
     editStart() {
         this.props.displayAssistLines(true);
+        //动态辅助线    
+        //拖拽开始，生成当前画布素材坐标数组
+        xPosArray= [];
+        yPosArray = [];
+        let arraylength = this.props.currentElements.length;
+        for(let i = 0;i<arraylength;i++){
+            if(this.props.currentElements[i].id === this.props.currentElement.id){continue;}
+            xPosArray.push(this.props.currentElements[i].info().x,this.props.currentElements[i].info().x+this.props.currentElements[i].info().width);
+            yPosArray.push(this.props.currentElements[i].info().y,this.props.currentElements[i].info().y+this.props.currentElements[i].info().height);
+        }      
     }
 
     editElement(eleIndex, element) {
@@ -63,12 +75,13 @@ export default class EditableLayer extends Component {
     }
 
     dragMoving(x,y,e) {
-        let normal = true;  //正常情况
-        //主动吸附功能
+        
+        
         let w = this.props.currentElement.info().width;
         let h = this.props.currentElement.info().height;        
-        let margin = 10;
+        let margin = 5;//判定辅助线吸附的margin（略小于显示margin）
 
+        //基础辅助线
         let marginLeftL = Math.abs(x - 0); //素材左-画布左
         let marginTopT = Math.abs(y - 0);  //素材上-画布上
         let marginRightR = Math.abs(x+w - 800);  //素材右-画布右
@@ -81,86 +94,54 @@ export default class EditableLayer extends Component {
         let marginRightC = Math.abs(x+w - 400);  //素材右-画布中
         let marginBottomC = Math.abs(y+h - 225);  //素材下-画布中
 
- // 逻辑：在靠近辅助线的时候，位置直接更改，可以再次拖动, 直接改动系统级当前抓取的元素
+        // 逻辑：在靠近辅助线的时候，直接改动系统级当前抓取的元素，实现主动吸附
 
-        if( marginLeftL < margin){   
-            x = 0;    
-            e.target.attrs.x = 0;
-            let dragpos = {x,y};
-            this.props.dragElement(dragpos);
-            //素材左-画布左
-            normal = false;
+        if( marginLeftL < margin){x = e.target.attrs.x = 0;}//素材左-画布左
+        if( marginTopT < margin){y = e.target.attrs.y = 0;}//素材上-画布上
+        if( marginRightR < margin){x = e.target.attrs.x = 800-w;}//素材右-画布右
+        if( marginBottomB < margin){y = e.target.attrs.y = 450-h;}//素材下-画布下
+        if( marginCenterXC < margin){x = e.target.attrs.x = 400-w/2;}//素材中-画布中
+        if( marginCenterYC < margin){y = e.target.attrs.y = 225-h/2;}//素材中-画布中
+        if( marginLeftC < margin){x = e.target.attrs.x = 400;}//素材左-画布中
+        if( marginTopC < margin){y = e.target.attrs.y = 225;}//素材上-画布中
+        if( marginRightC < margin){x = e.target.attrs.x = 400-w;}//素材右-画布中
+        if( marginBottomC < margin){y = e.target.attrs.y = 225-h;}//素材下-画布中
+
+        //动态辅助线    
+        //拖拽时生成附近xy点数组，遍历匹配去重得到结果
+        let x1 = x+w;
+        let y1 = y+h;
+        let dynamicArray = [];
+        for(let i =0,xArray = [],yArray = [];i<xPosArray.length;i++){
+        if( Math.abs(x - xPosArray[i]) < margin){
+            x = e.target.attrs.x = xPosArray[i];
+            xArray.push([x,-1]);
+            if (xArray.indexOf(x) === -1) {dynamicArray.push([x,-1]);}
+            continue;
+        }    
+        if( Math.abs(x1 - xPosArray[i]) < margin){
+            x = e.target.attrs.x = xPosArray[i]-w;
+            xArray.push([x+w,-1]);
+            if (xArray.indexOf(x+w) === -1) {dynamicArray.push([x+w,-1]);}
+            continue;
+        }      
+        if( Math.abs(y - yPosArray[i]) < margin){
+            y = e.target.attrs.y = yPosArray[i];
+            yArray.push([-1,y]);
+            if (yArray.indexOf(y) === -1) {dynamicArray.push([-1,y]);}
+            continue;
         }
-        if( marginTopT < margin){
-            y = 0;
-            e.target.attrs.y = 0;
-            let dragpos = {x,y};
-            this.props.dragElement(dragpos);
-            //素材上-画布上
-            normal = false;
+        if( Math.abs(y1 - yPosArray[i]) < margin){
+            y = e.target.attrs.y = yPosArray[i]-h;
+            yArray.push([-1,y+h]);
+            if (yArray.indexOf(y+h) === -1) {dynamicArray.push([-1,y+h]);}
+            continue;
         }
-        if( marginRightR < margin){
-            x = 800 -w;
-            e.target.attrs.x = 800-w;
-            let dragpos = {x,y};
-            this.props.dragElement(dragpos);
-            normal = false;
-        }//素材右-画布右
-        if( marginBottomB < margin){
-            y = 450-h;
-            e.target.attrs.y = 450-h;
-            let dragpos = {x,y};
-            this.props.dragElement(dragpos); 
-            normal = false;
-        }//素材下-画布下
-        if( marginCenterXC < margin){
-            x = 400-w/2;
-            e.target.attrs.x = 400-w/2;
-            let dragpos = {x,y};
-            this.props.dragElement(dragpos); 
-            normal = false;
-        }//素材中-画布中
-        if( marginCenterYC < margin){
-            y = 225-h/2;
-            e.target.attrs.y = 225-h/2;
-            let dragpos = {x,y};
-            this.props.dragElement(dragpos);
-            normal = false;
-        }//素材中-画布中
-        if( marginLeftC < margin){
-            x = 400;
-            e.target.attrs.x = 400;
-            let dragpos = {x,y};
-            this.props.dragElement(dragpos);
-            normal = false;
-        }//素材左-画布中
-        if( marginTopC < margin){
-            y=225;
-            e.target.attrs.y = 225;
-            let dragpos = {x,y};
-            this.props.dragElement(dragpos);
-            normal = false;
-        }//素材上-画布中
-        if( marginRightC < margin){
-            x=400-w;
-            e.target.attrs.x = 400-w;
-            let dragpos = {x,y};
-            
-            this.props.dragElement(dragpos); 
-            normal = false;
-        }//素材右-画布中
-        if( marginBottomC < margin){
-            y=225-h;
-            e.target.attrs.y = 225-h;
-            let dragpos = {x,y};
-            this.props.dragElement(dragpos);
-            normal = false;
-        }//素材下-画布中
-        if(normal){
+        
+    }
+        this.props.setDynamicAssistLines(dynamicArray); //for  循环结束后统一设置辅助线，保证画布元素和transformer及时一致
         let dragpos = {x,y};
         this.props.dragElement(dragpos);
-        normal = true;
-        }
     }
 
     dragEnding(x,y,index) {
@@ -412,3 +393,4 @@ export default class EditableLayer extends Component {
         )
     }
 }
+
