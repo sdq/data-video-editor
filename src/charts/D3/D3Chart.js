@@ -52,7 +52,7 @@ export default class D3Chart extends Component {
             const animation = animations[index];
             setTimeout(function () {
                 this.props.animate(animation, this.props);
-            }.bind(this), index * 2000)
+            }.bind(this), index * 3000)
         }
     }
 
