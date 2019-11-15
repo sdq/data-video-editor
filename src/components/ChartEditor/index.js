@@ -43,10 +43,11 @@ export default class ChartEditor extends Component {
 
     render() {
         const {showChart, showAnimation} = this.state;
-        const {currentData, displaySpec} = this.props;
+        const {currentData, currentElement, displaySpec} = this.props;
         if (!currentData.data) return null;
         const datapreview = <TablePanel {...this.props}/>
-        const chart = <ChartPanel data={currentData.data} spec={displaySpec} showAnimation={showAnimation} {...this.props}/>;
+        const chartInfo = currentElement.info();
+        const chart = <ChartPanel data={currentData.data} chartInfo={chartInfo} spec={displaySpec} showAnimation={showAnimation} {...this.props}/>;
         return (
             <Modal
                 title="Chart Editor"
@@ -69,7 +70,7 @@ export default class ChartEditor extends Component {
                                 <StylePanel {...this.props}/>
                             </TabPane>
                             <TabPane tab="Animation" key="Animation" style={{padding: 8}}>
-                                <AnimationPanel {...this.props}/>
+                                <AnimationPanel chartInfo={chartInfo} {...this.props}/>
                             </TabPane>
                         </Tabs>
                     </Sider>

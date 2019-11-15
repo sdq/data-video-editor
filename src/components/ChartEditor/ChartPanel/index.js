@@ -18,8 +18,7 @@ const animationTarget = {
 class ChartPanel extends Component {
 
     render() {
-        const { canDrop, isOver, connectDropTarget, currentElement } = this.props;
-        const chartInfo = currentElement.info();
+        const { canDrop, isOver, connectDropTarget, chartInfo } = this.props;
         const isActive = canDrop && isOver;
         let backgroundColor = 'white';
         if (isActive) {

@@ -10,29 +10,32 @@ export default class AnimationPanel extends Component {
         super(props);
         this.state = {
             showAnimationSetting: false,
+            selectedIndex: -1,
             selectedAnimation: null,
         }
     }
 
-    selectAnimation = (animation) => {
-        console.log(animation);
+    selectAnimation = (index, animation) => {
         this.setState({
+            selectedIndex: index,
             selectedAnimation: animation,
         })
     }
 
     unselectAnimation = () => {
         this.setState({
+            selectedIndex: -1,
             selectedAnimation: null,
         })
     }
 
     render() {
+        const {selectedIndex, selectedAnimation} = this.state;
         return (
             <div>
                 {
                     this.state.selectedAnimation?
-                    <AnimationSetting animation={this.state.selectedAnimation} unselectAnimation={this.unselectAnimation} {...this.props}/>
+                    <AnimationSetting animation={selectedAnimation} index={selectedIndex} unselectAnimation={this.unselectAnimation} {...this.props}/>
                     :
                     <div>
                         <AnimationList {...this.props}/>

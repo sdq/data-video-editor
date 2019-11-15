@@ -4,7 +4,7 @@ import _ from 'lodash';
 
 const offset = 20; // To show whole chart
 
-const draw = (props) => {
+const draw = (animation, props) => {
     // console.log('draw')
     let a = document.createElement("div");
     if (!props.onCanvas) {

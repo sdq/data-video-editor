@@ -1,24 +1,31 @@
 import React from 'react';
-import grow from './grow/animate';
-import GrowConf from './grow/configure';
-import emphasize from './emphasize/animate';
-import EmphasizeConf from './emphasize/configure';
-import sort from './sort/animate';
-import SortConf from './sort/configure';
+import ChartAnimationType from '../../ChartAnimationType';
+import dataTrend from './dataTrend/animate';
+import DataTrendConf from './dataTrend/configure';
+import emphasizeCategory from './emphasizeCategory/animate';
+import EmphasizeCategoryConf from './emphasizeCategory/configure';
+import compareCategories from './compareCategories/animate';
+import CompareCategoriesConf from './compareCategories/configure';
+import reconfigureOrder from './reconfigureOrder/animate';
+import ReconfigureOrderConf from './reconfigureOrder/configure';
 
 const animate = (animation, props) => {
 
     switch (animation.type) {
-        case 'grow':
-            grow(props)
+        case ChartAnimationType.DATA_TREND:
+            dataTrend(animation, props)
             break;
 
-        case 'emphasize':
-            emphasize(props)
+        case ChartAnimationType.EMPHASIZE_CATEGORY:
+            emphasizeCategory(animation, props)
             break;
 
-        case 'sort':
-            sort(props)
+        case ChartAnimationType.COMPARE_CATEGORIES:
+            compareCategories(animation, props)
+            break;
+
+        case ChartAnimationType.RECONFIGURE_ORDER:
+            reconfigureOrder(animation, props)
             break;
     
         default:
@@ -26,17 +33,20 @@ const animate = (animation, props) => {
     }
 }
 
-const configure = (animation, props) => {
+const configure = (animation, index, props) => {
 
     switch (animation.type) {
-        case 'grow':
-            return <GrowConf {...props}/>
+        case ChartAnimationType.DATA_TREND:
+            return <DataTrendConf animation={animation} index={index} {...props}/>
 
-        case 'emphasize':
-            return <EmphasizeConf {...props}/>
+        case ChartAnimationType.EMPHASIZE_CATEGORY:
+            return <EmphasizeCategoryConf animation={animation} index={index} {...props}/>
 
-        case 'sort':
-            return <SortConf {...props}/>
+        case ChartAnimationType.COMPARE_CATEGORIES:
+            return <CompareCategoriesConf animation={animation} index={index} {...props}/>
+
+        case ChartAnimationType.RECONFIGURE_ORDER:
+            return <ReconfigureOrderConf animation={animation} index={index} {...props}/>
     
         default:
             return null;

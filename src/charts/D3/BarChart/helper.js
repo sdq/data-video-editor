@@ -1,6 +1,32 @@
 import * as d3 from 'd3';
 
-const getMinRows = (rawData, encoding) =>{
+const getCategories = (rawData, encoding) => {
+    let dataCategories = {}
+    for (let i = 0; i < rawData.length; i++) {
+        if (dataCategories[rawData[i][encoding.x.field]]) {
+            dataCategories[rawData[i][encoding.x.field]].push(rawData[i]);
+        }
+        else {
+            dataCategories[rawData[i][encoding.x.field]] = [rawData[i]];
+        }
+    }
+    return dataCategories;
+}
+
+const getSeries = (rawData, encoding) => {
+    let dataSeries = {}
+    for (let i = 0; i < rawData.length; i++) {
+        if (dataSeries[rawData[i][encoding.color.field]]) {
+            dataSeries[rawData[i][encoding.color.field]].push(rawData[i]);
+        }
+        else {
+            dataSeries[rawData[i][encoding.color.field]] = [rawData[i]];
+        }
+    }
+    return dataSeries;
+}
+ 
+const getMinRows = (rawData, encoding) => {
     let calculateData = d3.nest().key(d => d[encoding.x.field]).entries(rawData);
     let data = calculateData.map(function (d) {
         let index = d3.scan(d.values, function(a, b) {
@@ -32,4 +58,4 @@ const getMaxRows = (rawData, encoding) =>{
     return data;
 }
 
-export {getMinRows, getMaxRows}
+export {getCategories, getSeries, getMinRows, getMaxRows}

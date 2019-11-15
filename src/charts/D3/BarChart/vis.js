@@ -1,5 +1,5 @@
 import * as d3 from 'd3';
-import {getMaxRows} from './helper';
+import {getSeries, getCategories, getMaxRows} from './helper';
 import _ from 'lodash';
 
 const offset = 20; // To show whole chart
@@ -32,8 +32,67 @@ const draw = (props) => {
     }
 
     // Process Data
-    // const data = props.data;
-    const data = getMaxRows(props.data, encoding);
+    let data = props.data;
+    // let data = getMaxRows(props.data, encoding);
+
+    // Get categories
+    let dataCategories = getCategories(data, encoding);
+    let categories = Object.keys(dataCategories);
+
+    // Get series and stacked data
+    let dataSeries = {};
+    let dataSeriesCategories = {};
+    let series = [];
+    if ('color' in encoding) {
+        // Series data
+        dataSeries = getSeries(data, encoding);
+        series = Object.keys(dataSeries);
+        for (const s in dataSeries) {
+            dataSeriesCategories[s] = {};
+            dataSeries[s] = getMaxRows(dataSeries[s], encoding);
+            for (let index = 0; index < dataSeries[s].length; index++) {
+                const rowData = dataSeries[s][index];
+                // console.log(rowData);
+                dataSeriesCategories[s][rowData[encoding.x.field]] = rowData[encoding.y.field]
+            }
+        }
+    }
+    // console.log(dataSeriesCategories);
+    // console.log(dataSeries);
+    // console.log(series);
+
+    if (series.length > 0) {
+        let preparedData = series.map((s) => {
+            let sData = [];
+            categories.forEach(c => {
+                sData.push({
+                    x: c,
+                    y: dataSeriesCategories[s][c]?dataSeriesCategories[s][c]:0,
+                    y0: 0,
+                })
+            });
+            return sData;
+        })
+        let reducedData = preparedData[0].map((d) => {
+            let z = {x: d.x};
+            z[series[0]] = d.y;
+            return z;
+        });
+        for (let i = 1; i < preparedData.length; i++) {
+            let s = series[i]
+            for (let j = 0; j < categories.length; j++) {
+                // const element = array[index];
+                reducedData[j][s] = preparedData[i][j].y
+            }
+            
+        }
+        // console.log(preparedData);
+        // console.log(reducedData);
+        // let stackedData = d3.stack().keys(series)(preparedData);
+        // console.log(stackedData);
+    }
+
+    data = getMaxRows(data, encoding);
 
     // X channel
     let x = d3.scaleBand()
@@ -45,6 +104,10 @@ const draw = (props) => {
     let y = d3.scaleLinear()
             .domain([0, d3.max(data, function(d) { return d[encoding.y.field]; })])
             .range([ height, 0]);
+
+    // Color channel
+    let colorScale = d3.scaleOrdinal(d3.schemeCategory10);
+    let color = colorScale.domain(data.map(function (d){ return d[encoding.color.field]; }));
 
     // Bars
     svg.selectAll(".bar")
@@ -60,8 +123,6 @@ const draw = (props) => {
 
     // Color channel: Not necessary
     if ('color' in encoding) {
-        let colorScale = d3.scaleOrdinal(d3.schemeCategory10);
-        let color = colorScale.domain(data.map(function (d){ return d[encoding.color.field]; }));
         svg.selectAll("rect")
             .data(data)
             .attr("fill", function (d){ return color(d[encoding.color.field]); });

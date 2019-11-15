@@ -4,7 +4,7 @@ import _ from 'lodash';
 
 const offset = 20; // To show whole chart
 
-const draw = (props) => {
+const draw = (animation, props) => {
     // console.log('draw')
     let a = document.createElement("div");
     if (!props.onCanvas) {
@@ -87,7 +87,27 @@ const draw = (props) => {
     }
 
     // Animation
-    
+    // Animation
+    svg.selectAll("rect")
+        .transition()
+        .duration(800)
+        .style("stroke", "yellow")
+        .style("stroke-width", function (d, i){  
+            // TODO: Data Binding
+            if (i === 0 || i === 1) {
+                return 5;
+            } else {
+                return 0;
+            }
+        })
+        .attr("fill", function (d, i){  
+            // TODO: Data Binding
+            if (i === 0 || i === 1) {
+                return "blue";
+            } else {
+                return "lightgray";
+            }
+        });
 
     return svg;
 }
