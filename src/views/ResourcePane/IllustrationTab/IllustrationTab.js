@@ -180,7 +180,7 @@ export default class ImageTab extends Component {
             }
         }
         return (
-            <div className="imagetab" style={{ height: this.props.contentHeight-50 }}>
+            <div className="imagetab" style={{ height: this.props.contentHeight }}>
                 <Row>
                     <Col span={20}>
                         <Search
@@ -223,7 +223,7 @@ export default class ImageTab extends Component {
                            )}></List>
                         {hasMore[0] &&(
                         <Button size = "small" display = { hasMore[0] ?"block":"none"} icon="caret-down"  onClick={this.onLoadMore} style={{margin:0, fontSize: '12px'}}>
-                        Showing {limit} of {shown[0]} , Click to load more...  
+                        Show {limit}/{shown[0]},Load more..
                         </Button>)}
                     </Panel>
 
@@ -240,7 +240,7 @@ export default class ImageTab extends Component {
                            )}></List>
                         {hasMore[1] &&(
                         <Button size = "small" display = { hasMore[1] ?"block":"none"} icon="caret-down"  onClick={this.onLoadMore} style={{margin:0, fontSize: '12px'}}>
-                        Showing {limit} of {shown[1]} , Click to load more...  
+                        Show {limit}/{shown[1]},Load more.. 
                         </Button>)}
                     </Panel>
 
@@ -258,7 +258,7 @@ export default class ImageTab extends Component {
                            )}></List>
                         {hasMore[2] &&(
                         <Button size = "small" display = { hasMore[2] ?"block":"none"} icon="caret-down"  onClick={this.onLoadMore} style={{margin:0, fontSize: '12px'}}>
-                        Showing {limit} of {shown[2]} , Click to load more...  
+                        Show {limit}/{shown[2]},Load more..  
                         </Button>)}
                     </Panel>
 
@@ -275,7 +275,7 @@ export default class ImageTab extends Component {
                            )}></List>
                         {hasMore[3] &&(
                         <Button size = "small" display = { hasMore[3] ?"block":"none"} icon="caret-down"  onClick={this.onLoadMore} style={{margin:0, fontSize: '12px'}}>
-                        Showing {limit} of {shown[3]} , Click to load more...  
+                       Show {limit}/{shown[3]},Load more..  
                         </Button>)}
                     </Panel>
 
@@ -292,7 +292,7 @@ export default class ImageTab extends Component {
                            )}></List>
                         {hasMore[4] &&(
                         <Button size = "small" display = { hasMore[4] ?"block":"none"} icon="caret-down"  onClick={this.onLoadMore} style={{margin:0, fontSize: '12px'}}>
-                        Showing {limit} of {shown[4]} , Click to load more...  
+                        Show {limit}/{shown[4]},Load more..  
                         </Button>)}
                     </Panel>
 

@@ -4,6 +4,8 @@
     border-left-color: #FFC107; 
     border-right-color: #FFC107;  */
     text-align: center;
+    overflow-x: hidden;
+    overflow-y: hidden;
 }
 
 #canvasContainer {

@@ -1,11 +1,11 @@
-.usertab {
+.defaulttab {
     /* height: 400px; */
     padding:10px 10px 0px 10px; 
 } 
 
 .user-upload-list {
     overflow: auto;
-    /* height: 380px; */
+    height: 380px;
 }
 
 .collaspe-panel {
