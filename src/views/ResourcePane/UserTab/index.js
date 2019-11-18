@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import axios from '@/axios'
 import { Upload, Button, Row, Col, Collapse, List } from 'antd';
 import ImageCard from '@/components/ImageCard';
 import AudioCard from '@/components/AudioCard';
@@ -89,6 +90,14 @@ export default class UserTab extends Component {
                 },
             ],
         }
+    }
+    componentWillMount() {
+        let url = '/webservice/rest/asset/id/4900?apikey=2816b9fe39b50c987cd07b04438c2c048bd9f63e2feb3013555ec5970988b194&light=true'
+        axios.get(url).then((response) => {
+            console.log("response...", response)
+        }).catch(error => {
+            console.log("error...", error)
+        })
     }
 
     componentDidMount() {
