@@ -15,26 +15,35 @@ export default class UserTab extends Component {
 
     constructor(props) {
         super(props);
+        this.testFolderId = 1;
         this.state = {
+            folderList: [],
             activeKey: "image", //default
             imageList: [
                 {
                     uid: '-1',
                     name: "man",
                     style: "cartoon",
-                    src: MyURL.OSS+"/images/man.png"
+                    src: MyURL.OSS + "/images/man.png"
                 },
                 {
                     uid: '-2',
                     name: "chair",
                     style: "cartoon",
-                    src: MyURL.OSS+"/images/chair.png"
+                    src: MyURL.OSS + "/images/chair.png"
                 },
                 {
                     uid: '-3',
                     name: "light",
                     style: "cartoon",
-                    src: MyURL.OSS+"/images/light.png"
+                    src: MyURL.OSS + "/images/light.png"
+                },
+                {
+                    uid: '-4',
+                    name: "testImage",
+                    style: "cartoon",
+                    //src: MyURL.OSS + "/images/light.png"
+                    src: 'https://pimcore.idvxlab.com:7000/pimcore-logo-2013-grau.png'
                 },
             ],
             audioList: [
@@ -73,6 +82,11 @@ export default class UserTab extends Component {
                     name: "91mp3",
                     src: "https://datavideo.idvxlab.com/audios/91mp3.mp3"
                 },
+                {
+                    uid: '-5',
+                    name: "testAudio",
+                    src: 'https://pimcore.idvxlab.com:7000/examples/audios/column-anon.mp3'
+                }
             ],
             videoList: [
                 {
@@ -80,6 +94,11 @@ export default class UserTab extends Component {
                     name: "chart_movie",
                     src: "https://datavideo.idvxlab.com/videos/chart_movie.mp4"
                 },
+                {
+                    uid: '-2',
+                    name: "video",
+                    src: 'users/default/video.mp4'
+                }
             ],
             gifList: [
                 {
@@ -100,14 +119,13 @@ export default class UserTab extends Component {
             ],
         }
     }
-
-    componentDidMount() {
-        //这里是解析对列表中默认的gif进行解析
+    componentWillMount() {
         this.state.gifList.map(async element => {
             element.gifData = await this.parseGif(element.src);
             return element;
         })
     }
+
     uploadFile = (file) => {
         let newFile = {};
         newFile.uid = file.uid;
@@ -156,16 +174,16 @@ export default class UserTab extends Component {
                     //上传文件成功，打开对应的panel
                     activeKey: "gif"
                 });
-                //console.log("uploadFile111", this.state.gifList)
                 break;
             default:
                 break;
         }
+
         return false;
     }
 
     async parseGif(gifUrl) {
-        //console.log("gifUrl", gifUrl)
+       // console.log("gifUrl", gifUrl)
         let _this = this;
         await gifFrames(
             { url: gifUrl, frames: 'all', outputType: 'canvas', cumulative: true },
@@ -174,6 +192,7 @@ export default class UserTab extends Component {
                     throw err;
                 }
                 _this.gifData = frameData;
+                //console.log("frameData",frameData)
             }
         );
         return _this.gifData;
@@ -184,6 +203,7 @@ export default class UserTab extends Component {
                 //console.log('deleteyes', this.state.imageList[i].uid);
                 const newList = this.state.imageList;
                 newList.splice(i, 1);
+                // this.deleteAssetByID();
                 this.setState({
                     imageList: newList
                 });
@@ -258,12 +278,15 @@ export default class UserTab extends Component {
         }
     };
 
+   
+   
+
     render() {
-        const { imageList, audioList, videoList, gifList} = this.state;
+        const { imageList, audioList, videoList, gifList } = this.state;
         //console.log("gifList", gifList)
 
         return (
-            <div className="usertab" style={{height:this.props.contentHeight}}  >
+            <div className="usertab" style={{ height: this.props.contentHeight }}  >
                 <div style={{ height: "120px" }}>
                     <Dragger
                         showUploadList={false}
@@ -278,8 +301,8 @@ export default class UserTab extends Component {
                     </Dragger>
                 </div>
 
-                <div className="user-upload-list" >
-                    <Collapse accordion bordered={false} activeKey={this.state.activeKey} onChange={this.callback} style={{height:this.props.contentHeight-130}} >
+                <div className="user-upload-list" style={{height:this.props.contentHeight-130}}>
+                    <Collapse accordion bordered={false} activeKey={this.state.activeKey} onChange={this.callback}  >
                         <Panel header={"Image (" + imageList.length + ")"} key="image" className="collaspe-panel">
                             <List
                                 grid={{ gutter: 3, column: 3 }}
@@ -334,11 +357,11 @@ export default class UserTab extends Component {
                                 grid={{ gutter: 3, column: 2 }}
                                 dataSource={videoList}
                                 renderItem={item => (
-                                    <List.Item >  
+                                    <List.Item >
                                         <VideoCard info={item}  {...this.props} />
                                         <Button style={{ marginLeft: '45px' }} key={item.uid} type="link" icon="delete" size="small"
                                             onClick={() => this.onDeleteVideo(item.uid)}
-                                        />  
+                                        />
                                     </List.Item>
                                 )}
                             />

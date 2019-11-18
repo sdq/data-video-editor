@@ -53,8 +53,6 @@ class AudioCard extends Component {
     
     onCanPlay=() => {
         this.playerElement.audioEl.id = 'audiotest-' + Math.random();
-        // this.playerElement.audioEl.crossOrigin = 'anonymous';
-        // this.playerElement.audioEl.src = this.props.info.src + "?" + Math.random();
         this.props.info.audio = this.playerElement.audioEl;
     }
 
@@ -65,8 +63,7 @@ class AudioCard extends Component {
                 <p>{this.props.info.name}</p>
                 <ReactAudioPlayer
                     style={{width:"250px"}}
-                    src={this.props.info.src} // + "?" + Math.random()
-                    //ref={(element) => { this.state.duration = element}}
+                    src={this.props.info.src}
                     ref={(element) => { this.playerElement = element}}
                     onCanPlay={this.onCanPlay}
                     controls

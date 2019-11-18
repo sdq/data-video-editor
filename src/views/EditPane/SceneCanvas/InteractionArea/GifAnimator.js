@@ -21,8 +21,7 @@ export default class GifAnimator extends Component {
                     top: this._gifInfo.y*scale,
                     left: this._gifInfo.x*scale,
                 }}
-                crossOrigin='anonymous'
-                src={this._gifInfo.src+"?"+ Math.random()}
+                src={this._gifInfo.src}
                 alt={this._gifInfo.name}>
             </img>
         )

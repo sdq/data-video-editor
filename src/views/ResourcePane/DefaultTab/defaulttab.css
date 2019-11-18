@@ -14,6 +14,7 @@
 .user-upload-list {
     padding:10px 0px 0px 0px; 
     overflow: auto;
+    height: 380px;
 }
 
 .collaspe-panel {

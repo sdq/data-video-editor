@@ -71,16 +71,16 @@ export default class EditToolBar extends Component {
     }
 
     newRect= () => {   
-        console.log("??/");
+       // console.log("??/");
     }
     newLine= () => {   
-        console.log("??/");
+      //  console.log("??/");
     }
     newCircle= () => {   
-        console.log("??/");
+      //  console.log("??/");
     }
     newTriangle= () => {   
-        console.log("??/");
+      //  console.log("??/");
     }
 
 

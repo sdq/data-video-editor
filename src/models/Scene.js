@@ -15,73 +15,84 @@ export default class Scene {
         this._backgroundColor = '#ffffff';
         this._backgroundImage = '';
     }
-    id = function() {
+    id = function () {
         return this._id;
     }
-    script = function(script) {
+    script = function (script) {
         //set animation duration
-        if (script == null){
+        if (script == null) {
             return this._script;
         } else {
             this._script = script;
             return this;
         }
     };
-    play = function() {
+    play = function () {
         //TODO: play
     };
-    pause = function() {
+    pause = function () {
         //TODO: pause
     };
-    stop = function() {
+    stop = function () {
         //TODO: stop
     };
-    forward = function() {
+    forward = function () {
         //TODO: forward to next frame
     };
-    backward = function() {
+    backward = function () {
         //TODO: backward to last frame
     };
-    begin = function() {
+    begin = function () {
         //TODO: first frame
     };
-    end = function() {
+    end = function () {
         //TODO: end frame
     };
-    duration = function(duration) {
+    duration = function (duration) {
         //set animation duration
-        if (duration == null){
+        if (duration == null) {
             return this._duration;
         } else {
             this._duration = duration;
             return this;
         }
     };
-    elements = function() {
+    elements = function () {
         return this._elements;
     };
-      
-    audios = function(){
+
+    audios = function () {
         return this._audios;
-    };  
-    addAudio = function(audio){
+    };
+    addAudio = function (audio) {
         this._audios.push(audio);
     };
-    videos = function(){
-       // console.log("videos",this._videos)
+    videos = function () {
+        //console.log("videos", this._videos)
         return this._videos;
-    };  
-    addVideo = function(video){
-        //console.log("addVideo",video)
-        this._videos.push(video);
     };
-    videoTags = function(){
+    addVideo = function (video) {
+        let isInList = false;
+        if (this._videos.length !== 0) {
+            this._videos.map(item => {
+                if (item.id === video.id) {
+                    isInList = true;
+                }
+                return video;
+            })
+        }
+        if (!isInList) {
+            //添加到播放列表中
+            this._videos.push(video)
+        }
+    };
+    videoTags = function () {
         return this._videoTags;
-    };  
-    addVideoTag = function(tag){
+    };
+    addVideoTag = function (tag) {
         this._videoTags.push(tag);
     };
-    addElement = function(element) {
+    addElement = function (element) {
         element.start(0);
         if (element.duration() === 0) {
             if (this.duration() > 10) {
@@ -98,20 +109,20 @@ export default class Scene {
         this._elements.push(element);
         return this;
     };
-    updateElement = function(element, index) {
+    updateElement = function (element, index) {
         this._elements[index] = element;
         return this;
     };
-    backgroundColor = function(backgroundColor) {
-        if (backgroundColor == null){
+    backgroundColor = function (backgroundColor) {
+        if (backgroundColor == null) {
             return this._backgroundColor;
         } else {
             this._backgroundColor = backgroundColor;
             return this;
         }
     };
-    backgroundImage = function(backgroundImage) {
-        if (backgroundImage == null){
+    backgroundImage = function (backgroundImage) {
+        if (backgroundImage == null) {
             return this._backgroundImage;
         } else {
             this._backgroundImage = backgroundImage;
