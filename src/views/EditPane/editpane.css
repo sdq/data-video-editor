@@ -4,6 +4,8 @@
     border-left-color: #FFC107; 
     border-right-color: #FFC107;  */
     text-align: center;
+    overflow-x: hidden;
+    overflow-y: hidden;
 }
 
 #canvasContainer {
@@ -25,7 +27,7 @@
 
 #playcontrol {
     margin-bottom: 1px;
-    height: 50px;
+    height: 49px;
     text-align: center;
     border-top-style: solid;
     border-top-width: 1px;

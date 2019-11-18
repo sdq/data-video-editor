@@ -1,10 +1,10 @@
 .chartcard {
-    height: 98px;
+    height: 60px;
     border-style: solid;
     border-color: #D8D8D8;
     border-width: 1px;
     border-radius: 4px;
-    padding: 5px;
+    padding: 3px;
 }
 
 img {

@@ -1,93 +1,24 @@
 import React, { Component } from 'react'
-import { Upload, Button, Row, Col, Collapse, List } from 'antd';
+import { Upload, Button, Row, Col, List } from 'antd';
 import ImageCard from '@/components/ImageCard';
 import AudioCard from '@/components/AudioCard';
 import GifCard from '@/components/GifCard';
 import VideoCard from '@/components/VideoCard';
-import MyURL from '@/constants/MyURL';
-import './usertab.css';
+import './defaulttab.css';
 var gifFrames = require('gif-frames');
 
-const { Panel } = Collapse;
 const { Dragger } = Upload;
 
-export default class UserTab extends Component {
+export default class DefaultTab extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
             activeKey: "image", //default
-            imageList: [
-                // {
-                //     uid: '-1',
-                //     name: "woman",
-                //     src: "https://datavideo.idvxlab.com/images/woman.png"
-                // },
-                {
-                    uid: '-1',
-                    name: "man",
-                    style: "cartoon",
-                    src: MyURL.OSS+"/images/man.png"
-                },
-                {
-                    uid: '-2',
-                    name: "chair",
-                    style: "cartoon",
-                    src: MyURL.OSS+"/images/chair.png"
-                },
-                {
-                    uid: '-3',
-                    name: "light",
-                    style: "cartoon",
-                    src: MyURL.OSS+"/images/light.png"
-                },
-            ],
-            audioList: [
-                {
-                    uid: '-1',
-                    name: "column-anon",
-                    src: "https://datavideo.idvxlab.com/audios/column-anon.mp3"
-                },
-                {
-                    uid: '-2',
-                    name: "88mp3",
-                    src: "https://datavideo.idvxlab.com/audios/88mp3.mp3"
-                },
-                {
-                    uid: '-3',
-                    name: "90mp3",
-                    src: "https://datavideo.idvxlab.com/audios/90mp3.mp3"
-                },
-                {
-                    uid: '-4',
-                    name: "91mp3",
-                    src: "https://datavideo.idvxlab.com/audios/91mp3.mp3"
-                },
-            ],
-            videoList: [
-                {
-                    uid: '-1',
-                    name: "demo",
-                    src: "https://datavideo.idvxlab.com/videos/demo.mp4"
-                },
-            ],
-            gifList: [
-                {
-                    uid: '-1',
-                    name: "walking",
-                    src: "https://datavideo.idvxlab.com/gifs/walking.gif"
-                },
-                {
-                    uid: '-2',
-                    name: "car-run",
-                    src: "https://datavideo.idvxlab.com/gifs/car-run.gif"
-                },
-                {
-                    uid: '-3',
-                    name: "star-flicker",
-                    src: "https://datavideo.idvxlab.com/gifs/star-flicker.gif"
-                },
-            ],
+            imageList: [],
+            audioList: [],
+            videoList: [],
+            gifList: [],
         }
     }
 
@@ -253,7 +184,7 @@ export default class UserTab extends Component {
         //console.log("gifList", gifList)
 
         return (
-            <div className="usertab" style={{height:this.props.contentHeight}}  >
+            <div className="usertab" style={{ height: this.props.contentHeight }}>
                 <div style={{ height: "120px" }}>
                     <Dragger
                         showUploadList={false}
@@ -268,9 +199,8 @@ export default class UserTab extends Component {
                     </Dragger>
                 </div>
 
-                <div className="user-upload-list" >
-                    <Collapse accordion bordered={false} activeKey={this.state.activeKey} onChange={this.callback} style={{height:this.props.contentHeight-170}} >
-                        <Panel header={"Image (" + imageList.length + ")"} key="image" className="collaspe-panel">
+                <div className="user-upload-list">
+                   
                             <List
                                 grid={{ gutter: 3, column: 3 }}
                                 dataSource={imageList}
@@ -283,8 +213,7 @@ export default class UserTab extends Component {
                                     </List.Item>
                                 )}
                             />
-                        </Panel>
-                        <Panel header={"Gif (" + gifList.length + ")"} key="gif" className="collaspe-panel">
+                       
                             <List
                                 grid={{ gutter: 3, column: 3 }}
                                 dataSource={gifList}
@@ -297,9 +226,7 @@ export default class UserTab extends Component {
                                     </List.Item>
                                 )}
                             />
-                        </Panel>
-
-                        <Panel header={"Audio (" + audioList.length + ")"} key="audio" className="collaspe-panel">
+                      
                             <List
                                 style={{ width: '100%', }}
                                 grid={{ gutter: 8, column: 1 }}
@@ -318,8 +245,7 @@ export default class UserTab extends Component {
                                     </List.Item>
                                 )}
                             />
-                        </Panel>
-                        <Panel header={"Video (" + videoList.length + ")"} key="video" className="collaspe-panel">
+                       
                             <List
                                 grid={{ gutter: 3, column: 2 }}
                                 dataSource={videoList}
@@ -332,8 +258,7 @@ export default class UserTab extends Component {
                                     </List.Item>
                                 )}
                             />
-                        </Panel>
-                    </Collapse>
+       
                 </div>
             </div>
         )

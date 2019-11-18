@@ -1,6 +1,6 @@
 #editview {
     overflow-x: hidden;
-    overflow-y: none;
+    overflow-y: hidden;
 }
 
 .maskbutton1 {
