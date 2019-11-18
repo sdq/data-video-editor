@@ -118,8 +118,7 @@ const draw = (props) => {
         .attr("x", function(d) { return x(d[encoding.x.field]); })
         .attr("width", x.bandwidth())
         .attr("height", function(d) { return height - y(d[encoding.y.field]); }) 
-        .attr("y", function(d) { return y(d[encoding.y.field]); })
-        .attr("fill", "pink");
+        .attr("y", function(d) { return y(d[encoding.y.field]); });
 
     // Color channel: Not necessary
     if ('color' in encoding) {
