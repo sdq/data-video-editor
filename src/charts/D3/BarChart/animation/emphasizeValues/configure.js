@@ -6,7 +6,7 @@ export default class configure extends Component {
     render() {
         return (
             <div>
-                emphasize extreme
+                emphasize values
             </div>
         )
     }

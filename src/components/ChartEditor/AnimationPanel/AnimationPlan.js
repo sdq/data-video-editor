@@ -11,23 +11,25 @@ export default class AnimationPlan extends Component {
             return null;
         }
         return (
-            <div className={'animation-plan-container'}>
+            <div>
                 <Divider>Animation Plan</Divider>
-                <List
-                    size="small"
-                    split = {false}
-                    dataSource={animationSteps}
-                    renderItem={(animation, index) => <List.Item>
-                        <div style={{display: 'inline-block'}}>
-                            <div style={{ float: 'left'}} onClick={() => this.props.selectAnimation(animation)}>
-                                <AnimationStep animation={animation} index={index} { ...this.props }/>
+                <div className={'animation-plan-container'}>
+                    <List
+                        size="small"
+                        split = {false}
+                        dataSource={animationSteps}
+                        renderItem={(animation, index) => <List.Item>
+                            <div style={{display: 'inline-block'}}>
+                                <div style={{ float: 'left'}} onClick={() => this.props.selectAnimation(index, animation)}>
+                                    <AnimationStep animation={animation} index={index} { ...this.props }/>
+                                </div>
+                                <div style={{ float: 'right', marginTop: 6}}>
+                                    <Button shape="circle" type="link" size="small" icon="close" onClick={()=>this.props.removeChartAnimation(index)}/>
+                                </div>
                             </div>
-                            <div style={{ float: 'right', marginTop: 6}}>
-                                <Button shape="circle" type="link" size="small" icon="close" onClick={()=>this.props.removeChartAnimation(index)}/>
-                            </div>
-                        </div>
-                    </List.Item>}
-                />
+                        </List.Item>}
+                    />
+                </div>
             </div>
         )
     }

@@ -11,6 +11,7 @@ export default class D3Chart extends Component {
             specString: '',
             chartImageUrl: '',
         };
+        this._animations = [];
     }
 
     componentDidMount() {
@@ -23,7 +24,7 @@ export default class D3Chart extends Component {
 
     componentDidUpdate() {
         if (this.state.specString !== JSON.stringify(this.props.spec)) {
-            if (this.props.showAnimation) {
+            if (this.props.showAnimation && this.props.spec.animation.length > 0) {
                 this.renderAnimation();
             } else {
                 this.renderChart();
@@ -32,6 +33,7 @@ export default class D3Chart extends Component {
     }
 
     renderChart = () => {
+        this.cancelAnimation();
         const svg = this.props.draw(this.props);
         this.setState({
             showAnimation: this.props.showAnimation
@@ -47,12 +49,28 @@ export default class D3Chart extends Component {
     }
 
     renderAnimation = () => {
+        this.cancelAnimation();
+        this.setState({
+            specString: JSON.stringify(this.props.spec),
+        });
         const animations = this.props.spec.animation;
+        let animationDelay = 0;
         for (let index = 0; index < animations.length; index++) {
             const animation = animations[index];
-            setTimeout(function () {
+            this._animations.push(setTimeout(function () {
                 this.props.animate(animation, this.props);
-            }.bind(this), index * 3000)
+            }.bind(this), animationDelay))
+            animationDelay += animation.duration;
+        }
+        // Reset
+        // this._animations.push(setTimeout(function () {
+        //     this.renderChart();
+        // }.bind(this), animationDelay))
+    }
+
+    cancelAnimation = () => {
+        for (var i = 0; i < this._animations.length; i++) {
+            clearTimeout(this._animations[i]);
         }
     }
 

@@ -4,7 +4,7 @@ import _ from 'lodash';
 
 const offset = 20; // To show whole chart
 
-const draw = (props) => {
+const draw = (animation, props) => {
     // console.log('draw')
     let a = document.createElement("div");
     if (!props.onCanvas) {
@@ -88,11 +88,16 @@ const draw = (props) => {
 
     // Animation
     let originPosition = _.cloneDeep(data.map(function(d) { return x(d[encoding.x.field]); }))
-    let newX = data.sort(function(a, b) { return a[encoding.y.field] - b[encoding.y.field]; }).map(function(d) { return d[encoding.x.field]; })
+    let newX;
+    if (animation.spec.order === 'ascending') {
+        newX = data.sort(function(a, b) { return a[encoding.y.field] - b[encoding.y.field]; }).map(function(d) { return d[encoding.x.field]; })
+    } else {
+        newX = data.sort(function(a, b) { return b[encoding.y.field] - a[encoding.y.field]; }).map(function(d) { return d[encoding.x.field]; })
+    }
     x.domain(newX);
     svg.selectAll("rect")
         .transition()
-        .duration(750)
+        .duration(animation.duration)
         .delay(function(d, i) { return i * 50; })
         .attr("transform", function(d, i) { 
             let offset = x(d[encoding.x.field])-originPosition[i];  

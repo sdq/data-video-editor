@@ -1,10 +1,10 @@
 import * as d3 from 'd3';
-import {getMaxRows} from '../../helper';
+import {getMaxRows, getCategories} from '../../helper';
 import _ from 'lodash';
 
 const offset = 20; // To show whole chart
 
-const draw = (props) => {
+const draw = (animation, props) => {
     // console.log('draw')
     let a = document.createElement("div");
     if (!props.onCanvas) {
@@ -87,7 +87,74 @@ const draw = (props) => {
     }
 
     // Animation
-    
+    let dataCategories = getCategories(props.data, encoding);
+    let categories = Object.keys(dataCategories);
+    let selectedCategory = animation.spec.category?animation.spec.category:categories[0];
+    if (animation.spec.effect === 'flicker') {
+        flicker(animation.duration);
+    } else {
+        filter(animation.duration);
+    }
+
+    function filter(duration) {
+        svg.selectAll("rect")
+            .transition()
+            .duration(duration)
+            .style("stroke", "yellow")
+            .style("stroke-width", function (d, i){  
+                if (d[encoding.x.field].toString() === selectedCategory) {
+                    return 5;
+                } else {
+                    return 0;
+                }
+            })
+            .attr("fill", function (d, i){  
+                if (d[encoding.x.field].toString() === selectedCategory) {
+                    return "blue";
+                } else {
+                    return "lightgray";
+                }
+            });
+    }
+
+    function flicker(duration) {
+        svg.selectAll("rect")
+            .transition()
+            .duration(duration/5)
+            .style("stroke", "yellow")
+            .style("stroke-width", function (d, i){  
+                if (d[encoding.x.field].toString() === selectedCategory) {
+                    return 5;
+                } else {
+                    return 0;
+                }
+            })
+            .transition()
+            .duration(duration/5)
+            .style("stroke-width", 0)
+            .transition()
+            .duration(duration/5)
+            .style("stroke-width", function (d, i){  
+                if (d[encoding.x.field].toString() === selectedCategory) {
+                    return 5;
+                } else {
+                    return 0;
+                }
+            })
+            .transition()
+            .duration(duration/5)
+            .style("stroke-width", 0)
+            .transition()
+            .duration(duration/5)
+            .style("stroke-width", function (d, i){  
+                // TODO: Data Binding
+                if (i === 0) {
+                    return 5;
+                } else {
+                    return 0;
+                }
+            })
+    }
 
     return svg;
 }
