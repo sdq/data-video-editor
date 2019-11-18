@@ -2,19 +2,6 @@ import ChartAnimationTask from '../ChartAnimationTask';
 import ChartAnimationType from '../ChartAnimationType';
 
 const animations = {
-    "Tendency": [
-        {
-            type: ChartAnimationType.DATA_TREND,
-            task: ChartAnimationTask.TENDENCY,
-            title: "Data Trend",
-            description: "Show data trend of all series from {range}",
-            duration: 2000,
-            spec: {
-                range: {},
-                effect: "filter" // or flicker
-            }
-        },
-    ],
     "Emphasize": [
         {
             type: ChartAnimationType.EMPHASIZE_CATEGORY,
@@ -166,7 +153,20 @@ const animations = {
                 to: "normalized",
             }
         },
-    ]
+    ],
+    "Tendency": [
+        {
+            type: ChartAnimationType.DATA_TREND,
+            task: ChartAnimationTask.TENDENCY,
+            title: "Data Trend",
+            description: "Show data trend of all series from {range}",
+            duration: 2000,
+            spec: {
+                range: {},
+                effect: "filter" // or flicker
+            }
+        },
+    ],
 };
 
 export default animations;

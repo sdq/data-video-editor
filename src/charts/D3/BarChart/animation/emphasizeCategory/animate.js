@@ -148,7 +148,7 @@ const draw = (animation, props) => {
             .duration(duration/5)
             .style("stroke-width", function (d, i){  
                 // TODO: Data Binding
-                if (i === 0) {
+                if (d[encoding.x.field].toString() === selectedCategory) {
                     return 5;
                 } else {
                     return 0;
