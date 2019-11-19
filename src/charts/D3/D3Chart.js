@@ -15,7 +15,7 @@ export default class D3Chart extends Component {
     }
 
     componentDidMount() {
-        if (this.props.showAnimation) {
+        if (this.props.showChartAnimation) {
             this.renderAnimation();
         } else {
             this.renderChart();
@@ -24,7 +24,7 @@ export default class D3Chart extends Component {
 
     componentDidUpdate() {
         if (this.state.specString !== JSON.stringify(this.props.spec)) {
-            if (this.props.showAnimation && this.props.spec.animation.length > 0) {
+            if (this.props.showChartAnimation && this.props.spec.animation.length > 0) {
                 this.renderAnimation();
             } else {
                 this.renderChart();
