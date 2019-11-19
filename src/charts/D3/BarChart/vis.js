@@ -1,5 +1,5 @@
 import * as d3 from 'd3';
-import {getSeries, getCategories, getMaxRows} from './helper';
+import {getStackedData, getMaxRows} from './helper';
 import _ from 'lodash';
 
 const offset = 20; // To show whole chart
@@ -30,68 +30,14 @@ const draw = (props) => {
             .attr("fill", "pink");
         return svg;
     }
+    let hasSeries = 'color' in encoding;
 
     // Process Data
     let data = props.data;
-    // let data = getMaxRows(props.data, encoding);
-
-    // Get categories
-    let dataCategories = getCategories(data, encoding);
-    let categories = Object.keys(dataCategories);
-
-    // Get series and stacked data
-    let dataSeries = {};
-    let dataSeriesCategories = {};
-    let series = [];
-    if ('color' in encoding) {
-        // Series data
-        dataSeries = getSeries(data, encoding);
-        series = Object.keys(dataSeries);
-        for (const s in dataSeries) {
-            dataSeriesCategories[s] = {};
-            dataSeries[s] = getMaxRows(dataSeries[s], encoding);
-            for (let index = 0; index < dataSeries[s].length; index++) {
-                const rowData = dataSeries[s][index];
-                // console.log(rowData);
-                dataSeriesCategories[s][rowData[encoding.x.field]] = rowData[encoding.y.field]
-            }
-        }
+    let stackedData = [];
+    if (hasSeries) {
+        stackedData = getStackedData(data, encoding);
     }
-    // console.log(dataSeriesCategories);
-    // console.log(dataSeries);
-    // console.log(series);
-
-    if (series.length > 0) {
-        let preparedData = series.map((s) => {
-            let sData = [];
-            categories.forEach(c => {
-                sData.push({
-                    x: c,
-                    y: dataSeriesCategories[s][c]?dataSeriesCategories[s][c]:0,
-                    y0: 0,
-                })
-            });
-            return sData;
-        })
-        let reducedData = preparedData[0].map((d) => {
-            let z = {x: d.x};
-            z[series[0]] = d.y;
-            return z;
-        });
-        for (let i = 1; i < preparedData.length; i++) {
-            let s = series[i]
-            for (let j = 0; j < categories.length; j++) {
-                // const element = array[index];
-                reducedData[j][s] = preparedData[i][j].y
-            }
-            
-        }
-        // console.log(preparedData);
-        // console.log(reducedData);
-        // let stackedData = d3.stack().keys(series)(preparedData);
-        // console.log(stackedData);
-    }
-
     data = getMaxRows(data, encoding);
 
     // X channel
@@ -102,29 +48,43 @@ const draw = (props) => {
     
     // Y channel
     let y = d3.scaleLinear()
-            .domain([0, d3.max(data, function(d) { return d[encoding.y.field]; })])
-            .range([ height, 0]);
+    if (hasSeries) {
+        y.domain([0, d3.max(stackedData[stackedData.length - 1], d => d[1] )]).nice().range([ height, 0]);
+    } else {
+        y.domain([0, d3.max(data, function(d) { return d[encoding.y.field]; })]).range([ height, 0]);
+    }
 
     // Color channel
-    let colorScale = d3.scaleOrdinal(d3.schemeCategory10);
-    let color = colorScale.domain(data.map(function (d){ return d[encoding.color.field]; }));
+    let color = d3.scaleOrdinal(d3.schemeCategory10);
 
     // Bars
-    svg.selectAll(".bar")
-        .data(data)
-        .enter()
-        .append("rect")
-        .style('stroke-width','0')
-        .attr("x", function(d) { return x(d[encoding.x.field]); })
-        .attr("width", x.bandwidth())
-        .attr("height", function(d) { return height - y(d[encoding.y.field]); }) 
-        .attr("y", function(d) { return y(d[encoding.y.field]); });
-
-    // Color channel: Not necessary
-    if ('color' in encoding) {
-        svg.selectAll("rect")
+    if (hasSeries) {
+        const layer = svg.selectAll('layer')
+            .data(stackedData)
+            .enter()
+            .append('g')
+            .attr('class', 'layer')
+            .style('fill', (d, i) => color(i))
+            
+        layer.selectAll('rect')
+            .data(d => d)
+            .enter()
+            .append('rect')
+            .attr('x', d => x(d.data.x))
+            .attr('y', d => y(d[1]))
+            .attr('height', d => y(d[0]) - y(d[1]))
+            .attr('width', x.bandwidth() - 1)
+            .style('stroke-width','0')
+    } else {
+        svg.selectAll(".bar")
             .data(data)
-            .attr("fill", function (d){ return color(d[encoding.color.field]); });
+            .enter()
+            .append("rect")
+            .style('stroke-width','0')
+            .attr("x", function(d) { return x(d[encoding.x.field]); })
+            .attr("width", x.bandwidth())
+            .attr("height", function(d) { return height - y(d[encoding.y.field]); }) 
+            .attr("y", function(d) { return y(d[encoding.y.field]); });
     }
 
     // Style
