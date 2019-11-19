@@ -18,7 +18,7 @@ export default class ChartEditor extends Component {
         super(props);
         this.state = {
             showChart: true,
-            showAnimation: false,
+            showChartAnimation: false,
         }
     }
 
@@ -26,28 +26,28 @@ export default class ChartEditor extends Component {
         if (key==='Data') {
             this.setState({
                 showChart: false,
-                showAnimation: false,
+                showChartAnimation: false,
             })
         } else if (key==='Animation') {
             this.setState({
                 showChart: true,
-                showAnimation: true,
+                showChartAnimation: true,
             })
         } else {
             this.setState({
                 showChart: true,
-                showAnimation: false,
+                showChartAnimation: false,
             })
         }
     }
 
     render() {
-        const {showChart, showAnimation} = this.state;
+        const {showChart, showChartAnimation} = this.state;
         const {currentData, currentElement, displaySpec} = this.props;
         if (!currentData.data) return null;
         const datapreview = <TablePanel {...this.props}/>
         const chartInfo = currentElement.info();
-        const chart = <ChartPanel data={currentData.data} chartInfo={chartInfo} spec={displaySpec} showAnimation={showAnimation} {...this.props}/>;
+        const chart = <ChartPanel data={currentData.data} chartInfo={chartInfo} spec={displaySpec} showChartAnimation={showChartAnimation} {...this.props}/>;
         return (
             <Modal
                 title="Chart Editor"

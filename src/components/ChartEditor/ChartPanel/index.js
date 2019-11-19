@@ -38,6 +38,7 @@ class ChartPanel extends Component {
                     height={600}
                     current={this.props.scenePosition}
                     onCanvas={false} 
+                    showChartAnimation={this.props.showChartAnimation}
                     showAnimation={this.props.showAnimation}
                 />
             </div>

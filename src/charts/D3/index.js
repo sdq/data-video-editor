@@ -12,6 +12,7 @@ export default class D3Chart extends Component {
                 width={this.props.width} 
                 height={this.props.height} 
                 onCanvas={this.props.onCanvas} 
+                showChartAnimation={this.props.showChartAnimation} 
                 showAnimation={this.props.showAnimation} 
                 animations={this.props.animations} 
                 current={this.props.scenePosition}
