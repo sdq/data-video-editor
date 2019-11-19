@@ -25,6 +25,54 @@ const getSeries = (rawData, encoding) => {
     }
     return dataSeries;
 }
+
+const getStackedData = (rawData, encoding) => {
+    if (!('color' in encoding)) {
+        return []
+    }
+    let dataCategories = getCategories(rawData, encoding);
+    let categories = Object.keys(dataCategories);
+    let dataSeries = getSeries(rawData, encoding);
+    let series = Object.keys(dataSeries);
+    let dataSeriesCategories = {};
+    for (const s in dataSeries) {
+        dataSeriesCategories[s] = {};
+        dataSeries[s] = getMaxRows(dataSeries[s], encoding);
+        for (let index = 0; index < dataSeries[s].length; index++) {
+            const rowData = dataSeries[s][index];
+            // console.log(rowData);
+            dataSeriesCategories[s][rowData[encoding.x.field]] = rowData[encoding.y.field]
+        }
+    }
+
+    let preparedData = series.map((s) => {
+        let sData = [];
+        categories.forEach(c => {
+            sData.push({
+                x: c,
+                y: dataSeriesCategories[s][c]?dataSeriesCategories[s][c]:0,
+                y0: 0,
+            })
+        });
+        return sData;
+    })
+    let reducedData = preparedData[0].map((d) => {
+        let z = {x: d.x};
+        z[series[0]] = d.y;
+        return z;
+    });
+    for (let i = 1; i < preparedData.length; i++) {
+        let s = series[i]
+        for (let j = 0; j < categories.length; j++) {
+            // const element = array[index];
+            reducedData[j][s] = preparedData[i][j].y
+        }
+        
+    }
+    let stackedData = d3.stack().keys(series)(reducedData);
+    return stackedData;
+
+}
  
 const getMinRows = (rawData, encoding) => {
     let calculateData = d3.nest().key(d => d[encoding.x.field]).entries(rawData);
@@ -58,4 +106,4 @@ const getMaxRows = (rawData, encoding) =>{
     return data;
 }
 
-export {getCategories, getSeries, getMinRows, getMaxRows}
+export {getCategories, getSeries, getStackedData, getMinRows, getMaxRows}
