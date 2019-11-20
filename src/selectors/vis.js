@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 import { getChannels } from '@/charts/Info';
-import ChartType from '@/constants/ChartType';
+import {chart} from '@/chart';
 import _ from 'lodash';
 
 // Data
@@ -28,7 +28,7 @@ export const currentData = createSelector(
 )
 const chartInfo = {
     dataIndex: 0,
-    type: ChartType.BARCHART,
+    type: chart,
     spec: {}
 }
 
