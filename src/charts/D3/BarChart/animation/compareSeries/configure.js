@@ -1,10 +1,85 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import { Row, Col, Select, Radio } from 'antd';
+import {getSeries} from '../../helper';
+const { Option } = Select;
 
 export default class configure extends Component {
+
+    handleSeries1Change = (value) => {
+        const {index, animation} = this.props;
+        animation.spec.series1 = value;
+        this.props.modifyChartAnimation(index, animation);
+    }
+
+    handleSeries2Change = (value) => {
+        const {index, animation} = this.props;
+        animation.spec.series2 = value;
+        this.props.modifyChartAnimation(index, animation);
+    }
+
+    handleEffectChange = e => {
+        const {index, animation} = this.props;
+        animation.spec.effect = e.target.value;
+        this.props.modifyChartAnimation(index, animation);
+    }
+
+    handleDurationChange = e => {
+        const {index, animation} = this.props;
+        animation.duration = e.target.value;
+        this.props.modifyChartAnimation(index, animation);
+    }
+
     render() {
+        const {animation, currentData, currentVis} = this.props;
+        let data = currentData.data;
+        let encoding = currentVis.spec.encoding;
+        let dataSeries = getSeries(data, encoding);
+        let series = Object.keys(dataSeries);
+        let series1 = animation.spec.series1?animation.spec.series1:series[0];
+        let series2 = animation.spec.series2?animation.spec.series2:series[1];
         return (
             <div>
-                compare series
+                <Row  style={{ height: 50 }}>
+                    <Col span={6}><h3 style={{ marginTop: 6 }}>Series1:</h3></Col>
+                    <Col span={9}>
+                        <Select defaultValue={series1} style={{ width: 120, marginTop: 4 }} onChange={this.handleSeries1Change}>
+                            {series.map((s) => <Option key={s} value={s}>{s}</Option>)}
+                        </Select>
+                    </Col>
+                    <Col span={9}>
+                        <p style={{ marginTop: 8 }}>{encoding.color.field}</p>
+                    </Col>
+                </Row>
+                <Row  style={{ height: 50 }}>
+                    <Col span={6}><h3 style={{ marginTop: 6 }}>Series2:</h3></Col>
+                    <Col span={9}>
+                        <Select defaultValue={series2} style={{ width: 120, marginTop: 4 }} onChange={this.handleSeries2Change}>
+                            {series.map((s) => <Option key={s} value={s}>{s}</Option>)}
+                        </Select>
+                    </Col>
+                    <Col span={9}>
+                        <p style={{ marginTop: 8 }}>{encoding.color.field}</p>
+                    </Col>
+                </Row>
+                <Row style={{ height: 50 }}> 
+                    <Col span={6}><h3 style={{ marginTop: 6 }}>Effect:</h3></Col>
+                    <Col span={18}>
+                        <Radio.Group value={animation.spec.effect} onChange={this.handleEffectChange}>
+                            <Radio.Button value="superposition">Superposition</Radio.Button>
+                            <Radio.Button value="difference">Difference</Radio.Button>
+                        </Radio.Group>
+                    </Col>
+                </Row>
+                <Row style={{ height: 50 }}> 
+                    <Col span={6}><h3 style={{ marginTop: 6 }}>Duration:</h3></Col>
+                    <Col span={18}>
+                        <Radio.Group value={animation.duration} onChange={this.handleDurationChange}>
+                            <Radio.Button value={500}>Short</Radio.Button>
+                            <Radio.Button value={1000}>Medium</Radio.Button>
+                            <Radio.Button value={1500}>Long</Radio.Button>
+                        </Radio.Group>
+                    </Col>
+                </Row>
             </div>
         )
     }

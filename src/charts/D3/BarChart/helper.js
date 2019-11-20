@@ -100,10 +100,24 @@ const getMaxRows = (rawData, encoding) =>{
         if(index >= 0) return d.values[index]
         // index === 'undefined'
         else {
-            return d.values[0]
+            return d.values[0];
         }
     });
     return data;
 }
 
-export {getCategories, getSeries, getStackedData, getMinRows, getMaxRows}
+const getSumRows = (rawData, encoding) =>{
+    let calculateData = d3.nest().key(d => d[encoding.x.field]).entries(rawData);
+    let sumData = new Array(calculateData.length).fill(0);
+    let data = calculateData.map(function (d,i) {
+        d.values.forEach(d=>{
+            sumData[i] += d[encoding.y.field]
+        })
+        let sumRows = Object.assign({},d.values[0])
+        sumRows[encoding.y.field] = sumData[i]
+        return sumRows
+    });
+    return data;
+}
+
+export {getCategories, getSeries, getStackedData, getMinRows, getMaxRows, getSumRows}

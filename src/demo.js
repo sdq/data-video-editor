@@ -101,6 +101,7 @@ const demochart2 = new ChartInfo(
             "color": {"field": "Origin", "type": "nordinal"},
         },
         "style": {
+            "layout": "stacked",
             "showAxisX": true,
             "showAxisY": true,
         },

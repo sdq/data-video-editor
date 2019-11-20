@@ -11,7 +11,7 @@ const draw = (props) => {
         a = '.vis-barchart';
     }
 
-    const margin = {top: 10, right: -10, bottom: 40, left: 40};
+    const margin = {top: 10, right: 10, bottom: 40, left: 40};
     const width = props.width - margin.left - margin.right - offset;
     const height = props.height - margin.top - margin.bottom - offset;
     let svg = d3.select(a)
@@ -30,7 +30,7 @@ const draw = (props) => {
             .attr("fill", "pink");
         return svg;
     }
-    let hasSeries = 'color' in encoding;
+    let hasSeries = ('color' in encoding) && ('field' in encoding.color);;
 
     // Process Data
     let data = props.data;
@@ -84,7 +84,8 @@ const draw = (props) => {
             .attr("x", function(d) { return x(d[encoding.x.field]); })
             .attr("width", x.bandwidth())
             .attr("height", function(d) { return height - y(d[encoding.y.field]); }) 
-            .attr("y", function(d) { return y(d[encoding.y.field]); });
+            .attr("y", function(d) { return y(d[encoding.y.field]); })
+            .style('fill', color(0));
     }
 
     // Style
