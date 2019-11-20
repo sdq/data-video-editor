@@ -83,6 +83,7 @@ export default class EditPane extends Component {
         this.props.updateScene(this.props.sceneIndex, newScene);
     }
 
+
     render() {
         return (
             <div id="editpane">
@@ -97,14 +98,14 @@ export default class EditPane extends Component {
                         setIsShowGridLines = {this.setIsShowGridLines}
                         { ...this.props }
                     />
-                    <div style={{ background: '#eee', height: '450px' }}>
+                    <div style={{ background: '#eee', height: this.props.contentHeight-100+'px' }}>
                         <SceneCanvas 
                             showGridLines={this.state.showGridLines}
                             { ...this.props }
                         />
                     </div>
                     <PlayControlBar { ...this.props }/>
-                </HotKeys>
+                    </HotKeys>
             </div>
         )
     }

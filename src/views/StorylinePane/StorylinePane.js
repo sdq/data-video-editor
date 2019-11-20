@@ -69,7 +69,7 @@ export default class StorylinePane extends Component {
 
     render() {
         return (
-            <div>
+            <div id="story">
                 <div id="storylineHeader">
                     <font color="white" weight="bold">Storyline</font>
                 </div>

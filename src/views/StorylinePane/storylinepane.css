@@ -1,8 +1,14 @@
+#story {
+margin-bottom: 0px;
+z-index:4;
+}
+
 #storyline {
     display: flex;
     padding: 8px;
     overflow-x: auto;
     overflow-y: hidden;
+    z-index:4;
 }
 
 #storylineHeader {
@@ -11,4 +17,5 @@
     padding-left: 16px;
     padding-top: 4px;
     font-size: 20px;
+    z-index:4;
 }

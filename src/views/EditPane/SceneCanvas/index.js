@@ -12,13 +12,13 @@ export default class EditCanvas extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            showAssistLines: false,
             dynamicAssistLines:"",
             showTextEditor: false, 
             showChartPreview: false, 
             showGifEditor:false,
             showVideoEditor:false,
             dbClickedElementIndex: -1,
+            windowWidth:1200,
         };
         this.handleStageDblClick = this.handleStageDblClick.bind(this);
         this.lastscene = props.sceneIndex; //进入界面的第一个scene编号
@@ -47,7 +47,6 @@ export default class EditCanvas extends Component {
         //每当切换元素时，清空公用dragpos,transinfo
         this.props.dragElement('');
         this.props.transformElement('');
-
 
         // remove animation
         this.setState({
@@ -117,10 +116,31 @@ export default class EditCanvas extends Component {
         }
     }
 
+
+    componentDidMount() {
+        window.addEventListener('resize', this.handleResize.bind(this)) //监听窗口大小改变
+      }
+    
+    componentWillUnmount() { //移除监听器，以防多个组件之间导致this的指向紊乱 
+        window.removeEventListener('resize', this.handleResize.bind(this))
+      }
+
+    handleResize = e => {
+        this.setState({
+            windowWidth: window.innerWidth,
+        })
+      }
+
+
     render() {
         const { isPerforming } = this.props;
+        const canvasW = 800*(this.props.contentHeight-100)/450;
+        const canvasH = this.props.contentHeight-100;
+        const {showResourcePane,showToolPane} = this.props;
+        
+
         let editable = !isPerforming;  
-        let { dbClickedElementIndex, showTextEditor, showChartPreview, showGifEditor, showVideoEditor, showAssistLines } = this.state;
+        let { dbClickedElementIndex, showTextEditor, showChartPreview, showGifEditor, showVideoEditor, showAssistLines,windowWidth } = this.state;
         if (this.props.sceneIndex!==this.lastscene)
         {
             //切换屏幕时，保证交互层不显示，双击元素置空
@@ -132,9 +152,6 @@ export default class EditCanvas extends Component {
             showVideoEditor = false;
             showAssistLines = false;
         }
-
-
-
         const editableLayer = <EditableLayer 
                 displayAssistLines={(active) => this.displayAssistLines(active)}
                 dbClickedElementIndex={dbClickedElementIndex}
@@ -150,7 +167,27 @@ export default class EditCanvas extends Component {
                 {...this.props}
             />
         return (
-            <div id="canvasContainer">
+            <div id="canvasContainer" 
+                 style={{  
+                 
+                 height: canvasH+'px',
+                 //不同情况下的居中计算
+                 //窗口小于缩放临界值的时候，采用尽量适配小窗口的策略
+                 marginLeft:windowWidth<=1300?
+                 (showResourcePane&&showToolPane?(window.innerWidth-660-canvasW)/2+"px"
+                 :!showResourcePane&&showToolPane?(window.innerWidth-300-canvasW)/2+"px"
+                 :showResourcePane&&!showToolPane?(window.innerWidth-360-canvasW)/2+"px"
+                 :(window.innerWidth-canvasW)/2+"px"
+                 //窗口大于缩放临界值的时候，直接进行居中计算
+                 )
+                 :(showResourcePane&&showToolPane?(windowWidth-660-canvasW)/2+'px'
+                 :!showResourcePane&&showToolPane?(windowWidth-300-canvasW)/2+'px'
+                 :showResourcePane&&!showToolPane?(windowWidth-360-canvasW)/2+'px'
+                 :(windowWidth-canvasW)/2+'px'
+                 )
+                }
+            } 
+                 >
                 {editable?
                 <InteractionArea 
                     showTextEditor={showTextEditor}
@@ -158,13 +195,17 @@ export default class EditCanvas extends Component {
                     showGifEditor={showGifEditor}
                     showVideoEditor={showVideoEditor}
                     showAssistLines={showAssistLines} 
-                    dynamicAssistLines = {this.state.dynamicAssistLines}///
+                    dynamicAssistLines = {this.state.dynamicAssistLines}
                     {...this.props}
                 />: 
                 null}
                 <Stage 
                     ref={ref => { this.stageRef = ref; }}
-                    width={800} height={450} 
+                    //控制画布缩放，限定大于800*450时
+                    // width={canvasW>800?canvasW:800} height={canvasH>450?canvasH:450} 
+                    // scale={{x: canvasW>800?canvasH/450:1, y:canvasH>450?canvasH/450:1}}
+                    width={canvasW} height={canvasH} 
+                    scale={{x:canvasH/450, y:canvasH/450}}
                     onMouseDown={editable?this.handleStageMouseDown:null}
                     onDblClick={editable?this.handleStageDblClick:null}
                 >
@@ -172,7 +213,7 @@ export default class EditCanvas extends Component {
                     {isPerforming?null:editableLayer}
                     {isPerforming?animationLayer:null}
                 </Stage>
-            </div>
+               </div>
         )
     }
 }

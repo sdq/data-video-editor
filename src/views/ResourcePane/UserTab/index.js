@@ -253,7 +253,7 @@ export default class UserTab extends Component {
         //console.log("gifList", gifList)
 
         return (
-            <div className="usertab">
+            <div className="usertab" style={{height:this.props.contentHeight-50}}  >
                 <div style={{ height: "120px" }}>
                     <Dragger
                         showUploadList={false}
@@ -268,8 +268,8 @@ export default class UserTab extends Component {
                     </Dragger>
                 </div>
 
-                <div className="user-upload-list">
-                    <Collapse accordion bordered={false} activeKey={this.state.activeKey} onChange={this.callback} >
+                <div className="user-upload-list" >
+                    <Collapse accordion bordered={false} activeKey={this.state.activeKey} onChange={this.callback} style={{height:this.props.contentHeight-170}} >
                         <Panel header={"Image (" + imageList.length + ")"} key="image" className="collaspe-panel">
                             <List
                                 grid={{ gutter: 3, column: 3 }}

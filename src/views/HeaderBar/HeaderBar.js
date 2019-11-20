@@ -21,16 +21,6 @@ export default class HeaderBar extends Component {
     this.play = this.play.bind(this);
 };
 
-    showMedia = () => {
-        const {showResourcePane} = this.props;
-        this.props.displayResourcePane(!showResourcePane);
-    }
-
-    showTool = () => {
-        const {showToolPane} = this.props;
-        this.props.displayToolPane(!showToolPane);
-    }
-
     showModal = () => {
         this.setState({
             visible: true,
@@ -173,10 +163,6 @@ export default class HeaderBar extends Component {
                 <Button type="primary" shape="round" icon={this.state.isVideoPerforming?"pause":"caret-right"} onClick={this.play} style={{ float: 'right', marginLeft: 12 } }>
                     Preview
                 </Button>
-                <Button.Group style={{ float: 'right', marginLeft: 12 }}>
-                    <Button type="primary" shape="round" onClick={this.showMedia}>Media</Button>
-                    <Button type="primary" shape="round" onClick={this.showTool}>Tool</Button>
-                </Button.Group>
                 <Modal
                     title="Export Video"
                     visible={this.state.visible}

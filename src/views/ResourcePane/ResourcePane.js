@@ -8,6 +8,7 @@ import './resourcepane.css';
 const { TabPane } = Tabs;
 
 export default class ResourcePane extends Component {
+
     render() {
         return (
             <div className="card-container">
@@ -22,7 +23,7 @@ export default class ResourcePane extends Component {
                         <ChartTab {...this.props}/>
                     </TabPane>
                 </Tabs>
-            </div>
+                </div>
         )
     }
 }

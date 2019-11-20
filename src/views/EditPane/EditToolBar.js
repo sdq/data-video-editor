@@ -9,10 +9,10 @@ import './editpane.css';
 const ButtonGroup = Button.Group;
 
 //目前仅支持中文长度识别
-const defaultText = new TextInfo(
+let defaultText = new TextInfo(
     "输入文字",
-    390,
-    220,
+    360,
+    220, //随机高度，避免重复
     0,
     'black',
     20,
@@ -30,6 +30,8 @@ export default class EditToolBar extends Component {
         super(props);
         this.state = {
             visible: false,
+            canvasW: 800*(this.props.contentHeight-100)/450,
+            canvasH: this.props.contentHeight-100,
         };
         this.copyElement = this.copyElement.bind(this);
         this.cutElement = this.cutElement.bind(this);
@@ -54,7 +56,8 @@ export default class EditToolBar extends Component {
         this.props.deleteElement();
     }
 
-    addText = () => {        
+    addText = () => {       
+        defaultText.y = defaultText.y+Math.ceil(Math.random()*30);
         const newTextElement = new Element(ElementType.TEXT, defaultText);
         const newScene = _.cloneDeep(this.props.currentScene);
         newScene.addElement(newTextElement);

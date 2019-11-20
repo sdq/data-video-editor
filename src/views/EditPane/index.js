@@ -4,7 +4,7 @@ import {currentScene, sceneIndex, scenes, isFirstScene, isLastScene, past, futur
 import {currentElement, currentElements, elementIndex, elementName, isElementSelected, dragPos, transformInfo} from '@/selectors/canvas';
 import { scenePosition } from '@/selectors/scene';
 import { isPerforming, isScenePerforming, isVideoPerforming } from '@/selectors/player';
-import { showAnimationTargetArea, showResourceTargetArea } from '@/selectors/ui';
+import { showAnimationTargetArea, showResourceTargetArea,uimode, showResourcePane, showToolPane } from '@/selectors/ui';
 import { dataNameList, dataList, fieldsList, displaySpec, currentData, currentVis, channels } from '@/selectors/vis';
 import * as uiActions from '@/actions/uiAction';
 import * as videoActions from '@/actions/videoAction';
@@ -45,6 +45,10 @@ const mapStateToProps = state => {
         displaySpec: displaySpec(state),
         currentVis: currentVis(state),
         channels: channels(state),
+        // showpane
+        uimode: uimode(state),
+        showResourcePane: showResourcePane(state),
+        showToolPane: showToolPane(state),
     }
 }
 
@@ -65,6 +69,9 @@ const mapDispatchToProps = dispatch => {
         redoCanvas: (index) => dispatch(metaActions.redoCanvas(index)),
         dragElement: (dragPos) => dispatch(canvasActions.dragElement(dragPos)),
         transformElement: (transformInfo) => dispatch(canvasActions.transformElement(transformInfo)),
+        // showpane
+        displayResourcePane: (isActive) => dispatch(uiActions.displayResourcePane(isActive)),
+        displayToolPane: (isActive) => dispatch(uiActions.displayToolPane(isActive)),
     }
 }
 

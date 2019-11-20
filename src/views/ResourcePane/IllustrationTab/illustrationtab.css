@@ -1,7 +1,7 @@
 .imagetab {
     overflow-x: hidden;
     overflow-y: hidden;
-    height: 500px;
+    /* height: 500px; */
     padding:0px 10px 0px 10px; 
 }
 
@@ -9,7 +9,7 @@
     /* 仅list滚动视野太小，应整个collaspe滚动 */
     /* overflow-x: hidden;
     overflow-y: visible; */
-    height: 475px; 
+    /* height: 475px;  */
     border-style: none;
     overflow: auto;
 }
