@@ -20,6 +20,8 @@ import compareValues from './compareValues/animate';
 import CompareValuesConf from './compareValues/configure';
 import reconfigureOrder from './reconfigureOrder/animate';
 import ReconfigureOrderConf from './reconfigureOrder/configure';
+import reconfigureScope from './reconfigureScope/animate';
+import ReconfigureScopeConf from './reconfigureScope/configure';
 import reconfigureStyle from './reconfigureStyle/animate';
 import ReconfigureStyleConf from './reconfigureStyle/configure';
 
@@ -66,6 +68,10 @@ const animate = (animation, props) => {
             reconfigureOrder(animation, props);
             break;
 
+        case ChartAnimationType.RECONFIGURE_SCOPE:
+            reconfigureScope(animation, props);
+            break;
+
         case ChartAnimationType.RECONFIGURE_STYLE:
             reconfigureStyle(animation, props);
             break;
@@ -107,6 +113,9 @@ const configure = (animation, index, props) => {
 
         case ChartAnimationType.RECONFIGURE_ORDER:
             return <ReconfigureOrderConf animation={animation} index={index} {...props} />
+
+        case ChartAnimationType.RECONFIGURE_SCOPE:
+            return <ReconfigureScopeConf animation={animation} index={index} {...props} />
 
         case ChartAnimationType.RECONFIGURE_STYLE:
             return <ReconfigureStyleConf animation={animation} index={index} {...props} />

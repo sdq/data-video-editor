@@ -88,21 +88,14 @@ const draw = (props) => {
             .style('fill', color(0));
     }
 
-    // Style
-    const style = props.spec.style;
-    if (!_.isEmpty(style)) {
-        if (style.showAxisX) {
-            svg.append("g")
-                .attr("transform", "translate(0," + height + ")")
-                .call(d3.axisBottom(x))
-                .selectAll("text")
-                .attr("transform", "translate(-10,0)rotate(-45)")
-                .style("text-anchor", "end");
-        }
-        if (style.showAxisY) {
-            svg.append("g").call(d3.axisLeft(y));
-        }
-    }
+    // Axis
+    svg.append("g")
+        .attr("transform", "translate(0," + height + ")")
+        .call(d3.axisBottom(x))
+        .selectAll("text")
+        .attr("transform", "translate(-10,0)rotate(-45)")
+        .style("text-anchor", "end");
+    svg.append("g").call(d3.axisLeft(y));
 
     return svg;
 }

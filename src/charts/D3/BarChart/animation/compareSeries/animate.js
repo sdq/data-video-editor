@@ -37,8 +37,9 @@ const draw = (animation, props) => {
     let stackedData = [];
     if (hasSeries) {
         stackedData = getStackedData(data, encoding);
+    } else {
+        data = getMaxRows(data, encoding);
     }
-    data = getMaxRows(data, encoding);
 
     // X channel
     let x = d3.scaleBand()
@@ -89,21 +90,14 @@ const draw = (animation, props) => {
             .attr("fill", color(0));
     }
 
-    // Style
-    const style = props.spec.style;
-    if (!_.isEmpty(style)) {
-        if (style.showAxisX) {
-            svg.append("g")
-                .attr("transform", "translate(0," + height + ")")
-                .call(d3.axisBottom(x))
-                .selectAll("text")
-                .attr("transform", "translate(-10,0)rotate(-45)")
-                .style("text-anchor", "end");
-        }
-        if (style.showAxisY) {
-            svg.append("g").call(d3.axisLeft(y));
-        }
-    }
+    // Axis
+    svg.append("g")
+        .attr("transform", "translate(0," + height + ")")
+        .call(d3.axisBottom(x))
+        .selectAll("text")
+        .attr("transform", "translate(-10,0)rotate(-45)")
+        .style("text-anchor", "end");
+    svg.append("g").call(d3.axisLeft(y));
 
     // Animation
     if (hasSeries) {
@@ -111,10 +105,7 @@ const draw = (animation, props) => {
         let series = Object.keys(dataSeries);
         let selectedSeries1 = animation.spec.series1 ? animation.spec.series1 : series[0];
         let selectedSeries2 = animation.spec.series2 ? animation.spec.series2 : series[1];
-        console.log(selectedSeries1);
-        console.log(selectedSeries2);
         if (animation.spec.effect === 'superposition') {
-            console.log('superposition')
             // superposition animation
             layer.transition()
                 .duration(animation.duration)

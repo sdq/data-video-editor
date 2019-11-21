@@ -2,6 +2,20 @@ import ChartAnimationTask from '../ChartAnimationTask';
 import ChartAnimationType from '../ChartAnimationType';
 
 const animations = {
+    "Tendency": [
+        {
+            type: ChartAnimationType.DATA_TREND,
+            task: ChartAnimationTask.TENDENCY,
+            title: "Data Trend",
+            description: "Show data trend of all series from {range}",
+            duration: 10000,
+            spec: {
+                range: "full",
+                rangeScope: [],
+                gap: 0,
+            }
+        },
+    ],
     "Emphasize": [
         {
             type: ChartAnimationType.EMPHASIZE_CATEGORY,
@@ -146,19 +160,6 @@ const animations = {
             spec: {
                 startLayout: "stacked",
                 endLayout: "grouped",
-            }
-        },
-    ],
-    "Tendency": [
-        {
-            type: ChartAnimationType.DATA_TREND,
-            task: ChartAnimationTask.TENDENCY,
-            title: "Data Trend",
-            description: "Show data trend of all series from {range}",
-            duration: 1000,
-            spec: {
-                range: {},
-                effect: "filter" // or flicker
             }
         },
     ],

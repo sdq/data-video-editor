@@ -1,6 +1,6 @@
 .animation-list-container {
     overflow-x: hidden;
-    overflow-y: auto;
+    overflow-y: hidden;
     padding: 0px 0px;
     height: 195px;
 }
@@ -14,9 +14,8 @@
 
 .animation-card {
     background-color: #edededcc;
-    margin-left: 10px;
-    padding: 1px 3px 3px 8px;
-    width: 82px;
+    text-align: center;
+    width: 70px;
     height: 24px;
     text-align: middle;
     border-style:solid;

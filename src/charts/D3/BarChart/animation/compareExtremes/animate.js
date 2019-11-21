@@ -37,8 +37,9 @@ const draw = (animation, props) => {
     let stackedData = [];
     if (hasSeries) {
         stackedData = getStackedData(data, encoding);
+    } else {
+        data = getMaxRows(data, encoding);
     }
-    data = getMaxRows(data, encoding);
 
     // X channel
     let x = d3.scaleBand()
@@ -89,21 +90,14 @@ const draw = (animation, props) => {
             .attr("fill", color(0));
     }
 
-    // Style
-    const style = props.spec.style;
-    if (!_.isEmpty(style)) {
-        if (style.showAxisX) {
-            svg.append("g")
-                .attr("transform", "translate(0," + height + ")")
-                .call(d3.axisBottom(x))
-                .selectAll("text")
-                .attr("transform", "translate(-10,0)rotate(-45)")
-                .style("text-anchor", "end");
-        }
-        if (style.showAxisY) {
-            svg.append("g").call(d3.axisLeft(y));
-        }
-    }
+    // Axis
+    svg.append("g")
+        .attr("transform", "translate(0," + height + ")")
+        .call(d3.axisBottom(x))
+        .selectAll("text")
+        .attr("transform", "translate(-10,0)rotate(-45)")
+        .style("text-anchor", "end");
+    svg.append("g").call(d3.axisLeft(y));
 
     // Animation
     if (hasSeries) {
@@ -130,8 +124,6 @@ const draw = (animation, props) => {
             aggregatedDS2.sort(function(a, b){return a[encoding.y.field] - b[encoding.y.field]}); // min
         }
         let extremeCategory2 = aggregatedDS2[0][encoding.x.field];
-        console.log(extremeCategory1);
-        console.log(selectedSeries2);
 
         if (animation.spec.effect === 'superposition') {
             // superposition animation
