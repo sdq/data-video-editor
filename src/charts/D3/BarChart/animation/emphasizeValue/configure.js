@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Row, Col, Select, Radio } from 'antd';
-import {getSeries} from '../../helper';
+import {getSeries, getCategories} from '../../helper';
 const { Option } = Select;
 
 export default class configure extends Component {
@@ -8,6 +8,12 @@ export default class configure extends Component {
     handleSeriesChange = (value) => {
         const {index, animation} = this.props;
         animation.spec.series = value;
+        this.props.modifyChartAnimation(index, animation);
+    }
+
+    handleCategoryChange = (value) => {
+        const {index, animation} = this.props;
+        animation.spec.category = value;
         this.props.modifyChartAnimation(index, animation);
     }
 
@@ -29,6 +35,9 @@ export default class configure extends Component {
         let encoding = currentVis.spec.encoding;
         let dataSeries = getSeries(data, encoding);
         let series = Object.keys(dataSeries);
+        let dataCategories = getCategories(data, encoding);
+        let categories = Object.keys(dataCategories);
+        let selectedCategory = animation.spec.category?animation.spec.category:categories[0];
         let selectedSeries = animation.spec.series?animation.spec.series:series[0];
         return (
             <div>
@@ -41,6 +50,17 @@ export default class configure extends Component {
                     </Col>
                     <Col span={9}>
                         <p style={{ marginTop: 8 }}>{encoding.color.field}</p>
+                    </Col>
+                </Row>
+                <Row  style={{ height: 50 }}>
+                    <Col span={6}><h3 style={{ marginTop: 6 }}>Categories:</h3></Col>
+                    <Col span={9}>
+                        <Select defaultValue={selectedCategory} style={{ width: 120, marginTop: 4 }} onChange={this.handleCategoryChange}>
+                            {categories.map((s) => <Option key={s} value={s}>{s}</Option>)}
+                        </Select>
+                    </Col>
+                    <Col span={9}>
+                        <p style={{ marginTop: 8 }}>{encoding.x.field}</p>
                     </Col>
                 </Row>
                 <Row style={{ height: 50 }}> 

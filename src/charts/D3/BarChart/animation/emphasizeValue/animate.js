@@ -1,5 +1,5 @@
 import * as d3 from 'd3';
-import { getStackedData, getMaxRows, getSeries } from '../../helper';
+import { getStackedData, getMaxRows, getSeries, getCategories } from '../../helper';
 import _ from 'lodash';
 
 const offset = 20; // To show whole chart
@@ -110,15 +110,9 @@ const draw = (animation, props) => {
         let dataSeries = getSeries(props.data, encoding);
         let series = Object.keys(dataSeries);
         let selectedSeries = animation.spec.series ? animation.spec.series : series[0];
-        let selectDataSeries = dataSeries[selectedSeries];
-        // TODO: choose aggregation
-        let aggregatedDS = getMaxRows(selectDataSeries, encoding);
-        if (animation.spec.extreme === 'max') {
-            aggregatedDS.sort(function(a, b){return b[encoding.y.field] - a[encoding.y.field]});
-        } else {
-            aggregatedDS.sort(function(a, b){return a[encoding.y.field] - b[encoding.y.field]}); // min
-        }
-        let extremeCategory = aggregatedDS[0][encoding.x.field];
+        let dataCategories = getCategories(props.data, encoding);
+        let categories = Object.keys(dataCategories);
+        let selectedCategory = animation.spec.category ? animation.spec.category : categories[0];
         if (animation.spec.effect === 'flicker') {
             // flicker animation
             layer.selectAll('rect')
@@ -133,7 +127,7 @@ const draw = (animation, props) => {
                 .duration(animation.duration/3)
                 .style("stroke", "yellow")
                 .style("stroke-width", function (d, i){  
-                    if (d.data.x.toString() === extremeCategory.toString()) {
+                    if (d.data.x.toString() === selectedCategory.toString()) {
                         return 5;
                     } else {
                         return 0;
@@ -145,7 +139,7 @@ const draw = (animation, props) => {
                 .transition()
                 .duration(animation.duration/3)
                 .style("stroke-width", function (d, i){  
-                    if (d.data.x.toString() === extremeCategory.toString()) {
+                    if (d.data.x.toString() === selectedCategory.toString()) {
                         return 5;
                     } else {
                         return 0;
@@ -177,13 +171,13 @@ const draw = (animation, props) => {
                 .transition()
                 .duration(animation.duration)
                 .style("fill", (d, i) => {
-                    if (d.data.x.toString() !== extremeCategory.toString()) {
+                    if (d.data.x.toString() !== selectedCategory.toString()) {
                         return "lightgray";
                     }
                 })
                 .style("stroke", "yellow")
                 .style("stroke-width", function (d, i){  
-                    if (d.data.x.toString() === extremeCategory.toString()) {
+                    if (d.data.x.toString() === selectedCategory.toString()) {
                         return 5;
                     } else {
                         return 0;

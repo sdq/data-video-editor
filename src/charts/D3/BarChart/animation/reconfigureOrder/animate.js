@@ -13,7 +13,7 @@ const draw = (animation, props) => {
     }
 
     // console.log(data);
-    const margin = {top: 10, right: -10, bottom: 40, left: 40};
+    const margin = {top: 10, right: 10, bottom: 40, left: 40};
     const width = props.width - margin.left - margin.right - offset;
     const height = props.height - margin.top - margin.bottom - offset;
     let svg = d3.select(a)

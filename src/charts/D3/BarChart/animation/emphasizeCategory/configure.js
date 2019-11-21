@@ -29,12 +29,13 @@ export default class configure extends Component {
         let encoding = currentVis.spec.encoding;
         let dataCategories = getCategories(data, encoding);
         let categories = Object.keys(dataCategories);
+        let selectedCategory = animation.spec.category?animation.spec.category:categories[0];
         return (
             <div>
                 <Row  style={{ height: 50 }}>
                     <Col span={6}><h3 style={{ marginTop: 6 }}>Category:</h3></Col>
                     <Col span={9}>
-                        <Select defaultValue={categories[0]} style={{ width: 120, marginTop: 4 }} onChange={this.handleCategoryChange}>
+                        <Select defaultValue={selectedCategory} style={{ width: 120, marginTop: 4 }} onChange={this.handleCategoryChange}>
                             {categories.map((category) => <Option key={category} value={category}>{category}</Option>)}
                         </Select>
                     </Col>
@@ -55,9 +56,9 @@ export default class configure extends Component {
                     <Col span={6}><h3 style={{ marginTop: 6 }}>Duration:</h3></Col>
                     <Col span={18}>
                         <Radio.Group value={animation.duration} onChange={this.handleDurationChange}>
-                            <Radio.Button value={1000}>Short</Radio.Button>
-                            <Radio.Button value={2000}>Medium</Radio.Button>
-                            <Radio.Button value={3000}>Long</Radio.Button>
+                            <Radio.Button value={500}>Short</Radio.Button>
+                            <Radio.Button value={1000}>Medium</Radio.Button>
+                            <Radio.Button value={1500}>Long</Radio.Button>
                         </Radio.Group>
                     </Col>
                 </Row>
