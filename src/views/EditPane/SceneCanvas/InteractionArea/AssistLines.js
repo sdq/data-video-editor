@@ -3,11 +3,17 @@ import ElementType from '@/constants/ElementType';
 
 
 let assistlinecolor = '#DCDCDC';
+const originW = 800;
+const originH = 450;
+
+
 
 export default class AssistLines extends Component {
  
 
     render() {
+        const canvasW = 800*(this.props.contentHeight-100)/450;
+        const canvasH = this.props.contentHeight-100;
         //获取当前元素信息（不考虑旋转情况）
         let x = 0;
         let y = 0;
@@ -45,6 +51,8 @@ export default class AssistLines extends Component {
         }
 
 
+
+
         //TODO:优化图表高宽度，才可以正确使用辅助线
         if(this.props.currentElement.type()=== ElementType.CHART){
             isChartLine = true;
@@ -57,38 +65,47 @@ export default class AssistLines extends Component {
         //判断素材四周和中央是否靠近画布中央和边侧辅助线
         let marginLeftL = Math.abs(x - 0); //素材左-画布左
         let marginTopT = Math.abs(y - 0);  //素材上-画布上
-        let marginRightR = Math.abs(x+w - 800);  //素材右-画布右
-        let marginBottomB = Math.abs(y+h - 450);  //素材下-画布下
+        let marginRightR = Math.abs(x+w - originW);  //素材右-画布右
+        let marginBottomB = Math.abs(y+h - originH);  //素材下-画布下
 
-        let marginCenterXC = Math.abs(x+w/2 - 400);  //素材中-画布中
-        let marginCenterYC = Math.abs(y+h/2 - 225);  //素材中-画布中
+        let marginCenterXC = Math.abs(x+w/2 - originW/2);  //素材中-画布中
+        let marginCenterYC = Math.abs(y+h/2 - originH/2);  //素材中-画布中
 
-        let marginLeftC = Math.abs(x - 400); //素材左-画布中
-        let marginTopC = Math.abs(y - 225);  //素材上-画布中
-        let marginRightC = Math.abs(x+w - 400);  //素材右-画布中
-        let marginBottomC = Math.abs(y+h - 225);  //素材下-画布中
+        let marginLeftC = Math.abs(x - originW/2); //素材左-画布中
+        let marginTopC = Math.abs(y - originH/2);  //素材上-画布中
+        let marginRightC = Math.abs(x+w - originW/2);  //素材右-画布中
+        let marginBottomC = Math.abs(y+h - originH/2);  //素材下-画布中
 
-
-
+        //Gridline、Assistline使用的不是konva图层，需要将x y w h 在显示前转换成普通canvas系统
+        x = x*(canvasW/originW);
+        y = y*(canvasH/originH);
+        w = w*(canvasW/originW);
+        h = h*(canvasW/originW);
+        
         //显示固定辅助线和动态辅助线
         return (
             <div style={{ position: 'absolute', zIndex: 1 }}>
                 
-                <div style={{ display: marginLeftL < margin ? 'block' : 'none', position: 'absolute', zIndex: 1, marginLeft: 1, height: 450, width: 1, borderLeftColor: assistlinecolor, borderLeftWidth: 1, borderLeftStyle: 'dashed' }} />
-                <div style={{ display: marginTopT < margin ? 'block' : 'none', position: 'absolute', zIndex: 2, marginTop: 1, height: 1, width: 800, borderTopColor: assistlinecolor, borderTopWidth: 1, borderTopStyle: 'dashed' }} />
+                {/* 四周 */}
+                <div style={{ display: marginLeftL < margin ? 'block' : 'none', position: 'absolute', zIndex: 1, marginLeft: 1, height: canvasH, width: 1, borderLeftColor: assistlinecolor, borderLeftWidth: 1, borderLeftStyle: 'dashed' }} />
+                <div style={{ display: marginTopT < margin ? 'block' : 'none', position: 'absolute', zIndex: 2, marginTop: 1, height: 1, width: canvasW, borderTopColor: assistlinecolor, borderTopWidth: 1, borderTopStyle: 'dashed' }} />
 
-                <div style={{ display: marginRightR < margin ? 'block' : 'none', position: 'absolute', zIndex: 1, marginLeft: 799, height: 450, width: 1, borderLeftColor: assistlinecolor, borderLeftWidth: 1, borderLeftStyle: 'dashed' }} />
-                <div style={{ display: marginBottomB < margin ? 'block' : 'none', position: 'absolute', zIndex: 2, marginTop: 449, height: 1, width: 800, borderTopColor: assistlinecolor, borderTopWidth: 1, borderTopStyle: 'dashed' }} />
-              
-                <div style={{ display: marginCenterXC < margin ? 'block' : 'none', position: 'absolute', zIndex: 1, marginLeft: 400, height: 450, width: 1, borderLeftColor: assistlinecolor, borderLeftWidth: 1, borderLeftStyle: 'dashed' }} />
-                <div style={{ display: marginCenterYC < margin ? 'block' : 'none', position: 'absolute', zIndex: 2, marginTop: 225, height: 1, width: 800, borderTopColor: assistlinecolor, borderTopWidth: 1, borderTopStyle: 'dashed' }} />
+                <div style={{ display: marginRightR < margin ? 'block' : 'none', position: 'absolute', zIndex: 1, marginLeft: canvasW-1, height: canvasH, width: 1, borderLeftColor: assistlinecolor, borderLeftWidth: 1, borderLeftStyle: 'dashed' }} />
+                <div style={{ display: marginBottomB < margin ? 'block' : 'none', position: 'absolute', zIndex: 2, marginTop: canvasH-1, height: 1, width: canvasW, borderTopColor: assistlinecolor, borderTopWidth: 1, borderTopStyle: 'dashed' }} />
+                
+                {/* 中 */}
+                <div style={{ display: marginCenterXC < margin ? 'block' : 'none', position: 'absolute', zIndex: 1, marginLeft: canvasW/2, height: canvasH, width: 1, borderLeftColor: assistlinecolor, borderLeftWidth: 1, borderLeftStyle: 'dashed' }} />
+                <div style={{ display: marginCenterYC < margin ? 'block' : 'none', position: 'absolute', zIndex: 2, marginTop: canvasH/2, height: 1, width: canvasW, borderTopColor: assistlinecolor, borderTopWidth: 1, borderTopStyle: 'dashed' }} />
 
-                <div style={{ display: marginLeftC < margin ? 'block' : 'none', position: 'absolute', zIndex: 1, marginLeft: 400, height: 450, width: 1, borderLeftColor: assistlinecolor, borderLeftWidth: 1, borderLeftStyle: 'dashed' }} />
-                <div style={{ display: marginTopC < margin ? 'block' : 'none', position: 'absolute', zIndex: 2, marginTop: 225, height: 1, width: 800, borderTopColor: assistlinecolor, borderTopWidth: 1, borderTopStyle: 'dashed' }} />
+                {/* 中 */}
+                <div style={{ display: marginLeftC < margin ? 'block' : 'none', position: 'absolute', zIndex: 1, marginLeft: canvasW/2, height: canvasH, width: 1, borderLeftColor: assistlinecolor, borderLeftWidth: 1, borderLeftStyle: 'dashed' }} />
+                <div style={{ display: marginTopC < margin ? 'block' : 'none', position: 'absolute', zIndex: 2, marginTop: canvasH/2, height: 1, width: canvasW, borderTopColor: assistlinecolor, borderTopWidth: 1, borderTopStyle: 'dashed' }} />
 
-                <div style={{ display: marginRightC < margin ? 'block' : 'none', position: 'absolute', zIndex: 1, marginLeft: 400, height: 450, width: 1, borderLeftColor: assistlinecolor, borderLeftWidth: 1, borderLeftStyle: 'dashed' }} />
-                <div style={{ display: marginBottomC < margin ? 'block' : 'none', position: 'absolute', zIndex: 2, marginTop: 225, height: 1, width: 800, borderTopColor: assistlinecolor, borderTopWidth: 1, borderTopStyle: 'dashed' }} />
+                {/* 中 */}
+                <div style={{ display: marginRightC < margin ? 'block' : 'none', position: 'absolute', zIndex: 1, marginLeft: canvasW/2, height: canvasH, width: 1, borderLeftColor: assistlinecolor, borderLeftWidth: 1, borderLeftStyle: 'dashed' }} />
+                <div style={{ display: marginBottomC < margin ? 'block' : 'none', position: 'absolute', zIndex: 2, marginTop: canvasH/2, height: 1, width: canvasW, borderTopColor: assistlinecolor, borderTopWidth: 1, borderTopStyle: 'dashed' }} />
 
+                {/* 素材 */}
                 <div style={{  display:  r===0 ? 'block' : 'none',position: 'absolute', zIndex: 1, marginLeft: x - 1 || 0, marginTop: y-10 || 0,height: h+20, width: 1, borderLeftColor: assistlinecolor, borderLeftWidth: 1, borderLeftStyle: 'dashed' }} />
                 <div style={{  display:  r===0 ? 'block' : 'none',position: 'absolute', zIndex: 2, marginTop: y - 1 || 0, marginLeft: x-10 || 0,height: 1, width: w+20, borderTopColor: assistlinecolor, borderTopWidth: 1, borderTopStyle: 'dashed' }} />
 
@@ -102,9 +119,9 @@ export default class AssistLines extends Component {
                     {this.props.dynamicAssistLines && this.props.dynamicAssistLines.map(function(lines, index) {
                     let isRow = lines&&(lines[0]===-1);
                     if(isRow){
-                        return <div key={index} index={index} style={{ position: 'absolute', zIndex: 3, marginTop: lines[1] ,width: 800, height: 1, borderTopColor: assistlinecolor, borderTopWidth: 1, borderTopStyle: 'dashed' }} />  
+                        return <div key={index} index={index} style={{ position: 'absolute', zIndex: 3, marginTop: lines[1] ,width: canvasW, height: 1, borderTopColor: assistlinecolor, borderTopWidth: 1, borderTopStyle: 'dashed' }} />  
                     }else{
-                        return <div key={index} index={index} style={{ position: 'absolute', zIndex: 4, marginLeft: lines[0], width: 10, height: 450, borderLeftColor: assistlinecolor, borderLeftWidth: 1, borderLeftStyle: 'dashed' }} />  
+                        return <div key={index} index={index} style={{ position: 'absolute', zIndex: 4, marginLeft: lines[0], width: 10, height: canvasH, borderLeftColor: assistlinecolor, borderLeftWidth: 1, borderLeftStyle: 'dashed' }} />  
                     }})}
                     </div>        
                 </div>

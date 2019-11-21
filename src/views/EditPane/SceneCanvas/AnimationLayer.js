@@ -65,6 +65,8 @@ export default class AnimationLayer extends Component {
 
     render() {
         const { currentScene } = this.props;
+        const canvasW = 800*(this.props.contentHeight-100)/450;
+        const canvasH = this.props.contentHeight-100;
         const hasBackgroundImage = currentScene.backgroundImage() !== "";
         return (
             <Layer 
@@ -74,8 +76,8 @@ export default class AnimationLayer extends Component {
                 <Rect
                     x={0}
                     y={0}
-                    width={800}
-                    height={450}
+                    width={canvasW}
+                    height={canvasH}
                     fill={currentScene.backgroundColor()}
                 />
                 {
@@ -84,8 +86,8 @@ export default class AnimationLayer extends Component {
                         ref={node=>this.imageref=node}
                         x={0}
                         y={0}
-                        width={800}
-                        height={450}
+                        width={canvasW}
+                        height={canvasH}
                         name={this.props.name}
                         image={this.state.image} 
                     />

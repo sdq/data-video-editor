@@ -38,10 +38,13 @@ export default class BackgroundLayer extends Component {
     };
     render() {
         const { currentScene } = this.props;
+        const canvasW = 800*(this.props.contentHeight-100)/450;
+        const canvasH = this.props.contentHeight-100;
         const hasBackgroundImage = currentScene.backgroundImage() !== "";
         return (
             <Layer 
                 ref={node => (this.backgroundLayer = node)}
+                style={{width:canvasW,height:canvasH}}
             >
                 <Rect
                     x={0}

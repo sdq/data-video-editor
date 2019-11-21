@@ -9,6 +9,7 @@ import VideoEiditor from './VideoAnimator'
 // import ChartInteractionArea from './ChartInteractionArea';
 
 export default class InteractionArea extends Component {
+
     render() {
         const { showAnimationTargetArea, showResourceTargetArea, showAssistLines, showTextEditor, showGridLines, showGifEditor, showVideoEditor } = this.props;
         return ( 
@@ -16,7 +17,7 @@ export default class InteractionArea extends Component {
                 {showAnimationTargetArea?<AnimationTargetArea {...this.props}/>:null}
                 {showResourceTargetArea?<ResourceTargetArea {...this.props}/>:null}
                 {showAssistLines ? <AssistLines {...this.props}/> : null }
-                {showGridLines ? <GridLines /> : null }
+                {showGridLines ? <GridLines {...this.props}/> : null }
                 {showTextEditor ? <TextEditor {...this.props}/> : null }
                 {showGifEditor ? <GifEditor  {...this.props}/> : null }
                 {showVideoEditor ? <VideoEiditor {...this.props}/> : null}

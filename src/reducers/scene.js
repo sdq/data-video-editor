@@ -5,6 +5,8 @@ const initialState = {
     scale: 5,
 }
 
+
+
 export default (state = initialState, action) => {
     switch (action.type) {
         case ActionType.SET_POSITION:

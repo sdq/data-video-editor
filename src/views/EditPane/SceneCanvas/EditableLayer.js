@@ -75,8 +75,7 @@ export default class EditableLayer extends Component {
     }
 
     dragMoving(x,y,e) {
-        
-        
+        const canvasH = this.props.contentHeight-100;
         let w = this.props.currentElement.info().width;
         let h = this.props.currentElement.info().height;        
         let margin = 5;//判定辅助线吸附的margin（略小于显示margin）
@@ -87,12 +86,12 @@ export default class EditableLayer extends Component {
         let marginRightR = Math.abs(x+w - 800);  //素材右-画布右
         let marginBottomB = Math.abs(y+h - 450);  //素材下-画布下
 
-        let marginCenterXC = Math.abs(x+w/2 - 400);  //素材中-画布中
-        let marginCenterYC = Math.abs(y+h/2 - 225);  //素材中-画布中
-        let marginLeftC = Math.abs(x - 400); //素材左-画布中
-        let marginTopC = Math.abs(y - 225);  //素材上-画布中
-        let marginRightC = Math.abs(x+w - 400);  //素材右-画布中
-        let marginBottomC = Math.abs(y+h - 225);  //素材下-画布中
+        let marginCenterXC = Math.abs(x+w/2 - 800/2);  //素材中-画布中
+        let marginCenterYC = Math.abs(y+h/2 - 450/2);  //素材中-画布中
+        let marginLeftC = Math.abs(x - 800/2); //素材左-画布中
+        let marginTopC = Math.abs(y - 450/2);  //素材上-画布中
+        let marginRightC = Math.abs(x+w - 800/2);  //素材右-画布中
+        let marginBottomC = Math.abs(y+h - 450/2);  //素材下-画布中
 
         // 逻辑：在靠近辅助线的时候，直接改动系统级当前抓取的元素，实现主动吸附
 
@@ -100,15 +99,15 @@ export default class EditableLayer extends Component {
         if( marginTopT < margin){y = e.target.attrs.y = 0;}//素材上-画布上
         if( marginRightR < margin){x = e.target.attrs.x = 800-w;}//素材右-画布右
         if( marginBottomB < margin){y = e.target.attrs.y = 450-h;}//素材下-画布下
-        if( marginCenterXC < margin){x = e.target.attrs.x = 400-w/2;}//素材中-画布中
-        if( marginCenterYC < margin){y = e.target.attrs.y = 225-h/2;}//素材中-画布中
-        if( marginLeftC < margin){x = e.target.attrs.x = 400;}//素材左-画布中
-        if( marginTopC < margin){y = e.target.attrs.y = 225;}//素材上-画布中
-        if( marginRightC < margin){x = e.target.attrs.x = 400-w;}//素材右-画布中
-        if( marginBottomC < margin){y = e.target.attrs.y = 225-h;}//素材下-画布中
+        if( marginCenterXC < margin){x = e.target.attrs.x = 800/2-w/2;}//素材中-画布中
+        if( marginCenterYC < margin){y = e.target.attrs.y = 450/2-h/2;}//素材中-画布中
+        if( marginLeftC < margin){x = e.target.attrs.x = 800/2;}//素材左-画布中
+        if( marginTopC < margin){y = e.target.attrs.y = 450/2;}//素材上-画布中
+        if( marginRightC < margin){x = e.target.attrs.x = 800/2-w;}//素材右-画布中
+        if( marginBottomC < margin){y = e.target.attrs.y = 450/2-h;}//素材下-画布中
 
         //动态辅助线    
-        //拖拽时生成附近xy点数组，遍历匹配去重得到结果
+        //拖拽时生成附近xy点数组，遍历匹配去重得到结果,对结果做缩放变换
         let x1 = x+w;
         let y1 = y+h;
         let dynamicArray = [];
@@ -116,25 +115,25 @@ export default class EditableLayer extends Component {
         if( Math.abs(x - xPosArray[i]) < margin){
             x = e.target.attrs.x = xPosArray[i];
             xArray.push([x,-1]);
-            if (xArray.indexOf(x) === -1) {dynamicArray.push([x,-1]);}
+            if (xArray.indexOf(x) === -1) {dynamicArray.push([x*(canvasH/450),-1]);}
             continue;
         }    
         if( Math.abs(x1 - xPosArray[i]) < margin){
             x = e.target.attrs.x = xPosArray[i]-w;
             xArray.push([x+w,-1]);
-            if (xArray.indexOf(x+w) === -1) {dynamicArray.push([x+w,-1]);}
+            if (xArray.indexOf(x+w) === -1) {dynamicArray.push([(x+w)*(canvasH/450),-1]);}
             continue;
         }      
         if( Math.abs(y - yPosArray[i]) < margin){
             y = e.target.attrs.y = yPosArray[i];
             yArray.push([-1,y]);
-            if (yArray.indexOf(y) === -1) {dynamicArray.push([-1,y]);}
+            if (yArray.indexOf(y) === -1) {dynamicArray.push([-1,y*(canvasH/450)]);}
             continue;
         }
         if( Math.abs(y1 - yPosArray[i]) < margin){
             y = e.target.attrs.y = yPosArray[i]-h;
             yArray.push([-1,y+h]);
-            if (yArray.indexOf(y+h) === -1) {dynamicArray.push([-1,y+h]);}
+            if (yArray.indexOf(y+h) === -1) {dynamicArray.push([-1,(y+h)*(canvasH/450)]);}
             continue;
         }
         
@@ -174,7 +173,6 @@ export default class EditableLayer extends Component {
                          //实时更改素材的真实w,h，以便显示正确边框和辅助线
                          this.props.currentElement.info().width = w;
                          this.props.currentElement.info().height = h;
-
                          
                     }else{
                          w = currentWidth;

@@ -39,7 +39,10 @@ export default class  extends Component {
                 <Stage width={192} height={108} scale={{x: 192/800, y:192/800}} 
                     style={{
                         backgroundColor:scene.backgroundColor(),
-                        backgroundImage:`url(${ scene.backgroundImage()})`,}}
+                        backgroundImage:`url(${ scene.backgroundImage()})`,
+                        backgroundSize:"192px 108px",
+                    }}
+                        
                 >
                     <Layer>
                         {scene.elements().map(function(element, index) {

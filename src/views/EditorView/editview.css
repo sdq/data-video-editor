@@ -1,3 +1,30 @@
 #editview {
-    overflow-x: none;
+    overflow-x: hidden;
+    overflow-y: none;
+}
+
+.maskbutton1 {
+    height:30px;
+    position:absolute;
+    background-color: white;
+    border-color: #fdc209; 
+    border-style:solid;
+    border-width:1px;
+    border-radius:4px;
+    border-left-color: transparent;
+    color: #fdc209;
+    z-index:3;
+}
+
+.maskbutton2 {
+    height:30px;
+    position:absolute;
+    background-color: white;
+    border-color: #fdc209; 
+    border-style:solid;
+    border-width:1px;
+    border-radius:4px;
+    border-right-color: transparent;
+    color: #fdc209;
+    z-index:3;
 }
