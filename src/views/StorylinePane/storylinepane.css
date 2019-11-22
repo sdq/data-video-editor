@@ -1,6 +1,5 @@
 #story {
 margin-bottom: 0px;
-z-index:4;
 }
 
 #storyline {
@@ -8,7 +7,6 @@ z-index:4;
     padding: 8px;
     overflow-x: auto;
     overflow-y: hidden;
-    z-index:4;
 }
 
 #storylineHeader {
@@ -17,5 +15,4 @@ z-index:4;
     padding-left: 16px;
     padding-top: 4px;
     font-size: 20px;
-    z-index:4;
 }
