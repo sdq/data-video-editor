@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Tabs } from 'antd';
 import ElementType from '@/constants/ElementType';
-import Color from '@/constants/Color';
 import SceneTool from './Tools/SceneTool';
 import ImageTool from './Tools/ImageTool';
 import GifTool from './Tools/GifTool';
@@ -99,7 +98,7 @@ export default class ToolPane extends Component {
 
     render() {
         return (
-            <div className="card-container" style={{position:'absolute', zIndex: 2, borderLeftStyle: 'solid', borderLeftColor: Color.ORANGE, borderLeftWidth: 1}}>
+            <div className="card-container" style={{position:'absolute', zIndex: 5}}>
                 {this.chooseTool()}
             </div>
         )

@@ -1,16 +1,17 @@
 #editpane {
-    border-left-style: solid;
+    /* border-left-style: solid;
     border-left-width: 1px;
-    border-left-color: #FFC107;
+    border-left-color: #FFC107; 
+    border-right-color: #FFC107;  */
     text-align: center;
 }
 
 #canvasContainer {
     /* height: 450px; */
     width: 800px;
-    /* border-style: solid;
+     /* border-style: solid;
     border-color: #FFC107;
-    border-width: 1px; */
+    border-width: 1px;  */
     text-align: center;
     margin: 0 auto;
 }

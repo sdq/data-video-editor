@@ -75,7 +75,7 @@ export default class EditorView extends Component {
     render() {
         const {showResourcePane, showToolPane} = this.props;
         const {windowWidth,windowHeight,contentHeight,contentWidth} = this.state;
-        const canvasW = 800*(this.state.contentHeight-100)/450;
+        //const canvasW = 800*(this.state.contentHeight-100)/450;
         const canvasH = this.state.contentHeight-100;
         return (
             <div id="editview" style={{ height: windowHeight+'px',width: windowWidth+'px' }}  >
@@ -85,7 +85,10 @@ export default class EditorView extends Component {
                     <Layout style={{ height: contentHeight+'px' }}>
                         <Sider 
                             width={360} 
-                            style={{ background: '#fff', height: contentHeight+'px' }} 
+                            style={{ background: '#fff', height: contentHeight+'px',
+                            borderRightStyle: "solid",
+                            borderRightWidth: "1px",
+                            borderRightColor: "#FFC107" }} 
                             // trigger={null} 
                             // collapsible 
                             collapsedWidth={0} 
@@ -96,7 +99,7 @@ export default class EditorView extends Component {
                             <div className="maskbutton1" 
                              onClick={this.showMedia}
                              style={{left:showResourcePane?"359px":"0px",top:canvasH/2+33+"px",width:"18px",}}>
-                             <p style={{marginLeft:"4px",marginTop:"4px"}} >{showResourcePane?"<":">" }</p>
+                             <p style={{marginLeft:"4px",marginTop:"3px"}} >{showResourcePane?"<":">" }</p>
                          </div>
                         </Sider>
 
@@ -105,7 +108,10 @@ export default class EditorView extends Component {
                         </Content>
                         <Sider 
                             width={300}                            
-                            style={{ background: '#fff', height: contentHeight+'px' }} 
+                            style={{ background: '#fff', height: contentHeight+'px',
+                            borderLeftStyle: "solid",
+                            borderLeftWidth: "1px",
+                            borderLeftColor: "#FFC107" }} 
                             // trigger={null} 
                             // collapsible 
                             collapsedWidth={0} 
@@ -116,14 +122,14 @@ export default class EditorView extends Component {
                             <div className="maskbutton2" 
                             onClick={this.showTool}
                             style={{right:showToolPane?(windowWidth<1300?298-(1300-windowWidth)+"px":"298px"):"0px",top:canvasH/2+33+"px",width:"18px",}}>
-                            <p style={{marginLeft:"4px",marginTop:"4px"}} >{showToolPane?">":"<" }</p>
+                            <p style={{marginLeft:"4px",marginTop:"3px"}} >{showToolPane?">":"<" }</p>
                             </div>
                         </Sider>
                            {/* 贴别遮罩按钮 */}
                             <div className="maskbutton2" 
                             onClick={this.showTool}
                             style={{display:!showToolPane&&window.innerWidth<1300?"inline":"none",left:window.innerWidth+this.state.scrollLeft-18+"px",top:canvasH/2+93+"px",width:"18px",}}>
-                            <p style={{marginLeft:"4px",marginTop:"4px"}} >{"<"}</p>
+                            <p style={{marginLeft:"4px",marginTop:"3px"}} >{"<"}</p>
                         </div>
 
                     </Layout>
