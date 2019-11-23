@@ -52,6 +52,12 @@ export const removeEncoding = (channel, field) => ({
     field
 })
 
+export const changeAggregation = (channel, method) => ({
+    type: VisActionType.CHANGE_AGGREGATION,
+    channel,
+    method
+})
+
 // Style
 export const configureStyle = (style) => ({
     type: VisActionType.CONFIGURE_STYLE,
@@ -59,6 +65,23 @@ export const configureStyle = (style) => ({
 })
 
 // Animation
+export const chooseChartAnimation = (animation) => ({
+    type: VisActionType.CHOOSE_CHART_ANIMATION,
+    animation
+})
+
+export const selectChartAnimation = (animation, index) => ({
+    type: VisActionType.SELECT_CHART_ANIMATION,
+    animation,
+    index,
+})
+
+export const selectChartElement = (isSelectingChartElement, parameter) => ({
+    type: VisActionType.SELECTING_CHART_ELEMENT,
+    isSelectingChartElement,
+    parameter,
+})
+
 export const addChartAnimation = (animation) => ({
     type: VisActionType.ADD_CHART_ANIMATION,
     animation

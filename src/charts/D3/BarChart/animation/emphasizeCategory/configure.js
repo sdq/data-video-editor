@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, Select, Radio } from 'antd';
+import { Row, Col, Select, Radio, Button } from 'antd';
 import {getCategories} from '../../helper';
 const { Option } = Select;
 
@@ -8,6 +8,7 @@ export default class configure extends Component {
     handleCategoryChange = (value) => {
         const {index, animation} = this.props;
         animation.spec.category = value;
+        animation.description= "Emphasize the category with " + animation.spec.category;
         this.props.modifyChartAnimation(index, animation);
     }
 
@@ -39,8 +40,11 @@ export default class configure extends Component {
                             {categories.map((category) => <Option key={category} value={category}>{category}</Option>)}
                         </Select>
                     </Col>
-                    <Col span={9}>
+                    <Col span={4}>
                         <p style={{ marginTop: 8 }}>{encoding.x.field}</p>
+                    </Col>
+                    <Col span={5}>
+                        <Button size={'small'} style={{ marginTop: 8 }} onClick={() => this.props.selectChartElement(true, {type: 'category', key: 'category'})}>Select</Button>
                     </Col>
                 </Row>
                 <Row style={{ height: 50 }}> 

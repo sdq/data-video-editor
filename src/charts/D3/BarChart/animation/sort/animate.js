@@ -1,5 +1,5 @@
 import * as d3 from 'd3';
-import {getMaxRows} from '../../helper';
+import {getAggregatedRows} from '../../helper';
 import _ from 'lodash';
 
 const offset = 20; // To show whole chart
@@ -35,7 +35,7 @@ const draw = (animation, props) => {
 
     // Process Data
     //const data = props.data;
-    const data = getMaxRows(props.data, encoding);
+    const data = getAggregatedRows(props.data, encoding);
 
     // X channel
     let x = d3.scaleBand()

@@ -97,7 +97,7 @@ const demochart2 = new ChartInfo(
     {
         "encoding": {
             "x": {"field": "Cylinders", "type": "ordinal"},
-            "y": {"field": "Horsepower", "type": "quantitative"},
+            "y": {"field": "Horsepower", "type": "quantitative", "aggregation": "average"},
             "color": {"field": "Origin", "type": "nordinal"},
             "time": {"field": "Year", "type": "temporal"},
         },

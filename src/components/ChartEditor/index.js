@@ -53,7 +53,7 @@ export default class ChartEditor extends Component {
                 title="Chart Editor"
                 visible={this.props.visible}
                 onOk={this.props.handleOk}
-                width={1200}
+                width={1050}
                 bodyStyle={{height: 600, padding: 0}}
                 onCancel={this.props.handleCancel}
             >

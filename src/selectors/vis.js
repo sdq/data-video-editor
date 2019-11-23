@@ -15,6 +15,13 @@ const scenes = state => state.video.scenes;
 const sceneIndex = state => state.video.index;
 export const displaySpec = state => state.vis.displaySpec;
 
+// Animation
+export const choosenAnimation = state => state.vis.choosenAnimation;
+export const selectedAnimation = state => state.vis.selectedAnimation;
+export const selectedAnimationIndex = state => state.vis.selectedAnimationIndex;
+export const isSelectingChartElement = state => state.vis.isSelectingChartElement;
+export const selectingParameter = state => state.vis.selectingParameter;
+
 export const currentData = createSelector(
     dataIndex,
     dataNameList,

@@ -1,5 +1,9 @@
 const defaultSpec = {
-    "encoding": {},
+    "encoding": {
+        "y": {
+            "aggregation": "average",
+        }
+    },
     "style": {
         "layout": "stacked",
     },

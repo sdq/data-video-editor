@@ -1,5 +1,5 @@
 import * as d3 from 'd3';
-import {getMaxRows, getStackedData} from '../../helper';
+import {getAggregatedRows, getStackedData} from '../../helper';
 import _ from 'lodash';
 
 const offset = 20; // To show whole chart
@@ -38,7 +38,7 @@ const draw = (animation, props) => {
     if (hasSeries) {
         stackedData = getStackedData(data, encoding);
     } else {
-        data = getMaxRows(data, encoding);
+        data = getAggregatedRows(data, encoding);
     }
 
     // X channel
@@ -101,7 +101,6 @@ const draw = (animation, props) => {
 
     // Animation
     if (hasSeries) {
-        console.log(stackedData);
         let originPosition = _.cloneDeep(stackedData[0].map(function(d) { return x(d.data.x)}));
         let selectedSeries = animation.spec.series;
         let newX;
@@ -132,7 +131,6 @@ const draw = (animation, props) => {
             .duration(animation.duration)
             .delay(function(d, i) { return i * 50; })
             .attr("transform", function(d, i) { 
-                console.log(d);
                 let offset = x(d.data.x)-originPosition[i];  
                 return "translate(" + offset + ",0)"; 
             });

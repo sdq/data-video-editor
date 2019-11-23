@@ -6,16 +6,17 @@ import ChartAnimationTask from '@/charts/D3/ChartAnimationTask';
 const boxSource = {
 
 	beginDrag(props) {
+		props.chooseChartAnimation(props.animation);
 		return {
 			animation: props.animation,
 		}
 	},
 	endDrag(props, monitor) {
-		const item = monitor.getItem();
+		// const item = monitor.getItem();
 		const dropResult = monitor.getDropResult();
-
 		if (dropResult) {
-			props.addChartAnimation(item.animation);
+			//props.addChartAnimation(item.animation);
+			props.addChartAnimation(props.choosenAnimation);
 		}
 	},
 }

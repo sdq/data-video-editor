@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import ToolPane from './ToolPane';
 import {currentScene, sceneIndex, scenes} from '@/selectors/video';
 import {currentElement, elementIndex, isElementSelected, dragPos,transformInfo} from '@/selectors/canvas';
-import { dataNameList, dataList, fieldsList, displaySpec, currentData, currentVis, channels } from '@/selectors/vis';
+import { dataNameList, dataList, fieldsList, displaySpec, currentData, currentVis, channels, choosenAnimation, selectedAnimation, selectedAnimationIndex, isSelectingChartElement, selectingParameter } from '@/selectors/vis';
 import * as videoActions from '@/actions/videoAction';
 import * as canvasActions from '@/actions/canvasAction';
 import * as visActions from '@/actions/visAction';
@@ -27,6 +27,11 @@ const mapStateToProps = state => {
         displaySpec: displaySpec(state),
         currentVis: currentVis(state),
         channels: channels(state),
+        choosenAnimation: choosenAnimation(state),
+        selectedAnimation: selectedAnimation(state),
+        selectedAnimationIndex: selectedAnimationIndex(state),
+        isSelectingChartElement: isSelectingChartElement(state),
+        selectingParameter: selectingParameter(state),
     }
 }
 
@@ -55,7 +60,11 @@ const mapDispatchToProps = dispatch => {
             }
         },
         removeEncoding: (channel, field) => dispatch(visActions.removeEncoding(channel, field)),
+        changeAggregation: (channel, method) => dispatch(visActions.changeAggregation(channel, method)),
         configureStyle: (style) => dispatch(visActions.configureStyle(style)),
+        chooseChartAnimation: (animation) => dispatch(visActions.chooseChartAnimation(animation)),
+        selectChartAnimation: (animation, index) => dispatch(visActions.selectChartAnimation(animation, index)),
+        selectChartElement: (isSelecting, parameter) => dispatch(visActions.selectChartElement(isSelecting, parameter)),
         addChartAnimation: (animation) => dispatch(visActions.addChartAnimation(animation)),
         modifyChartAnimation: (index, animation) => dispatch(visActions.modifyChartAnimation(index, animation)),
         removeChartAnimation: (index) => dispatch(visActions.removeChartAnimation(index)),

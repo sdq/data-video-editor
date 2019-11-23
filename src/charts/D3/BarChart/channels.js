@@ -8,6 +8,7 @@ const channels = {
     y: {
         name: 'y',
         type: [FieldType.QUANTITATIVE],
+        aggregation: 'average',
     },
     color: {
         name: 'color',

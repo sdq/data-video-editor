@@ -1,5 +1,5 @@
 import * as d3 from 'd3';
-import { getStackedData, getMaxRows, getSeries } from '../../helper';
+import { getStackedData, getAggregatedRows, getSeries } from '../../helper';
 import _ from 'lodash';
 
 const offset = 20; // To show whole chart
@@ -38,7 +38,7 @@ const draw = (animation, props) => {
     if (hasSeries) {
         stackedData = getStackedData(data, encoding);
     } else {
-        data = getMaxRows(data, encoding);
+        data = getAggregatedRows(data, encoding);
     }
 
     // X channel
@@ -106,7 +106,7 @@ const draw = (animation, props) => {
         let selectedSeries = animation.spec.series ? animation.spec.series : series[0];
         let selectDataSeries = dataSeries[selectedSeries];
         // TODO: choose aggregation
-        let aggregatedDS = getMaxRows(selectDataSeries, encoding);
+        let aggregatedDS = getAggregatedRows(selectDataSeries, encoding);
         if (animation.spec.extreme === 'max') {
             aggregatedDS.sort(function(a, b){return b[encoding.y.field] - a[encoding.y.field]});
         } else {

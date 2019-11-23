@@ -37,7 +37,7 @@ const getStackedData = (rawData, encoding) => {
     let dataSeriesCategories = {};
     for (const s in dataSeries) {
         dataSeriesCategories[s] = {};
-        dataSeries[s] = getMaxRows(dataSeries[s], encoding);
+        dataSeries[s] = getAggregatedRows(dataSeries[s], encoding);
         for (let index = 0; index < dataSeries[s].length; index++) {
             const rowData = dataSeries[s][index];
             // console.log(rowData);
@@ -120,4 +120,41 @@ const getSumRows = (rawData, encoding) =>{
     return data;
 }
 
-export {getCategories, getSeries, getStackedData, getMinRows, getMaxRows, getSumRows}
+const getAverageRows = (rawData, encoding) =>{
+    let calculateData = d3.nest().key(d => d[encoding.x.field]).entries(rawData);
+    let sumData = new Array(calculateData.length).fill(0);
+    let data = calculateData.map(function (d,i) {
+        d.values.forEach(d=>{
+            sumData[i] += d[encoding.y.field]
+        })
+        let sumRows = Object.assign({},d.values[0])
+        sumRows[encoding.y.field] = sumData[i] / d.values.length;
+        return sumRows;
+    });
+    return data;
+}
+
+const getAggregatedRows = (rawData, encoding) => {
+    let data;
+    switch (encoding.y.aggregation) {
+        case 'sum':
+            data = getSumRows(rawData, encoding);
+            break;
+        case 'average':
+            data = getAverageRows(rawData, encoding);
+            break;
+        case 'max':
+            data = getMaxRows(rawData, encoding);
+            break;
+        case 'min':
+            data = getMinRows(rawData, encoding);
+            break;
+
+        default:
+            data = getMaxRows(rawData, encoding);
+            break;
+    }
+    return data;
+}
+
+export {getCategories, getSeries, getStackedData, getAggregatedRows}

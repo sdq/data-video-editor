@@ -1,5 +1,5 @@
 import * as d3 from 'd3';
-import {getStackedData, getMaxRows} from './helper';
+import { getStackedData, getSeries, getAggregatedRows } from './helper';
 import _ from 'lodash';
 
 const offset = 20; // To show whole chart
@@ -11,19 +11,19 @@ const draw = (props) => {
         a = '.vis-barchart';
     }
 
-    const margin = {top: 10, right: 10, bottom: 40, left: 40};
+    const margin = { top: 10, right: 10, bottom: 40, left: 40 };
     const width = props.width - margin.left - margin.right - offset;
     const height = props.height - margin.top - margin.bottom - offset;
     let svg = d3.select(a)
-                .append("svg")
-                .attr("width", width + margin.left + margin.right)
-                .attr("height", height + margin.top + margin.bottom)
-                .append("g")
-                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+        .append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     // Get Encoding
     const encoding = props.spec.encoding;
-    if (_.isEmpty(encoding) || !('x' in encoding) || !('y' in encoding) || _.isEmpty(encoding.x) || _.isEmpty(encoding.y) ) {
+    if (_.isEmpty(encoding) || !('x' in encoding) || !('y' in encoding) || _.isEmpty(encoding.x) || _.isEmpty(encoding.y)) {
         svg.append("rect")
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
@@ -35,23 +35,28 @@ const draw = (props) => {
     // Process Data
     let data = props.data;
     let stackedData = [];
+    let dataSeries = [];
+    let series = [];
     if (hasSeries) {
+        dataSeries = getSeries(data, encoding);
         stackedData = getStackedData(data, encoding);
+        series = Object.keys(dataSeries);
+    } else {
+        data = getAggregatedRows(data, encoding);
     }
-    data = getMaxRows(data, encoding);
 
     // X channel
     let x = d3.scaleBand()
-            .range([ 0, width ])
-            .domain(data.map(function(d) { return d[encoding.x.field]; }))
-            .padding(0.2);
-    
+        .range([0, width])
+        .domain(data.map(function (d) { return d[encoding.x.field]; }))
+        .padding(0.2);
+
     // Y channel
     let y = d3.scaleLinear()
     if (hasSeries) {
-        y.domain([0, d3.max(stackedData[stackedData.length - 1], d => d[1] )]).nice().range([ height, 0]);
+        y.domain([0, d3.max(stackedData[stackedData.length - 1], d => d[1])]).nice().range([height, 0]);
     } else {
-        y.domain([0, d3.max(data, function(d) { return d[encoding.y.field]; })]).range([ height, 0]);
+        y.domain([0, d3.max(data, function (d) { return d[encoding.y.field]; })]).range([height, 0]);
     }
 
     // Color channel
@@ -59,32 +64,80 @@ const draw = (props) => {
 
     // Bars
     if (hasSeries) {
-        const layer = svg.selectAll('layer')
+        let n = series.length;
+        let layer = svg.selectAll('layer')
             .data(stackedData)
             .enter()
             .append('g')
             .attr('class', 'layer')
             .style('fill', (d, i) => color(i))
-            
-        layer.selectAll('rect')
-            .data(d => d)
+          
+        let rect = layer.selectAll('rect')
+            .data(d => {
+                return d.map(x => {
+                    x.series = d.key.toString();
+                    return x;
+                });
+            })
             .enter()
-            .append('rect')
+            .append('rect');
+        
+        let style = props.spec.style;
+        if (style.layout === "stacked") {
+            y.domain([0, d3.max(stackedData[stackedData.length - 1], d => d[1] )]).nice();
+            rect.style('stroke-width','0')
             .attr('x', d => x(d.data.x))
-            .attr('y', d => y(d[1]))
-            .attr('height', d => y(d[0]) - y(d[1]))
             .attr('width', x.bandwidth() - 1)
-            .style('stroke-width','0')
+            .attr('y', d => y(d[1]))
+            .attr('height', d => y(d[0]) - y(d[1]));
+        } else if (style.layout === "percent") {
+            let totalDict = {};
+            stackedData[stackedData.length-1].forEach(d => {
+                totalDict[d.data.x] = d[1];
+            });
+            y.domain([0, 1]);
+            rect.style('stroke-width','0')
+            .attr('x', d => x(d.data.x))
+            .attr('width', x.bandwidth() - 1)
+            .attr('y', d => {
+                let total = totalDict[d.data.x];
+                return y(d[1] / total);
+            })
+            .attr('height', d => {
+                let total = totalDict[d.data.x];
+                return y(d[0] / total) - y(d[1] / total);
+            });
+        } else {
+            // grouped
+            let max = 0;
+            stackedData.forEach(ds => {
+                ds.forEach(d => {
+                    if ((d[1] - d[0]) > max) {
+                        max = d[1] - d[0];
+                    }
+                });
+            });
+            y.domain([0, max]).nice();
+            rect.style('stroke-width','0')
+            .attr('x', d => {
+                return x(d.data.x) + (x.bandwidth() - 1) / n * series.indexOf(d.series);
+            })
+            .attr('width', (x.bandwidth() - 1)/n)
+            .attr('y', d => {
+                return y(0) - (y(d[0]) - y(d[1]))
+            })
+            .attr('height', d => y(d[0]) - y(d[1]))
+        }
     } else {
         svg.selectAll(".bar")
             .data(data)
             .enter()
             .append("rect")
-            .style('stroke-width','0')
-            .attr("x", function(d) { return x(d[encoding.x.field]); })
+            .style('stroke-width', '0')
+            .attr("x", function (d) { return x(d[encoding.x.field]); })
             .attr("width", x.bandwidth())
-            .attr("height", function(d) { return height - y(d[encoding.y.field]); }) 
-            .attr("y", function(d) { return y(d[encoding.y.field]); })
+            .attr("height", function (d) { return height - y(d[encoding.y.field]); })
+            .attr("y", function (d) { return y(d[encoding.y.field]); })
             .style('fill', color(0));
     }
 

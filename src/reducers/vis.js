@@ -23,6 +23,12 @@ const initialState = {
     specIndex: 0,
     specHistory: [JSON.stringify(originSpec)],
     displaySpec: {},
+    // animation
+    choosenAnimation: {},
+    selectedAnimation: {},
+    selectedAnimationIndex: -1,
+    isSelectingChartElement: false,
+    selectingParameter: {},
     // history
     actionHistory: [{
         "type": "none",
@@ -32,7 +38,7 @@ const initialState = {
 
 export default (state = initialState, action) => {
     const newSpec = JSON.parse(state.specHistory[state.specIndex]);
-    const newState = Object.assign({},state);
+    const newState = Object.assign({}, state);
     const newList = newState.dataNameList.slice();
     var newSpecHistory = [];
     var newActionHistory = [];
@@ -57,7 +63,7 @@ export default (state = initialState, action) => {
             return newState
 
         case VisActionType.SWITCH_DATA:
-            newState.dataIndex = action.index 
+            newState.dataIndex = action.index
             return newState
 
         case VisActionType.UPDATE_DATA:
@@ -74,12 +80,12 @@ export default (state = initialState, action) => {
             newState.fieldsList.splice(action.index, 1)
             newState.dataIndex = 0
             return newState
-    
+
         // Vis
         case VisActionType.ENCODING:
         case VisActionType.MODIFY_ENCODING:
             // state
-            newSpecHistory = newState.specHistory.slice(0,newState.specIndex+1);
+            newSpecHistory = newState.specHistory.slice(0, newState.specIndex + 1);
             //console.log(newSpecHistory);
             if (action.channel in newSpec["encoding"]) {
                 newSpec["encoding"][action.channel]["field"] = action.field.name;
@@ -99,24 +105,24 @@ export default (state = initialState, action) => {
                     "type": VisActionType.ENCODING,
                     "channel": action.channel,
                     "field": action.field,
-                    "description": "add field "+action.channel,
+                    "description": "add field " + action.channel,
                 });
             } else {
                 newActionHistory.push({
                     "type": VisActionType.MODIFY_ENCODING,
                     "channel": action.channel,
                     "field": action.field,
-                    "description": "modify field "+action.channel,
+                    "description": "modify field " + action.channel,
                 });
             }
             newState.actionHistory = newActionHistory;
-            newState.specIndex ++;
+            newState.specIndex++;
             newState.displaySpec = newSpec;
             return newState
 
         case VisActionType.REMOVE_ENCODING:
             // state
-            newSpecHistory = newState.specHistory.slice(0,newState.specIndex+1);
+            newSpecHistory = newState.specHistory.slice(0, newState.specIndex + 1);
             //console.log(newSpecHistory);
             if (action.channel in newSpec["encoding"]) {
                 delete newSpec["encoding"][action.channel].field;
@@ -130,16 +136,42 @@ export default (state = initialState, action) => {
                 "type": VisActionType.REMOVE_ENCODING,
                 "channel": action.channel,
                 "field": action.field,
-                "description": "remove field "+action.channel,
+                "description": "remove field " + action.channel,
             });
             newState.actionHistory = newActionHistory;
-            newState.specIndex ++;
+            newState.specIndex++;
+            newState.displaySpec = newSpec;
+            return newState
+
+        case VisActionType.CHANGE_AGGREGATION:
+            // state
+            newSpecHistory = newState.specHistory.slice(0, newState.specIndex + 1);
+            //console.log(newSpecHistory);
+            if (action.channel in newSpec["encoding"]) {
+                newSpec["encoding"][action.channel]["aggregation"] = action.method;
+            }
+            else {
+                newSpec["encoding"][action.channel] = {};
+                newSpec["encoding"][action.channel]["aggregation"] = action.method;
+            };
+            newSpecHistory.push(JSON.stringify(newSpec));
+            newState.specHistory = newSpecHistory
+            // action
+            newActionHistory = newState.actionHistory.slice();
+            newActionHistory.push({
+                "type": VisActionType.CHANGE_AGGREGATION,
+                "channel": action.channel,
+                "method": action.method,
+                "description": "change aggregation to " + action.channel,
+            });
+            newState.actionHistory = newActionHistory;
+            newState.specIndex++;
             newState.displaySpec = newSpec;
             return newState
 
         case VisActionType.CONFIGURE_STYLE:
             // state
-            newSpecHistory = newState.specHistory.slice(0,newState.specIndex+1);
+            newSpecHistory = newState.specHistory.slice(0, newState.specIndex + 1);
             newSpec.style = action.style;
             newSpecHistory.push(JSON.stringify(newSpec));
             newState.specHistory = newSpecHistory
@@ -151,13 +183,27 @@ export default (state = initialState, action) => {
                 "detail": action.style,
             });
             newState.actionHistory = newActionHistory;
-            newState.specIndex ++;
+            newState.specIndex++;
             newState.displaySpec = newSpec;
             return newState
 
+        case VisActionType.CHOOSE_CHART_ANIMATION:
+            newState.choosenAnimation = action.animation;
+            return newState;
+
+        case VisActionType.SELECT_CHART_ANIMATION:
+            newState.selectedAnimation = action.animation;
+            newState.selectedAnimationIndex = action.index;
+            return newState;
+
+        case VisActionType.SELECTING_CHART_ELEMENT:
+            newState.isSelectingChartElement = action.isSelectingChartElement;
+            newState.selectingParameter = action.parameter;
+            return newState;
+
         case VisActionType.ADD_CHART_ANIMATION:
             // state
-            newSpecHistory = newState.specHistory.slice(0,newState.specIndex+1);
+            newSpecHistory = newState.specHistory.slice(0, newState.specIndex + 1);
             if (!newSpec.animation) {
                 newSpec.animation = [];
             }
@@ -172,13 +218,13 @@ export default (state = initialState, action) => {
                 "detail": action.animation,
             });
             newState.actionHistory = newActionHistory;
-            newState.specIndex ++;
+            newState.specIndex++;
             newState.displaySpec = newSpec;
             return newState;
 
         case VisActionType.MODIFY_CHART_ANIMATION:
             // state
-            newSpecHistory = newState.specHistory.slice(0,newState.specIndex+1);
+            newSpecHistory = newState.specHistory.slice(0, newState.specIndex + 1);
             if (!newSpec.animation || action.index >= newSpec.animation.length) {
                 return newState;
             }
@@ -196,13 +242,13 @@ export default (state = initialState, action) => {
                 },
             });
             newState.actionHistory = newActionHistory;
-            newState.specIndex ++;
+            newState.specIndex++;
             newState.displaySpec = newSpec;
             return newState;
 
         case VisActionType.REMOVE_CHART_ANIMATION:
             // state
-            newSpecHistory = newState.specHistory.slice(0,newState.specIndex+1);
+            newSpecHistory = newState.specHistory.slice(0, newState.specIndex + 1);
             if (!newSpec.animation || action.index >= newSpec.animation.length) {
                 return newState;
             }
@@ -217,13 +263,13 @@ export default (state = initialState, action) => {
                 "detail": action.index,
             });
             newState.actionHistory = newActionHistory;
-            newState.specIndex ++;
+            newState.specIndex++;
             newState.displaySpec = newSpec;
             return newState;
 
         case VisActionType.REORDER_CHART_ANIMATION:
             // state
-            newSpecHistory = newState.specHistory.slice(0,newState.specIndex+1);
+            newSpecHistory = newState.specHistory.slice(0, newState.specIndex + 1);
             newSpec.animation = _.cloneDeep(action.animations);
             newSpecHistory.push(JSON.stringify(newSpec));
             newState.specHistory = newSpecHistory
@@ -235,7 +281,7 @@ export default (state = initialState, action) => {
                 "detail": action.animations,
             });
             newState.actionHistory = newActionHistory;
-            newState.specIndex ++;
+            newState.specIndex++;
             newState.displaySpec = newSpec;
             return newState;
 
@@ -243,5 +289,5 @@ export default (state = initialState, action) => {
 
         default:
             return state
-        }
+    }
 }

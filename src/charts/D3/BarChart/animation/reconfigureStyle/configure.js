@@ -6,12 +6,14 @@ export default class configure extends Component {
     handleStartLayoutChange = e => {
         const {index, animation} = this.props;
         animation.spec.startLayout = e.target.value;
+        animation.description = "Reconfigure the "+animation.spec.startLayout+" style to the "+animation.spec.endLayout+" style";
         this.props.modifyChartAnimation(index, animation);
     };
 
     handleEndLayoutChange = e => {
         const {index, animation} = this.props;
         animation.spec.endLayout = e.target.value;
+        animation.description = "Reconfigure the "+animation.spec.startLayout+" style to the "+animation.spec.endLayout+" style";
         this.props.modifyChartAnimation(index, animation);
     };
 

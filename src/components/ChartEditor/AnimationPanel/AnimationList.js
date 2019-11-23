@@ -8,13 +8,6 @@ export default class AnimationList extends Component {
         const {currentElement} = this.props;
         const chartInfo = currentElement.info();
         const animations = getAnimations(chartInfo.category, chartInfo.type);
-        // if (animations.length === 0) {
-        //     return (
-        //         <div className={'animation-list-container'}>
-        //             <Divider>No Supported Animations</Divider>
-        //         </div>
-        //     )
-        // }
         let taskAnimations = []
         for (const task in animations) {
             taskAnimations.push(
