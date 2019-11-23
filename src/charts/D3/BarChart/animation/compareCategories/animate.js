@@ -37,8 +37,9 @@ const draw = (animation, props) => {
     let stackedData = [];
     if (hasSeries) {
         stackedData = getStackedData(data, encoding);
+    } else {
+        data = getMaxRows(data, encoding);
     }
-    data = getMaxRows(data, encoding);
 
     // X channel
     let x = d3.scaleBand()
@@ -75,7 +76,8 @@ const draw = (animation, props) => {
             .attr('y', d => y(d[1]))
             .attr('height', d => y(d[0]) - y(d[1]))
             .attr('width', x.bandwidth() - 1)
-            .style('stroke-width','0')
+            .style('stroke-width','0') 
+            
     } else {
         svg.selectAll(".bar")
             .data(data)
@@ -89,21 +91,14 @@ const draw = (animation, props) => {
             .attr("fill", color(0));
     }
 
-    // Style
-    const style = props.spec.style;
-    if (!_.isEmpty(style)) {
-        if (style.showAxisX) {
-            svg.append("g")
-                .attr("transform", "translate(0," + height + ")")
-                .call(d3.axisBottom(x))
-                .selectAll("text")
-                .attr("transform", "translate(-10,0)rotate(-45)")
-                .style("text-anchor", "end");
-        }
-        if (style.showAxisY) {
-            svg.append("g").call(d3.axisLeft(y));
-        }
-    }
+    // Axis
+    svg.append("g")
+        .attr("transform", "translate(0," + height + ")")
+        .call(d3.axisBottom(x))
+        .selectAll("text")
+        .attr("transform", "translate(-10,0)rotate(-45)")
+        .style("text-anchor", "end");
+    svg.append("g").call(d3.axisLeft(y));
 
     // Animation
     let dataCategories = getCategories(props.data, encoding);
@@ -149,6 +144,98 @@ const draw = (animation, props) => {
                     return "lightgray";
                 }
             });
+        }
+    } else {
+        // difference animation
+        if (hasSeries) {
+
+            layer.selectAll('rect')
+                .transition()
+                .duration(animation.duration)
+                .style("fill", function (d, i){  
+                    if (d.data.x.toString() !== selectedCategory1 && d.data.x.toString() !== selectedCategory2) {
+                        return "lightgray";
+                    }
+                });
+
+            // draw red line
+            let lastStack = stackedData[stackedData.length - 1];
+            let h1 = y(lastStack.filter(d => d.data.x === selectedCategory1)[0][1]);
+            let h2 = y(lastStack.filter(d => d.data.x === selectedCategory2)[0][1]);
+            layer.append("line") 
+                .style("stroke", "red")
+                .style("stroke-width", 2)
+                .style("stroke-dasharray", ("5, 5"))
+                .attr("x1", x(selectedCategory1) + x.bandwidth())
+                .attr("y1", h1)
+                .attr("x2", x(selectedCategory1) + x.bandwidth())
+                .attr("y2", h1)
+                .transition()
+                .duration(animation.duration)
+                .attr("x1", x(selectedCategory1) + x.bandwidth())
+                .attr("y1", h1)
+                .attr("x2", 0)
+                .attr("y2", h1)
+
+            layer.append("line") 
+                .style("stroke", "red")
+                .style("stroke-width", 2)
+                .style("stroke-dasharray", ("5, 5"))
+                .attr("x1", x(selectedCategory2) + x.bandwidth())
+                .attr("y1", h2)
+                .attr("x2", x(selectedCategory2) + x.bandwidth())
+                .attr("y2", h2)
+                .transition()
+                .duration(animation.duration)
+                .attr("x1", x(selectedCategory2) + x.bandwidth())
+                .attr("y1", h2)
+                .attr("x2", 0)
+                .attr("y2", h2)
+
+        } else {
+            svg.selectAll("rect")
+                .transition()
+                .duration(animation.duration)
+                .attr("fill", function (d, i){  
+                    if (d[encoding.x.field].toString() === selectedCategory1 || d[encoding.x.field].toString() === selectedCategory2) {
+                        return color(0);
+                    } else {
+                        return "lightgray";
+                    }
+                });
+
+            // draw red line
+            let h1 = y(data.filter(d => d[encoding.x.field].toString() === selectedCategory1)[0][encoding.y.field]);
+            let h2 = y(data.filter(d => d[encoding.x.field].toString() === selectedCategory2)[0][encoding.y.field]);
+            svg.append("line") 
+                .style("stroke", "red")
+                .style("stroke-width", 2)
+                .style("stroke-dasharray", ("5, 5"))
+                .attr("x1", x(selectedCategory1) + x.bandwidth())
+                .attr("y1", h1)
+                .attr("x2", x(selectedCategory1) + x.bandwidth())
+                .attr("y2", h1)
+                .transition()
+                .duration(animation.duration)
+                .attr("x1", x(selectedCategory1) + x.bandwidth())
+                .attr("y1", h1)
+                .attr("x2", 0)
+                .attr("y2", h1)
+
+            svg.append("line") 
+                .style("stroke", "red")
+                .style("stroke-width", 2)
+                .style("stroke-dasharray", ("5, 5"))
+                .attr("x1", x(selectedCategory2) + x.bandwidth())
+                .attr("y1", h2)
+                .attr("x2", x(selectedCategory2) + x.bandwidth())
+                .attr("y2", h2)
+                .transition()
+                .duration(animation.duration)
+                .attr("x1", x(selectedCategory2) + x.bandwidth())
+                .attr("y1", h2)
+                .attr("x2", 0)
+                .attr("y2", h2)
         }
     }
 

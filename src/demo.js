@@ -99,21 +99,13 @@ const demochart2 = new ChartInfo(
             "x": {"field": "Cylinders", "type": "ordinal"},
             "y": {"field": "Horsepower", "type": "quantitative"},
             "color": {"field": "Origin", "type": "nordinal"},
+            "time": {"field": "Year", "type": "temporal"},
         },
         "style": {
             "layout": "stacked",
-            "showAxisX": true,
-            "showAxisY": true,
         },
         "animation": [
-            // {
-            //     "type": "grow",
-            //     "duration": 800,
-            // },
-            // {
-            //     "type": "emphasize",
-            //     "duration": 800,
-            // }
+            
         ]
     },
     45,

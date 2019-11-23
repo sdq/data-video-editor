@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { List, Divider } from 'antd';
+import { List, Divider, Row, Col } from 'antd';
 import AnimationCard from './AnimationCard';
 import { getAnimations } from '@/charts/Info';
 
@@ -18,18 +18,20 @@ export default class AnimationList extends Component {
         let taskAnimations = []
         for (const task in animations) {
             taskAnimations.push(
-                <div key={task}>
-                    <h4 style={{marginLeft: 12}}>{task}</h4>
-                    <List
-                        grid={{ gutter: 6, column: 4 }}
-                        dataSource={animations[task]}
-                        renderItem={animation => (
-                        <List.Item>
-                            <AnimationCard animation={animation} {...this.props}/>
-                        </List.Item>
-                        )}
-                    />
-                </div>
+                <Row key={task} style={{ height: 50 }}> 
+                    <Col span={7}><h4 style={{marginLeft: 12}}>{task}</h4></Col>
+                    <Col span={17}>
+                        <List
+                            grid={{ gutter: 2, column: 4 }}
+                            dataSource={animations[task]}
+                            renderItem={animation => (
+                            <List.Item>
+                                <AnimationCard animation={animation} {...this.props}/>
+                            </List.Item>
+                            )}
+                        />
+                    </Col>
+                </Row>
             )
         }
         return (

@@ -1,31 +1,60 @@
 import React, { Component } from 'react';
-import { Row, Col, Radio } from 'antd';
+import { Row, Col, Select, Radio } from 'antd';
+import {getSeries} from '../../helper';
+const { Option } = Select;
 
 export default class configure extends Component {
 
-    handleOrderChange = e => {
+    handleSeriesChange = (value) => {
         const {index, animation} = this.props;
+        animation.spec.series = value;
+        this.props.modifyChartAnimation(index, animation);
+    }
+
+    handleOrderChange = e => {
+        const { index, animation } = this.props;
         animation.spec.order = e.target.value;
         this.props.modifyChartAnimation(index, animation);
     };
 
     handleEffectChange = e => {
-        const {index, animation} = this.props;
+        const { index, animation } = this.props;
         animation.spec.effect = e.target.value;
         this.props.modifyChartAnimation(index, animation);
     };
 
     handleDurationChange = e => {
-        const {index, animation} = this.props;
+        const { index, animation } = this.props;
         animation.duration = e.target.value;
         this.props.modifyChartAnimation(index, animation);
     }
 
     render() {
-        const {animation} = this.props;
+        const {animation, currentData, displaySpec} = this.props;
+        let data = currentData.data;
+        let encoding = displaySpec.encoding;
+        let dataSeries = getSeries(data, encoding);
+        let series = Object.keys(dataSeries);
+        let selectedSeries = animation.spec.series?animation.spec.series:"";
+        let hasSeries = ('color' in encoding) && ('field' in encoding.color);
+        let selectSeriesRow = (
+            <Row style={{ height: 50 }}>
+                <Col span={6}><h3 style={{ marginTop: 6 }}>Series:</h3></Col>
+                <Col span={9}>
+                    <Select defaultValue={selectedSeries} style={{ width: 120, marginTop: 4 }} onChange={this.handleSeriesChange}>
+                        <Option key={""} value={""}>All</Option>
+                        {series.map((s) => <Option key={s} value={s}>{s}</Option>)}
+                    </Select>
+                </Col>
+                <Col span={9}>
+                    <p style={{ marginTop: 8 }}>{encoding.color.field}</p>
+                </Col>
+            </Row>
+        )
         return (
             <div>
-                <Row style={{ height: 50 }}> 
+                {hasSeries?selectSeriesRow:null}
+                <Row style={{ height: 50 }}>
                     <Col span={6}><h3 style={{ marginTop: 6 }}>Order:</h3></Col>
                     <Col span={18}>
                         <Radio.Group value={animation.spec.order} onChange={this.handleOrderChange}>
@@ -34,7 +63,7 @@ export default class configure extends Component {
                         </Radio.Group>
                     </Col>
                 </Row>
-                <Row style={{ height: 50 }}> 
+                <Row style={{ height: 50 }}>
                     <Col span={6}><h3 style={{ marginTop: 6 }}>Effect:</h3></Col>
                     <Col span={18}>
                         <Radio.Group value={animation.spec.effect} onChange={this.handleEffectChange}>
@@ -44,13 +73,13 @@ export default class configure extends Component {
                         </Radio.Group>
                     </Col>
                 </Row>
-                <Row style={{ height: 50 }}> 
+                <Row style={{ height: 50 }}>
                     <Col span={6}><h3 style={{ marginTop: 6 }}>Duration:</h3></Col>
                     <Col span={18}>
                         <Radio.Group value={animation.duration} onChange={this.handleDurationChange}>
-                            <Radio.Button value={1000}>Short</Radio.Button>
-                            <Radio.Button value={2000}>Medium</Radio.Button>
-                            <Radio.Button value={3000}>Long</Radio.Button>
+                            <Radio.Button value={500}>Short</Radio.Button>
+                            <Radio.Button value={1000}>Medium</Radio.Button>
+                            <Radio.Button value={2000}>Long</Radio.Button>
                         </Radio.Group>
                     </Col>
                 </Row>

@@ -1,5 +1,6 @@
 export default {
     DATA_TREND: 'Data Trend',
+    REGRESSION: 'Regression',
     EMPHASIZE_CATEGORY : 'Emphasize Category',
     EMPHASIZE_EXTREME : 'Emphasize Extreme',
     EMPHASIZE_SERIES : 'Emphasize Series',

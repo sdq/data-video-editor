@@ -51,7 +51,7 @@ export default class configure extends Component {
                         <Radio.Group value={animation.duration} onChange={this.handleDurationChange}>
                             <Radio.Button value={500}>Short</Radio.Button>
                             <Radio.Button value={1000}>Medium</Radio.Button>
-                            <Radio.Button value={1500}>Long</Radio.Button>
+                            <Radio.Button value={2000}>Long</Radio.Button>
                         </Radio.Group>
                     </Col>
                 </Row>
