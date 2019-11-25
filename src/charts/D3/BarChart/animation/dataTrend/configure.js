@@ -12,6 +12,7 @@ export default class configure extends Component {
     customizeRange = (range) => {
         const { index, animation } = this.props;
         animation.spec.rangeScope = range;
+        animation.description = "Show data trend of all series from "+animation.spec.rangeScope[0]+" to "+animation.spec.rangeScope[1];
         this.props.modifyChartAnimation(index, animation);
     }
 

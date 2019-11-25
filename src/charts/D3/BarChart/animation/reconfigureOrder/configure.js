@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, Select, Radio } from 'antd';
+import { Row, Col, Select, Radio, Button } from 'antd';
 import {getSeries} from '../../helper';
 const { Option } = Select;
 
@@ -8,6 +8,7 @@ export default class configure extends Component {
     handleSeriesChange = (value) => {
         const {index, animation} = this.props;
         animation.spec.series = value;
+        animation.description = "Reconfigure the order to "+ animation.spec.series +" series";
         this.props.modifyChartAnimation(index, animation);
     }
 
@@ -46,8 +47,11 @@ export default class configure extends Component {
                         {series.map((s) => <Option key={s} value={s}>{s}</Option>)}
                     </Select>
                 </Col>
-                <Col span={9}>
+                <Col span={4}>
                     <p style={{ marginTop: 8 }}>{encoding.color.field}</p>
+                </Col>
+                <Col span={5}>
+                    <Button size={'small'} style={{ marginTop: 8 }} onClick={() => this.props.selectChartElement(true, {type: 'series', key: 'series'})}>Select</Button>
                 </Col>
             </Row>
         )

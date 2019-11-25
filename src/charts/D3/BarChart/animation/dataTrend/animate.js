@@ -1,5 +1,5 @@
 import * as d3 from 'd3';
-import {getStackedData, getMaxRows, getSeries, getCategories} from '../../helper';
+import {getStackedData, getAggregatedRows, getSeries, getCategories} from '../../helper';
 import _ from 'lodash';
 
 const offset = 20; // To show whole chart
@@ -67,12 +67,12 @@ const draw = (animation, props) => {
                 stackedTD.key = timePoint;
                 trendData.push(stackedTD);
             } else {
-                td = getMaxRows(td, encoding);
+                td = getAggregatedRows(td, encoding);
                 trendData.push(td);
             }
         });
     } else {
-        data = getMaxRows(data, encoding);
+        data = getAggregatedRows(data, encoding);
     }
 
     // X channel

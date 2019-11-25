@@ -1,5 +1,5 @@
 import * as d3 from 'd3';
-import { getStackedData, getMaxRows, getSeries } from '../../helper';
+import { getStackedData, getAggregatedRows, getSeries } from '../../helper';
 import _ from 'lodash';
 
 const offset = 20; // To show whole chart
@@ -38,7 +38,7 @@ const draw = (animation, props) => {
     if (hasSeries) {
         stackedData = getStackedData(data, encoding);
     } else {
-        data = getMaxRows(data, encoding);
+        data = getAggregatedRows(data, encoding);
     }
 
     // X channel
@@ -106,7 +106,7 @@ const draw = (animation, props) => {
         let selectedSeries1 = animation.spec.series1 ? animation.spec.series1 : series[0];
         let selectDataSeries1 = dataSeries[selectedSeries1];
         // TODO: choose aggregation
-        let aggregatedDS1 = getMaxRows(selectDataSeries1, encoding);
+        let aggregatedDS1 = getAggregatedRows(selectDataSeries1, encoding);
         if (animation.spec.extreme1 === 'max') {
             aggregatedDS1.sort(function(a, b){return b[encoding.y.field] - a[encoding.y.field]});
         } else {
@@ -117,7 +117,7 @@ const draw = (animation, props) => {
         let selectedSeries2 = animation.spec.series2 ? animation.spec.series2 : series[1];
         let selectDataSeries2 = dataSeries[selectedSeries2];
         // TODO: choose aggregation
-        let aggregatedDS2 = getMaxRows(selectDataSeries2, encoding);
+        let aggregatedDS2 = getAggregatedRows(selectDataSeries2, encoding);
         if (animation.spec.extreme2 === 'max') {
             aggregatedDS2.sort(function(a, b){return b[encoding.y.field] - a[encoding.y.field]});
         } else {

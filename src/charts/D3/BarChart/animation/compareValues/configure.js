@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, Select, Radio } from 'antd';
+import { Row, Col, Select, Radio, Button } from 'antd';
 import {getSeries, getCategories} from '../../helper';
 const { Option } = Select;
 
@@ -8,6 +8,7 @@ export default class configure extends Component {
     handleSeries1Change = (value) => {
         const {index, animation} = this.props;
         animation.spec.series1 = value;
+        animation.description = "Compare between the values of category in "+animation.spec.series1+" and "+animation.spec.series2;
         this.props.modifyChartAnimation(index, animation);
     }
 
@@ -20,6 +21,7 @@ export default class configure extends Component {
     handleSeries2Change = (value) => {
         const {index, animation} = this.props;
         animation.spec.series2 = value;
+        animation.description = "Compare between the values of category in "+animation.spec.series1+" and "+animation.spec.series2;
         this.props.modifyChartAnimation(index, animation);
     }
 
@@ -62,8 +64,11 @@ export default class configure extends Component {
                             {series.map((s) => <Option key={s} value={s}>{s}</Option>)}
                         </Select>
                     </Col>
-                    <Col span={9}>
+                    <Col span={4}>
                         <p style={{ marginTop: 8 }}>{encoding.color.field}</p>
+                    </Col>
+                    <Col span={5}>
+                        <Button size={'small'} style={{ marginTop: 8 }} onClick={() => this.props.selectChartElement(true, {type: 'value', key1: 'series1', key2: 'category1'})}>Select</Button>
                     </Col>
                 </Row>
                 <Row  style={{ height: 50 }}>
@@ -84,8 +89,11 @@ export default class configure extends Component {
                             {series.map((s) => <Option key={s} value={s}>{s}</Option>)}
                         </Select>
                     </Col>
-                    <Col span={9}>
+                    <Col span={4}>
                         <p style={{ marginTop: 8 }}>{encoding.color.field}</p>
+                    </Col>
+                    <Col span={5}>
+                        <Button size={'small'} style={{ marginTop: 8 }} onClick={() => this.props.selectChartElement(true, {type: 'value', key1: 'series2', key2: 'category2'})}>Select</Button>
                     </Col>
                 </Row>
                 <Row  style={{ height: 50 }}>

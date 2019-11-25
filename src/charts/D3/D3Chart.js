@@ -10,6 +10,9 @@ export default class D3Chart extends Component {
         this.state = {
             specString: '',
             chartImageUrl: '',
+            pointx: 0,
+            pointy: 0,
+            isSelecting: false,
         };
         this._animations = [];
     }
@@ -29,6 +32,25 @@ export default class D3Chart extends Component {
             } else {
                 this.renderChart();
             }
+        } else if (this.props.pointx !== this.state.pointx && this.props.pointy !== this.state.pointy) {
+            // dragging animation
+            this.props.hover(this.props);
+            this.setState({
+                pointx: this.props.pointx,
+                pointy: this.props.pointy,
+            })
+        } else if (this.props.isSelectingChartElement && !this.state.isSelecting) {
+            // start selecting chart element
+            this.props.select(this.props);
+            this.setState({
+                isSelecting: true,
+            })
+        } else if (!this.props.isSelectingChartElement && this.state.isSelecting) {
+            // finish selecting chart element
+            this.renderAnimation();
+            this.setState({
+                isSelecting: false,
+            })
         }
     }
 

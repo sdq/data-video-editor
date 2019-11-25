@@ -1,5 +1,5 @@
 import * as d3 from 'd3';
-import {getStackedData, getMaxRows, getSeries} from '../../helper';
+import {getStackedData, getAggregatedRows, getSeries} from '../../helper';
 import _ from 'lodash';
 
 const offset = 20; // To show whole chart
@@ -42,7 +42,7 @@ const draw = (animation, props) => {
         stackedData = getStackedData(data, encoding);
         series = Object.keys(dataSeries);
     } else {
-        data = getMaxRows(data, encoding);
+        data = getAggregatedRows(data, encoding);
     }
 
     // X channel
