@@ -1,5 +1,5 @@
-const animations = [
+const animations = {
     
-];
+};
 
 export default animations;
