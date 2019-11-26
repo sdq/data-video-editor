@@ -196,7 +196,7 @@ export default class TextTool extends Component {
         }
 
         return (
-            <div style={{padding: '0px 10px 10px 10px', fontSize: '14px', backgroundColor: 'white',height:'400px',overflow: 'auto'}}>
+            <div style={{padding: '0px 10px 10px 10px', fontSize: '14px', backgroundColor: 'white',height:this.props.contentHeight-140+'px',overflow: 'auto'}}>
 
                 <Divider>Properties</Divider>
                 <Row style={{margin: '0px 15px 0px 15px', fontSize: '14px'}}> 

@@ -154,7 +154,7 @@ export default class DataTool extends Component {
         let { dataNameList, currentData} = this.props;
         const text = 'Are you sure to change chart data?（All the encodings will be emptied.）';
         return (
-            <div style={{ padding: '0px 10px 10px 10px', fontSize: '14px', backgroundColor: 'white',height:'400px',overflow: 'hidden' }}>
+            <div style={{ padding: '0px 10px 10px 10px', fontSize: '14px', backgroundColor: 'white',height:this.props.contentHeight-140+'px',overflow: 'auto' }}>
                 <div  style={{height:'120px'}} >
                 <Dragger
                     accept=".csv"

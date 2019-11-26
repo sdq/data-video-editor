@@ -44,7 +44,7 @@ export default class GifTool extends Component {
 
     render() {
         return (
-            <div style={{padding: '0px 10px 10px 10px', fontSize: '14px', backgroundColor: 'white',overflow: 'auto'}}>
+            <div style={{padding: '0px 10px 10px 10px', fontSize: '14px', backgroundColor: 'white',height:this.props.contentHeight-140+'px',overflow: 'auto'}}>
                 <Divider>Style</Divider>
                 <Row style={{margin: '0px 10px 0px 15px', fontSize: '14px'}}>
                 <Col span={8} style={{ padding: '10px 0px 0 0px'}}>Transparency</Col>
