@@ -35,3 +35,10 @@
 .card-container >.ant-tabs .ant-tabs-left-content{
     padding-left: 0px;
 }
+
+
+/* 如何动态赋值？ */
+.card-container >.ant-tabs .ant-tabs-left-bar .ant-tabs-nav{
+    overflow:auto;
+    height:500px;
+}

@@ -191,7 +191,7 @@ export default class DefaultTab extends Component {
         //console.log("gifList", gifList)
 
         return (
-            <div className="defaulttab" style={{ height: this.props.contentHeight,overflow:"auto" }}>
+            <div className="defaulttab" style={{ height: this.props.contentHeight-140,overflow:"auto" }}>
                 <Search
                 placeholder="input search text"
                 onSearch={value => this.onSearch(value)}
