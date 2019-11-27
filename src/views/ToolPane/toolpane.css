@@ -1,14 +1,14 @@
-.card-container > .ant-tabs-card > .ant-tabs-content {
+.card-container-tool > .ant-tabs-card > .ant-tabs-content {
     /* height: 500px; */
     margin-top: -6px;
     z-index: 5;
 }
 
-.card-container > .ant-tabs-card > .ant-tabs-content > .ant-tabs-tabpane {
+.card-container-tool > .ant-tabs-card > .ant-tabs-content > .ant-tabs-tabpane {
     background: #fff;
 }
 
-.card-container > .ant-tabs-card > .ant-tabs-bar .ant-tabs-tab {
+.card-container-tool > .ant-tabs-card > .ant-tabs-bar .ant-tabs-tab {
     border-color: transparent;
     background: transparent;
 }

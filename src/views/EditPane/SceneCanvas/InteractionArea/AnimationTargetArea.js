@@ -18,6 +18,7 @@ class AnimationTargetArea extends Component {
     render() {
         const { canDrop, isOver, connectDropTarget, currentElement } = this.props;
         const isActive = canDrop && isOver;
+        const canvasH = this.props.contentHeight-100;
         let backgroundColor = 'white';
         if (isActive) {
 			backgroundColor = Color.BLUE;
@@ -25,14 +26,15 @@ class AnimationTargetArea extends Component {
 		else if (canDrop) {
 			backgroundColor = Color.LIGHT_BLUE;
         }
+        //Gridline、Assistline、interaction使用的不是konva图层，需要将x y w h 在显示前转换成普通canvas系统
         return connectDropTarget(
             <div
                 style={{
                     position: 'absolute',
-                    top: currentElement.info().y,
-                    left: currentElement.info().x,
-                    width: currentElement.info().width,
-                    height: currentElement.info().height,
+                    top: currentElement.info().y*(canvasH/450),
+                    left: currentElement.info().x*(canvasH/450),
+                    width: currentElement.info().width*(canvasH/450),
+                    height: currentElement.info().height*(canvasH/450),
                     backgroundColor: backgroundColor,
                     opacity: 0.5,
                 }}

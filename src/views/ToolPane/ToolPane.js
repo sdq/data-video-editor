@@ -22,7 +22,7 @@ export default class ToolPane extends Component {
         if (this.props.isElementSelected && this.props.currentElement) {
             switch (this.props.currentElement.type()) {
                 case ElementType.IMAGE:
-                    return <div className="card-container">
+                    return <div className="card-container-tool">
                     <PosTool {...this.props}/>
                     <Tabs type="card">
                         <TabPane tab="Design" key="Design" >
@@ -34,7 +34,7 @@ export default class ToolPane extends Component {
                     </Tabs>
                     </div>
                 case ElementType.GIF:
-                        return <div className="card-container">
+                        return <div className="card-container-tool">
                         <PosTool {...this.props}/>
                         <Tabs type="card">
                         <TabPane tab="Design" key="Design">
@@ -46,7 +46,7 @@ export default class ToolPane extends Component {
                     </Tabs>
                     </div>
                  case ElementType.VIDEO:
-                    return <div className="card-container">
+                    return <div className="card-container-tool">
                     <PosTool {...this.props}/>
                     <Tabs type="card">
                     <TabPane tab="Design" key="Design">
@@ -58,7 +58,7 @@ export default class ToolPane extends Component {
                 </Tabs>
                 </div>
                 case ElementType.CHART:
-                    return <div className="card-container">
+                    return <div className="card-container-tool">
                     <PosTool {...this.props}/>
                     <Tabs type="card">
                         <TabPane tab="Data" key="Data">
@@ -73,7 +73,7 @@ export default class ToolPane extends Component {
                     </Tabs>
                     </div>
                 case ElementType.TEXT:
-                    return <div className="card-container">
+                    return <div className="card-container-tool">
                     <PosTool {...this.props}/>
                     <Tabs type="card">
                         <TabPane tab="Text" key="Text">
@@ -98,7 +98,7 @@ export default class ToolPane extends Component {
 
     render() {
         return (
-            <div className="card-container" style={{position:'absolute', zIndex: 5}}>
+            <div className="card-container-tool" style={{position:'absolute', zIndex: 5}}>
                 {this.chooseTool()}
             </div>
         )
