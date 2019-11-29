@@ -18,11 +18,6 @@ export default class UserTab extends Component {
         this.state = {
             activeKey: "image", //default
             imageList: [
-                // {
-                //     uid: '-1',
-                //     name: "woman",
-                //     src: "https://datavideo.idvxlab.com/images/woman.png"
-                // },
                 {
                     uid: '-1',
                     name: "man",
@@ -44,11 +39,6 @@ export default class UserTab extends Component {
             ],
             audioList: [
                 {
-                    uid: '-1',
-                    name: "column-anon",
-                    src: "https://datavideo.idvxlab.com/audios/column-anon.mp3"
-                },
-                {
                     uid: '-2',
                     name: "service1",
                     src: "https://datavideo.idvxlab.com/audios/service1.mp3"
@@ -67,6 +57,21 @@ export default class UserTab extends Component {
                     uid: '-4',
                     name: "service4",
                     src: "https://datavideo.idvxlab.com/audios/service4.mp3"
+                },
+                {
+                    uid: '-5',
+                    name: "88mp3",
+                    src: "https://datavideo.idvxlab.com/audios/88mp3.mp3"
+                },
+                {
+                    uid: '-6',
+                    name: "90mp3",
+                    src: "https://datavideo.idvxlab.com/audios/90mp3.mp3"
+                },
+                {
+                    uid: '-7',
+                    name: "91mp3",
+                    src: "https://datavideo.idvxlab.com/audios/91mp3.mp3"
                 },
             ],
             videoList: [

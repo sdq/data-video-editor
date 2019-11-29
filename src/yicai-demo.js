@@ -241,7 +241,7 @@ const element020 = new Element(ElementType.TEXT, demotext020);
 
 
 
-const scene1 = new Scene("Comparison of cars in three countries", 11.0);//编辑后设置
+const scene1 = new Scene("中国服务进口规模已是全球第二", 11.0);//编辑后设置
 
 scene1.addElement(element01);
 scene1.addElement(element02);
@@ -597,7 +597,7 @@ const element120 = new Element(ElementType.TEXT, demotext120);
 
 
 
-const scene2 = new Scene("Comparison of cars in three countries", 11.0);//编辑后设置
+const scene2 = new Scene("中国服务进口领域占比变化", 11.0);//编辑后设置
 
 scene2.addElement(element11);
 scene2.addElement(element12);
@@ -825,7 +825,7 @@ const element212 = new Element(ElementType.IMAGE, demoimage212);
 
 
 
-const scene3 = new Scene("Comparison of car acceleration in three countries", 10.0);
+const scene3 = new Scene("世界第一出境消费国", 10.0);
 
 
 scene3.addElement(element23);
@@ -1045,7 +1045,7 @@ const element310 = new Element(ElementType.TEXT, demotext310);
 const element311 = new Element(ElementType.TEXT, demotext311);
 const element312 = new Element(ElementType.TEXT, demotext312);
 
-const scene4 = new Scene("Comparison of car acceleration in three countries", 10.0);
+const scene4 = new Scene("中国经济结构转型升级", 10.0);
 
 scene4.addElement(element31);
 scene4.addElement(element32);
@@ -1139,7 +1139,7 @@ const element41 = new Element(ElementType.IMAGE, demoimage41);
 const element42 = new Element(ElementType.TEXT, demotext42);
 const element43 = new Element(ElementType.IMAGE, demoimage43);
 
-const scene5 = new Scene("Comparison of car acceleration in three countries", 10.0);
+const scene5 = new Scene("片尾", 10.0);
 
 scene5.addElement(element41);
 scene5.addElement(element42);

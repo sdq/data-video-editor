@@ -1,5 +1,7 @@
 import ActionType from '../actions/types';
-import scenes from '../demo';
+//切换demo
+import scenes from '../yicai-demo';
+//import scenes from '../car-demo';
 import _ from 'lodash';
 
 const initialState = {
