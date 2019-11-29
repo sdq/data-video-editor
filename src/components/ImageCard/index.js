@@ -32,6 +32,7 @@ const imageSource = {
         let e = window.event;       //Firefox下是没有event这个对象的！！
         let canvas=document.getElementsByTagName("canvas")[0];
         let pos = canvas.getBoundingClientRect();//获取canvas基于父页面的位差
+        let scale = pos.height/450;
         if((Number(e.clientX)-Number(pos.left))>0){
             x = Number(e.clientX)-Number(pos.left)-w/2; //根据鼠标位置计算画布上元素位置,强制类型转换
             y = Number(e.clientY)-Number(pos.top)-h/2;
@@ -43,7 +44,7 @@ const imageSource = {
             if (dropResult.target === "canvas") {
                 //add element to scene
                 const newScene = _.cloneDeep(dropResult.currentScene);
-                const newImage = new ImageInfo(item.name,item.src, x, y, w, h, 0);
+                const newImage = new ImageInfo(item.name,item.src, x/scale, y/scale, w, h, 0);
                 const newElement = new Element(ElementType.IMAGE, newImage);
                 newScene.addElement(newElement);
                 props.addElement(newElement);
@@ -91,7 +92,8 @@ class ImageCard extends Component {
 export default DragSource(
     DNDType.DND_IMAGE,
     imageSource,
-	(connect, monitor) => ({
+    
+	(connect, monitor,) => ({
 		connectDragSource: connect.dragSource(),
 		isDragging: monitor.isDragging()
 	}),

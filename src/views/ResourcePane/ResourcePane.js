@@ -9,6 +9,7 @@ import './resourcepane.css';
 const { TabPane } = Tabs;
 
 let tabName = '';
+let newTabKey = "";
 
 const tabIconStyle = {
     position: 'absolute',
@@ -19,10 +20,11 @@ const tabIconStyle = {
 //限定2字长度组名
 const tabTextStyle = {
     position: 'absolute',
-    textAlign:'center',//无效
+    textAlign:'center',//必须设置宽度才会有效
     lineHeight:"10px",
     marginTop:"33px",
     fontSize: '8px',
+    width:"28px",
 }
 // const tabButtonStyle = {
 //     positon:"absolute",
@@ -45,7 +47,7 @@ export default class ResourcePane extends Component {
     constructor(props) {
         super(props);
         this.newTabIndex = 0;
-         const panes = [
+         let panes = [
            { icon: "picture", text:"",content: <DefaultTab {...this.props}/>, key: 'UImageser' },
            { icon: "gift", text:"",content: <DefaultTab {...this.props}/>, key: 'Gif' },
            { icon: "customer-service",text:"", content: <DefaultTab {...this.props}/>, key: 'Audio' },
@@ -55,16 +57,17 @@ export default class ResourcePane extends Component {
           activeKey: panes[0].key,
           panes,
           visible: false,
+          isfixName: false,
         };
       }
 
     addTab = (name) => {
-        const { panes } = this.state;
+        let { panes } = this.state;
 
-        const activeKey = `name${this.newTabIndex++}`;
+        let activeKey = `name${this.newTabIndex++}`;
         panes.push({ 
         icon: "file",
-        text:name,
+        text: name,
         content: <DefaultTab {...this.props}/>, key: activeKey });
         this.setState({ panes, activeKey,});
         this.setState({
@@ -127,6 +130,35 @@ export default class ResourcePane extends Component {
         });
       };
 
+      fixFileName(key){
+       this.setState({
+           isfixName:true
+       })
+       newTabKey = key;
+      }
+
+      onNameChange = e =>  {
+        let { panes } = this.state;
+        let newTabName = e.target.value;
+        for(let i =0;i<panes.length;i++){
+          if(panes[i].key === newTabKey){
+            panes[i].text = newTabName;
+            let activeKey = newTabName;
+            this.setState({ panes, activeKey});
+            this.setState({
+                visible: false,
+              });
+          }
+        }
+        
+      }
+
+      onBlur= e =>  {
+        this.setState({
+            isfixName:false
+        })
+      }
+
 
     render() {
         return (
@@ -155,7 +187,7 @@ export default class ResourcePane extends Component {
                     <TabPane 
                     tab={<div>
                         <div style={tabIconStyle}><Icon type={pane.icon}  /></div>
-                        <p style={tabTextStyle}>{pane.text}</p>
+                        <p onDoubleClick={key => this.fixFileName(pane.key)} style={tabTextStyle}>{pane.text}</p>
                     </div>} 
                     key={pane.key} >
                        {pane.content}
@@ -179,6 +211,17 @@ export default class ResourcePane extends Component {
                      >
                     <Input placeholder="Group1" maxLength={5} allowClear onChange = {value => this.onChange(value)}/>
                 </Modal>
+                {this.state.isfixName?
+                    <input 
+                    placeholder=""//不方便获取原名字 
+                    maxLength={5} 
+                    onChange = {value => this.onNameChange(value)}
+                    onBlur = {value => this.onBlur(value)}
+                    caret-color= "#fdc209"
+                    autoFocus="autofocus"
+                    style={{position:"absolute",height:"15px",width:"48px",left:"6px",paddingLeft:"2px",borderWidth:"0.5px",top:window.event.clientY-68+"px"}}
+                    />
+                :null}
             </div>
         )
     }

@@ -61,9 +61,10 @@ class AudioCard extends Component {
     render() {
         const { connectDragSource } = this.props;
         return connectDragSource(
-            <div>
+            <div className="audiocard">
                 <p>{this.props.info.name}</p>
                 <ReactAudioPlayer
+                    style={{width:"250px"}}
                     src={this.props.info.src} // + "?" + Math.random()
                     //ref={(element) => { this.state.duration = element}}
                     ref={(element) => { this.playerElement = element}}

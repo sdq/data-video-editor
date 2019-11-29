@@ -3,8 +3,9 @@ import scenes from '../demo';
 import _ from 'lodash';
 
 const initialState = {
-    past:[[],[],[]],
-    future:[[],[],[]],
+    //根据数据更改
+    past:[[],[],[],[],[]],
+    future:[[],[],[],[],[]],
     scenes: scenes,
     index: 1,
 };
