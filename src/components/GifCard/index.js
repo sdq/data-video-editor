@@ -31,6 +31,7 @@ const imageSource = {
         let e = window.event;       //Firefox下是没有event这个对象的！！
         let canvas=document.getElementsByTagName("canvas")[0];
         let pos = canvas.getBoundingClientRect();//获取canvas基于父页面的位差
+        let scale = pos.height/450;
         if((Number(e.clientX)-Number(pos.left))>0){
             x = Number(e.clientX)-Number(pos.left)-w; //为什么gif不能减去二分之一宽高度？
             y = Number(e.clientY)-Number(pos.top);
@@ -52,7 +53,7 @@ const imageSource = {
                 }
                 //console.log("endDrag",w,h)
 
-                const newImage = new GifInfo(item.name, item.src, delay, gifFrames, x, y, w, h, 0);
+                const newImage = new GifInfo(item.name, item.src, delay, gifFrames, x/scale, y/scale, w, h, 0);
                 const newElement = new Element(ElementType.GIF, newImage);
                 newScene.addElement(newElement);
                 props.addElement(newElement);

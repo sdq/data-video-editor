@@ -12,7 +12,7 @@ const ButtonGroup = Button.Group;
 let defaultText = new TextInfo(
     "输入文字",
     360,
-    220, //随机高度，避免重复
+    220, //随机高度，避免重复?
     0,
     'black',
     20,
@@ -57,7 +57,7 @@ export default class EditToolBar extends Component {
     }
 
     addText = () => {       
-        defaultText.y = defaultText.y+Math.ceil(Math.random()*30);
+        //defaultText.y = defaultText.y+Math.ceil(Math.random()*30);
         const newTextElement = new Element(ElementType.TEXT, defaultText);
         const newScene = _.cloneDeep(this.props.currentScene);
         newScene.addElement(newTextElement);
@@ -84,7 +84,7 @@ export default class EditToolBar extends Component {
 
 
       //TODO:快速对齐功能待测试
-      /*
+      
       setElementPos = pos =>{  
       //use the real material‘s  size
         switch (pos) {
@@ -131,7 +131,7 @@ export default class EditToolBar extends Component {
         newScene.updateElement(this.props.currentElement, this.props.elementIndex);
         this.props.updateScene(this.props.sceneIndex, newScene);
       }
-      */
+      
   
 
 
@@ -171,7 +171,7 @@ export default class EditToolBar extends Component {
                 </ButtonGroup>
 
                 <ButtonGroup id = "assist-position" style = { {margin: '10px 20px 0px 0px', float:'right'} }>
-                {/* <Button id = "quickalign" icon="pic-center" style = { {padding: '0 20px 0 20px'} } disabled={!isElementSelected || isPerforming} onClick={this.showModal}/>  */}
+                <Button id = "quickalign" icon="pic-center" style = { {padding: '0 20px 0 20px'} } disabled={!isElementSelected || isPerforming} onClick={this.showModal}/> 
                 <Modal
                      //title="Quick Align"
                      visible={this.state.visible}

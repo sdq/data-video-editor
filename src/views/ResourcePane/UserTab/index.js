@@ -18,11 +18,6 @@ export default class UserTab extends Component {
         this.state = {
             activeKey: "image", //default
             imageList: [
-                // {
-                //     uid: '-1',
-                //     name: "woman",
-                //     src: "https://datavideo.idvxlab.com/images/woman.png"
-                // },
                 {
                     uid: '-1',
                     name: "man",
@@ -44,22 +39,37 @@ export default class UserTab extends Component {
             ],
             audioList: [
                 {
-                    uid: '-1',
-                    name: "column-anon",
-                    src: "https://datavideo.idvxlab.com/audios/column-anon.mp3"
+                    uid: '-2',
+                    name: "service1",
+                    src: "https://datavideo.idvxlab.com/audios/service1.mp3"
                 },
                 {
-                    uid: '-2',
+                    uid: '-3',
+                    name: "servic2",
+                    src: "https://datavideo.idvxlab.com/audios/service2.mp3"
+                },
+                {
+                    uid: '-4',
+                    name: "service3",
+                    src: "https://datavideo.idvxlab.com/audios/service3.mp3"
+                },
+                {
+                    uid: '-4',
+                    name: "service4",
+                    src: "https://datavideo.idvxlab.com/audios/service4.mp3"
+                },
+                {
+                    uid: '-5',
                     name: "88mp3",
                     src: "https://datavideo.idvxlab.com/audios/88mp3.mp3"
                 },
                 {
-                    uid: '-3',
+                    uid: '-6',
                     name: "90mp3",
                     src: "https://datavideo.idvxlab.com/audios/90mp3.mp3"
                 },
                 {
-                    uid: '-4',
+                    uid: '-7',
                     name: "91mp3",
                     src: "https://datavideo.idvxlab.com/audios/91mp3.mp3"
                 },
@@ -67,8 +77,8 @@ export default class UserTab extends Component {
             videoList: [
                 {
                     uid: '-1',
-                    name: "demo",
-                    src: "https://datavideo.idvxlab.com/videos/demo.mp4"
+                    name: "chart_movie",
+                    src: "https://datavideo.idvxlab.com/videos/chart_movie.mp4"
                 },
             ],
             gifList: [
@@ -269,7 +279,7 @@ export default class UserTab extends Component {
                 </div>
 
                 <div className="user-upload-list" >
-                    <Collapse accordion bordered={false} activeKey={this.state.activeKey} onChange={this.callback} style={{height:this.props.contentHeight-170}} >
+                    <Collapse accordion bordered={false} activeKey={this.state.activeKey} onChange={this.callback} style={{height:this.props.contentHeight-130}} >
                         <Panel header={"Image (" + imageList.length + ")"} key="image" className="collaspe-panel">
                             <List
                                 grid={{ gutter: 3, column: 3 }}

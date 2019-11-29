@@ -1,10 +1,13 @@
 import ActionType from '../actions/types';
-import scenes from '../demo';
+//切换demo
+import scenes from '../yicai-demo';
+//import scenes from '../car-demo';
 import _ from 'lodash';
 
 const initialState = {
-    past:[[],[],[]],
-    future:[[],[],[]],
+    //根据数据更改
+    past:[[],[],[],[],[]],
+    future:[[],[],[],[],[]],
     scenes: scenes,
     index: 1,
 };

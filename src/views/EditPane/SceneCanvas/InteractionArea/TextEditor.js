@@ -34,7 +34,11 @@ export default class TextEditor extends Component {
     }
 
     render() {
-             //不同字体textarea与tranformer的变换伸缩度（暂时忽略其余浏览器）
+             //画布伸缩
+             const scale = (this.props.contentHeight-100)/450;
+
+
+             //不同字体textarea 不同字号 与tranformer的变换伸缩度（暂时忽略其余浏览器）都不同
             let offwidth = 0; 
              //取得浏览器的userAgent字符串
             let userAgent = navigator.userAgent; 
@@ -48,8 +52,8 @@ export default class TextEditor extends Component {
                 offsetY = 6.6;
             } //判断是否Firefox浏览器
             if (userAgent.indexOf("Chrome") > -1){
-                offsetX = 2;
-                offsetY = 2;
+                offsetX = 1;
+                offsetY = 1;
             }
             if (userAgent.indexOf("Safari") > -1 && !(userAgent.indexOf("Chrome") > -1) ) {
                 //在Mac主机电脑上通过测试
@@ -80,18 +84,18 @@ export default class TextEditor extends Component {
               outline: "none",
               border: "0px",
               background:'none',
-              color:'black',
+              color:this.props.currentElement.info().color,
               resize: 'none',
               autofocus:"autofocus",//设置光标，无效
-              lineHeight:(this.props.currentElement) ? this.props.currentElement.info().textSize+'px':'20px',//需要和当前字号相等
+              lineHeight:(this.props.currentElement) ? this.props.currentElement.info().textSize*scale+'px':'20px',//需要和当前字号相等
               //Elimination of displacement error between textTransform and textEditor
               //判断当前element是否存在，保证编辑时切换scene运行正确
               fontFamily:(this.props.currentElement) ? this.props.currentElement.info().fontFamily:"Arial",
-              fontSize:(this.props.currentElement) ? this.props.currentElement.info().textSize:20,
-              top:(this.props.currentElement) ? this.props.currentElement.info().y-offsetY : 0,
-              left:(this.props.currentElement) ? this.props.currentElement.info().x-offsetX : 0,
-              width:(this.props.currentElement) ? this.props.currentElement.info().width+offsetW*offwidth: 0, 
-              height:(this.props.currentElement) ? this.props.currentElement.info().height+offsetH : 0,
+              fontSize:(this.props.currentElement) ? this.props.currentElement.info().textSize*scale:20,
+              top:(this.props.currentElement) ? (this.props.currentElement.info().y-offsetY)*scale : 0,
+              left:(this.props.currentElement) ? (this.props.currentElement.info().x-offsetX)*scale : 0,
+              width:(this.props.currentElement) ? (this.props.currentElement.info().width+offsetW*offwidth)*scale: 0, 
+              height:(this.props.currentElement) ? (this.props.currentElement.info().height+offsetH)*scale: 0,
               fillOpacity:0.5
             }}
             value = {this.state.text}

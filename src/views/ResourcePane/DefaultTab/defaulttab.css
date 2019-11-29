@@ -1,6 +1,12 @@
 .defaulttab {
     /* height: 400px; */
     padding:10px 10px 0px 10px; 
+    border-style:solid;
+    border-width:1px;
+    border-left-color: #e0e0e0;
+    border-right-color: transparent;
+    border-top-color: transparent;
+    border-bottom-color: transparent;
 } 
 
 .user-upload-list {
@@ -9,6 +15,6 @@
 
 .collaspe-panel {
     /* background-color: #f7f7f7; */
-    border-style: none;
+    border-style:none;
     overflow: 'hidden';
 }

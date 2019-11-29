@@ -18,7 +18,7 @@ export default class EditCanvas extends Component {
             showGifEditor:false,
             showVideoEditor:false,
             dbClickedElementIndex: -1,
-            windowWidth:1200,
+            windowWidth:window.innerWidth,//init
         };
         this.handleStageDblClick = this.handleStageDblClick.bind(this);
         this.lastscene = props.sceneIndex; //进入界面的第一个scene编号
@@ -133,6 +133,8 @@ export default class EditCanvas extends Component {
 
 
     render() {
+
+        
         const { isPerforming } = this.props;
         const canvasW = 800*(this.props.contentHeight-100)/450;
         const canvasH = this.props.contentHeight-100;
@@ -169,7 +171,6 @@ export default class EditCanvas extends Component {
         return (
             <div id="canvasContainer" 
                  style={{  
-                 
                  height: canvasH+'px',
                  //不同情况下的居中计算
                  //窗口小于缩放临界值(1388为mac大屏测试结果)的时候，采用尽量适配小窗口的策略
