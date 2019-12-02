@@ -1,5 +1,9 @@
 .imagecard {
-    height: 98px;
+    /* display:inline-block; */
+    display:table-cell;  
+    line-height:68px;
+    height: 68px;
+    width:88px;
     border-style: solid;
     border-color: #D8D8D8;
     border-width: 1px;
@@ -8,7 +12,9 @@
 }
 
 img {
+    /* //display:table-cell; */
     max-width: 100%;
     max-height: 100%;
     vertical-align: middle;
+    align-content: middle;
 }

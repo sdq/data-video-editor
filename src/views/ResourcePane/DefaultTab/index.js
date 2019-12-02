@@ -191,7 +191,7 @@ export default class DefaultTab extends Component {
         //console.log("gifList", gifList)
 
         return (
-            <div className="defaulttab" style={{ height: this.props.contentHeight,overflow:"auto" }}>
+            <div className="defaulttab" style={{ height: this.props.contentHeight }}>
                 <Search
                 placeholder="input search text"
                 onSearch={value => this.onSearch(value)}
@@ -211,14 +211,14 @@ export default class DefaultTab extends Component {
                     </Dragger>
                 </div>
 
-                <div className="user-upload-list">
+                <div className="user-upload-list" style={{ height: this.props.contentHeight-25 }}>
                         { imageList.length!==0 ?   <List
                                 grid={{ gutter: 3, column: 3 }}
                                 dataSource={imageList}
                                 renderItem={item => (
                                     <List.Item>
                                         <ImageCard info={item}  {...this.props} />
-                                        <Button style={{ marginLeft: '36px' }} key={item.uid} type="link" icon="delete" size="small"
+                                        <Button style={{ marginLeft: '30px' }} key={item.uid} type="link" icon="delete" size="small"
                                             onClick={() => this.onDeleteImage(item.uid)}
                                         />
                                     </List.Item>
@@ -232,7 +232,7 @@ export default class DefaultTab extends Component {
                                 renderItem={item => (
                                     <List.Item>
                                         <GifCard info={item}  {...this.props} />
-                                        <Button style={{ marginLeft: '36px' }} key={item.uid} type="link" icon="delete" size="small"
+                                        <Button style={{ marginLeft: '30px' }} key={item.uid} type="link" icon="delete" size="small"
                                             onClick={() => this.onDeleteGif(item.uid)}
                                         />
                                     </List.Item>

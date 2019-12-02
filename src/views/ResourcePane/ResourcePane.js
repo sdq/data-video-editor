@@ -161,9 +161,9 @@ export default class ResourcePane extends Component {
 
 
     render() {
+        console.log(this.contentHeight-100)
         return (
-            <div className="card-container">
-
+            <div className="card-container" style={{height:this.props.contentHeight-100+"px"}}>
                 <Tabs tabPosition="left" type="editable-card" onEdit={this.onEdit}>
                     <TabPane 
                     tab={<div style={tabIconStyle}><Icon type="user" /></div>} 

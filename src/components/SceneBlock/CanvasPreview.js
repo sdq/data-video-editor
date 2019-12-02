@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Stage, Layer } from 'react-konva';
+import { Stage, Layer ,Button } from 'react-konva';
 import ImageElement from '@/components/Elements/ImageElement';
 import GifElement from '@/components/Elements/GifElement';
 import VideoElement from '@/components/Elements/VideoElement';
@@ -78,6 +78,8 @@ export default class  extends Component {
                         }.bind(this))}
                     </Layer>
                 </Stage>
+                {/* <Button type="link" icon="delete" ></Button>
+                <Button type="link" icon="delete" ></Button> */}
             </div>
         )
     }

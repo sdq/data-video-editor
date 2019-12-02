@@ -20,6 +20,8 @@ export default class VideoAnimator extends Component {
     }
 
     render() {
+        //画布伸缩
+        const scale = (this.props.contentHeight-100)/450;
         //console.log("this._videoInfo", this._videoInfo)
 
         if (!this._videoInfo) {
@@ -27,12 +29,12 @@ export default class VideoAnimator extends Component {
         }
 
         return (
-            <div style={{marginLeft:this._videoInfo && this._videoInfo.x,marginTop:this._videoInfo && this._videoInfo.y}} >
+            <div style={{marginLeft:this._videoInfo && this._videoInfo.x*scale,marginTop:this._videoInfo && this._videoInfo.y*scale}} >
                 <Player
                      ref={(player) => { this.videoPlayer = player }}
                      fluid={false}
-                     width={ this._videoInfo && this._videoInfo.width }
-                     height={ this._videoInfo && this._videoInfo.height }
+                     width={ this._videoInfo && this._videoInfo.width*scale }
+                     height={ this._videoInfo && this._videoInfo.height*scale }
                     autoPlay
                 >
                     <source src={this._videoInfo.src} />
