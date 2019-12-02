@@ -41,5 +41,5 @@
 /* contenheight- 上下箭头 */
 .card-container >.ant-tabs .ant-tabs-left-bar .ant-tabs-nav{
     overflow:auto;
-    height:600px;
+    height:100%;
 }

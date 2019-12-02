@@ -287,7 +287,7 @@ export default class UserTab extends Component {
                                 renderItem={item => (
                                     <List.Item>
                                         <ImageCard info={item}  {...this.props} />
-                                        <Button style={{ marginLeft: '36px' }} key={item.uid} type="link" icon="delete" size="small"
+                                        <Button style={{ marginLeft: '25px' }} key={item.uid} type="link" icon="delete" size="small"
                                             onClick={() => this.onDeleteImage(item.uid)}
                                         />
                                     </List.Item>
@@ -300,8 +300,8 @@ export default class UserTab extends Component {
                                 dataSource={gifList}
                                 renderItem={item => (
                                     <List.Item>
-                                        <GifCard info={item}  {...this.props} />
-                                        <Button style={{ marginLeft: '36px' }} key={item.uid} type="link" icon="delete" size="small"
+                                        <GifCard info={item}  {...this.props}/>
+                                        <Button style={{ marginLeft: '25px' }} key={item.uid} type="link" icon="delete" size="small"
                                             onClick={() => this.onDeleteGif(item.uid)}
                                         />
                                     </List.Item>
@@ -336,7 +336,7 @@ export default class UserTab extends Component {
                                 renderItem={item => (
                                     <List.Item >  
                                         <VideoCard info={item}  {...this.props} />
-                                        <Button style={{ marginLeft: '70px' }} key={item.uid} type="link" icon="delete" size="small"
+                                        <Button style={{ marginLeft: '45px' }} key={item.uid} type="link" icon="delete" size="small"
                                             onClick={() => this.onDeleteVideo(item.uid)}
                                         />  
                                     </List.Item>

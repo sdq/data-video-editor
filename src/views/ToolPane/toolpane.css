@@ -2,6 +2,7 @@
     /* height: 500px; */
     margin-top: -6px;
     z-index: 5;
+    width:300px;
 }
 
 .card-container-tool > .ant-tabs-card > .ant-tabs-content > .ant-tabs-tabpane {

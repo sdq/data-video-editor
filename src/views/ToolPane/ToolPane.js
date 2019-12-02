@@ -85,10 +85,12 @@ export default class ToolPane extends Component {
                     </Tabs>
                     </div>
                 default:
-                    return <SceneTool {...this.props}/>
+                    return <div className="card-container-tool">
+                    <SceneTool {...this.props}/>
+                    </div>
             }
         } else {
-            return <Tabs type="card">
+            return <Tabs type="card" className="card-container-tool">
                 <TabPane tab="Scene" key="Scene">
                     <SceneTool {...this.props}/>
                 </TabPane>

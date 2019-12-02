@@ -1,5 +1,7 @@
 .defaulttab {
     /* height: 400px; */
+    overflow-x: hidden;
+    overflow-y: hidden;
     padding:10px 10px 0px 10px; 
     border-style:solid;
     border-width:1px;
@@ -10,11 +12,12 @@
 } 
 
 .user-upload-list {
+    padding:10px 0px 0px 0px; 
     overflow: auto;
 }
 
 .collaspe-panel {
     /* background-color: #f7f7f7; */
     border-style:none;
-    overflow: 'hidden';
+    overflow: auto;
 }

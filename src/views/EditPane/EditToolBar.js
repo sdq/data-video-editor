@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {Button,Modal,Col,Row} from 'antd';
+import {Button,Modal,Col,Row,Menu, Dropdown,Icon} from 'antd';
 import {Element,TextInfo} from '@/models/Element';
 import ElementType from '@/constants/ElementType';
 import Color from '@/constants/Color';
@@ -25,6 +25,8 @@ let defaultText = new TextInfo(
 
 
 
+
+
 export default class EditToolBar extends Component {
     constructor(props) {
         super(props);
@@ -38,6 +40,10 @@ export default class EditToolBar extends Component {
         this.pasteElement = this.pasteElement.bind(this);
         this.deleteElement = this.deleteElement.bind(this);
         this.addText = this.addText.bind(this);
+        this.newRect = this.newRect.bind(this);
+        this.newLine = this.newLine.bind(this);
+        this.newCircle = this.newCircle.bind(this);
+        this.newTriangle = this.newTriangle.bind(this);
     }
 
     copyElement() {
@@ -63,6 +69,21 @@ export default class EditToolBar extends Component {
         newScene.addElement(newTextElement);
         this.props.updateScene(this.props.sceneIndex, newScene);
     }
+
+    newRect= () => {   
+        console.log("??/");
+    }
+    newLine= () => {   
+        console.log("??/");
+    }
+    newCircle= () => {   
+        console.log("??/");
+    }
+    newTriangle= () => {   
+        console.log("??/");
+    }
+
+
 
     showModal = () => {
         this.setState({
@@ -153,6 +174,31 @@ export default class EditToolBar extends Component {
     }
 
     render() {
+        const menu = (
+            <Menu>
+              <Menu.Item onclick={this.newRect()}>
+                <a target="_blank" >
+                <Icon type="border" style={{fontSize: '20px',left:"50px"}}/>
+                </a>
+              </Menu.Item>
+              <Menu.Item onclick={this.newLine()}>
+                <a target="_blank" >
+                <Icon type="minus" style={{fontSize: '20px',left:"50px"}} />  
+                </a>
+              </Menu.Item>
+              <Menu.Item onclick={this.newCircle()}>
+                <a target="_blank" >
+                <Icon type="minus-circle" style={{fontSize: '20px',left:"50px"}} />
+                </a>
+              </Menu.Item>
+              <Menu.Item onclick={this.newTriangle()}>
+                <a target="_blank" >
+                <Icon type="caret-up" style={{fontSize: '20px',left:"50px"}}/>
+                </a>
+              </Menu.Item>
+            </Menu>
+          );
+
         const { isElementSelected, copiedElement, isPerforming, past , future, sceneIndex} = this.props;
         let currentPast = past[sceneIndex];
         let currentFuture = future[sceneIndex];
@@ -208,6 +254,13 @@ export default class EditToolBar extends Component {
                 </ButtonGroup>
 
                 <Button icon="font-size" style = { {width:'80px',margin: '10px 20px 0px 0px', float:'right'} } disabled={isPerforming}  onClick={this.addText}/>
+                
+                <Dropdown overlay={menu}>
+                <Button style = { {width:'80px',margin: '10px 20px 0px 0px', float:'right'} }>
+                <Icon style={{ fontSize: '20px' }} type="block" />
+                <Icon type="down" />
+                </Button>
+                </Dropdown>
             </div>
         )
     }
