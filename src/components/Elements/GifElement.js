@@ -12,6 +12,7 @@ export default class GifElement extends Component {
         this.originWidth = props.element.info().width;
         this.originHeight = props.element.info().height;
         this.isToAnimate = false;
+        this.gifElement = this.props.element;
         this.data = this.props.element.info().gifFrames || [];
         this.dragstart = this.dragstart.bind(this);
         this.dragmove = this.dragmove.bind(this);
@@ -40,6 +41,15 @@ export default class GifElement extends Component {
                 const animation = animations[index];
                 animationCreator.fromModel(animation).play(current);
             }
+        }
+    }
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.element.info().name !== this.gifElement.info().name) {
+        //console.log("更新。。。",nextProps.element.info().name)
+        //更新显示第一帧
+        this.setState({
+            canvas: nextProps.element.info().gifFrames[0] && nextProps.element.info().gifFrames[0].getImage()
+        });
         }
     }
     componentDidUpdate(oldProps) {

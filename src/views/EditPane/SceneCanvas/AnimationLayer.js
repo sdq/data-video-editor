@@ -71,13 +71,14 @@ export default class AnimationLayer extends Component {
         return (
             <Layer 
                 ref={node => (this.animationLayer = node)}
+                style={{width:canvasW+"px",height:canvasH+"px"}}
             >
                 {/* background */}
                 <Rect
                     x={0}
                     y={0}
-                    width={canvasW}
-                    height={canvasH}
+                    width={800}
+                    height={450}
                     fill={currentScene.backgroundColor()}
                 />
                 {
@@ -86,8 +87,8 @@ export default class AnimationLayer extends Component {
                         ref={node=>this.imageref=node}
                         x={0}
                         y={0}
-                        width={canvasW}
-                        height={canvasH}
+                        width={800}
+                        height={450}
                         name={this.props.name}
                         image={this.state.image} 
                     />

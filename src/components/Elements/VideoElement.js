@@ -21,11 +21,11 @@ export default class VideoElement extends Component {
     }
 
     componentDidMount() {
-        if(typeof this.props.showAnimation === 'undefined'){
-         return;
+        if (typeof this.props.showAnimation === 'undefined') {
+            return;
         }
         if (this.props.showAnimation) {
-            //console.log("元素...", this.props.element.id())
+            //console.log("元素...", this.props.element.id(),this.props.scenes[this.props.sceneIndex].videos())
             const { scenePosition, element } = this.props;
             this.props.scenes[this.props.sceneIndex].videos().map(video => {
                 //查找要播放的元素
@@ -33,7 +33,7 @@ export default class VideoElement extends Component {
                     this.setState({
                         video: video
                     })
-                    video.currentTime=0;
+                    video.currentTime = 0;
                     //设置播放位置
                     if (scenePosition < (element.start() + element.duration()) && scenePosition > element.start()) {
                         let playpos = scenePosition - element.start();
@@ -54,22 +54,22 @@ export default class VideoElement extends Component {
                 let currentVideoList = this.props.scenes[this.props.sceneIndex] && this.props.scenes[this.props.sceneIndex].videos();
                 //console.log("currentVideoList",currentVideoList)
                 let isInList = false;
-                if(currentVideoList.length !== 0){
+                if (currentVideoList.length !== 0) {
                     currentVideoList.map(video => {
-                        if(video.id==="video-"+this.props.element.id()){
-                            isInList=true;
+                        if (video.id === "video-" + this.props.element.id()) {
+                            isInList = true;
                         }
                         return video;
-                    })    
+                    })
                 }
-                
-                if(!isInList){
-                //准备可以播放的资源,并且添加到播放列表中
-                this.loadVideo();
+               
+                if (!isInList) {
+                    //准备可以播放的资源,并且添加到播放列表中
+                    this.loadVideo();
                 }
             }
         }
-        const animations = this.props.element.animations(); 
+        const animations = this.props.element.animations();
         if (this.props.showAnimation && animations.length !== 0) {
             let animationCreator = new AnimationCreator(this.imageref);
             let current = this.props.scenePosition;
@@ -84,6 +84,7 @@ export default class VideoElement extends Component {
     }
 
     componentWillUnmount() {
+        //console.log("componentWillUnmount....")
         if (this.state.video) {
             this.state.video.pause();
             //console.log("pause....")
@@ -92,11 +93,8 @@ export default class VideoElement extends Component {
 
     loadVideo() {
         this.video = document.createElement('video');
-        this.video.setAttribute("id", "video-"+this.props.element.id());
-        var rand = '?' + Math.random();
-        this.video.src = this.props.element.info().src + rand;
-        // console.log("src",this.video.src )
-        this.video.crossOrigin='anonymous';
+        this.video.setAttribute("id", "video-" + this.props.element.id());
+        this.video.src = this.props.element.info().src;
         this.video.addEventListener('loadedmetadata', this.handleLoad);
     }
     handleLoad = () => {
@@ -108,14 +106,14 @@ export default class VideoElement extends Component {
     dragstart() {
         this.props.editStart();
     };
-  
-    dragmove(x,y,e){
-        this.props.dragMoving(x,y,e);
+
+    dragmove(x, y, e) {
+        this.props.dragMoving(x, y, e);
     }
 
-    dragend(x,y) {
+    dragend(x, y) {
         let index = this.props.elementIndex;
-        this.props.dragEnding(x,y,index);
+        this.props.dragEnding(x, y, index);
     };
 
     onTransformStart(e) {
@@ -124,14 +122,14 @@ export default class VideoElement extends Component {
     onTransform(e) {
         let originWidth = this.originWidth;
         let originHeight = this.originHeight;
-        this.props.transforming(e,originWidth,originHeight);
-     }
+        this.props.transforming(e, originWidth, originHeight);
+    }
 
     onTransformEnd(e) {
         let index = this.props.elementIndex;
         let originWidth = this.originWidth;
         let originHeight = this.originHeight;
-        this.props.transformEnding(e,index,originWidth,originHeight);
+        this.props.transformEnding(e, index, originWidth, originHeight);
     }
 
     render() {
@@ -147,7 +145,7 @@ export default class VideoElement extends Component {
                 //draggable
                 onDragStart={this.dragstart}
                 onDragMove={e => {
-                    this.dragmove(e.target.x(), e.target.y(),e)
+                    this.dragmove(e.target.x(), e.target.y(), e)
                 }}
                 onDragEnd={e => {
                     this.dragend(e.target.x(), e.target.y())
@@ -163,8 +161,8 @@ export default class VideoElement extends Component {
                     ref={node => this.imageref = node}
                     name={this.props.name}
                     image={video}
-                    width={this.props.draggable?this.originWidth:this.props.element.info().width}
-                    height={this.props.draggable?this.originHeight:this.props.element.info().height}
+                    width={this.props.draggable ? this.originWidth : this.props.element.info().width}
+                    height={this.props.draggable ? this.originHeight : this.props.element.info().height}
                     crossOrigin='anonymous'
                     opacity={this.props.element.info().opacity}
                     visible={true}

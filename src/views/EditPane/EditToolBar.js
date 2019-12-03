@@ -71,16 +71,16 @@ export default class EditToolBar extends Component {
     }
 
     newRect= () => {   
-        console.log("??/");
+       // console.log("??/");
     }
     newLine= () => {   
-        console.log("??/");
+      //  console.log("??/");
     }
     newCircle= () => {   
-        console.log("??/");
+      //  console.log("??/");
     }
     newTriangle= () => {   
-        console.log("??/");
+      //  console.log("??/");
     }
 
 
@@ -177,24 +177,16 @@ export default class EditToolBar extends Component {
         const menu = (
             <Menu>
               <Menu.Item onclick={this.newRect()}>
-                <a target="_blank" >
                 <Icon type="border" style={{fontSize: '20px',left:"50px"}}/>
-                </a>
               </Menu.Item>
               <Menu.Item onclick={this.newLine()}>
-                <a target="_blank" >
                 <Icon type="minus" style={{fontSize: '20px',left:"50px"}} />  
-                </a>
               </Menu.Item>
               <Menu.Item onclick={this.newCircle()}>
-                <a target="_blank" >
                 <Icon type="minus-circle" style={{fontSize: '20px',left:"50px"}} />
-                </a>
               </Menu.Item>
               <Menu.Item onclick={this.newTriangle()}>
-                <a target="_blank" >
                 <Icon type="caret-up" style={{fontSize: '20px',left:"50px"}}/>
-                </a>
               </Menu.Item>
             </Menu>
           );

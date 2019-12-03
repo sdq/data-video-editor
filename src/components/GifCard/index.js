@@ -8,8 +8,8 @@ import _ from 'lodash';
 import './gifcard.css';
 
 //gif size
-let w = 100;
-let h = 100;
+let w = 100;
+let h = 100;
 //drag end pos
 let x = 240;
 let y = 100;
@@ -29,7 +29,7 @@ const imageSource = {
 
         ////获取鼠标结束拖拽的位置，基于canvas基点计算位置
         let e = window.event;       //Firefox下是没有event这个对象的！！
-        let canvas=document.getElementsByTagName("canvas")[0];
+        let canvas = document.getElementsByTagName("canvas")[0];
         let pos = canvas.getBoundingClientRect();//获取canvas基于父页面的位差
         let scale = pos.height/450;
         if((Number(e.clientX)-Number(pos.left))>0){
@@ -42,13 +42,13 @@ const imageSource = {
             // console.log(dropResult);
             if (dropResult.target === "canvas") {
                 //add element to scene
-                const newScene = _.cloneDeep( dropResult.currentScene);
+                const newScene = _.cloneDeep(dropResult.currentScene);
 
                 //console.log("gifData", item.gifData);
                 let delay = 1;
                 let gifFrames;
                 if (item.gifData) {
-                    gifFrames=item.gifData;
+                    gifFrames = item.gifData;
                     //console.log("gifDuration", item.gifData[0].frameInfo.delay);
                 }
                 //console.log("endDrag",w,h)
@@ -75,25 +75,24 @@ class GifCard extends Component {
 
     componentWillUpdate() {
         //get img size after drag , 有一定时间延迟, 对gif也按照img读取尺寸
-         let img = new Image();
-         img.src = this.props.info.src;
-         img.onload = async function(){
-             w = img.width;
-             h = img.height;
-         if(h>100){
-             //gif尺寸太大，按比例拉伸到较小的比例
-             w = 100*(w/h);
-             h = 100;
-         }
-         };   
-     }
- 
+        let img = new Image();
+        img.src = this.props.info.src;
+        img.onload = async function () {
+            w = img.width;
+            h = img.height;
+            if (h > 100) {
+                //gif尺寸太大，按比例拉伸到较小的比例
+                w = 100 * (w / h);
+                h = 100;
+            }
+        };
+    }
 
     render() {
         const { connectDragSource } = this.props;
         return connectDragSource(
             <div className="gifcard" align="center">
-                 <img crossOrigin='anonymous' src={this.props.info.src+"?"+ Math.random()} alt={this.props.info.name} /> 
+                 <img src={this.props.info.src} alt={this.props.info.name} /> 
             </div>
         )
     }

@@ -173,7 +173,9 @@ export default class AudioController {
     pauseAudio(index) {
         const scene = this.currentScene(index)
         scene.audios().map(item => {
-            item.element.pause();
+            if (!item.element.paused) {
+                item.element.pause();
+            }
             this.isAudioCanPlays.push(AudioState.NOTREADY);
             this.audioPlayPosition.push(0);
             this.beforeState.push(AudioState.NOTREADY)
