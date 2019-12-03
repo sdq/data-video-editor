@@ -65,6 +65,7 @@ export default class TextElement extends Component {
     }
 
     render() {
+
         return (
             <Group name={this.props.name}
                 draggable = {this.props.draggable}

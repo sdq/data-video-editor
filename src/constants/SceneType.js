@@ -4,4 +4,5 @@ export default {
     AUDIO: 'audio',
     CHART: 'chart',
     TEXT: 'text',
+    SHAPE: 'shape',
 }

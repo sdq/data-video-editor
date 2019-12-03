@@ -23,34 +23,35 @@ export default class AssistLines extends Component {
         let smallW = false;//较小的素材不显示中间辅助线
         let smallH = false;//较小的素材不显示中间辅助线
         let isChartLine = false;//chart暂时不显示中间辅助线
-        //console.log(w,h)
+
+        // const shapeType = (this.props.currentElement.type()==="shape_element");
+        // const shapeCircle = (this.props.currentElement.info().shapeType==="circle"||this.props.currentElement.info().shapeType==="ellipse"||this.props.currentElement.info().shapeType==="star");
+
+
         if(this.props.currentElement && this.props.currentElement.info()){
             if (this.props.dragPos){
-                x = this.props.dragPos.x;
+                // x = shapeCircle&&shapeType?this.props.dragPos.x-this.props.currentElement.info().width/2:this.props.dragPos.x;
+                // y = shapeCircle&&shapeType?this.props.dragPos.y-this.props.currentElement.info().height/2:this.props.dragPos.y;
+                x =this.props.dragPos.x;
                 y = this.props.dragPos.y;
+            }else{
+                x = this.props.currentElement.info().x;
+                y = this.props.currentElement.info().y;
             }
-
             if (this.props.transformInfo){
                 w = this.props.transformInfo.w;
                 h = this.props.transformInfo.h;
                 r = this.props.transformInfo.r;
-            }
-            
-            if(!this.props.dragPos){
-                x = this.props.currentElement.info().x;
-                y = this.props.currentElement.info().y;
-            }
-            if(!this.props.transformInfo){
+            }else{
                 w = this.props.currentElement.info().width;
                 h = this.props.currentElement.info().height;
                 r = this.props.currentElement.info().rotation;
-               }
+            }
+
 
              if(w<100){smallW=true;}
              if(h<100){smallH=true;}
         }
-
-
 
 
         //TODO:优化图表高宽度，才可以正确使用辅助线

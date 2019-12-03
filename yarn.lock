@@ -3571,10 +3571,10 @@ d3-zoom@1:
     d3-selection "1"
     d3-transition "1"
 
-d3@^5.12.0:
+d3@5.12.0:
   version "5.12.0"
-  resolved "https://registry.npm.taobao.org/d3/download/d3-5.12.0.tgz?cache=0&sync_timestamp=1567828689921&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fd3%2Fdownload%2Fd3-5.12.0.tgz#0ddeac879c28c882317cd439b495290acd59ab61"
-  integrity sha1-Dd6sh5woyIIxfNQ5tJUpCs1Zq2E=
+  resolved "https://registry.yarnpkg.com/d3/-/d3-5.12.0.tgz#0ddeac879c28c882317cd439b495290acd59ab61"
+  integrity sha512-flYVMoVuhPFHd9zVCe2BxIszUWqBcd5fvQGMNRmSiBrgdnh6Vlruh60RJQTouAK9xPbOB0plxMvBm4MoyODXNg==
   dependencies:
     d3-array "1"
     d3-axis "1"

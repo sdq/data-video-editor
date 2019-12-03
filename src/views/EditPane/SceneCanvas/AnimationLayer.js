@@ -4,6 +4,7 @@ import Konva from "konva";
 import ImageElement from '@/components/Elements/ImageElement';
 import GifElement from '@/components/Elements/GifElement';
 import TextElement from '@/components/Elements/TextElement';
+import ShapeElement from '@/components/Elements/ShapeElement';
 import ChartElement from '@/components/Elements/ChartElement';
 import VideoElement from '@/components/Elements/VideoElement';
 import ElementType from '@/constants/ElementType';
@@ -149,6 +150,17 @@ export default class AnimationLayer extends Component {
                                 showAnimation={true}
                                 {...this.props}
                             />
+                        case ElementType.SHAPE:
+                                return <ShapeElement
+                                    ref={node => (this.elementNodes[index] = node)} 
+                                    key={this.props.sceneIndex+"-"+index} 
+                                    element={element} 
+                                    name={this.props.sceneIndex+"-"+index} 
+                                    draggable={false} 
+                                    visible={this.isElementDisplay(element)}
+                                    showAnimation={true}
+                                    {...this.props}
+                                />
                         case ElementType.VIDEO:
                             if (this.isElementDisplay(element)) {
                                 return <VideoElement

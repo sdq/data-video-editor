@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {Button,Modal,Col,Row,Menu, Dropdown,Icon} from 'antd';
-import {Element,TextInfo} from '@/models/Element';
+import {Element,TextInfo,ShapeInfo} from '@/models/Element';
 import ElementType from '@/constants/ElementType';
 import Color from '@/constants/Color';
 import _ from 'lodash';
@@ -12,7 +12,7 @@ const ButtonGroup = Button.Group;
 let defaultText = new TextInfo(
     "输入文字",
     360,
-    220, //随机高度，避免重复?
+    220, 
     0,
     'black',
     20,
@@ -23,8 +23,76 @@ let defaultText = new TextInfo(
     'left',
 )
 
+let defaultRect = new ShapeInfo(
+    "rect",
+    250,
+    125, 
+    0,
+    Color.ORANGE,
+    1,
+    300,
+    200,
+    'black',
+    2,
+)
 
 
+let defaultLine = new ShapeInfo(
+    "line",
+    120,
+    120, 
+    0,
+    Color.ORANGE,
+    1,
+    300,
+)
+
+let defaultCircle = new ShapeInfo(
+    "circle",
+    300,
+    125, 
+    0,
+    Color.ORANGE,
+    1,
+    200,
+    200,
+)
+
+let defaultEllipse = new ShapeInfo(
+    "ellipse",
+    300,
+    175, 
+    0,
+    Color.ORANGE,
+    1,
+    200,
+    100,
+)
+
+
+
+let defaultStar = new ShapeInfo(
+    "star",
+    300,
+    125, 
+    0,
+    Color.ORANGE,
+    1,
+    200,
+    200,
+)
+
+
+let defaultArrow = new ShapeInfo(
+    "arrow",
+    140,
+    140, 
+    0,
+    Color.ORANGE,
+    1,
+    300,
+    20,
+)
 
 
 export default class EditToolBar extends Component {
@@ -43,7 +111,9 @@ export default class EditToolBar extends Component {
         this.newRect = this.newRect.bind(this);
         this.newLine = this.newLine.bind(this);
         this.newCircle = this.newCircle.bind(this);
-        this.newTriangle = this.newTriangle.bind(this);
+        this.newEllipse = this.newEllipse.bind(this);
+        this.newStar = this.newStar.bind(this);
+        this.newArrow = this.newArrow.bind(this);
     }
 
     copyElement() {
@@ -62,8 +132,8 @@ export default class EditToolBar extends Component {
         this.props.deleteElement();
     }
 
-    addText = () => {       
-        //defaultText.y = defaultText.y+Math.ceil(Math.random()*30);
+    addText = () => {    
+        //defaultText.y = defaultText.y+Math.ceil(Math.random()*30);        //随机高度  
         const newTextElement = new Element(ElementType.TEXT, defaultText);
         const newScene = _.cloneDeep(this.props.currentScene);
         newScene.addElement(newTextElement);
@@ -71,16 +141,40 @@ export default class EditToolBar extends Component {
     }
 
     newRect= () => {   
-       // console.log("??/");
+        const newShapeElement = new Element(ElementType.SHAPE, defaultRect);
+        const newScene = _.cloneDeep(this.props.currentScene);
+        newScene.addElement(newShapeElement);
+        this.props.updateScene(this.props.sceneIndex, newScene);
     }
     newLine= () => {   
-      //  console.log("??/");
+        const newShapeElement = new Element(ElementType.SHAPE, defaultLine);
+        const newScene = _.cloneDeep(this.props.currentScene);
+        newScene.addElement(newShapeElement);
+        this.props.updateScene(this.props.sceneIndex, newScene);
     }
     newCircle= () => {   
-      //  console.log("??/");
+        const newShapeElement = new Element(ElementType.SHAPE, defaultCircle);
+        const newScene = _.cloneDeep(this.props.currentScene);
+        newScene.addElement(newShapeElement);
+        this.props.updateScene(this.props.sceneIndex, newScene);
     }
-    newTriangle= () => {   
-      //  console.log("??/");
+    newEllipse= () => {   
+        const newShapeElement = new Element(ElementType.SHAPE, defaultEllipse);
+        const newScene = _.cloneDeep(this.props.currentScene);
+        newScene.addElement(newShapeElement);
+        this.props.updateScene(this.props.sceneIndex, newScene);
+    }
+    newStar= () => {   
+        const newShapeElement = new Element(ElementType.SHAPE, defaultStar);
+        const newScene = _.cloneDeep(this.props.currentScene);
+        newScene.addElement(newShapeElement);
+        this.props.updateScene(this.props.sceneIndex, newScene);
+    }
+    newArrow= () => {   
+        const newShapeElement = new Element(ElementType.SHAPE, defaultArrow);
+        const newScene = _.cloneDeep(this.props.currentScene);
+        newScene.addElement(newShapeElement);
+        this.props.updateScene(this.props.sceneIndex, newScene);
     }
 
 
@@ -176,17 +270,23 @@ export default class EditToolBar extends Component {
     render() {
         const menu = (
             <Menu>
-              <Menu.Item onclick={this.newRect()}>
-                <Icon type="border" style={{fontSize: '20px',left:"50px"}}/>
+              <Menu.Item onClick={this.newRect}>
+                <Icon type="border" style={{fontSize: '20px',left:"50px"}}/>Rect
               </Menu.Item>
-              <Menu.Item onclick={this.newLine()}>
-                <Icon type="minus" style={{fontSize: '20px',left:"50px"}} />  
+              <Menu.Item onClick={this.newLine}>
+                <Icon type="minus" style={{fontSize: '20px',left:"50px"}} />Line
               </Menu.Item>
-              <Menu.Item onclick={this.newCircle()}>
-                <Icon type="minus-circle" style={{fontSize: '20px',left:"50px"}} />
+              <Menu.Item onClick={this.newCircle}>
+                <Icon type="minus-circle" style={{fontSize: '20px',left:"50px"}} />Circle
               </Menu.Item>
-              <Menu.Item onclick={this.newTriangle()}>
-                <Icon type="caret-up" style={{fontSize: '20px',left:"50px"}}/>
+              <Menu.Item onClick={this.newEllipse}>
+                <Icon type="yahoo" style={{fontSize: '20px',left:"50px"}}/>Ellipse
+              </Menu.Item>
+              <Menu.Item onClick={this.newArrow}>
+                <Icon type="caret-up" style={{fontSize: '20px',left:"50px"}}/>Arrow
+              </Menu.Item>
+              <Menu.Item onClick={this.newStar}>
+                <Icon type="star" style={{fontSize: '20px',left:"50px"}}/>Star
               </Menu.Item>
             </Menu>
           );

@@ -5,4 +5,5 @@ export default {
     AUDIO: 'audio_element',
     CHART: 'chart_element',
     TEXT: 'text_element',
+    SHAPE:'shape_element',
 }

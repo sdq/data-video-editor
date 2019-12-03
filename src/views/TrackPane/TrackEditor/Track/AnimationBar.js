@@ -75,6 +75,9 @@ export default class AnimationBar extends Component {
             case ElementType.TEXT:
                 color = Color.TEXT_BAR;
                 break;
+            case ElementType.SHAPE:
+                color = Color.SHAPE_BAR;
+                break;
         
             default:
                 break;

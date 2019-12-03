@@ -56,6 +56,10 @@ export default class TrackInfo extends Component {
                 name = element.info().text;
                 icon = <Icon type="font-size" style={{color: Color.TEXT_BAR}}/>;
                 break;
+            case ElementType.SHAPE:
+                name = element.info().shapeType;
+                icon = <Icon type="border" style={{color: Color.SHAPE_BAR}}/>;
+                break;
         
             default:
                 break;

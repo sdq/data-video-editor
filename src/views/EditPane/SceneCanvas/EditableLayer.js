@@ -4,6 +4,7 @@ import TransformerComponent from '@/components/Elements/TransformerComponent';
 import ImageElement from '@/components/Elements/ImageElement';
 import GifElement from '@/components/Elements/GifElement'
 import TextElement from '@/components/Elements/TextElement';
+import ShapeElement from '@/components/Elements/ShapeElement';
 import ChartElement from '@/components/Elements/ChartElement';
 import VideoElement from '@/components/Elements/VideoElement';
 import ElementType from '@/constants/ElementType';
@@ -39,6 +40,8 @@ export default class EditableLayer extends Component {
     }
 
     editStart() {
+
+
         this.props.displayAssistLines(true);
         //动态辅助线    
         //拖拽开始，生成当前画布素材坐标数组
@@ -75,6 +78,8 @@ export default class EditableLayer extends Component {
     }
 
     dragMoving(x,y,e) {
+
+
         const canvasH = this.props.contentHeight-100;
         let w = this.props.currentElement.info().width;
         let h = this.props.currentElement.info().height;        
@@ -144,6 +149,8 @@ export default class EditableLayer extends Component {
     }
 
     dragEnding(x,y,index) {
+        this.props.currentElement.info().isPosTool = false;
+
          //更新右侧ToolPane的值 
         let dragPos = { x, y };
         this.props.dragElement(dragPos);
@@ -213,6 +220,8 @@ export default class EditableLayer extends Component {
                     this.props.transformElement(transforminfo);
                 return;
         }   
+
+        
     }
 
     transformEnding(e,index,originWidth,originHeight) {
@@ -243,6 +252,7 @@ export default class EditableLayer extends Component {
     render() {
         const { isPerforming } = this.props;
         const editable = !isPerforming;
+
         return (
             <Layer 
                 ref={node => (this.editableLayer = node)}
@@ -319,6 +329,28 @@ export default class EditableLayer extends Component {
                             } else {
                                 return null;
                             }
+                        
+                            case ElementType.SHAPE:
+                                if (this.isElementDisplay(element)) {
+                                    return <ShapeElement 
+                                        ref={node => (this.elementNodes[index] = node)}
+                                        key={this.props.sceneIndex+"-"+index} 
+                                        // edit={ele => this.editElement(index, ele)} 
+                                        editStart={this.editStart} 
+                                        dragMoving={this.dragMoving} 
+                                        dragEnding={this.dragEnding} 
+                                        transforming={this.transforming} 
+                                        transformEnding={this.transformEnding} 
+                                        element={element} 
+                                        name={this.props.sceneIndex+"-"+index} 
+                                        draggable={editable} 
+                                        visible={true}
+                                        showAnimation={false}
+                                        {...this.props}
+                                    />
+                                } else {
+                                    return null;
+                                }
 
                         case ElementType.CHART:
                             if (this.isElementDisplay(element)) {
@@ -386,6 +418,7 @@ export default class EditableLayer extends Component {
                 <TransformerComponent
                     selectedElementName={this.props.elementName}
                     selectedElementType = {this.props.currentElement? this.props.currentElement.type() : null  }
+                    selectedElementShapeType = {this.props.currentElement&&this.props.currentElement.type()==="shape_element"? this.props.currentElement.info().shapeType : null  }
                 />
             </Layer>
         )

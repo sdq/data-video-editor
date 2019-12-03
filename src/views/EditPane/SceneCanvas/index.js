@@ -134,7 +134,6 @@ export default class EditCanvas extends Component {
 
     render() {
 
-        
         const { isPerforming } = this.props;
         const canvasW = 800*(this.props.contentHeight-100)/450;
         const canvasH = this.props.contentHeight-100;
