@@ -1,10 +1,10 @@
 import Scene from './models/Scene';
 //import Video from './models/Video';
-import { Element, ImageInfo, TextInfo } from './models/Element';
+import { Element, ImageInfo, TextInfo, ChartInfo } from './models/Element';
 import MyURL from './constants/MyURL';
 import ElementType from './constants/ElementType';
-//import ChartType from './constants/ChartType';
-//import ChartCategory from './constants/ChartCategory';
+import ChartType from './constants/ChartType';
+import ChartCategory from './constants/ChartCategory';
 import AnimationType from './animation/AnimationType';
 import AnimationModel from './animation/AnimationModel';
 //import Color from './constants/Color';
@@ -579,6 +579,39 @@ const demotext120 = new TextInfo(
     20,
 )
 
+const demochart = new ChartInfo(
+    0,
+    ChartCategory.D3,
+    ChartType.BARCHART,
+    {
+        "encoding": {
+            "x": {"field": "Cylinders", "type": "ordinal"},
+            "y": {"field": "Horsepower", "type": "quantitative"},
+            "color": {"field": "Origin", "type": "nordinal"},
+            "time": {"field": "Year", "type": "temporal"},
+        },
+        "style": {
+            "layout": "stacked",
+            "showAxisX": true,
+            "showAxisY": true,
+        },
+        "animation": [
+            // {
+            //     "type": "grow",
+            //     "duration": 800,
+            // },
+            // {
+            //     "type": "emphasize",
+            //     "duration": 800,
+            // }
+        ]
+    },
+    345,
+    100,
+    320,
+    320,
+    0,
+)
 
 
 const element11 = new Element(ElementType.IMAGE, demoimage11);
@@ -594,6 +627,7 @@ const element117 = new Element(ElementType.TEXT, demotext117);
 const element118 = new Element(ElementType.TEXT, demotext118);
 const element119 = new Element(ElementType.TEXT, demotext119);
 const element120 = new Element(ElementType.TEXT, demotext120);
+const element121 = new Element(ElementType.CHART, demochart);
 
 
 
@@ -614,6 +648,8 @@ scene2.addElement(element118);
 
 scene2.addElement(element119);
 scene2.addElement(element120);
+
+scene2.addElement(element121);
 scene2.backgroundColor('#ffffff');
 
 
