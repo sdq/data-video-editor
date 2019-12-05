@@ -6,5 +6,6 @@ const service = axios.create({
 }
 )
 // service.defaults.baseURL = `${window.location.origin}/webservice/rest`
+service.defaults.baseURL = 'https://pimcore.idvxlab.com:7000'
 
 export default service
