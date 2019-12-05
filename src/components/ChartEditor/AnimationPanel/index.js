@@ -11,50 +11,43 @@ export default class AnimationPanel extends Component {
         const {displaySpec} = this.props;
         const animations = displaySpec.animation;
         this.state = {
-            // selectedAnimationIndex: -1,
-            // selectedAnimation: null,
             animationCount: animations.length,
         }
     }
 
     selectAnimation = (index, animation) => {
-        this.props.selectChartAnimation(animation, index)
-        // this.setState({
-        //     selectedAnimationIndex: index,
-        //     selectedAnimation: animation,
-        // })
+        this.props.selectChartAnimation(animation, index);
     }
 
     unselectAnimation = () => {
-        this.props.selectChartAnimation(null, -1)
-        // this.setState({
-        //     selectedAnimationIndex: -1,
-        //     selectedAnimation: null,
-        // })
+        this.props.selectChartAnimation(null, -1);
     }
 
     render() {
         const {selectedAnimationIndex, selectedAnimation} = this.props;
-        const {animationCount} = this.state;
         let si = selectedAnimationIndex;
         let sa = selectedAnimation;
-        const {displaySpec} = this.props;
-        const animations = displaySpec.animation;
-        if (animations.length > animationCount) {
-            // added new animation
-            sa = animations[animations.length - 1];
-            si = animations.length - 1;
-            this.props.selectChartAnimation(sa, si);
-            this.setState({
-                // selectedAnimation: sa,
-                // selectedAnimationIndex: si,
-                animationCount: animations.length,
-            })
-        } else if (animations.length !== animationCount) {
-            this.setState({
-                animationCount: animations.length
-            })
-        }
+
+        /* The following code is to open animation setting after add new animation */
+        // const {animationCount} = this.state;
+        // const {displaySpec} = this.props;
+        // const animations = displaySpec.animation;
+        // if (animations.length > animationCount) {
+        //     // added new animation
+        //     sa = animations[animations.length - 1];
+        //     si = animations.length - 1;
+        //     this.props.selectChartAnimation(sa, si);
+        //     this.setState({
+        //         // selectedAnimation: sa,
+        //         // selectedAnimationIndex: si,
+        //         animationCount: animations.length,
+        //     })
+        // } else if (animations.length !== animationCount) {
+        //     this.setState({
+        //         animationCount: animations.length
+        //     })
+        // }
+
         return (
             <div>
                 {
