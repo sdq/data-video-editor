@@ -5,6 +5,7 @@ import AudioCard from '@/components/AudioCard';
 import GifCard from '@/components/GifCard';
 import VideoCard from '@/components/VideoCard';
 import './defaulttab.css';
+import MyURL from '@/constants/MyURL'
 import WebApi from '@/axios/api';
 let gifFrames = require('gif-frames');
 
@@ -90,7 +91,7 @@ export default class DefaultTab extends Component {
                     let assetInfo = data.data;
                     //src name uid
                     assetInfo.uid = assetInfo.id;
-                    assetInfo.src = assetInfo.path + assetInfo.filename;
+                    assetInfo.src = MyURL.PIMCORE + assetInfo.path + assetInfo.filename;
                     assetInfo.name = assetInfo.filename;
                     return assetInfo;
                 })
