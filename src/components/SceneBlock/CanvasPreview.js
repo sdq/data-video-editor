@@ -5,6 +5,7 @@ import GifElement from '@/components/Elements/GifElement';
 import VideoElement from '@/components/Elements/VideoElement';
 import TextElement from '@/components/Elements/TextElement';
 import ChartElement from '@/components/Elements/ChartElement';
+import ShapeElement from '@/components/Elements/ShapeElement';
 import ElementType from '@/constants/ElementType';
 
 export default class  extends Component {
@@ -55,7 +56,9 @@ export default class  extends Component {
                                     return <GifElement key={sceneIndex + "-" + index} element={element} name={sceneIndex + "-" + index} draggable={false} {...this.props} />
                                 case ElementType.CHART:
                                     return <ChartElement key={sceneIndex+"-"+index} element={element} name={sceneIndex+"-"+index}  width={200} height={200} draggable = {false} {...this.props}/>
-                                case ElementType.VIDEO:
+                                case ElementType.SHAPE:
+                                    return <ShapeElement key={sceneIndex+"-"+index} element={element} name={sceneIndex+"-"+index} draggable = {false} {...this.props}/>
+                                    case ElementType.VIDEO:
                                         let elementTag;
                                         //find video by id in scene
                                         scene.videoTags().map(item => {

@@ -5,9 +5,10 @@ import ChartInfo from './element/ChartInfo';
 import TextInfo from './element/TextInfo';
 import AudioInfo from './element/AudioInfo';
 import VideoInfo from './element/VideoInfo';
+import ShapeInfo from './element/ShapeInfo';
 import Fragment from './element/Fragment';
 
-export {ImageInfo, GifInfo, ChartInfo, TextInfo, AudioInfo, VideoInfo}
+export {ImageInfo, GifInfo, ChartInfo, TextInfo, AudioInfo, VideoInfo,ShapeInfo}
 
 export class Element {
     constructor(type, info) {

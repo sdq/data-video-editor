@@ -3,6 +3,7 @@ import { Tabs } from 'antd';
 import ElementType from '@/constants/ElementType';
 import SceneTool from './Tools/SceneTool';
 import ImageTool from './Tools/ImageTool';
+import ShapeTool from './Tools/ShapeTool';
 import GifTool from './Tools/GifTool';
 import VideoTool from './Tools/VideoTool';
 // import AudioTool from './Tools/AudioTool';
@@ -57,6 +58,18 @@ export default class ToolPane extends Component {
                     </TabPane>
                 </Tabs>
                 </div>
+                case ElementType.SHAPE:
+                    return <div className="card-container-tool">
+                    <PosTool {...this.props}/>
+                    <Tabs type="card">
+                        <TabPane tab="Design" key="Design" >
+                            <ShapeTool {...this.props}/>
+                        </TabPane>
+                        <TabPane tab="Animation" key="Animation">
+                            <AnimationTool {...this.props}/>
+                        </TabPane>
+                    </Tabs>
+                    </div>
                 case ElementType.CHART:
                     return <div className="card-container-tool">
                     <PosTool {...this.props}/>

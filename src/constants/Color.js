@@ -13,4 +13,5 @@ export default {
     AUDIO_BAR: '#F8BE8C',
     VIDEO_BAR: '#6DD400',
     TEXT_BAR: '#BB96F7',
+    SHAPE_BAR: '#87CEEB',
 }

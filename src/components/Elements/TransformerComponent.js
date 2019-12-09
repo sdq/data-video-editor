@@ -37,7 +37,7 @@ export default class TransformerComponent extends Component {
     }
 
     render() {
-         const { selectedElementType } = this.props;  //判断text-element
+         const { selectedElementType,selectedElementShapeType  } = this.props;  //判断text-element  line  arrow
         return (
             <Transformer
                 ref={node => {
@@ -46,7 +46,7 @@ export default class TransformerComponent extends Component {
                 borderStroke="#DCDCDC"
                 anchorStroke="#DCDCDC"
                 anchorFill={Color.LIGHT_ORANGE}
-                enabledAnchors= {  (selectedElementType==="text_element")  ? ['middle-right'] : ['top-left', 'top-right', 'bottom-left', 'bottom-right']}
+                enabledAnchors= {  (selectedElementType==="text_element"||selectedElementShapeType==="line"||selectedElementShapeType==="arrow")  ? ['middle-right'] : ['top-left', 'top-right', 'bottom-left', 'bottom-right']}
             />
         )
     }
