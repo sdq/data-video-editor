@@ -41,6 +41,7 @@
 /* 如何动态赋值？ */
 /* contenheight- 上下箭头 */
 .card-container >.ant-spin-nested-loading > .ant-spin-container > .ant-tabs .ant-tabs-left-bar .ant-tabs-nav{
-    overflow:auto;
+    overflow-x:hidden;
+    overflow-y:auto;
     height:100%;
 }

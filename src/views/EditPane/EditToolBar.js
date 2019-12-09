@@ -94,6 +94,25 @@ let defaultArrow = new ShapeInfo(
     20,
 )
 
+const EllSvg = () => (
+   <svg width="1.5em" height="1.5em" fill="gray" viewBox="0 0 1024 1024" version="1.1" 
+   xmlns="http://www.w3.org/2000/svg" p-id="2167" ><path d="M532.5 839.7c220.9 0 409.6-152.6 409.6-327.7S753.4 184.3 532.5 184.3C270.6 184.3 81.9 336.9 81.9 512s188.7 327.7 450.6 327.7z m0 81.9C226.1 921.6 0 734.5 0 512s226.1-409.6 532.5-409.6c265.4 0 491.5 187.1 491.5 409.6S797.9 921.6 532.5 921.6z" p-id="2168"></path></svg>
+  );
+const EllIcon = props => <Icon component={EllSvg} {...props} />;
+
+const CircleSvg = () => (
+    <svg width="1.5em" height="1.5em" fill="gray" viewBox="0 0 1024 1024" version="1.1" 
+    xmlns="http://www.w3.org/2000/svg" p-id="2279"><path d="M512 1024c282.7776 0 512-229.2224 512-512S794.7776 0 512 0 0 229.2224 0 512s229.2224 512 512 512z m0-102.4a409.6 409.6 0 1 1 0-819.2 409.6 409.6 0 0 1 0 819.2z" p-id="2280"></path></svg>
+    );
+ const CircleIcon = props => <Icon component={CircleSvg} {...props} />;
+
+ const ArrowSvg = () => (
+    <svg width="1.5em" height="1.5em" fill="gray" viewBox="0 0 1024 1024" version="1.1" 
+    xmlns="http://www.w3.org/2000/svg" p-id="7432" ><path d="M512 174.30895499c8.142447 0 15.950274 3.234671 21.707394 8.99179201l255.82655 255.82655c11.988032 11.989055 11.988032 31.425733 0 43.414789-11.989055 11.990079-31.426757 11.990079-43.415812 1e-8l-234.118132-234.118132-234.11915501 234.11813199c-11.988032 11.990079-31.426757 11.990079-43.41478899 0-11.989055-11.989055-11.989055-31.425733 0-43.414789l255.82655-255.82655C496.049726 177.543625 503.85857601 174.308955 512 174.30895499z" p-id="7433"></path><path d="M512 174.30895499c16.954137 0 30.699186 13.745049 30.699186 30.69918601l0 613.983719c0 16.954137-13.745049 30.699186-30.699186 30.699186s-30.699186-13.745049-30.699186-30.699186l0-613.983719C481.300814 188.054003 495.045863 174.308955 512 174.30895499z" p-id="7434"></path></svg>
+    );
+ const ArrowIcon = props => <Icon component={ArrowSvg} {...props} />;
+
+
 
 export default class EditToolBar extends Component {
     constructor(props) {
@@ -277,13 +296,13 @@ export default class EditToolBar extends Component {
                 <Icon type="minus" style={{fontSize: '20px',left:"50px"}} />Line
               </Menu.Item>
               <Menu.Item onClick={this.newCircle}>
-                <Icon type="minus-circle" style={{fontSize: '20px',left:"50px"}} />Circle
+              <CircleIcon style={{left:"50px" }} />Circle
               </Menu.Item>
               <Menu.Item onClick={this.newEllipse}>
-                <Icon type="yahoo" style={{fontSize: '20px',left:"50px"}}/>Ellipse
+                <EllIcon style={{left:"50px" }} />Ellipse
               </Menu.Item>
               <Menu.Item onClick={this.newArrow}>
-                <Icon type="caret-up" style={{fontSize: '20px',left:"50px"}}/>Arrow
+              <ArrowIcon style={{left:"50px" }} />Arrow
               </Menu.Item>
               <Menu.Item onClick={this.newStar}>
                 <Icon type="star" style={{fontSize: '20px',left:"50px"}}/>Star

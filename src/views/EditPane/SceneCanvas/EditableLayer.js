@@ -15,6 +15,7 @@ let lastScale = '';
 let xPosArray= [];
 let yPosArray = [];
 
+
 export default class EditableLayer extends Component {
 
     constructor(props) {

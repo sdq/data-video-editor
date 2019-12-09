@@ -42,9 +42,15 @@ export default class ShapeTool extends Component {
     };
 
     handleColorChange = (value)=>{
+        const shapeType =this.props.currentElement.info().shapeType;
         let color = value.hex;  
         this.setState({color})
         const newScene = Object.assign({},this.props.currentScene);
+        if(shapeType==="line"||shapeType==="arrow"){
+            this.props.currentElement.info().stroke = color;
+        }else{
+            this.props.currentElement.info().color = color;
+        }
         this.props.currentElement.info().color = color;
         this.props.updateScene(this.props.sceneIndex, newScene);
         this.handleColorClose();
@@ -180,10 +186,10 @@ export default class ShapeTool extends Component {
                 </Col>
                 <Col span={18} style={{margin: '0px 0px 0px 10px'}}>
                     <Button 
-                    disabled = {shapeType==="line"||shapeType==="arrow"}
+                    //disabled = {shapeType==="line"||shapeType==="arrow"}
                     size='small' icon="bg-colors" onClick={ this.handleColorClick } 
                     style={{width: '100%',margin: '0px 0px 0px 0px',
-                    background:shapeType==="line"||shapeType==="arrow"?"none":this.props.currentElement.info().color,
+                    background:shapeType==="line"||shapeType==="arrow"?this.props.currentElement.info().stroke:this.props.currentElement.info().color,
                     border:"#ffffff",verticalAlign: "middle"}}></Button> 
                     {this.state.displayColorPicker ? <div style={ popover }>
                      <div style={ cover } onClick={ this.handleColorClose } />
@@ -192,7 +198,7 @@ export default class ShapeTool extends Component {
                 </Col>
                 </Row> 
                
-
+               { shapeType==="line"||shapeType==="arrow"?null:
                 <Row style={{margin: '5px 10px 0px 10px', fontSize: '14px'}}>
                 <Col span={4} style={{margin: '1px 0px 0px 0px'}}>
                 Stroke
@@ -214,6 +220,21 @@ export default class ShapeTool extends Component {
                         style={{width: '100%',}}/>
                 </Col>
                 </Row>
+               }
+
+                { shapeType==="line"||shapeType==="arrow"?
+                <Row style={{margin: '0px 10px 18px 5px', fontSize: '14px'}}>
+                <Col span={4} style={{margin: '1px 0px 0px 5px'}}>
+                Width
+                </Col>
+                <Col span={18} style={{margin: '0px 0px 0px 10px'}}>
+                        <InputNumber size='small' min={0} max={50} 
+                        defaultValue={this.props.currentElement.info().strokeWidth} 
+                        onChange={value => this.onStrokeWidthChange(value)}
+                        style={{width: '98%',}}/>
+                </Col>
+                </Row>
+               :null}   
 
 
                 <Row style={{margin: '5px 10px 0px 10px', fontSize: '13px'}}>

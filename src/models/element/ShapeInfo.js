@@ -2,7 +2,7 @@ import Color from '@/constants/Color';
 
 export default class ShapeInfo {
     //default info for 6 features
-    constructor(shapeType, x, y, rotation, color=Color.ORANGE,opacity=1,width=50,height=50,stroke,strokeWidth,shadowColor=Color.GRAY,shadowBlur=0,cornerRadius=0,numPoints=5,pointerLength=5,pointerWidth=5,isPosTool=false) {
+    constructor(shapeType, x, y, rotation, color=Color.ORANGE,opacity=1,width=50,height=50,stroke='black',strokeWidth=3,shadowColor=Color.GRAY,shadowBlur=0,cornerRadius=0,numPoints=5,pointerLength=5,pointerWidth=5,isPosTool=false) {
         this.name = shapeType;
         this.shapeType =shapeType;
         // if circle  //this.x= (shapeType==="cicle"?x+100:x);
