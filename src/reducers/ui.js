@@ -7,6 +7,7 @@ const initialState = {
     showToolPane: true,
     showAnimationTargetArea: false,
     showResourceTargetArea: false,
+    showPathLayer:false,
 }
 
 export default (state = initialState, action) => {
@@ -36,6 +37,15 @@ export default (state = initialState, action) => {
                 newState.showAnimationTargetArea = action.isActive;
                 return newState;
             }
+
+            
+        case ActionType.DISPLAY_PATHLAYER:
+                if (state.showPathLayer === action.isActive) {
+                    return state;
+                } else {
+                    newState.showPathLayer = action.isActive;
+                    return newState;
+                }
 
         case ActionType.DISPLAY_RESOURCE_TARGET_AREA:
             if (state.showResourceTargetArea === action.isActive) {

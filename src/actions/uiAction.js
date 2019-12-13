@@ -13,6 +13,12 @@ export const displayAnimationTargetArea = (isActive) => ({
     isActive
 })
 
+
+export const displayPathLayer = (isActive) => ({
+    type: ActionType.DISPLAY_PATHLAYER,
+    isActive
+})
+
 export const displayResourceTargetArea = (isActive) => ({
     type: ActionType.DISPLAY_RESOURCE_TARGET_AREA,
     isActive

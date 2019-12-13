@@ -1,5 +1,5 @@
 export default class AnimationBase {
-    constructor(start, duration, node) {
+    constructor(start, duration, node, pathinfo) {
         this._node = node;
         this._layer = node.getLayer();
         this._start = start;
@@ -7,6 +7,7 @@ export default class AnimationBase {
         this._isPlaying = false;
         this._isAnimating = false;
         this._animation = null;
+        this._pathinfo = pathinfo;
     }
 
     isPlaying = () => this._isPlaying;

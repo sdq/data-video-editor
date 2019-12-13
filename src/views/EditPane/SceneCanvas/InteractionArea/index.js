@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+
 import AnimationTargetArea from './AnimationTargetArea';
 import ResourceTargetArea from './ResourceTargetArea';
 import AssistLines from './AssistLines';
+// import PathAnimator from './PathAnimator';
 import GridLines from './GridLines';
 import TextEditor from './TextEditor';
 import GifEditor from './GifAnimator';
@@ -17,6 +19,7 @@ export default class InteractionArea extends Component {
                 {showAnimationTargetArea?<AnimationTargetArea {...this.props}/>:null}
                 {showResourceTargetArea?<ResourceTargetArea {...this.props}/>:null}
                 {showAssistLines ? <AssistLines {...this.props}/> : null }
+                {/* {showPathAnimator ? <PathAnimator {...this.props}/> : null } */}
                 {showGridLines ? <GridLines {...this.props}/> : null }
                 {showTextEditor ? <TextEditor {...this.props}/> : null }
                 {showGifEditor ? <GifEditor  {...this.props}/> : null }

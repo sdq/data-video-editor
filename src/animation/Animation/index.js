@@ -6,6 +6,8 @@ import ZoomIn from './ZoomIn';
 import ZoomOut from './ZoomOut';
 import FlyIn from './FlyIn';
 import FlyOut from './FlyOut';
+import Path from './Path';
+
 
 export default {
     // Presentation
@@ -18,4 +20,6 @@ export default {
     FlyOut: FlyOut,
     // Interpretation
     Flicker: Flicker,
+    // Path
+    Path:Path,
 }

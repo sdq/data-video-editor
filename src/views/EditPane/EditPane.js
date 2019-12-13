@@ -22,6 +22,13 @@ export default class EditPane extends Component {
         this.deleteElement = this.deleteElement.bind(this);
     }
 
+    // setIsshowPathAnimator = value => {
+    //     this.setState({
+    //         showPathAnimator: value
+    //     })
+    // }
+
+
     setIsShowGridLines = value => {
         this.setState({
             showGridLines: value
@@ -96,11 +103,14 @@ export default class EditPane extends Component {
                         copiedElement = {this.state.copiedElement}
                         showGridLines={this.state.showGridLines}
                         setIsShowGridLines = {this.setIsShowGridLines}
+                        // showPathAnimator={this.state.showPathAnimator}
+                        // setIsshowPathAnimator={this.setIsshowPathAnimator}
                         { ...this.props }
                     />
                     <div style={{ background: '#eee', height: this.props.contentHeight-100+'px' }}>
                         <SceneCanvas 
                             showGridLines={this.state.showGridLines}
+                            // showPathAnimator={this.state.showPathAnimator}
                             { ...this.props }
                         />
                     </div>

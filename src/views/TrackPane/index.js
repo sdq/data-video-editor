@@ -9,6 +9,7 @@ import * as uiActions from '@/actions/uiAction';
 import * as canvasActions from '@/actions/canvasAction';
 import * as sceneActions from '@/actions/sceneAction';
 import * as playerActions from '@/actions/playerAction';
+import { showPathLayer } from '@/selectors/ui';
 import { dataList } from '@/selectors/vis';
 
 const mapStateToProps = state => {
@@ -29,6 +30,8 @@ const mapStateToProps = state => {
         isVideoPerforming: isVideoPerforming(state),
         // vis
         dataList: dataList(state),
+        //path
+        showPathLayer:showPathLayer(state),
     }
 }
 
@@ -48,6 +51,8 @@ const mapDispatchToProps = dispatch => {
         displayStoryline: () => dispatch(uiActions.displayStoryline()),
         playScene: (sceneIndex) => dispatch(playerActions.playScene(sceneIndex)),
         stopScene: (sceneIndex) => dispatch(playerActions.stopScene(sceneIndex)),
+        //showpath
+        displayPathLayer:(isActive) => dispatch(uiActions.displayPathLayer(isActive)),
     }
 }
 

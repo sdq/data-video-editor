@@ -1,7 +1,10 @@
 import AnimationType from './AnimationType';
 import AnimationModel from './AnimationModel';
 
+let pathinfo="";//init path info
+
 const all = [
+    new AnimationModel(AnimationType.INTERPRETATION_PATH, 'Path', pathinfo),
     new AnimationModel(AnimationType.INTERPRETATION_FLICKER, 'Flicker'),
     new AnimationModel(AnimationType.PRESENTATION_FADEIN, 'Fade in'),
     new AnimationModel(AnimationType.PRESENTATION_FADEOUT, 'Fade out'),
@@ -22,6 +25,7 @@ const PresentationAnimations = [
 
 const InterpretationAnimations = [
     new AnimationModel(AnimationType.INTERPRETATION_FLICKER, 'Flicker'),
+    new AnimationModel(AnimationType.INTERPRETATION_PATH, 'Path', pathinfo),
 ]
 
 const ReasoningAnimations = [

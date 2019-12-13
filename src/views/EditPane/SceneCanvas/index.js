@@ -4,6 +4,7 @@ import InteractionArea from './InteractionArea';
 import EditableLayer from './EditableLayer';
 import BackgroundLayer from './BackgroundLayer';
 import AnimationLayer from './AnimationLayer';
+import PathLayer from './PathLayer';
 import ElementType from '@/constants/ElementType';
 import './scenecanvas.css';
 
@@ -17,7 +18,9 @@ export default class EditCanvas extends Component {
             showChartPreview: false, 
             showGifEditor:false,
             showVideoEditor:false,
+            showPath:false,
             dbClickedElementIndex: -1,
+            isElementWithPath:false,
             windowWidth:window.innerWidth,//init
         };
         this.handleStageDblClick = this.handleStageDblClick.bind(this);
@@ -42,6 +45,8 @@ export default class EditCanvas extends Component {
         })
     }
 
+
+
     handleStageMouseDown = e => {
          
         //每当切换元素时，清空公用dragpos,transinfo
@@ -57,26 +62,56 @@ export default class EditCanvas extends Component {
             showGifEditor:false,
             showVideoEditor:false,
         });
-
         // clicked on stage - clear selection
         if (e.target === e.target.getStage()) {
+            this.props.displayPathLayer(false);
             this.props.unselectElement();
             return;
+            
         }
         // clicked on transformer - do nothing
-        const clickedOnTransformer =
+        if(e.target.getParent()){ //path with no parennt
+            const clickedOnTransformer =
             e.target.getParent().className === "Transformer";
-        if (clickedOnTransformer) {
-            return;
+
+            if (clickedOnTransformer) {
+                return;
+            }
         }
+        
+
     
         // find clicked rect by its name
         const name = e.target.name();
+
         if (name) {
+            //选中一个元素
             var eleIndex = Number(name.split('-')[1]);
             this.props.selectElement(eleIndex, name);
+            //判断选中的元素是否被赋予了path动画
+            const aniLength = this.props.currentElement?this.props.currentElement.animations().length:0;
+            const aniArray = this.props.currentElement?this.props.currentElement.animations():0;
+            if(aniLength===0)
+            {
+                this.props.displayPathLayer(false);
+            }else{
+            for(let i=0;i<aniLength;i++){
+                if(aniArray[i].type().indexOf("INTERPRETATION_PATH")!==-1){
+                    this.props.displayPathLayer(true);
+                    break;
+                }
+                this.props.displayPathLayer(false);
+            }
+        }
+
         } else {
+            if(e.target.attrs.id&&e.target.attrs.id.indexOf("path")!==-1){
+                //判断选中的是否为path元素（认path没有name属性）
+                    this.props.displayPathLayer(true);
+                    return;
+            }else{
             this.props.unselectElement();
+                }
         }
 
         if (e.evt.button === 2) {
@@ -133,11 +168,11 @@ export default class EditCanvas extends Component {
 
 
     render() {
-
-        const { isPerforming } = this.props;
+        //isPerforming判断是否在播放，showPathLayer用于anicard拖拽管理，isElementSelected判断是否有元素被选中,判断选中的元素是否含有path动画
+        const { isPerforming,showPathLayer} = this.props; 
         const canvasW = 800*(this.props.contentHeight-100)/450;
         const canvasH = this.props.contentHeight-100;
-        const {showResourcePane,showToolPane} = this.props;
+        const { showResourcePane, showToolPane} = this.props;
         
 
         let editable = !isPerforming;  
@@ -152,6 +187,7 @@ export default class EditCanvas extends Component {
             showGifEditor = false;
             showVideoEditor = false;
             showAssistLines = false;
+            this.props.displayPathLayer(false);
         }
         const editableLayer = <EditableLayer 
                 displayAssistLines={(active) => this.displayAssistLines(active)}
@@ -167,6 +203,9 @@ export default class EditCanvas extends Component {
                 dbClickedElementIndex={dbClickedElementIndex}
                 {...this.props}
             />
+        const pathLayer = <PathLayer
+                {...this.props}
+           />
         return (
             <div id="canvasContainer" 
                  style={{  
@@ -211,6 +250,7 @@ export default class EditCanvas extends Component {
                 >
                     {isPerforming?null:backgroundLayer}
                     {isPerforming?null:editableLayer}
+                    {!isPerforming&&showPathLayer&&this.props.isElementSelected?pathLayer:null}
                     {isPerforming?animationLayer:null}
                 </Stage>
                </div>

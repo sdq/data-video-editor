@@ -44,6 +44,7 @@ const mapDispatchToProps = dispatch => {
         removeElement: (elementIndex) => dispatch(canvasActions.removeElement(elementIndex)),
         updateElement: (element, elementIndex, selectElement) => dispatch(canvasActions.updateElement(element, elementIndex, selectElement)),
         displayAnimationTargetArea: (isActive) => dispatch(uiActions.displayAnimationTargetArea(isActive)),
+        displayPathLayer:(isActive) => dispatch(uiActions.displayPathLayer(isActive)),
         dragElement: (dragPos) => dispatch(canvasActions.dragElement(dragPos)),
         transformElement: (transformInfo) => dispatch(canvasActions.transformElement(transformInfo)),
         // vis

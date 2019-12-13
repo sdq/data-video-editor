@@ -1,11 +1,16 @@
+import Path from './Animation/Path';
+
+export {Path}
+
 export default class AnimationModel {
-    constructor(type, name) {
+    constructor(type, name, pathinfo) {
         this._type = type;
         this._name = name;
         this._start = 0;
         this._duration = 0;
         this._style = "";
         this._loop = "loop";
+        this._pathinfo = pathinfo;
     }
     type = function(type) {
         if (type == null){
@@ -45,6 +50,16 @@ export default class AnimationModel {
             return this._loop;
         } else {
             this._loop = loop;
+            return this;
+        }
+    };
+    //可扩展的动画属性信息
+    pathinfo = function(pathinfo) {
+        //set animation pathinfo
+        if (pathinfo == null){
+            return this._pathinfo;
+        } else {
+            this._pathinfo = pathinfo;
             return this;
         }
     };
