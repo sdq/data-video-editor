@@ -15,9 +15,18 @@ export default class AnimationInfo extends Component {
     }
 
     deleteAnimation() {
+        //if path , need redux
+        const deleteType = this.props.element.animations()[this.props.animationIndex].type();
+        if(deleteType === "INTERPRETATION_PATH"){
+            this.props.displayPathLayer(false);
+        }
+
+
         const newScene = Object.assign({},this.props.currentScene);
         const newElement = Object.assign({},this.props.element);
         newElement.remove(this.props.animationIndex);
+        
+
         newScene.updateElement(newElement, this.props.elementIndex);
         this.props.updateScene(this.props.sceneIndex, newScene);
         const elementName = this.props.sceneIndex + '-' + this.props.elementIndex;

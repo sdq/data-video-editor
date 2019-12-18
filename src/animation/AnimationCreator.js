@@ -3,7 +3,7 @@ import Animation from './Animation';
 
 // Use Factory Pattern for Animations
 export default class AnimationCreator {
-    constructor(node) {
+    constructor(node ) {
         this._node = node;
     }
     fromModel(model) {
@@ -27,6 +27,8 @@ export default class AnimationCreator {
             // Interpretation
             case AnimationType.INTERPRETATION_FLICKER:
                 return new Animation.Flicker(model.start(), model.duration(), this._node)
+            case AnimationType.INTERPRETATION_PATH:// what type? 为什么info 不能放在node前面？？
+                return new Animation.Path(model.start(), model.duration(),  this._node, model.pathinfo())
             default:
                 break;
         }

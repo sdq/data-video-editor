@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { DragSource } from 'react-dnd';
 import DNDType from '@/constants/DNDType';
 import Animation from '@/animation/AnimationModel';
+import AnimationType from '@/animation/AnimationType';
 import './animationcard.css';
 
 const animationSource = {
@@ -10,10 +11,19 @@ const animationSource = {
         // console.log(props.animation);
         // return props.animation.name();
         props.displayAnimationTargetArea(true);
-        return {
+        switch (props.animation.type()) {
+        case AnimationType.INTERPRETATION_PATH:     
+        return  {
             type: props.animation.type(),
             name: props.animation.name(),
+            pathinfo: props.animation.pathinfo(),
         }
+        default:
+            return {
+                type: props.animation.type(),
+                name: props.animation.name(),
+            }
+}
 	},
 
 	endDrag(props, monitor) {
@@ -23,8 +33,15 @@ const animationSource = {
 		if (dropResult) {
             const newScene = Object.assign({},dropResult.currentScene);
             const newEle = Object.assign({},dropResult.currentElement);
-            const animation = new Animation(item.type, item.name);
-            newEle.add(animation);
+            if(item.type===AnimationType.INTERPRETATION_PATH){
+                //if path 
+                props.displayPathLayer(true);//redux管理（而不是state），保证动画拖拽及时显示path层
+                const animation = new Animation(item.type, item.name, item.pathinfo);
+                newEle.add(animation);
+            }else{
+                const animation = new Animation(item.type, item.name);
+                newEle.add(animation);
+            }
             newScene.updateElement(newEle, dropResult.elementIndex);
             props.updateScene(dropResult.sceneIndex, newScene);
             const elementName = dropResult.sceneIndex + '-' + dropResult.elementIndex;
