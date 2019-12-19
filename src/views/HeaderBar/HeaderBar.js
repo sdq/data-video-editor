@@ -171,11 +171,17 @@ export default class HeaderBar extends Component {
         var sfri = window.navigator.userAgent.toLowerCase().indexOf("safari") > -1;
         return !chr && sfri;
     }
+    logout = () =>{
+        this.props.history.push('/')
+    }
 
     render() {
         return (
             <div className="headerbar">
                 <font color="white"><b>Data Video Editor</b></font>
+                <Button type="primary" icon="logout" shape="round"  onClick={this.logout} style={{ float: 'right', marginLeft: 12 } }>
+                     Logout
+                </Button>
                 <Button type="primary" icon="export" shape="round" style={{ float: 'right', marginLeft: 12 }} onClick={this.showModal}>
                     Export
                 </Button>
