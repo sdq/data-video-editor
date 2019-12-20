@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import ResourcePane from './ResourcePane';
-import {currentScene, sceneIndex} from '@/selectors/video';
+import {currentScene, sceneIndex,scenes} from '@/selectors/video';
 import * as videoActions from '@/actions/videoAction';
 import * as canvasActions from '@/actions/canvasAction';
 import * as uiActions from '@/actions/uiAction';
@@ -8,6 +8,7 @@ import {uimode, showResourcePane} from '@/selectors/ui';
 
 const mapStateToProps = state => {
     return {
+        scenes:scenes(state),
         sceneIndex: sceneIndex(state),
         currentScene: currentScene(state),
         uimode: uimode(state),
@@ -24,6 +25,7 @@ const mapDispatchToProps = dispatch => {
         displayTrackEditor: () => dispatch(uiActions.displayTrackEditor()),
         displayResourceTargetArea: (isActive) => dispatch(uiActions.displayResourceTargetArea(isActive)),
         displayResourcePane: (isActive) => dispatch(uiActions.displayResourcePane(isActive)),
+        displayMusicTargetArea: (isActive) => dispatch(uiActions.displayMusicTargetArea(isActive)),
     }
 }
 

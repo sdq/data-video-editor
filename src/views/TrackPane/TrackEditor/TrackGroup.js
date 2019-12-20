@@ -57,8 +57,12 @@ export default class TrackGroup extends Component {
                             style={getListStyle(snapshot.isDraggingOver)}
                             >
                                 {elements.map((element, index) => {
+                                 let isbackgroundMusic = element.info().backgroundmusic?element.info().backgroundmusic:false;
                                     switch (element.type()) {
                                         case ElementType.AUDIO:
+                                            if(isbackgroundMusic){
+                                                return null;
+                                            }else{
                                             return (<AudioTrack
                                                 key={element.id()}
                                                 index={index}
@@ -68,7 +72,7 @@ export default class TrackGroup extends Component {
                                                 setBarUnactive={this.setBarUnactive}
                                                 isSelected={this.props.isElementSelected && (this.props.elementIndex === index)}
                                                 {...this.props}
-                                            />)
+                                            />)}
                                     
                                         default:
                                             return (<Track

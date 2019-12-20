@@ -226,6 +226,7 @@ export default class TrackBar extends Component {
         const scenePositionWithScale = scenePosition * sceneScale;
         //console.log("render",scenePosition,sceneScale,scenePosition * sceneScale)
         var color = Color.LIGHT_ORANGE;
+
         switch (element.type()) {
             case ElementType.IMAGE:
             case ElementType.GIF:
@@ -256,11 +257,12 @@ export default class TrackBar extends Component {
         }
         let bars = [];
         let fragments = element.fragments();
+
         for (let index = 0; index < fragments.length; index++) {
             const fragment = fragments[index];
             let fragmentX = fragment.start() * sceneScale;
             let fragmentWidth = fragment.duration() * sceneScale;
-            if (isBarActive && !isPerforming) {
+            if (isBarActive && !isPerforming ) {
                 if (!dragOffsetX[index]) {
                     dragOffsetX[index] = 0;
                 }
@@ -314,7 +316,8 @@ export default class TrackBar extends Component {
                 />)
             } else {
                 bars.push(<div key={"bar-"+this.props.element.id()+'-'+index} style={{float: 'left', position: 'absolute', marginLeft: fragmentX, height: 22, width: fragmentWidth ,backgroundColor: color}} onClick = {this.clickBar} onMouseOver = {this.clickBar}/>);
-            }
+            
+          }
         }
         //console.log("dragMoveX...",this.clipBtnOffsetX)
         // clip

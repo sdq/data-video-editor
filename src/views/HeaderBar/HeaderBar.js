@@ -17,6 +17,7 @@ export default class HeaderBar extends Component {
         loading: false,
         remainTime: 0,
         isVideoPerforming: false,
+        backgroundMusicID: "",
     };
     this.play = this.play.bind(this);
 };
@@ -29,7 +30,6 @@ export default class HeaderBar extends Component {
 
     tick() {
         if (this.state.remainTime === 0) {
-            //
         } else {
             this.setState(preState => ({
                 remainTime: preState.remainTime - 1
@@ -37,20 +37,32 @@ export default class HeaderBar extends Component {
         }
     }
 
+
     play() {
         // this.props.unselectElement();
         // this.props.displayTrackEditor();
+        let backgroundMusicID = "";
+        if(this.props.scenes[0].backgroundMusic()!=="none"){
+            for(let i = 0;i<this.props.scenes[0].elements().length;i++){ 
+                if(this.props.scenes[0].elements()[i].info().name === this.props.scenes[0].backgroundMusic())
+                {
+                    backgroundMusicID = this.props.scenes[0].elements()[i].id();
+                }
+            }
+        }
+
         if (this.state.isVideoPerforming === false) {
             this.setState({
                 isVideoPerforming : true
             });
             this.props.displayTrackEditor();
-            player.playVideo(); 
+            player.playVideo(backgroundMusicID); 
         } else {
             this.setState({
                 isVideoPerforming : false
             });
             this.pause();   
+            //todo：终止后没有自动归位
         }
     };
 

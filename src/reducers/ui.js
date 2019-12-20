@@ -7,6 +7,7 @@ const initialState = {
     showToolPane: true,
     showAnimationTargetArea: false,
     showResourceTargetArea: false,
+    showMusicTargetArea: false,
     showPathLayer:false,
 }
 
@@ -52,6 +53,14 @@ export default (state = initialState, action) => {
                 return state;
             } else {
                 newState.showResourceTargetArea = action.isActive;
+                return newState;
+            }
+
+        case ActionType.DISPLAY_MUSIC_TARGET_AREA:
+            if (state.showMusicTargetArea === action.isActive) {
+                return state;
+            } else {
+                newState.showMusicTargetArea = action.isActive;
                 return newState;
             }
 
