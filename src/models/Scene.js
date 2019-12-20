@@ -14,6 +14,7 @@ export default class Scene {
         this._videos = [];
         this._backgroundColor = '#ffffff';
         this._backgroundImage = '';
+        this._backgroundMusic = '';
     }
     id = function () {
         return this._id;
@@ -126,6 +127,14 @@ export default class Scene {
             return this._backgroundImage;
         } else {
             this._backgroundImage = backgroundImage;
+            return this;
+        }
+    };
+    backgroundMusic = function (backgroundMusic) {
+        if (backgroundMusic == null) {
+            return this._backgroundMusic;
+        } else {
+            this._backgroundMusic = backgroundMusic;
             return this;
         }
     };

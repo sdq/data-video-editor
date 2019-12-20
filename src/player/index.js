@@ -55,6 +55,8 @@ export default class Player {
                     store.dispatch(sceneActions.setPosition(position));
                     AudioController.playAudio();
                     if (index === (n-1)) {
+                    //播放单个场景的停止
+                       console.log("tingzhi",index)
                         this.pauseScene();
                         store.dispatch(sceneActions.setPosition(0));
                     }
@@ -66,7 +68,8 @@ export default class Player {
     pauseScene() {
         this._clearTimeouts();
         store.dispatch(playerActions.stopScene(this.sceneIndex));
-        AudioController.pauseAudio(this.sceneIndex)       
+        AudioController.pauseAudio(this.sceneIndex)  
+        //todo：暂停后重播没有恢复播放音乐  
     }
 
     playVideo() {
@@ -75,6 +78,7 @@ export default class Player {
         this._clearVideoTimeouts();
         let sceneStart = 0;
 
+        //遍历播放scene
         for (let index = 0; index < this.scenesCount; index++) {
             const sceneDuration = this.sceneDuration(index);
             this._videoTimeouts.push(setTimeout(function () {
@@ -93,13 +97,14 @@ export default class Player {
                         store.dispatch(sceneActions.setPosition(position));
                         AudioController.playAudio()
                         if (index === (n-1)) {
+                            //播放全部场景的停止
                             this.pauseScene();
                             store.dispatch(sceneActions.setPosition(0));
                         }
                     }.bind(this), index * 100));
                 }
             }.bind(this), sceneStart * 1000));
-            sceneStart += sceneDuration;
+            sceneStart += sceneDuration; // whole time  
         }
         this._videoTimeouts.push(setTimeout(function () {
             store.dispatch(playerActions.stopVideo());
@@ -107,10 +112,11 @@ export default class Player {
     }
 
     pauseVideo() {
+        AudioController.pauseAudio(this.sceneIndex)
         this._clearTimeouts();
         this._clearVideoTimeouts();
         store.dispatch(playerActions.stopVideo());
-        AudioController.pauseAudio(this.sceneIndex)
+
     }
 
     _clearTimeouts() {

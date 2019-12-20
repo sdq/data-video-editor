@@ -4,7 +4,7 @@ import {currentScene, sceneIndex, scenes, isFirstScene, isLastScene, past, futur
 import {currentElement, currentElements, elementIndex, elementName, isElementSelected, dragPos, transformInfo} from '@/selectors/canvas';
 import { scenePosition } from '@/selectors/scene';
 import { isPerforming, isScenePerforming, isVideoPerforming } from '@/selectors/player';
-import { showAnimationTargetArea, showResourceTargetArea,uimode, showResourcePane, showToolPane, showPathLayer } from '@/selectors/ui';
+import { showAnimationTargetArea, showResourceTargetArea,showMusicTargetArea,uimode, showResourcePane, showToolPane, showPathLayer } from '@/selectors/ui';
 import { dataNameList, dataList, fieldsList, displaySpec, currentData, currentVis, channels } from '@/selectors/vis';
 import * as uiActions from '@/actions/uiAction';
 import * as videoActions from '@/actions/videoAction';
@@ -34,6 +34,7 @@ const mapStateToProps = state => {
         showAnimationTargetArea: showAnimationTargetArea(state),
         showPathLayer:showPathLayer(state),
         showResourceTargetArea: showResourceTargetArea(state),
+        showMusicTargetArea: showMusicTargetArea(state),
         // canvas
         dragPos:dragPos(state),
         transformInfo:transformInfo(state),
