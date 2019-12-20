@@ -47,6 +47,8 @@ export default class PlayControlBar extends Component {
         const { isVideoPerforming, isPerforming, isLastScene, isFirstScene } = this.props;
         return (
             <div id='playcontrol' style = { { background: Color.LIGHT_ORANGE} }>
+                <Button icon="delete" type="link" style = { {float:"left",margin:"10px 0px 10px 12px"} } disabled = {isFirstScene || isPerforming} onClick={this.lastScene}/> 
+                <p style = { {float:"left",margin:"15px 0px 10px 10px"} }>Background Music : none</p>  
                 <ButtonGroup style = { {margin: '10px 0 0 0'}}>
                     <Button icon="step-backward" style = { {padding: '0 20px 0 20px'} } disabled = {isFirstScene || isPerforming} onClick={this.lastScene}/>
                     <Button icon={isPerforming?"pause":"caret-right"} disabled = {isVideoPerforming} onClick={this.playScene} style = { {padding: '0 20px 0 20px'} }/>

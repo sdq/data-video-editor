@@ -3,17 +3,16 @@ import Color from '@/constants/Color';
 import { DropTarget } from 'react-dnd';
 import DNDType from '@/constants/DNDType';
 
-const canvasTarget = {
+const musicTarget = {
 	drop: (props) => ({ 
-        target: "canvas",
-        sceneIndex: props.sceneIndex,
-        currentScene: props.currentScene
+        target: "music",
+        sceneIndex: 1,
+        // currentScene: props.currentScene
     })
 }
 
 class MusicTargetArea extends Component {
     render() {
-        console.log("music")
         const { canDrop, isOver, connectDropTarget } = this.props;
         // const canvasW = 800*(this.props.contentHeight-100)/450;
         // const canvasH = this.props.contentHeight-100;
@@ -35,7 +34,7 @@ class MusicTargetArea extends Component {
 
 export default DropTarget(
 	[DNDType.DND_AUDIO],
-	canvasTarget,
+	musicTarget,
 	(connect, monitor) => ({
 		connectDropTarget: connect.dropTarget(),
 		isOver: monitor.isOver(),
