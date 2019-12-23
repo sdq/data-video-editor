@@ -58,11 +58,22 @@ const audioSource = {
                 //redux新建一个界面 背景音乐开关&名字显示
                 //播放时候使用单独的player
                 //tag to backgroundmusic
-                
+                //避免重复
+                if(props.scenes[0].backgroundMusic()!=="none"||!props.scenes[0].backgroundMusic()){
+                //先删除旧背景音乐
+                for(let i = 0;i<props.scenes[0].elements().length;i++){ //element 删除
+                    if(props.scenes[0].elements()[i].info().name === props.scenes[0].backgroundMusic())
+                    {
+                        props.scenes[0].elements().splice(i, 1);
+                    }
+                }
+                }
+                //设置全局backgroundname
+                props.scenes[0].backgroundMusic(item.name);
+                //新增新背景音乐
                 const newbackGroundMusic = new AudioInfo(item.name,item.src,Math.round( props.info.audio && props.info.audio.duration),true);
                 const newElement = new Element(ElementType.AUDIO, newbackGroundMusic);
-                props.scenes[0].addElement(newElement); //添加给第一scene //但是控制不要显示
-                console.log(props)
+                props.scenes[0].addElement(newElement); //添加给第一scene //但是控制不要显示在底部
                 //add audioResource to audioList
                 let audioResource = {};
                 audioResource.id = newElement.id();
@@ -71,14 +82,6 @@ const audioSource = {
                 props.scenes[0].addAudio(audioResource);
                 props.addElement(newElement);
                 props.updateScene(0, props.scenes[0]);
-                // props.displayTrackEditor();
-
-
-           
-
-             
-
-
                 
             }
 
