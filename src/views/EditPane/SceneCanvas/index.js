@@ -192,8 +192,8 @@ export default class EditCanvas extends Component {
         const editableLayer = <EditableLayer 
                 displayAssistLines={(active) => this.displayAssistLines(active)}
                 dbClickedElementIndex={dbClickedElementIndex}
-                dynamicAssistLines = {this.state.dynamicAssistLines}///////////
-                setDynamicAssistLines = {this.setDynamicAssistLines}/////////////
+                dynamicAssistLines = {this.state.dynamicAssistLines}
+                setDynamicAssistLines = {this.setDynamicAssistLines}
                 {...this.props}
             />;
         const backgroundLayer = <BackgroundLayer 

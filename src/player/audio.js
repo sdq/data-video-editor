@@ -8,6 +8,8 @@ const AudioState = {
     PAUSE: 3,
     END: 4,
 }
+
+
 export default class AudioController {
 
     constructor() {
@@ -25,7 +27,6 @@ export default class AudioController {
 
 
     scenePosition() {
-        //console.log('scenePosition', store.getState().scene.position)
         return store.getState().scene.position.toFixed(1);
     }
 
@@ -33,7 +34,7 @@ export default class AudioController {
         return store.getState().video.scenes[index]
     }
 
-    init(index, startPlayPosition) {
+    init(index, startPlayPosition,playScene,backgroundMusicID) {
         this.isAudioCanPlays = [];
         this._audioResources = [];
         this._audioElement = [];
@@ -41,22 +42,40 @@ export default class AudioController {
         //音频默认0s播放
         this.audioPlayPosition = [];
         this.beforeState = [];
-
+        //todo：音频切割功能
         const scene = this.currentScene(index);
-        this._audioResources = scene.audios()
+        this._audioResources = scene.audios();
+        // audioResourceswithBackMusic = audioResourceswithBackMusic===""?scene.audios():audioResourceswithBackMusic;
+        // audioResourceswithoutBackMusic = scene.audios();
+        // if(playScene&&index===0){
+        //     for(let i = 0;i<=audioResourceswithoutBackMusic.length;i++){
+        //         //当播放scene0时候先隐藏背景音乐
+        //       if(audioResourceswithoutBackMusic[i].id === backgroundMusicID){
+        //         audioResourceswithoutBackMusic.splice(i,1);//为什么sceneaudio会被删除
+        //       }
+        //     }
+        //     console.log(scene.audios(),audioResourceswithoutBackMusic,audioResourceswithBackMusic)
+        // }
+        // if(!playScene){
+        //     //当播放scene0时候重新获取背景音乐
+        //     console.log(scene.audios(),audioResourceswithBackMusic)
+        //     this._audioResources = audioResourceswithBackMusic;
+        // }
+        //控制第一屏不播放
+
         this._audioResources.map(item => {
             this.isAudioCanPlays.push(AudioState.NOTREADY);
             this.audioPlayPosition.push(0);
             this.beforeState.push(AudioState.NOTREADY)
             return item;
         })
-        //
+        //过滤
         this._audioElement = scene.elements().filter(item => {
             return item.type() === ElementType.AUDIO;
         })
     }
 
-    getAudioPlayState(element, index) {
+    getAudioPlayState(element, index ,backgroundMusicID, sceneOver) {
         let elementStart;
         let elementDuration;
         let elementFragments;
@@ -81,7 +100,11 @@ export default class AudioController {
         }
 
         if (scenePosition === elementStart + elementDuration) {
-            this.isAudioCanPlays[index] = AudioState.PAUSE;
+            if(element.id === backgroundMusicID && !sceneOver){
+                //if has backgroundMusic , don't pause 
+            }else{
+                this.isAudioCanPlays[index] = AudioState.PAUSE;
+            }
             return this.isAudioCanPlays[index];
         }
 
@@ -121,7 +144,6 @@ export default class AudioController {
         for (let s = 0; s < seekableLength; s++) {
             start = seekable.start(s)
             end = seekable.end(s)
-            //console.log("11111", start, this.audioPlayPosition[index], end)
             if (this.audioPlayPosition[index] >= start && this.audioPlayPosition[index] <= end) {
                 audio.currentTime = this.audioPlayPosition[index];//当前位置可播放
                 //console.log("currentTime ",audio.currentTime)
@@ -134,12 +156,12 @@ export default class AudioController {
         //可以设置audio.currentTime = audio.buffered.end(audio.buffered.length-1);回到缓冲的最大位置处
     }
 
-    playAudio() {
+    playAudio(backgroundMusicID,sceneOver) {
         this._audioResources.map((item, index) => {
             if(!item.element){
               return item;
             }
-            let playState = this.getAudioPlayState(item, index)
+            let playState = this.getAudioPlayState(item, index, backgroundMusicID, sceneOver)
             //console.log("beforeState====", index,this.beforeState[index])
             //console.log("playState====", index,playState)
             if (playState === AudioState.PLAY) {
@@ -179,7 +201,6 @@ export default class AudioController {
             this.isAudioCanPlays.push(AudioState.NOTREADY);
             this.audioPlayPosition.push(0);
             this.beforeState.push(AudioState.NOTREADY)
-            //console.log("Pause")
             return item;
         })
     }

@@ -7,6 +7,7 @@ export default {
     DEEP_BLUE: '#0C2086',
     CLEAR_BLUE: '#EDF3FE',
     GRAY: "#EEEEEE",
+    DEEP_GRAY:"#808080",
     // TrackBar Color
     ILLUSTRATION_BAR: '#FB99A4',
     CHART_BAR: '#8BA1F9',

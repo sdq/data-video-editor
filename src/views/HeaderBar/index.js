@@ -1,11 +1,12 @@
 import { connect } from 'react-redux';
 import HeaderBar from './HeaderBar';
-import {videoDuration} from '@/selectors/video';
+import {videoDuration ,scenes} from '@/selectors/video';
 import * as uiActions from '@/actions/uiAction';
 
 const mapStateToProps = state => {
     return {
         videoDuration: videoDuration(state),
+        scenes: scenes(state),
     }
 }
 

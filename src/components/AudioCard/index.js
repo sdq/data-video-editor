@@ -10,20 +10,22 @@ import './audiocard.css';
 const audioSource = {
 
 	beginDrag(props) {
+        props.displayMusicTargetArea(true);
+
         props.displayResourceTargetArea(true);
 		return props.info;
 	},
 
 	endDrag(props, monitor) {
+
+        props.displayMusicTargetArea(false);
         props.displayResourceTargetArea(false);
         const item = monitor.getItem();
 		const dropResult = monitor.getDropResult();
 		if (dropResult) {
-            // console.log(item);
-            // console.log(dropResult);
+            //if audio for current scene  
             if (dropResult.target === "canvas") {
                 if(!props.info.audio){
-                    //console.log("音频对象为空")
                     return null;
                 }
                 //add element to scene
@@ -41,6 +43,40 @@ const audioSource = {
                 props.updateScene(dropResult.sceneIndex, newScene);
                 // props.displayTrackEditor();
             }
+
+            //if background music for all scene
+            if (dropResult.target === "music") {
+                if(!props.info.audio){
+                    return null;
+                }
+                //add music element to scene0
+                //删除旧背景音乐
+                if(props.scenes[0].backgroundMusic()!=="none"||!props.scenes[0].backgroundMusic()){
+                for(let i = 0;i<props.scenes[0].elements().length;i++){ 
+                    if(props.scenes[0].elements()[i].info().name === props.scenes[0].backgroundMusic())
+                    {
+                        props.scenes[0].elements().splice(i, 1);
+                    }
+                }
+                }
+                //设置全局backgroundmusicname,用于显示name
+                props.scenes[0].backgroundMusic(item.name);
+                //新增新背景音乐
+                const newbackGroundMusic = new AudioInfo(item.name,item.src,Math.round( props.info.audio && props.info.audio.duration),true);
+                const newElement = new Element(ElementType.AUDIO, newbackGroundMusic);
+                props.scenes[0].addElement(newElement); //添加给scene0
+                //add audioResource to audioList
+                let audioResource = {};
+                audioResource.id = newElement.id();
+                audioResource.element = props.info.audio
+                props.scenes[0].addAudio(audioResource);
+                props.addElement(newElement);
+                props.updateScene(0, props.scenes[0]);
+
+                //方案二：在添加背景音乐时直接切割为scenes份，添加到每一scene里
+            }
+
+
 		}
     },
 }

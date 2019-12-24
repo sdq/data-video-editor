@@ -91,6 +91,7 @@ export default class AudioTrack extends Component {
                 draggableId={element.id()} 
                 index={index}
                 isDragDisabled={isPerforming}
+                
             >
                 {(provided, snapshot) => (
                     <div

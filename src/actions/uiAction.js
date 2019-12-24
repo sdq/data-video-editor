@@ -24,6 +24,11 @@ export const displayResourceTargetArea = (isActive) => ({
     isActive
 })
 
+export const displayMusicTargetArea = (isActive) => ({
+    type: ActionType.DISPLAY_MUSIC_TARGET_AREA,
+    isActive
+})
+
 export const displayResourcePane = (isActive) => ({
     type: ActionType.DISPLAY_RESOURCE_PANE,
     isActive
