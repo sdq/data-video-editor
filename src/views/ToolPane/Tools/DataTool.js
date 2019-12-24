@@ -189,7 +189,7 @@ export default class DataTool extends Component {
 
                 <SimpleDataPreview currentData={currentData} />
 
-                <Button block style={{ marginTop: '8px' }} onClick={this.handleDataPreview} type="primary">Preview & Edit Data</Button>
+                {/* <Button block style={{ marginTop: '8px' }} onClick={this.handleDataPreview} type="primary">Preview & Edit Data</Button> */}
 
                 <Popconfirm placement="top" title={text} visible={this.state.confirmVisible} onConfirm={this.changeDataConfirm} onCancel={this.changeDataCancel} okText="Yes" cancelText="No">
                     <Button block style={{ marginTop: '8px' }} onClick={this.handleChartEditor} type="primary">Data Mapping</Button>
