@@ -1,18 +1,26 @@
 import { connect } from 'react-redux';
 import HeaderBar from './HeaderBar';
-import {videoDuration ,scenes} from '@/selectors/video';
+import {videoDuration ,sceneIndex, scenes} from '@/selectors/video';
+import * as videoActions from '@/actions/videoAction';
 import * as uiActions from '@/actions/uiAction';
+import * as canvasActions from '@/actions/canvasAction';
 
 const mapStateToProps = state => {
     return {
         videoDuration: videoDuration(state),
         scenes: scenes(state),
+        sceneIndex: sceneIndex(state),
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
         displayTrackEditor: () => dispatch(uiActions.displayTrackEditor()),
+        addScene: (scene) => dispatch(videoActions.addScene(scene)),
+        updateScene: (index, scene) => dispatch(videoActions.updateScene(index, scene)),
+        addProject: (source) => dispatch(videoActions.addProject(source)),
+        removeProject: () => dispatch(videoActions.removeProject()),
+        addElement: (element) => dispatch(canvasActions.addElement(element)),
     }
 }
 

@@ -26,3 +26,12 @@ export const reorderScene = (sourceIndex, destinationIndex) => ({
     sourceIndex,
     destinationIndex,
 })
+
+export const addProject = (source) => ({
+    type: ActionType.ADD_PROJECT,
+    source,
+})
+
+export const removeProject = () => ({
+    type: ActionType.REMOVE_PROJECT,
+})

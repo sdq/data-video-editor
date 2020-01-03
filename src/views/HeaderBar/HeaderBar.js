@@ -1,20 +1,28 @@
 import React, { Component } from 'react';
-import { Button, Modal, Spin } from 'antd';
+import Scene from '@/models/Scene';
+import { Button, Modal, Spin ,Input ,Upload ,Icon} from 'antd';
 import Recorder from '@/recorder';
 import Player from '@/player';
+import ElementType from '@/constants/ElementType';
+import { Element, ImageInfo, ChartInfo, TextInfo ,VideoInfo, ShapeInfo, GifInfo ,AudioInfo} from '@/models/Element';
+import AnimationModel from '@/animation/AnimationModel';
+//import { saveAs } from 'file-saver';
 import './headerbar.css';
 
 const recorder = new Recorder();
 const player = new Player();
 const prepareTime = 100; //TODO: 100ms for preparation
 let backgroundMusicID = "";
+let saveName = "";
 
 export default class HeaderBar extends Component {
     constructor(props) {
         super(props);
         this.state = {
+        saveVisible: false,
         visible: false,
         loading: false,
+        importloading:false,
         remainTime: 0,
         isVideoPerforming: false,
         backgroundMusicID: "",
@@ -27,6 +35,256 @@ export default class HeaderBar extends Component {
             visible: true,
         });
     };
+
+    importprojectFile(file){
+        return new Promise((resolve) => {
+            let text = "";
+            let reader = new FileReader();
+            reader.readAsText(file);
+            reader.onload = function (e) { 
+                text = reader.result;
+                resolve(text)
+            };
+        })
+
+    }
+
+    importProject = (file) => {
+    this.importprojectFile(file).then(text => {
+            this.setState({
+                importloading: true,
+                importloadingTips: 'loading...'
+            })
+        let jsonObj;
+        jsonObj =  JSON.parse(text);
+
+        //更新项目文件
+        this.props.removeProject();
+        //this.props.addProject(jsonObj); 
+        
+       //项目文件载入
+        for(let i=0;i<jsonObj.length;i++){
+            const newScene = new Scene(jsonObj[i]._script, 700);
+            //background
+            if(jsonObj[i]._backgroundColor){newScene.backgroundColor(jsonObj[i]._backgroundColor)}
+            if(jsonObj[i]._backgroundImage){newScene.backgroundImage(jsonObj[i]._backgroundImage)}
+            if(jsonObj[0]._backgroundMusic){newScene.backgroundMusic(jsonObj[0]._backgroundMusic)}//要对背景音乐做特殊处理
+
+            if(i===0){ //For first scene, update
+                this.props.updateScene(this.props.sceneIndex, newScene);}
+                else{  //for other scene , add
+                this.props.addScene(newScene);
+                }
+            //element duration start animation
+            for(let m=0;m<jsonObj[i]._elements.length;m++){
+            let newE = jsonObj[i]._elements[m]._info;
+            let newElement = '';
+            let animation = "";
+            let aniM = '';
+
+            switch (jsonObj[i]._elements[m]._type) {
+            case ElementType.IMAGE:
+                 const newImage = new ImageInfo(newE.name, newE.src, newE.x, newE.y, newE.width, newE.height, newE.rotation, newE.opacity);
+                 newElement = new Element(ElementType.IMAGE, newImage);//为什么不显示
+                 newScene.addElement(newElement);
+                 newElement.start(jsonObj[i]._elements[m]._start);
+                 newElement.duration(jsonObj[i]._elements[m]._duration);
+
+                 //animation
+                 for(let n=0;n<jsonObj[i]._elements[m]._animations.length;n++){
+                    aniM = jsonObj[i]._elements[m]._animations[n];
+                    animation = new AnimationModel(aniM._type, aniM._name);
+                    animation.start(aniM._start);
+                    animation.duration(aniM._duration);
+                    newElement.add(animation);
+                    }
+            break;
+            case ElementType.TEXT:
+                    const newText = new TextInfo(newE.text, newE.x, newE.y, newE.rotation, newE.color, newE.textSize, newE.fontFamily, newE.fontStyle, newE.textDecorationLine,newE.opacity,newE.textAlign,newE.width,newE.height);
+                    newElement = new Element(ElementType.TEXT, newText);
+                    newScene.addElement(newElement);
+                    newElement.start(jsonObj[i]._elements[m]._start);
+                    newElement.duration(jsonObj[i]._elements[m]._duration);
+                    
+                     //animation
+                    for(let n=0;n<jsonObj[i]._elements[m]._animations.length;n++){
+                    aniM = jsonObj[i]._elements[m]._animations[n];
+                    animation = new AnimationModel(aniM._type, aniM._name);
+                    animation.start(aniM._start);
+                    animation.duration(aniM._duration);
+                    newElement.add(animation);
+                    }
+
+            break;
+            case ElementType.GIF:
+                    const newGif = new GifInfo(newE.name, newE.src, newE.delay, newE.gifFrames, newE.x, newE.y, newE.width, newE.height, newE.rotation, newE.opacity);
+                    newElement = new Element(ElementType.GIF, newGif);
+                    newScene.addElement(newElement);//无法被直接解析
+                    newElement.start(jsonObj[i]._elements[m]._start);
+                    newElement.duration(jsonObj[i]._elements[m]._duration);
+
+                    //animation
+                    for(let n=0;n<jsonObj[i]._elements[m]._animations.length;n++){
+                    aniM = jsonObj[i]._elements[m]._animations[n];
+
+                    animation = new AnimationModel(aniM._type, aniM._name);
+                    animation.start(aniM._start);
+                    animation.duration(aniM._duration);
+                    newElement.add(animation);
+                    }
+            break;
+            case ElementType.CHART:
+                    const newChart = new ChartInfo(newE.dataIndex, newE.category, newE.type, newE.spec, newE.x, newE.y, newE.width, newE.height, newE.rotation);
+                    newElement = new Element(ElementType.CHART, newChart);
+                    newScene.addElement(newElement);
+                    newElement.start(jsonObj[i]._elements[m]._start);
+                    newElement.duration(jsonObj[i]._elements[m]._duration);
+                    //animation
+                    for(let n=0;n<jsonObj[i]._elements[m]._animations.length;n++){
+                    aniM = jsonObj[i]._elements[m]._animations[n];
+                    animation = new AnimationModel(aniM._type, aniM._name);
+                    animation.start(aniM._start);
+                    animation.duration(aniM._duration);
+                    newElement.add(animation);
+                    }
+            break;
+            case ElementType.SHAPE:
+                    const newShape = new ShapeInfo(newE.shapeType, newE.x, newE.y, newE.rotation, newE.color,newE.opacity,newE.width,newE.height,newE.stroke,newE.strokeWidth,newE.shadowColor,newE.shadowBlur,newE.cornerRadius,newE.numPoints,newE.pointerLength,newE.pointerWidth,newE.isPosTool);
+                    newElement = new Element(ElementType.SHAPE, newShape);
+                    newScene.addElement(newElement);
+                    newElement.start(jsonObj[i]._elements[m]._start);
+                    newElement.duration(jsonObj[i]._elements[m]._duration);
+                    //animation
+                    for(let n=0;n<jsonObj[i]._elements[m]._animations.length;n++){
+                        aniM = jsonObj[i]._elements[m]._animations[n];
+                        animation = new AnimationModel(aniM._type, aniM._name);
+                        animation.start(aniM._start);
+                        animation.duration(aniM._duration);
+                        newElement.add(animation);
+                        }
+            break;
+            case ElementType.VIDEO:
+                    const newVideo = new VideoInfo(newE.name, newE.src, newE.x, newE.y, newE.width, newE.height, newE.rotation, newE.opacity);
+                    newElement = new Element(ElementType.VIDEO, newVideo);
+                    newScene.addElement(newElement);
+                    /////////////无法被解析/////////////
+                    //todo:对拿到的video素材重新解析，加入素材列表              
+                    //二次载入的audio没有seekable属性，无法播放
+                    newElement.start(jsonObj[i]._elements[m]._start);
+                    newElement.duration(jsonObj[i]._elements[m]._duration);
+                    //animation
+                    for(let n=0;n<jsonObj[i]._elements[m]._animations.length;n++){
+                        aniM = jsonObj[i]._elements[m]._animations[n];
+                        animation = new AnimationModel(aniM._type, aniM._name);
+                        animation.start(aniM._start);
+                        animation.duration(aniM._duration);
+                        newElement.add(animation);
+                        }
+            break;
+            case ElementType.AUDIO:
+                    //const newAudio = new AudioInfo(newE.name, newE.src, newE.duration, newE.backgroundmusic, newE.volume);
+                    const newAudio = new AudioInfo(newE.name,newE.src,Math.round( newE.duration),newE.backgroundmusic, newE.volume);
+                    newElement = new Element(ElementType.AUDIO, newAudio);
+                    /////////////无法被解析/////////////
+                    //todo:对拿到的audio素材重新解析，加入素材列表，              
+                    //二次载入的audio没有seekable属性，无法播放
+                    //add audioResource to audioList
+                    let audioResource = {};
+                    audioResource.id = newElement.id();
+                    audioResource.element = newAudio;
+                    newScene.addAudio(audioResource);
+                    newScene.addElement(newElement);
+                    newElement.start(jsonObj[i]._elements[m]._start);
+                    newElement.duration(jsonObj[i]._elements[m]._duration);
+                    //no animation
+
+
+
+            break;
+            default:
+                //TODO: remove
+                //console.log("wrong!!!!!!!");
+            return;
+            }
+
+
+         }  //element for
+
+       
+        }//scene for
+
+
+    })
+     return false;
+    }
+
+
+
+
+
+
+    saveProject = () => {
+        this.showSaveModal();
+
+    };
+
+
+    showSaveModal = () => {
+        this.setState({
+            saveVisible: true,
+        });
+    };
+
+
+    saveChange = e => {
+            saveName = e.target.value;
+        }
+
+    
+    saveOk = () => {
+        
+        var FileSaver = require('file-saver');
+    //     // 声明cache变量，便于匹配是否有循环引用的情况，去掉循环会导致项目打不开
+    //     var cache = [];
+    //     var filecontent = JSON.stringify(this.props.scenes, function(key, value) {
+    //     if (typeof value === 'object' && value !== null) {
+    //       if (cache.indexOf(value) !== -1) {
+    //            // 移除
+    //          return;
+    //       }
+    //      // 收集所有的值
+    //      cache.push(value);
+    //  }
+    //     return value;
+    //     });
+    //     cache = null; // 清空变量，便于垃圾回收机制回收
+ 
+        let scenesWithoutCircular = this.props.scenes;
+        for(let i=0;i<scenesWithoutCircular.length;i++){
+            //去除audio和video的循环引用信息，才能被转化保存，否则报错
+            scenesWithoutCircular[i]._audios = "";
+            scenesWithoutCircular[i]._videos = "";   
+            scenesWithoutCircular[i]._videoTags = "";   
+        }  
+
+        //var filecontent =  JSON.stringify(this.props.scenes);
+        var filecontent =  JSON.stringify(scenesWithoutCircular);;
+        var file = new File([filecontent], saveName+".idv", {type: "text/plain;charset=utf-8"});//特殊后缀名
+        FileSaver.saveAs(file);
+
+        this.setState({
+            saveVisible: false,
+        });
+    };
+
+
+    saveCancel = () => {
+        this.setState({
+            saveVisible: false,
+        });
+    };
+
+
 
     tick() {
         if (this.state.remainTime === 0) {
@@ -182,8 +440,20 @@ export default class HeaderBar extends Component {
                 <Button type="primary" icon="logout" shape="round"  onClick={this.logout} style={{ float: 'right', marginLeft: 12 } }>
                      Logout
                 </Button>
+                <Upload 
+                        showUploadList={false}
+                        accept=".idv"  //后缀名
+                        beforeUpload={this.importProject}
+                        >
+                 <Button type="primary" shape="round" style={{  marginLeft: 12 }}>
+                     <Icon type="import" /> Import
+                 </Button>
+                </Upload>
                 <Button type="primary" icon="export" shape="round" style={{ float: 'right', marginLeft: 12 }} onClick={this.showModal}>
                     Export
+                </Button>
+                <Button type="primary" icon="save" shape="round" style={{ float: 'right', marginLeft: 12 }} onClick={this.saveProject}>
+                    Save
                 </Button>
                 <Button type="primary" shape="round" icon={this.state.isVideoPerforming?"pause":"caret-right"} onClick={this.play} style={{ float: 'right', marginLeft: 12 } }>
                     Preview
@@ -215,6 +485,20 @@ export default class HeaderBar extends Component {
                     <p>Recording...</p>
                     <p>{this.formatSeconds(this.state.remainTime)} remaining</p>
                     <p>Please don't leave this page!</p>
+                </Modal>
+                <Modal
+                    visible={this.state.saveVisible}
+                    onOk={this.saveOk}
+                    onCancel={this.saveCancel}
+                    title="Input FileName"
+                    mask={false}
+                    maskClosable={true}
+                >
+                    <Input placeholder="dataVideo" 
+                    allowClear
+                    onChange = {value => this.saveChange(value)}
+                    />
+                    Attention：cannot save video audio gif and path animation !
                 </Modal>
             </div>
         )

@@ -25,6 +25,8 @@ const mapDispatchToProps = dispatch => {
         removeScene: (index) => dispatch(videoActions.removeScene(index)),
         updateScene: (index, scene) => dispatch(videoActions.updateScene(index, scene)),
         reorderScene: (sourceIndex, destinationIndex) => dispatch(videoActions.reorderScene(sourceIndex, destinationIndex)),
+        addProject: (source) => dispatch(videoActions.addProject(source)),
+        removeProject: () => dispatch(videoActions.removeProject()),
         displayTrackEditor: () => dispatch(uiActions.displayTrackEditor()),
     }
 }

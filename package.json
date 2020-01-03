@@ -9,6 +9,7 @@
     "canvg": "^2.0.0",
     "customize-cra": "^0.4.1",
     "d3": "5.12.0",
+    "file-saver": "^2.0.2",
     "fix-webm-duration": "^1.0.0",
     "gif-frames": "^1.0.1",
     "http-proxy-middleware": "^0.20.0",

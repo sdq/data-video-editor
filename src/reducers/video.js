@@ -4,10 +4,17 @@ import scenes from '../yicai-demo';
 //import scenes from '../car-demo';
 import _ from 'lodash';
 
+let initialPast = [];
+let initialFuture = [];
+for (let i=0;i<(scenes.length+1);i++){
+    initialPast.push([]);
+    initialFuture.push([]);
+}
+
 const initialState = {
     //根据数据更改
-    past:[[],[],[],[],[]],
-    future:[[],[],[],[],[]],
+    past:initialPast,
+    future:initialFuture,
     scenes: scenes,
     index: 1,
 };
@@ -33,8 +40,8 @@ export default (state = initialState, action) => {
             newState.future.splice(action.index, 1);
             newScenes.splice(action.index, 1);
             newState.scenes = newScenes;
-            // newState.video.remove(action.index)
-            newState.index = 0;
+            //newState.video.remove(action.index)
+            newState.index = action.index>0?action.index-1:0;//定位到上一个
             return newState
         case ActionType.UPDATE_SCENE:
             newPast[action.index].push(_.cloneDeep(newScenes[action.index]));
@@ -68,6 +75,15 @@ export default (state = initialState, action) => {
             newState.scenes = newScenes;
             //newState.video.update(action.index, action.scene);
             return newState;
+        case ActionType.ADD_PROJECT:
+            return newState;
+        case ActionType.REMOVE_PROJECT:
+            newState.past.length = 1;
+            newState.future.length = 1;
+            newScenes.length = 1;//clear to at least one scene
+            newState.scenes = newScenes;
+            newState.index = 0;
+            return newState;        
         default:
             return state
     }
