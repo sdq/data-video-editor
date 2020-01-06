@@ -1,5 +1,5 @@
 import axios from '@/axios'
-import { message } from 'antd';
+//import { message } from 'antd';
 import config from '@/constants/ApiConfig';
 import qs from 'qs';
 
@@ -14,10 +14,19 @@ var composeUrl = (url, param) => {
     }
     return result;
 }
-
+var composeUrl1 = (url, param) => {
+    let result = url;
+    param = {
+        ...param,
+    };
+    if (typeof param === 'object' && Object.keys(param).length !== 0) {
+        result += `?${qs.stringify(param)}`;
+    }
+    return result;
+}
 var request = ({ url, method, param, data }) => {
     //console.log("request...",data)
-    return new Promise((reslove,reject) => {
+    return new Promise((reslove, reject) => {
         axios({
             method: method,
             url: composeUrl(url, param),
@@ -27,15 +36,60 @@ var request = ({ url, method, param, data }) => {
                 reslove(response.data);
             } else {
                 reject();
-                message.error('error message');
+               // message.error('error message');
             }
         }).catch(error => {
             reject();
-            message.error('error message');
+          //  message.error('error message');
         })
     })
 };
+
+var request1 = ({ url, method, param, data }) => {
+    //console.log("request...",data)
+    return new Promise((reslove, reject) => {
+        axios({
+            method: method,
+            //不带api-key
+            url: composeUrl1(url, param),
+            data: data
+        }).then((response) => {
+            //console.log("request1",response)
+            if (response.status === 200) {
+                reslove(response.data);
+            } else {
+                reject();
+               // message.error('error message');
+            }
+        }).catch(error => {
+            reject();
+           // message.error('error message');
+        })
+    })
+};
+
 var WebApi = {
+    checkUser: function (name, psw) {
+        return request1({
+            url: '/login',
+            method: 'post',
+            data: {
+                phone: name,
+                password: psw
+            }
+        })
+    },
+    registerUser: function (name, psw, userFolderId) {
+        return request1({
+            url: '/register',
+            method: 'post',
+            data: {
+                phone: name,
+                password: psw,
+                userFolderId: userFolderId,
+            }
+        })
+    },
     CreatNewFolder: function (name, parentId) {
         return request({
             url: config.api.asset,
@@ -105,7 +159,7 @@ var WebApi = {
         })
 
     },
-    SearchAssets(parentId,value,assetType){
+    SearchAssets(parentId, value, assetType) {
         return request({
             url: config.api.assetList,
             method: 'get',

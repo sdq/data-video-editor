@@ -80,7 +80,7 @@ export default class EditorView extends Component {
         return (
             <div id="editview" style={{ height: windowHeight+'px',width: windowWidth+'px' }}  >
             <DndProvider backend={HTML5Backend}>
-                <HeaderBar/>
+                <HeaderBar history={this.props.history}/>
                 <Layout style={{ height: windowHeight+'px' }}>
                     <Layout style={{ height: contentHeight+'px' }}>
                         <Sider 

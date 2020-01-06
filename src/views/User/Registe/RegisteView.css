@@ -1,0 +1,115 @@
+
+  .loginWrapper{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .formWrapper{
+   width: 30%;
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   margin-bottom: 11px;
+  }
+  .smallTxt{
+    display: flex;
+    flex-direction: row;
+  }
+  .smallTxt div{
+    display: flex;
+    flex: 1;
+    color:#464A5F;
+    font-size:10px;
+  }
+  .loginTxt{
+    display: flex;
+    color:#FCC92F;
+    font-size:10px;
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+  .line{
+    width: 1px;
+    height: 14px;
+    background-color: #6B6E7F;
+    margin: 0 10px;
+  }
+
+
+   .bigTxt{
+    text-align: center;
+    font-size: 30px;
+    color: #4B4E63;
+    margin-bottom: 22px;
+  } 
+  .formWrappe > span:nth-child(2){
+    font-size: 10px;
+    color: #464A5F;
+    text-align: left;
+    margin-bottom: 10px;
+  }
+  .formWrappe > span:nth-child(4){
+    margin-top: 24px;
+    font-size: 10px;
+    color: #464A5F;
+    text-align: left;
+    margin-bottom: 10px;
+  }
+  .formWrapper input{
+    border-bottom: 0.5px solid #6B6E7F;
+    border-top:0px;
+    border-left:0px;
+    border-right:0px;
+    height: 24px;
+    size:10px ;
+  }
+
+  .formWrapper Button{
+    height: 35px;
+    margin-top: 22.5px;
+    border-radius: 21px;
+    border: 1px solid rgba(255,193,7,1);
+    background-color: #FFC107;
+    color: #FFFFFF;
+    font-size:15px;
+  }
+  .logo{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 42px;
+    height: 42px;
+    background-size: 100% 100%;
+    background-repeat: no;
+    background-image: url('../images/logo.png');
+  }
+ .leftRectangle{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 150px;
+  height: 145px;
+  background-size: 100% 100%;
+  background-repeat: no;
+  background-image: url('../images/leftRectangle.png');
+ }
+ .rightRectangle{
+  position: absolute;
+  top: 54px;
+  right: 0;
+  width: 185px;
+  height: 372px;
+  background-size: 100% 100%;
+  background-repeat: no;
+  background-image: url('../images/rightRectangle.png');
+ }
+
+ .ant-checkbox-wrapper{
+   margin-top: 16px;
+   display: flex;
+   font-size: 10px;
+   color: #464A5F;
+  }
