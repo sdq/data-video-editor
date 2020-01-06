@@ -317,8 +317,8 @@ export default class EditToolBar extends Component {
           );
 
         const { isElementSelected, copiedElement, isPerforming, past , future, sceneIndex} = this.props;
-        let currentPast = past[sceneIndex];
-        let currentFuture = future[sceneIndex];
+        let currentPast = past[sceneIndex]?past[sceneIndex]:0;//避免删除问题
+        let currentFuture = future[sceneIndex]?future[sceneIndex]:0;
         return (
             <div id='edittoolbar' style={{ background: Color.LIGHT_ORANGE }}> 
                 <ButtonGroup style = { {margin: '10px 0px 0px 20px', float:'left'} }>

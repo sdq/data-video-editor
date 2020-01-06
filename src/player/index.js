@@ -57,6 +57,8 @@ export default class Player {
                     store.dispatch(sceneActions.setPosition(position));
                     AudioController.playAudio(backgroundMusicID);
                     if (index === (n-1)) {
+                    //播放单个场景的停止
+                       console.log("tingzhi",index)
                         this.pauseScene();
                         store.dispatch(sceneActions.setPosition(0));
                     }

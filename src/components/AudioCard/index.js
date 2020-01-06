@@ -23,6 +23,7 @@ const audioSource = {
         const item = monitor.getItem();
 		const dropResult = monitor.getDropResult();
 		if (dropResult) {
+            // console.log(item);
             //if audio for current scene  
             if (dropResult.target === "canvas") {
                 if(!props.info.audio){

@@ -38,4 +38,7 @@ export default {
     // Meta Action
     UNDO_CANVAS: 'UNDO_CANVAS',
     REDO_CANVAS: 'REDO_CANVAS',
+    //Project Action
+    ADD_PROJECT: "ADD_PROJECT",
+    REMOVE_PROJECT: "REMOVE_PROJECT",
 }

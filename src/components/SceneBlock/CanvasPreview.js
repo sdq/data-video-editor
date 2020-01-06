@@ -34,7 +34,6 @@ export default class  extends Component {
     // };
     render() {
         const { scene, sceneIndex } = this.props;
-
         return (
             <div>
                 <Stage width={192} height={108} scale={{x: 192/800, y:192/800}} 
@@ -47,6 +46,7 @@ export default class  extends Component {
                 >
                     <Layer>
                         {scene.elements().map(function(element, index) {
+                            
                             switch (element.type()) {
                                 case ElementType.TEXT:
                                     return <TextElement key={sceneIndex+"-"+index} element={element} name={sceneIndex+"-"+index} draggable = {false} {...this.props}/>

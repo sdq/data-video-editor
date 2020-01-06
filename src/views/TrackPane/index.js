@@ -53,6 +53,9 @@ const mapDispatchToProps = dispatch => {
         stopScene: (sceneIndex) => dispatch(playerActions.stopScene(sceneIndex)),
         //showpath
         displayPathLayer:(isActive) => dispatch(uiActions.displayPathLayer(isActive)),
+        //project
+        addProject: (source) => dispatch(videoActions.addProject(source)),
+        removeProject: () => dispatch(videoActions.removeProject()),
     }
 }
 

@@ -83,7 +83,6 @@ export default class StorylinePane extends Component {
                                 style={getListStyle(snapshot.isDraggingOver)}
                                 >
                                     {this.props.scenes.map(function(scene, index) {
-                                        //console.log(scene);
                                         return <Draggable key={index} draggableId={scene.id()} index={index}>
                                             {(provided, snapshot) => (
                                                 <div

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import uuidv4 from 'uuid/v4';
+import Scene from '@/models/Scene';
 import Color from '@/constants/Color';
 import {Button, Modal} from 'antd';
 import CanvasPreview from './CanvasPreview';
@@ -12,7 +13,6 @@ export default class SceneBlock extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            display: "block",
             visible: false,
         };
         this.clickSceneBlock = this.clickSceneBlock.bind(this);
@@ -60,16 +60,19 @@ export default class SceneBlock extends Component {
       this.setState({
         visible: false,
       });
-       //取消选择
-       this.props.selectScene(0);
-       //this.props.scenes.splice(this.props.sceneIndex,1)
-        //直接执行删除最后场景会报错，setTimeout，将界面先隐藏
         setTimeout(function(){
-            this.props.scenes.splice(this.props.sceneIndex,1)
-        }.bind(this), 100);
-        this.setState({
-            display: "none",
-        });
+            //删除后props.sceneIndex不会挪动
+            if(this.props.scenes.length===1){
+                const newScene =new Scene("blank", 700);
+                this.props.updateScene(this.props.sceneIndex, newScene);
+               
+            }else{
+                //this.props.scenes.splice(this.props.sceneIndex,1)
+                this.props.removeScene(this.props.sceneIndex);
+            }
+                //this.props.scenes.splice(this.props.sceneIndex,1)
+           }.bind(this), 100);
+
     };
   
     handleCancel = e => {
@@ -85,7 +88,7 @@ export default class SceneBlock extends Component {
             onClick={this.clickSceneBlock} 
             onDoubleClick={this.dbclickSceneBlock}                        
             
-            style={{display:this.state.display,borderColor: this.props.isSelected?Color.DEEP_ORANGE:Color.GRAY}}>
+            style={{borderColor: this.props.isSelected?Color.DEEP_ORANGE:Color.GRAY}}>
                 <div className="canvas-preview">
                     <CanvasPreview {...this.props} />
                 </div>
