@@ -6,7 +6,7 @@ import UserTab from './UserTab';
 import DefaultTab from './DefaultTab';
 import './resourcepane.css';
 import WebApi from '@/axios/api';
-import config from '@/constants/ApiConfig';
+//import config from '@/constants/ApiConfig';
 const { TabPane } = Tabs;
 
 let tabName = '';

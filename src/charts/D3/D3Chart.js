@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import ChartImage from '../ChartImage';
 import { AnimationCreator } from '@/animation';
 import canvg from 'canvg';
+import ChartRecorderInstance from '@/recorder/innerAnimation'
+import _ from 'lodash'
 
+const chartRecorderInstance = new ChartRecorderInstance();
 export default class D3Chart extends Component {
 
     constructor(props) {
@@ -15,6 +18,8 @@ export default class D3Chart extends Component {
             isSelecting: false,
         };
         this._animations = [];
+        this.innnerAnimataionTimer = 0;
+        this.recorderTimer = 0;
     }
 
     componentDidMount() {
@@ -31,6 +36,12 @@ export default class D3Chart extends Component {
                 this.renderAnimation();
             } else {
                 this.renderChart();
+                if (!this.props.currentElement) return;
+                //此处没有内部动画（或者用户在手动删除）要清除之前保存的chartVideoURL
+                this.props.currentElement.info().src = null   //这样在双击图表，就不显示录制好的video
+                const newScene = _.cloneDeep(this.props.currentScene);
+                newScene.updateElement(this.props.currentElement, this.props.elementIndex);
+                this.props.updateScene(this.props.sceneIndex, newScene);
             }
         } else if (this.props.pointx !== this.state.pointx && this.props.pointy !== this.state.pointy) {
             // dragging animation
@@ -54,6 +65,10 @@ export default class D3Chart extends Component {
         }
     }
 
+    componentWillUnmount() {
+        this.cancelAnimation();
+    }
+
     renderChart = () => {
         this.cancelAnimation();
         const svg = this.props.draw(this.props);
@@ -69,21 +84,74 @@ export default class D3Chart extends Component {
             });
         }
     }
+    getSvg2ImageUrl = () => {
+        if (!document.getElementsByClassName(this.props.chartId)[0]) {
+            return;
+        }
+        let svg = document.getElementsByClassName(this.props.chartId)[0].getElementsByTagName('svg')[0]
+        let visSourc = svg.innerHTML
+        if (svg) {
+            return this.getImageUrl(visSourc);
+        }
+    }
+
 
     renderAnimation = () => {
         this.cancelAnimation();
+        let canvasOptions = {
+            width: this.props.width,
+            height: this.props.height
+        }
+        //准备录制画布 captureStream
+        chartRecorderInstance.initRecorder(canvasOptions);
+        this.innnerAnimataionTimer = setInterval(() => {
+            //每隔16豪秒截取此刻svg生成image
+            let svg2ImageUrl = this.getSvg2ImageUrl();
+            //绘制到canvas,通过canvas录制
+            chartRecorderInstance.start(svg2ImageUrl)
+        }, 16)
+
         this.setState({
             specString: JSON.stringify(this.props.spec),
         });
         const animations = this.props.spec.animation;
         let animationDelay = 0;
+        //主线程使用的变量
+        let totalDelay = 0;
         for (let index = 0; index < animations.length; index++) {
             const animation = animations[index];
             this._animations.push(setTimeout(function () {
                 this.props.animate(animation, this.props);
             }.bind(this), animationDelay))
             animationDelay += animation.duration;
+            totalDelay += animation.duration;
         }
+        let isRecording = true
+        //是否播放完
+        this.recorderTimer = setTimeout(() => {
+            isRecording = false
+            //关闭录制中弹窗显示 
+            this.props.addRecordingStateListener(isRecording, 0);
+            //播放完毕！ 生成video url
+            clearInterval(this.innnerAnimataionTimer)
+            chartRecorderInstance.finish().then(VideoURL => {
+                if (VideoURL) {
+                    this.props.currentElement.info().src = VideoURL
+                    const newScene = _.cloneDeep(this.props.currentScene);
+                    newScene.updateElement(this.props.currentElement, this.props.elementIndex);
+                    this.props.updateScene(this.props.sceneIndex, newScene);
+                }
+            }, reject => {
+                //用户取消制作chartAnimation过程
+                this.props.currentElement.info().src = null
+                const newScene = _.cloneDeep(this.props.currentScene);
+                newScene.updateElement(this.props.currentElement, this.props.elementIndex);
+                this.props.updateScene(this.props.sceneIndex, newScene);
+            });
+        }, totalDelay)
+        //totalDelay 是为了倒计时的初始值
+        this.props.addRecordingStateListener(isRecording, totalDelay);
+
         // Reset
         // this._animations.push(setTimeout(function () {
         //     this.renderChart();
@@ -94,6 +162,8 @@ export default class D3Chart extends Component {
         for (var i = 0; i < this._animations.length; i++) {
             clearTimeout(this._animations[i]);
         }
+        clearInterval(this.innnerAnimataionTimer)
+        clearTimeout(this.recorderTimer)
     }
 
     getImageUrl = (source) => {
@@ -107,7 +177,7 @@ export default class D3Chart extends Component {
     getImageRef = (ref) => {
         if (!this.imageref && ref) {
             this.imageref = ref;
-            const animations = this.props.animations; 
+            const animations = this.props.animations;
             if (this.props.showAnimation && animations.length !== 0) {
                 let animationCreator = new AnimationCreator(ref);
                 for (let index = 0; index < animations.length; index++) {
@@ -119,14 +189,14 @@ export default class D3Chart extends Component {
                     animationCreator.fromModel(animation).play(current);
                 }
             }
-        } 
+        }
     }
 
     render() {
         if (this.props.onCanvas) {
-            return <ChartImage name={this.props.name} src={this.state.chartImageUrl} getImageRef={this.getImageRef}/>;
+            return <ChartImage name={this.props.name} src={this.state.chartImageUrl} getImageRef={this.getImageRef} />;
         } else {
-            return <div className={this.props.chartId}/>;
+            return <div className={this.props.chartId} />;
         }
     }
 }

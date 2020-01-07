@@ -67,6 +67,7 @@ class ChartPanel extends Component {
                     onCanvas={false} 
                     showChartAnimation={this.props.showChartAnimation}
                     showAnimation={this.props.showAnimation}
+                    {...this.props}
                 />
             </div>
         )

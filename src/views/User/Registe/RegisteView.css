@@ -63,7 +63,7 @@
     border-top:0px;
     border-left:0px;
     border-right:0px;
-    height: 24px;
+    height: 40px;
     size:10px ;
   }
 
@@ -84,7 +84,7 @@
     height: 42px;
     background-size: 100% 100%;
     background-repeat: no;
-    background-image: url('../images/logo.png');
+    background-image: url('https://datavideo.idvxlab.com/images/logo.png');
   }
  .leftRectangle{
   position: absolute;
@@ -94,7 +94,7 @@
   height: 145px;
   background-size: 100% 100%;
   background-repeat: no;
-  background-image: url('../images/leftRectangle.png');
+  background-image: url('https://datavideo.idvxlab.com/images/leftRectangle.png');
  }
  .rightRectangle{
   position: absolute;
@@ -104,7 +104,7 @@
   height: 372px;
   background-size: 100% 100%;
   background-repeat: no;
-  background-image: url('../images/rightRectangle.png');
+  background-image: url('https://datavideo.idvxlab.com/images/rightRectangle.png');
  }
 
  .ant-checkbox-wrapper{
