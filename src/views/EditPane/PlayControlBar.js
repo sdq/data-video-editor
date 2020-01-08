@@ -83,18 +83,17 @@ export default class PlayControlBar extends Component {
     render() {  
         const { isVideoPerforming, isPerforming, isLastScene, isFirstScene } = this.props;
 
-        const canvasW = 800*(this.props.contentHeight-100)/450;
-  
-
         return (
             <div id='playcontrol' style = { { background: Color.LIGHT_ORANGE} }>
                 <Button icon="delete" type="link" style = { {float:"left",margin:"10px 0px 10px 12px"} }  onClick={this.deleteBackgroundMusic}/> 
-                <p style = { {float:"left",margin:"15px 0px 10px 10px",width:"165px",textAlign:"left"} }>Music: {this.state.backgroundMusic}</p>  
-                <ButtonGroup style = { {paddingRight:canvasW/2-120+"px",paddingTop:"10px"}}>
+                <p style = { {float:"left",paddingTop:"15px",marginLeft:"10px",textAlign:"left",zIndex:5} }>Music: {this.state.backgroundMusic}</p>  
+                <div style = { {textAlign:"center",paddingRight: '90px'}}>
+                <ButtonGroup style = { {textAlign:"center",paddingTop:"10px",width:"180px",zIndex:2}}>
                     <Button icon="step-backward" style = { {paddingRight: '20px',paddingLeft:"20px"} } disabled = {isFirstScene || isPerforming} onClick={this.lastScene}/>
                     <Button icon={isPerforming?"pause":"caret-right"} disabled = {isVideoPerforming} onClick={this.playScene} style = { {padding: '0 20px 0 20px'} }/>
                     <Button icon="step-forward" style = { {padding: '0 20px 0 20px'} } disabled = {isLastScene || isPerforming} onClick={this.nextScene}/>
                 </ButtonGroup>
+                </div>
             </div>
         )
     }

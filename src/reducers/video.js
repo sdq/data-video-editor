@@ -1,7 +1,8 @@
 import ActionType from '../actions/types';
-//切换demo
-import scenes from '../yicai-demo';
+//import scenes from '../yicai-demo';
 //import scenes from '../car-demo';
+import scenes from '../blank-demo';//bug
+
 import _ from 'lodash';
 
 let initialPast = [];
@@ -16,7 +17,7 @@ const initialState = {
     past:initialPast,
     future:initialFuture,
     scenes: scenes,
-    index: 1,
+    index: 0,
 };
 
 export default (state = initialState, action) => {

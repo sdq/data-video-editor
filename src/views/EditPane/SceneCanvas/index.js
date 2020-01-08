@@ -210,20 +210,13 @@ export default class EditCanvas extends Component {
             <div id="canvasContainer" 
                  style={{  
                  height: canvasH+'px',
-                 //不同情况下的居中计算
-                 //窗口小于缩放临界值(1388为mac大屏测试结果)的时候，采用尽量适配小窗口的策略
-                 marginLeft:windowWidth<=1388?
-                 (showResourcePane&&showToolPane?"10px"
-                 :!showResourcePane&&showToolPane?(window.innerWidth-300-canvasW)/2+"px"
-                 :showResourcePane&&!showToolPane?(window.innerWidth-360-canvasW)/2+"px"
-                 :(window.innerWidth-canvasW)/2+"px"
-                 //窗口大于缩放临界值的时候，直接进行居中计算
-                 )
-                 :(showResourcePane&&showToolPane?(windowWidth-660-canvasW)/2+'px'
+                 //缩放策略 全局统一缩放
+                 marginLeft:
+                 showResourcePane&&showToolPane?(windowWidth-660-canvasW)/2+'px'
                  :!showResourcePane&&showToolPane?(windowWidth-300-canvasW)/2+'px'
                  :showResourcePane&&!showToolPane?(windowWidth-360-canvasW)/2+'px'
                  :(windowWidth-canvasW)/2+'px'
-                 )
+                 
                 }
             } 
                  >

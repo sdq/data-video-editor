@@ -59,7 +59,8 @@ export default class ResourcePane extends Component {
   }
 
   componentWillMount() {
-    let parentId = config.userFolderId;
+    //let parentId = config.userFolderId;
+    let parentId = 4962;///test
     //console.log("parentId...",parentId)
     let type = 'folder'
     WebApi.GetAssetsInExistingFolder(parentId, type).then(this.GetAsset).then(resolve => {
@@ -97,7 +98,8 @@ export default class ResourcePane extends Component {
     })
   }
   addTab = (name) => {
-    let parentId = config.userFolderId;
+     let parentId = 4962;/////////////////////////test
+    //let parentId = config.userFolderId;
     WebApi.CreatNewFolder(name, parentId).then((resolve) => {
       //console.log("FolderId...", resolve)
       let id = resolve.data.id;
