@@ -27,6 +27,8 @@ export default class LogInView extends Component {
             //console.log("config",reslove.data.userFolderId)
             this.props.history.push('/index')
         }, reject => {
+
+
             //console.log("WebApi...",reject)
             message.error("用户名或密码不正确！请再次输入")
             return;

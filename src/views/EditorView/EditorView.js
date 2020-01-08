@@ -18,20 +18,24 @@ const { Sider, Content } = Layout;
 
 export default class EditorView extends Component {
         state = {
-            windowWidth:window.innerWidth>1300?window.innerWidth:1300,
-            windowHeight:window.innerHeight>820?window.innerHeight:820,
-            contentHeight:window.innerHeight>820?window.innerHeight-370:450,
-            contentWidth:window.innerWidth>1300?window.innerWidth-660:800,
+            windowWidth:window.innerWidth,
+            windowHeight:window.innerHeight,
+            contentHeight:window.innerHeight-370,
+            contentWidth:window.innerWidth-660,
             scrollLeft:0,
         };
 
 
     componentWillMount() {  //初始化获取窗口大小   
         this.setState({
-            windowWidth:window.innerWidth>1300?window.innerWidth:1300,
-            windowHeight:window.innerHeight>820?window.innerHeight:820,
-            contentHeight:window.innerHeight>820?window.innerHeight-370:450,
-            contentWidth:window.innerWidth>1300?window.innerWidth-660:800,
+            windowWidth:window.innerWidth,
+            windowHeight:window.innerHeight,
+            contentHeight:window.innerHeight-370,
+            contentWidth:window.innerWidth-660,
+            // windowWidth:window.innerWidth>1300?window.innerWidth:1300,
+            // windowHeight:window.innerHeight>820?window.innerHeight:820,
+            // contentHeight:window.innerHeight>820?window.innerHeight-370:450,
+            // contentWidth:window.innerWidth>1300?window.innerWidth-660:800,
         })
       }
 
@@ -47,10 +51,10 @@ export default class EditorView extends Component {
 
     handleResize = e => {
         this.setState({
-            windowWidth:window.innerWidth>1300?window.innerWidth:1300,
-            windowHeight:window.innerHeight>820?window.innerHeight:820,
-            contentHeight:window.innerHeight>820?window.innerHeight-370:450,
-            contentWidth:window.innerWidth>1300?window.innerWidth-660:800,
+            windowWidth:window.innerWidth,
+            windowHeight:window.innerHeight,
+            contentHeight:window.innerHeight-370,
+            contentWidth:window.innerWidth-660,
         })
       }
 

@@ -11,8 +11,9 @@ class App extends Component {
   render() {
     return (
         <Router history  = {customHistory}>
-            <Route exact path='/' component={LoginView}/>
-            <Route exact path="/index" component={EditorView} />
+            {/* <Route exact path='/' component={LoginView}/>
+            <Route exact path="/index" component={EditorView} /> */}
+            <Route exact path="/" component={EditorView} />
             <Route exact path="/register" component={RegisteView} />
             <Route exact path="/projects" component={ProjectView} />
             <Route exact path="/editor" component={EditorView} />

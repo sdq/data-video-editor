@@ -70,11 +70,6 @@ export default class HeaderBar extends Component {
             if(jsonObj[i]._backgroundImage){newScene.backgroundImage(jsonObj[i]._backgroundImage)}
             if(jsonObj[0]._backgroundMusic){newScene.backgroundMusic(jsonObj[0]._backgroundMusic)}//要对背景音乐做特殊处理
 
-            if(i===0){ //For first scene, update
-                this.props.updateScene(this.props.sceneIndex, newScene);}
-                else{  //for other scene , add
-                this.props.addScene(newScene);
-                }
             //element duration start animation
             for(let m=0;m<jsonObj[i]._elements.length;m++){
             let newE = jsonObj[i]._elements[m]._info;
@@ -96,6 +91,7 @@ export default class HeaderBar extends Component {
                     animation = new AnimationModel(aniM._type, aniM._name);
                     animation.start(aniM._start);
                     animation.duration(aniM._duration);
+                    animation.pathinfo(aniM._pathinfo);
                     newElement.add(animation);
                     }
             break;
@@ -109,9 +105,10 @@ export default class HeaderBar extends Component {
                      //animation
                     for(let n=0;n<jsonObj[i]._elements[m]._animations.length;n++){
                     aniM = jsonObj[i]._elements[m]._animations[n];
-                    animation = new AnimationModel(aniM._type, aniM._name);
+                    animation = new AnimationModel(aniM._type, aniM._name,);
                     animation.start(aniM._start);
                     animation.duration(aniM._duration);
+                    animation.pathinfo(aniM._pathinfo);
                     newElement.add(animation);
                     }
 
@@ -130,6 +127,7 @@ export default class HeaderBar extends Component {
                     animation = new AnimationModel(aniM._type, aniM._name);
                     animation.start(aniM._start);
                     animation.duration(aniM._duration);
+                    animation.pathinfo(aniM._pathinfo);
                     newElement.add(animation);
                     }
             break;
@@ -145,6 +143,7 @@ export default class HeaderBar extends Component {
                     animation = new AnimationModel(aniM._type, aniM._name);
                     animation.start(aniM._start);
                     animation.duration(aniM._duration);
+                    animation.pathinfo(aniM._pathinfo);
                     newElement.add(animation);
                     }
             break;
@@ -160,6 +159,7 @@ export default class HeaderBar extends Component {
                         animation = new AnimationModel(aniM._type, aniM._name);
                         animation.start(aniM._start);
                         animation.duration(aniM._duration);
+                        animation.pathinfo(aniM._pathinfo);
                         newElement.add(animation);
                         }
             break;
@@ -178,6 +178,7 @@ export default class HeaderBar extends Component {
                         animation = new AnimationModel(aniM._type, aniM._name);
                         animation.start(aniM._start);
                         animation.duration(aniM._duration);
+                        animation.pathinfo(aniM._pathinfo);
                         newElement.add(animation);
                         }
             break;
@@ -208,18 +209,23 @@ export default class HeaderBar extends Component {
             }
 
 
-         }  //element for
+         }//element for
 
        
+         //先添加上element，再addscene，保证加载项目及时显示画面元素
+         if(i===0){ //For first scene, update
+            this.props.updateScene(this.props.sceneIndex, newScene);}
+            else{  //for other scene , add
+            this.props.addScene(newScene);
+            }
+         
+
         }//scene for
-
-
     })
+
+
      return false;
     }
-
-
-
 
 
 
