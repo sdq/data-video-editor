@@ -231,12 +231,12 @@ export default class ResourcePane extends Component {
       <div className="card-container" style={{height:this.props.contentHeight-100+"px"}}>
         <Spin tip="Loading..." spinning={this.state.loading}>
           <Tabs tabPosition="left" type="editable-card" onEdit={this.onEdit} onChange={this.changeTab}>
-            <TabPane
+            {/* <TabPane
               tab={<div style={tabIconStyle}><Icon type="user" /></div>}
               key="User"
               closable={false}>
               <UserTab {...this.props} />
-            </TabPane>
+            </TabPane> */}
             <TabPane
               tab={<div style={tabIconStyle}><Icon type="appstore" /></div>}
               key="Illustration"
