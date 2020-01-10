@@ -158,14 +158,14 @@ class EditableTable extends Component {
                     <Table
                         components={components}
                         bordered
-                        size={'middle'}
+                        size={'small'}
                         dataSource={this.props.dataSource}
                         columns={columns}
                         scroll={{ x: 1000}}
                         rowKey={columns[0].title}
                         rowClassName="editable-row"
                         pagination={{
-                            pageSize: 5,
+                            pageSize: 6,
                             onChange: this.cancel,
                         }}
                     />

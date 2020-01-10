@@ -35,7 +35,7 @@ export default class AnimationSetting extends Component {
                     <div style={{float: 'left', display: 'inline-block', width: 36, height: 34, backgroundColor: color, padding: 5}}>
                         <h3 style={{color:'white', paddingLeft:8}}>{taskIcon}</h3>
                     </div>
-                    <div style={{float: 'left', marginLeft: 'inline-block', width: 342, height: 35, backgroundColor: color+'3C', whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden', padding: 6}}>
+                    <div style={{float: 'left', marginLeft: 'inline-block', width: 342, height: 35, backgroundColor: color+'3C', whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden', padding: 8}}>
                         {description}
                     </div>
                 </div>

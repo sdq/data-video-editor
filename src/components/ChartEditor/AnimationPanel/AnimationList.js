@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { List, Divider, Row, Col } from 'antd';
+import { List, Divider, Row, Col ,Tag,Tooltip} from 'antd';
 import AnimationCard from './AnimationCard';
 import { getAnimations } from '@/charts/Info';
 
@@ -12,17 +12,22 @@ export default class AnimationList extends Component {
         for (const task in animations) {
             taskAnimations.push(
                 <Row key={task} style={{ height: 50 }}> 
-                    <Col span={7}><h4 style={{marginLeft: 12}}>{task}</h4></Col>
-                    <Col span={17}>
-                        <List
-                            grid={{ gutter: 2, column: 4 }}
-                            dataSource={animations[task]}
-                            renderItem={animation => (
-                            <List.Item>
-                                <AnimationCard animation={animation} {...this.props}/>
-                            </List.Item>
-                            )}
-                        />
+                    <Col span={8}><h4 style={{marginLeft: 12}}>{task}</h4></Col>
+                    <Col span={16}>
+                     {animations[task].map((animation, index) => {
+                     const isLongTag = animation.title.length > 20;
+                        const tagElem = (
+                         <Tag key={animation.title} style={{border:"none",marginLeft:"0px",marginRight:"0px",marginBottom:"6px"}}>
+                        <AnimationCard animation={animation} {...this.props}/>
+                         </Tag>
+                    );
+                 return isLongTag ? (
+                     <Tooltip title={animation.title} key={animation.title}>
+                     </Tooltip>
+                     ) : (
+                      tagElem
+                     );
+                     })}      
                     </Col>
                 </Row>
             )
@@ -30,7 +35,7 @@ export default class AnimationList extends Component {
         return (
             <div>
                 <Divider>Tasks</Divider>
-                <div className={'animation-list-container'}>
+                <div className={'animation-list-container'} >
                     {taskAnimations}
                 </div>
             </div>

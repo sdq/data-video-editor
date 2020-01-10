@@ -41,7 +41,9 @@ class Shelf extends Component {
             <div>
                 <Row className="shelf">
                     <Col span={4} className="channelName">{this.props.channel.name}</Col>
-                    <Col span={ this.props.channel.isEncoded ? 14 : 18} className="channelSlot" style={{ backgroundColor: backgroundColor, color: this.props.channel.isEncoded ? "#ffffff" : "#37415C" }}>{this.props.channel.isEncoded ? this.props.channel.field : 'drop field here'}</Col>
+                    <Col span={ this.props.channel.isEncoded ? 14 : 18} className="channelSlot" 
+                    style={{ backgroundColor: backgroundColor, color: this.props.channel.isEncoded ? "#ffffff" : "#37415C"}}>
+                        {this.props.channel.isEncoded ? this.props.channel.field : 'drop field here'}</Col>
                     <Col span={ this.props.channel.isEncoded ? 4 : 0} className="channelSlot" style={{ backgroundColor }}>
                         <Button shape="circle" type="link" ghost size="small" icon="close" onClick={this.removeEncoding}/>
                     </Col>

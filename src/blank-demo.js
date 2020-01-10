@@ -14,14 +14,13 @@ const demotext = new TextInfo(
     40,
 )
 
-
 const element = new Element(ElementType.TEXT, demotext);
-element.duration(4.0);
-const animation0 = new AnimationModel(AnimationType.PRESENTATION_FADEIN, 'Zoomin');//改成flicker
-animation0.start(0);
-animation0.duration(3);
+element.duration(8.0);
+const animation0 = new AnimationModel(AnimationType.PRESENTATION_FADEIN, 'FADEIN');
+animation0.start(3);
+animation0.duration(8);
 element.add(animation0);
-const scene1 = new Scene("welcome page", 4.0);
+const scene1 = new Scene("welcome page", 10.0);
 scene1.addElement(element);
 
 
