@@ -8,13 +8,13 @@ import GridLines from './GridLines';
 import TextEditor from './TextEditor';
 import GifEditor from './GifAnimator';
 import VideoEiditor from './VideoAnimator'
-// import ChartInteractionArea from './ChartInteractionArea';
+import ChartInteractionArea from './ChartInteractionArea';
 
 export default class InteractionArea extends Component {
 
     render() {
 
-        const { showAnimationTargetArea, showResourceTargetArea, showMusicTargetArea, showAssistLines, showTextEditor, showGridLines, showGifEditor, showVideoEditor } = this.props;
+        const { showAnimationTargetArea, showResourceTargetArea, showMusicTargetArea, showAssistLines, showTextEditor, showGridLines, showGifEditor, showVideoEditor, showChartPreview } = this.props;
         return ( 
             <div style={{position:'absolute', zIndex:1}}>
                 {showAnimationTargetArea?<AnimationTargetArea {...this.props}/>:null}
@@ -26,7 +26,7 @@ export default class InteractionArea extends Component {
                 {showTextEditor ? <TextEditor {...this.props}/> : null }
                 {showGifEditor ? <GifEditor  {...this.props}/> : null }
                 {showVideoEditor ? <VideoEiditor {...this.props}/> : null}
-                {/* {showChartPreview ? <ChartInteractionArea  {...this.props}/> : null } */}
+                {showChartPreview ? <ChartInteractionArea  {...this.props}/> : null }
             </div>
         )
     }

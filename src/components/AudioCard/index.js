@@ -33,6 +33,8 @@ const audioSource = {
                 const newScene = _.cloneDeep(dropResult.currentScene);
                 const newAudio = new AudioInfo(item.name,item.src,Math.round( props.info.audio && props.info.audio.duration));
                 const newElement = new Element(ElementType.AUDIO, newAudio);
+                //解析音频时长
+                newElement.duration(Math.round( props.info.audio && props.info.audio.duration))
                 newScene.addElement(newElement);
                 //add audioResource to audioList
                 let audioResource = {};

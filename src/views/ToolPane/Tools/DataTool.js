@@ -4,10 +4,13 @@ import DataPreview from '@/components/DataPreview';
 import ChartEditor from '@/components/ChartEditor';
 import SimpleDataPreview from '@/components/DataPreview/SimpleDataPreview';
 import DataProcessor from '@/components/DataPreview/processor';
+import ChartRecorderInstance from '@/recorder/innerAnimation';
+import _ from 'lodash'
 
 const { Dragger } = Upload;
 const { Option } = Select;
 const dataProcessor = new DataProcessor();
+const chartRecorderInstance = new ChartRecorderInstance();
 
 export default class DataTool extends Component {
 
@@ -124,7 +127,14 @@ export default class DataTool extends Component {
             datavisible: false,
         });
     };
-
+    handleChartEditorCancel = () => {
+        //关闭录制
+        chartRecorderInstance.stop()
+        this.setState({
+            chartvisible: false,
+            datavisible: false,
+        });
+    }
     beforeUpload = (file) => {
         const fileURL = URL.createObjectURL(file);
         dataProcessor.process(fileURL)
@@ -151,24 +161,24 @@ export default class DataTool extends Component {
     }
 
     render() {
-        let { dataNameList, currentData} = this.props;
+        let { dataNameList, currentData } = this.props;
         const text = 'Are you sure to change chart data?（All the encodings will be emptied.）';
         return (
-            <div style={{ padding: '0px 10px 10px 10px', fontSize: '14px', backgroundColor: 'white',height:this.props.contentHeight-140+'px',overflow: 'auto' }}>
-                <div  style={{height:'120px'}} >
-                <Dragger
-                    accept=".csv"
-                    showUploadList={false}
-                    beforeUpload={this.beforeUpload}
+            <div style={{ padding: '0px 10px 10px 10px', fontSize: '14px', backgroundColor: 'white', height: this.props.contentHeight - 140 + 'px', overflow: 'auto' }}>
+                <div style={{ height: '120px' }} >
+                    <Dragger
+                        accept=".csv"
+                        showUploadList={false}
+                        beforeUpload={this.beforeUpload}
                     >
-                    <p className="ant-upload-drag-icon">
-                        <Icon type="inbox" />
+                        <p className="ant-upload-drag-icon">
+                            <Icon type="inbox" />
+                        </p>
+                        {/* <p className="ant-upload-text">Click or drag csv file to this area</p> */}
+                        <p className="ant-upload-hint">
+                            Click or drag csv file to this area
                     </p>
-                    {/* <p className="ant-upload-text">Click or drag csv file to this area</p> */}
-                    <p className="ant-upload-hint">
-                        Click or drag csv file to this area
-                    </p>
-                </Dragger>
+                    </Dragger>
                 </div>
                 <Select id="data-selection"
                     value={currentData.name}
@@ -208,7 +218,7 @@ export default class DataTool extends Component {
                     currentData={currentData}
                     visible={this.state.chartvisible}
                     handleOk={this.handleChartOk}
-                    handleCancel={this.handleCancel}
+                    handleCancel={this.handleChartEditorCancel}
                     {...this.props}
                 />
                 <Alert style={{ display: this.state.alertvisible === false ? 'none' : 'block', position: 'fixed', top: 110, width: 280 }} message="Error: Failed to load data." type="error" showIcon closable />

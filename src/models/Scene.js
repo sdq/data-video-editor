@@ -111,7 +111,7 @@ export default class Scene {
                 element.duration(this.duration());
             }
         } else if (element.duration() > this.duration()) {
-            element.duration(this.duration());
+            // element.duration(this.duration());
             this.duration(element.duration()); // update scene duration
         }
         let fragment = new Fragment(0, element.duration());

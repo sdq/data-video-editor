@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import EditorView from './views/EditorView';
 import ProjectView from './views/ProjectView';
-import LoginView from './views/User/Login/LogInView'
+//import LoginView from './views/User/Login/LogInView'
 import RegisteView from './views/User/Registe/RegisteView'
 
 import { BrowserRouter as Router, Route } from "react-router-dom";

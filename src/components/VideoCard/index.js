@@ -31,6 +31,7 @@ const videoSource = {
                 //add element to scene
                 const newScene = _.cloneDeep( dropResult.currentScene);
                 let videoElement = props.info.videoElement;
+                if(!videoElement) return;
                 //console.log("videoElement.duration...",videoElement.duration)
                  ////获取鼠标结束拖拽的位置，基于canvas基点计算位置
                  let e = window.event;       //Firefox下是没有event这个对象的！！
@@ -44,6 +45,8 @@ const videoSource = {
 
                 const newVideo = new VideoInfo(item.name, item.src, videoElement.duration, x/scale, y/scale, videoElement.clientWidth, videoElement.clientHeight, 0);
                 const newElement = new Element(ElementType.VIDEO, newVideo);
+                //解析视频时长
+                newElement.duration(videoElement.duration)
                 newScene.addElement(newElement);
                 //add videoResource to audioList
                 let videoResource = {};
