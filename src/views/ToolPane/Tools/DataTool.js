@@ -5,7 +5,7 @@ import ChartEditor from '@/components/ChartEditor';
 import SimpleDataPreview from '@/components/DataPreview/SimpleDataPreview';
 import DataProcessor from '@/components/DataPreview/processor';
 import ChartRecorderInstance from '@/recorder/innerAnimation';
-import _ from 'lodash'
+//import _ from 'lodash'
 
 const { Dragger } = Upload;
 const { Option } = Select;
