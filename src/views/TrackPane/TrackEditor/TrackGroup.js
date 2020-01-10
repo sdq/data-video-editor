@@ -46,6 +46,7 @@ export default class TrackGroup extends Component {
     render() {
         let { currentScene, barActiveList } = this.props;
         let elements = currentScene.elements();
+        //console.log("显示元素",elements)
         return (
             <div className="track-group">
                 <DragDropContext onDragEnd={this.onDragEnd} onDragStart={this.onDragStart}>
@@ -57,9 +58,11 @@ export default class TrackGroup extends Component {
                             style={getListStyle(snapshot.isDraggingOver)}
                             >
                                 {elements.map((element, index) => {
+                                //console.log("elements.map",element.type(),element)
                                  let isbackgroundMusic = element.info().backgroundmusic?element.info().backgroundmusic:false;
                                     switch (element.type()) {
                                         case ElementType.AUDIO:
+                                            //console.log("isbackgroundMusic...",isbackgroundMusic,element)
                                             if(isbackgroundMusic){
                                                 return null;
                                             }else{

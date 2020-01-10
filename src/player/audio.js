@@ -62,7 +62,7 @@ export default class AudioController {
         //     this._audioResources = audioResourceswithBackMusic;
         // }
         //控制第一屏不播放
-
+        if(!this._audioResources) return
         this._audioResources.map(item => {
             this.isAudioCanPlays.push(AudioState.NOTREADY);
             this.audioPlayPosition.push(0);

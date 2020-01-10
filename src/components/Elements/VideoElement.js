@@ -84,11 +84,11 @@ export default class VideoElement extends Component {
     }
 
     componentWillUnmount() {
-        //console.log("componentWillUnmount....")
-        if (this.state.video) {
-            this.state.video.pause();
-            //console.log("pause....")
-        }
+        console.log("componentWillUnmount....",this.state.video)
+        // if (this.state.video && !this.state.video.paused) {
+        //     this.state.video.pause();
+        //     //console.log("pause....")
+        // }
     }
 
     loadVideo() {

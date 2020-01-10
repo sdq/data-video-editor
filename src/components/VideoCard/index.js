@@ -48,7 +48,7 @@ const videoSource = {
                 //解析视频时长
                 newElement.duration(videoElement.duration)
                 newScene.addElement(newElement);
-                //add videoResource to audioList
+                //add videoResource to videoList
                 let videoResource = {};
                 videoResource.id = newElement.id();
                 //console.log("newElement.id",newElement.id())
@@ -71,7 +71,6 @@ class VideoCard extends Component {
 
     componentDidMount() {
         //console.log("videoPlayer",this.videoPlayer);
-        this.props.info.videoTag = this.videoPlayer && this.videoPlayer.video;
         this.props.info.videoElement = this.videoPlayer && this.videoPlayer.video && this.videoPlayer.video.video;
     }
 

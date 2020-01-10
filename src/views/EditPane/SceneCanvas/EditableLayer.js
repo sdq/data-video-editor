@@ -378,6 +378,7 @@ export default class EditableLayer extends Component {
                         case ElementType.VIDEO:
                             if (this.isElementDisplay(element)) {
                                 let elementTag;
+                                if(!this.props.currentScene.videoTags()) return;
                                 //find video by id in scene
                                 this.props.currentScene.videoTags().map(item => {
                                     if (item.id === element.id()) {

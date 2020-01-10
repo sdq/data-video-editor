@@ -61,6 +61,7 @@ export default class  extends Component {
                                     case ElementType.VIDEO:
                                         let elementTag;
                                         //find video by id in scene
+                                        if(!scene.videoTags()) return;
                                         scene.videoTags().map(item => {
                                             if (item.id === element.id()) {
                                                 elementTag = item.element;
