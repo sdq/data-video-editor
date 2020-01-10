@@ -235,6 +235,7 @@ export default class EditableLayer extends Component {
                     if(lastScale!==e.target.scaleX()){
                         newEle.info().width = newEle.info().width*e.target.scaleX(); 
                         //newEle.info().height = newEle.info().height*e.target.scaleY(); 
+                        //拉伸后的高度计算要包含中英文的宽度
                         newEle.info().height = Math.ceil((this.props.currentElement.info().text.length * this.props.currentElement.info().textSize)/this.props.currentElement.info().width)*this.props.currentElement.info().textSize
                     }
                     newEle.info().rotation = e.target.rotation();

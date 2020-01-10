@@ -37,7 +37,6 @@ export default class TextEditor extends Component {
              //画布伸缩
              const scale = (this.props.contentHeight-100)/450;
 
-
              //不同字体textarea 不同字号 与tranformer的变换伸缩度（暂时忽略其余浏览器）都不同
             let offwidth = 0; 
              //取得浏览器的userAgent字符串
@@ -68,8 +67,6 @@ export default class TextEditor extends Component {
 
             offsetW = (this.props.currentElement) ? this.props.currentElement.info().textSize:20;//基础偏差：一个字的偏差
             offwidth = 0.25-offsetW/500;  //次级偏差：计算伸缩，假定为线性函数（中文） 
-            
-            //TODO://识别换行前是英文还是中文
             //假如换行的是英文，那么换行时就会出现跳行偏差
 
 
@@ -77,16 +74,15 @@ export default class TextEditor extends Component {
              <div className="TextEditor" style={{display: (this.state.isShowTextArea) ? "block" : "none"}} > 
              <textarea
              style={{
-               // apply many styles to match text on canvas as close as possible
-               // remember that text rendering on canvas and on the textarea can be different
-               // and sometimes it is hard to make it 100% the same. But we will try...
+              // apply many styles to match text on canvas as close as possible
+              // remember that text rendering on canvas and on the textarea can be different
+              // and sometimes it is hard to make it 100% the same. But we will try...
               position: "absolute",
               outline: "none",
               border: "0px",
               background:'none',
               color:this.props.currentElement.info().color,
               resize: 'none',
-              autofocus:"autofocus",//设置光标，无效
               lineHeight:(this.props.currentElement) ? this.props.currentElement.info().textSize*scale+'px':'20px',//需要和当前字号相等
               //Elimination of displacement error between textTransform and textEditor
               //判断当前element是否存在，保证编辑时切换scene运行正确
@@ -98,6 +94,9 @@ export default class TextEditor extends Component {
               height:(this.props.currentElement) ? (this.props.currentElement.info().height+offsetH)*scale: 0,
               fillOpacity:0.5
             }}
+            autofocus  //自动获取焦点 no use
+            //cursor={1} //设置光标 no use
+            spellcheck ={false}//关闭拼写检查
             value = {this.state.text}
             onChange={(value) => {this.onTextChange(value)}}
              />

@@ -25,10 +25,10 @@ export default class TextInfo {
             if(reg.test(text[i])){
                widthTemp += textSize;
                lengthTemp += 1;
-               reg.test(text[i]); //没整明白为什么还要再判断一次
+               reg.test(text[i]); //为什么还要再判断一次？
             }else{
                lengthTemp += 0.3;
-               widthTemp += textSize*0.3; // 英文大小为中文的缩小倍数（各种字体不同）
+               widthTemp += textSize*0.3; // 默认英文大小为中文的0.3宽度（但是每个英文字体宽度本身不同，不同字体差别很大，难以适配）
             }
         }
         this.width = text ? widthTemp:width; //the number of text*scale
@@ -36,4 +36,10 @@ export default class TextInfo {
         //this.height = height;//fake height
         this.height = text ? Math.ceil((lengthTemp * textSize)/widthTemp)*textSize : height;// 根据字数、字号、宽度，计算当前行高，不要额外行距,-5为减去最后一行多余行距
     }   
+
+
+
+
+
+
 }

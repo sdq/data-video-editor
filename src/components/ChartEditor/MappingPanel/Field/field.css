@@ -2,7 +2,7 @@
     background-color: #edededcc;
     font-weight: 500;
     margin : 0px 10px -10px 10px;
-    padding: 0px 6px;
+    padding: 3px 6px; /*标签文字居中 */
     width: 200px;
     height: 24px;
     text-align: left;
