@@ -100,11 +100,13 @@ const draw = (props) => {
                     break;
                 case ChartAnimationType.COMPARE_SERIES:
                     choosenAnimation.spec.series1 = seriesNearest;
-                    choosenAnimation.description = "Compare the "+ choosenAnimation.spec.series1 +" and "+ choosenAnimation.spec.series2 +" series";
+                    // choosenAnimation.description = "Compare the "+ choosenAnimation.spec.series1 +" and "+ choosenAnimation.spec.series2 +" series";
+                    choosenAnimation.description = "Compare two series";
                     break;
-                case ChartAnimationType.COMPARE_EXTREME:
+                case ChartAnimationType.COMPARE_EXTREMES:
                     choosenAnimation.spec.series1 = seriesNearest;
-                    choosenAnimation.description = "Compare the " + choosenAnimation.spec.value + " value in the " + choosenAnimation.spec.series1 +" and "+ choosenAnimation.spec.series2 + " series";
+                    // choosenAnimation.description = "Compare the " + choosenAnimation.spec.value + " value in the " + choosenAnimation.spec.series1 +" and "+ choosenAnimation.spec.series2 + " series";
+                    choosenAnimation.description = "Compare the extreme of two series";
                     break;
                 default:
                     break;
@@ -140,11 +142,9 @@ const draw = (props) => {
                 choosenAnimation.description = "Emphasize the value of " + des + " in the " + choosenAnimation.spec.series + " series";
             } else {
                 choosenAnimation.spec.value = current_node ? current_node.data()[0].x :"max";
-                choosenAnimation.spec.series1 = seriesNearest;
-                choosenAnimation.description = "Compare the " + choosenAnimation.spec.value + " value in the " + choosenAnimation.spec.series1 +" and "+ choosenAnimation.spec.series2 + " series";
-                // choosenAnimation.spec.series1 = hoverSeries;
-                // choosenAnimation.spec.category1 = hoverCategory;
-                // choosenAnimation.description = "Compare between the values of " + hoverCategory + " in " + hoverSeries + " and the other one";
+                choosenAnimation.spec.series1 = hoverSeries;
+                // choosenAnimation.description = "Compare the " + choosenAnimation.spec.value + " value in the " + choosenAnimation.spec.series1 +" and "+ choosenAnimation.spec.series2 + " series";
+                choosenAnimation.description = "Compare the value of two series";
             }
         }
     } else {

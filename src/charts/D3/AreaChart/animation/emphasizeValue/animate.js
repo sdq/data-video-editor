@@ -32,7 +32,6 @@ const draw = (animation, props) => {
         data = getAggregatedRows(data, encoding);
     }
 
-    //console.log(stackedData)
     //X轴
     var x = d3.scalePoint()
         .domain(data.map(function (d) { return d[encoding.x.field]; }))
@@ -171,12 +170,10 @@ const draw = (animation, props) => {
             }, duration / tick * (tick - 1));
 
             // for categorylist
-            //console.log(animation.spec.series)
 
             areaG.selectAll('line').remove()
             seriesIndex = series.indexOf(animation.spec.series)
             category = animation.spec.category
-            //console.log(category)
             let categoryIndex;
             let categoryList = []
             stackedData[0].forEach(d => {
@@ -185,8 +182,6 @@ const draw = (animation, props) => {
             categoryIndex = categoryList.indexOf(category)
             vLine = stackedData[seriesIndex][categoryIndex] // 一个数组
         }
-
-        //console.log(vLine)
         // vLine
         areaG.append('line')
             .attr('class', 'animation')
@@ -245,7 +240,6 @@ const draw = (animation, props) => {
             .attr('opacity', 1);
 
         // 结束清除
-        //console.log(areaPath)
         setTimeout(function () {
             d3.selectAll('.animation')
                 .transition()

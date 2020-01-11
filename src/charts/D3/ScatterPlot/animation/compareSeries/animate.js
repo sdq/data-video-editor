@@ -1,10 +1,17 @@
 import * as d3 from 'd3';
+import { getSeries } from '../../helper';
 
 const draw = (animation, props) => {
     const encoding = props.spec.encoding;
     const svg = d3.select('.vis-scatterplot svg');
     const content = svg.select('.content');
     let items = content.selectAll(".data-item");
+    
+    let data = props.data;
+    let series = getSeries(data, encoding); 
+    animation.spec.series1 = animation.spec.series1 && animation.spec.series1 !== "all" ? animation.spec.series1:series[0];
+    animation.spec.series2 = animation.spec.series2 && animation.spec.series2 !== "all" ? animation.spec.series2:series[1];
+    animation.description = "Compare the "+ animation.spec.series1 +" and "+ animation.spec.series2 +" series";
 
     //because of hovering
     items.attr("stroke-width", 0);

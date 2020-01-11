@@ -74,13 +74,13 @@ const animations = {
             spec: {
                 series1: null,
                 series2: null,
-                effect: "difference" // superposition difference
+                effect: "superposition" // superposition difference
             }
         },
         {
             type: ChartAnimationType.COMPARE_EXTREMES,
             task: ChartAnimationTask.COMPARISON,
-            title: "Extreme",
+            title: "Extremes",
             description: "Compare the max value in the {series1} and {series2}",
             duration: 2000,
             spec: {
@@ -93,7 +93,7 @@ const animations = {
         {
             type: ChartAnimationType.COMPARE_VALUES,
             task: ChartAnimationTask.COMPARISON,
-            title: "Value",
+            title: "Values",
             description: "Compare the value of category in the {series1} and {series2}",
             duration: 2000,
             spec: {

@@ -38,11 +38,7 @@ export default class innerAnimationRecorder {
         }
         recorder = new MediaRecorder(stream, options);
         this.recorder = recorder;
-        //开始录制
-        if (recorder.state === 'recording') {
-            recorder.stop();
-        }
-        recorder.start(10);
+        recorder.start(10)
         recorder.ondataavailable = function (event) {
             data.push(event.data);
             // console.log("event.data", event.data, recorder.state)
@@ -69,7 +65,7 @@ export default class innerAnimationRecorder {
     }
     //结束录制
     finish = () => {
-        return new Promise((resolve,reject) => {
+        return new Promise((resolve, reject) => {
             //console.log("finish结束录制", recorder,recorder.state)
             if (recorder && recorder.state === 'recording') {
                 //结束录制
@@ -80,11 +76,7 @@ export default class innerAnimationRecorder {
                     //console.log("url...", url)
                     resolve(url)
                 }, 2000)
-            }else{
-                //用户取消制作chartAnimation过程
-                reject()
             }
-
         })
     }
     //用户退出录制过程

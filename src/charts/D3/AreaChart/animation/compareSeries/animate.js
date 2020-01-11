@@ -2,6 +2,7 @@ import * as d3 from 'd3';
 import { getSeriesValue, getStackedData } from '../../helper';
 
 const draw = (animation, props) => {
+
     const data = props.data,
         encoding = props.spec.encoding;
     const svg = d3.select('.vis-areachart svg');
@@ -9,7 +10,9 @@ const draw = (animation, props) => {
     let areaPath = areaG.selectAll("path")
 
     let series = getSeriesValue(data, encoding);
-    //console.log(animation.spec.series1, animation.spec.series2)
+    animation.spec.series1 = animation.spec.series1 && animation.spec.series1 !== "all" ? animation.spec.series1:series[0];
+    animation.spec.series2 = animation.spec.series2 && animation.spec.series2 !== "all" ? animation.spec.series2:series[1];
+   
     let compareIndex1 = series.indexOf(animation.spec.series1),
         compareIndex2 = series.indexOf(animation.spec.series2)
     let duration = animation.duration;
@@ -39,7 +42,6 @@ const draw = (animation, props) => {
             .transition()
             .duration(duration / tick * 2)
             .attr('opacity', function () {
-                // console.log(d3.select(this)['_groups'][0][0].id)
                 if (d3.select(this)['_groups'][0][0].id !== 'series_' + compareIndex1 && d3.select(this)['_groups'][0][0].id !== 'series_' + compareIndex2)
                     return 0.1;
             })
@@ -49,18 +51,11 @@ const draw = (animation, props) => {
             .transition()
             .duration(duration / tick * 2)
             .attr("stroke-opacity", function () {
-                // console.log(d3.select(this)['_groups'][0][0].id)
                 if (d3.select(this)['_groups'][0][0].id === 'series_' + compareIndex1 || d3.select(this)['_groups'][0][0].id === 'series_' + compareIndex2)
                     return 0.6;
             })
-        // let comparePath1 = areaG.select('#series_' + compareIndex1)
-        // let comparePath2 = areaG.select('#series_' + compareIndex2)
-        // console.log(compareIndex1, compareIndex2)
-        // console.log(comparePath1, comparePath2)
         // tooltip 1
 
-
-        // console.log(animation.spec.series1,animation.spec.series2)
         let compareArray = new Array(2);
         let comparePath = new Array(2);
         compareArray[0] = animation.spec.series1
@@ -68,11 +63,9 @@ const draw = (animation, props) => {
         comparePath[0] = areaG.select('#series_' + compareIndex1)
         comparePath[1] = areaG.select('#series_' + compareIndex2)
         compareArray.forEach((s, i) => {
-            //console.log(s, i)
             let lastArray = [comparePath[i]['_groups'][0][0].__data__.slice(-1)[0][0], areaPath['_groups'][0][0].__data__.slice(-1)[0][1]]
             let middleX = width - 30
             let middleY = (y(lastArray[0]) + y(lastArray[1])) / 2
-            // console.log(animation.spec)
             let tooltip = svg.append('line')
                 .attr('class', 'animation')
                 .attr('x1', middleX)
@@ -106,7 +99,6 @@ const draw = (animation, props) => {
         // let lastArray = [comparePath1['_groups'][0][0].__data__.slice(-1)[0][0], areaPath['_groups'][0][0].__data__.slice(-1)[0][1]]
         // let middleX = width - 30
         // let middleY = (y(lastArray[0]) + y(lastArray[1])) / 2
-        // // console.log(animation.spec)
         // let tooltip = svg.append('line')
         //     .attr('class', 'animation')
         //     .attr('x1', middleX)

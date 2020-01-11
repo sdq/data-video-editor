@@ -16,11 +16,9 @@ import reconfigureStyle from './reconfigureStyle/animate';
 import ReconfigureStyleConf from './reconfigureStyle/configure';
 
 const animate = (animation, props) => {
-    console.log(animation)
     switch (animation.type) {
 
         case ChartAnimationType.DATA_TREND:
-            console.log(animation.type)
             dataTrend(animation, props);
             break;
 

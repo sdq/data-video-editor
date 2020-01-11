@@ -1,4 +1,5 @@
 import * as d3 from 'd3';
+import { getSeries } from '../../helper';
 
 
 const draw = (animation, props) => {
@@ -11,8 +12,22 @@ const draw = (animation, props) => {
     items.attr("stroke-width", 3);
     content.selectAll('circle.data-item')
             .attr('r', 4);
+    let data = props.data;
+    let encoding = props.spec.encoding;
+    let series = Object.keys(getSeries(data, encoding)); 
+    animation.spec.series1 = animation.spec.series1 && animation.spec.series1 !== "all" ? animation.spec.series1:series[0];
+    if (animation.spec.series2 && animation.spec.series2 !== "all") {
+        // animation.spec.series2 = animation.spec.series2;
+    } else {
+        for(let i=0; i<series.length; i++) {
+            if (animation.spec.series1 !== series[i]) {
+                animation.spec.series2 = series[i];
+                break;
+            }
+        }
+    }
+    animation.description = "Compare the " + animation.spec.value + " of the "+ animation.spec.series1 +" and "+ animation.spec.series2 +" series";
 
-    
 
     function getExtremeValue(circles, extreme){
         let selectCircle;

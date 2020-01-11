@@ -1,4 +1,5 @@
 import * as d3 from 'd3';
+import { getSeries } from '../../helper';
 
 const draw = (animation, props) => {
     const data = props.data;
@@ -7,6 +8,11 @@ const draw = (animation, props) => {
     const content = svg.select('.content'),
         chartHeight = content.attr("chartHeight");
     let items = content.selectAll(".data-item");
+
+    let series = getSeries(data, encoding); 
+    animation.spec.series1 = animation.spec.series1 && animation.spec.series1 !== "all" ? animation.spec.series1:series[0];
+    animation.spec.series2 = animation.spec.series2 && animation.spec.series2 !== "all" ? animation.spec.series2:series[1];
+    animation.description = "Compare the "+ animation.spec.series1 +" and "+ animation.spec.series2 +" series";
 
     //because of hovering
     items.attr("stroke-width", 0);

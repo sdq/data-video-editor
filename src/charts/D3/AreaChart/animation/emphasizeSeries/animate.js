@@ -39,14 +39,9 @@ const draw = (animation, props) => {
 
             areaPath = areaG.selectAll('#series_' + seriesIndex)
 
-            // console.log(areaPath['_groups'][0][0].__data__)
-            // console.log(areaPath['_groups'][0][0].__data__.slice(-1))
             let lastArray = [areaPath['_groups'][0][0].__data__.slice(-1)[0][0], areaPath['_groups'][0][0].__data__.slice(-1)[0][1]]
-            // console.log(y(lastArray[0]), y(lastArray[1]))
-            // console.log(lastArray)
             // TODO: tooltip position
             let middleX = width - 30
-            // console.log(height)
             let middleY = (y(lastArray[0]) + y(lastArray[1])) / 2
 
             let tooltip = svg.append('line')
