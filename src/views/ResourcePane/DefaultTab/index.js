@@ -7,7 +7,7 @@ import VideoCard from '@/components/VideoCard';
 import './defaulttab.css';
 import MyURL from '@/constants/MyURL'
 import WebApi from '@/axios/api';
-let gifFrames = require('gif-frames');
+//import { object } from 'prop-types';
 
 const { Dragger } = Upload;
 const { Panel } = Collapse;
@@ -41,26 +41,21 @@ export default class DefaultTab extends Component {
             videoList: [],
             audioList: [],
             loading: true,
-            loadingTips:'Loading'
+            loadingTips: 'Loading'
         })
         let parentId = this.props.folderId
-        //Image 
-        //"mimetype": "image/png",
-        //"mimetype": "image/gif",
-        WebApi.GetAssetsInExistingFolder(parentId, 'image').then(this.GetAsset).then(async assetsList => {
-            await assetsList.map(async item => {
-                if (item.mimetype === 'image/gif') {
-                    //这里是解析对列表中默认的gif进行解析
-                    item.gifData = await this.parseGif(item.src);
-                    //console.log("item",item)
-                    this.state.gifList.push(item)
-                } else {
+        //image
+        WebApi.GetAssetsInExistingFolder(parentId, 'image').then(this.GetAsset).then(assetsList => {
+            assetsList.map(item => {
+                if (item.mimetype === 'image/png') {
                     this.state.imageList.push(item)
+                } else if (item.mimetype === 'image/gif') {
+                    //console.log("item", item)
+                    this.state.gifList.push(item)
                 }
                 return item;
             })
-            //console.log("this.state.gifList", this.state.gifList)
-            //TODO 解决异步问题
+            //console.log("this.state.gifList",this.state.gifList)
             this.setState({
                 loading: false,
                 imageList: this.state.imageList,
@@ -89,10 +84,19 @@ export default class DefaultTab extends Component {
             for (let i = 0; i < IdList.length; i++) {
                 let p = WebApi.GetAsset(IdList[i].id).then((data) => {
                     let assetInfo = data.data;
-                    //src name uid
+                    //src name uid id
+                    assetInfo.id = IdList[i].id;
                     assetInfo.uid = assetInfo.id;
-                    assetInfo.src = MyURL.PIMCORE + assetInfo.path + assetInfo.filename;
                     assetInfo.name = assetInfo.filename;
+                    if (assetInfo.mimetype === 'image/gif') {
+                        //获取base64图片数据,用本地内存中的url进行gif-frame解析。解决线上跨域问题
+                        WebApi.GetGIFAsset(assetInfo.id).then((fileURL) => {
+                            //console.log("newSrc", fileURL)
+                            assetInfo.src = fileURL;
+                        })
+                    } else {
+                        assetInfo.src = MyURL.PIMCORE + assetInfo.path + assetInfo.filename;
+                    }
                     return assetInfo;
                 })
                 promiseList.push(p);
@@ -119,6 +123,21 @@ export default class DefaultTab extends Component {
             };
         })
     }
+    dataURLtoBlob = (dataurl) => {
+        var arr = dataurl.split(',');
+        //注意base64的最后面中括号和引号是不转译的   
+        var _arr = arr[1].substring(0, arr[1].length - 2);
+        var mime = arr[0].match(/:(.*?);/)[1],
+            bstr = atob(_arr),
+            n = bstr.length,
+            u8arr = new Uint8Array(n);
+        while (n--) {
+            u8arr[n] = bstr.charCodeAt(n);
+        }
+        return new Blob([u8arr], {
+            type: mime
+        });
+    }
 
     uploadFile = (file) => {
         this.encodeFileToBase64(file).then(encodeData => {
@@ -129,7 +148,9 @@ export default class DefaultTab extends Component {
             let newFile = {};
             newFile.uid = file.uid;
             newFile.name = file.name;
+            //console.log("file", file)
             const fileURL = URL.createObjectURL(file);
+            //console.log("uploadFile", fileURL)
             newFile.src = fileURL;
             let fileType = newFile.name.split(".").slice(-1).pop()
             let newList = [];
@@ -193,9 +214,6 @@ export default class DefaultTab extends Component {
                         newFile.id = resolve.data.id;
                         //上传文件成功，打开对应的panel
                         newList = this.state.gifList;
-                        (async () => {
-                            newFile.gifData = await this.parseGif(newFile.src);
-                        })();
                         newList.push(newFile);
                         this.setState({
                             loading: false,
@@ -215,35 +233,19 @@ export default class DefaultTab extends Component {
         return false;
     }
 
-    async parseGif(gifUrl) {
-        //console.log("gifUrl", gifUrl)
-        let _this = this;
-        await gifFrames(
-            { url: gifUrl, frames: 'all', outputType: 'canvas', cumulative: true },
-            function (err, frameData) {
-                // console.log("frameData", frameData)
-                if (err) {
-                    throw err;
-                }
-                _this.gifData = frameData;
-            }
-        );
-        return _this.gifData;
-    }
-
     onDelete = (type, key, assetId) => {
         this.setState({
-            loading:true,
-            loadingTips:'deleting...'
+            loading: true,
+            loadingTips: 'deleting...'
         })
         WebApi.DeleteAsset(assetId).then(reslove => {
             this.setState({
-                loading:false,
+                loading: false,
             })
             this.refreshAssetList(type, key);
-        },reject =>{
+        }, reject => {
             this.setState({
-                loading:false,
+                loading: false,
             })
         })
     }
@@ -340,7 +342,7 @@ export default class DefaultTab extends Component {
             videoList: [],
             audioList: [],
             loading: true,
-            loadingTips:'loading'
+            loadingTips: 'loading'
         })
         WebApi.SearchAssets(this.props.folderId, value, 'image').then(this.GetAsset).then(assetsList => {
             assetsList.map(item => {
@@ -392,9 +394,9 @@ export default class DefaultTab extends Component {
         return (
             <div className="defaulttab" style={{ height: this.props.contentHeight }}>
                 <Search
-                placeholder="input search text"
-                onSearch={value => this.onSearch(value)}
-                style={{ width: "100%",marginBottom:"10px" }}
+                    placeholder="input search text"
+                    onSearch={value => this.onSearch(value)}
+                    style={{ width: "100%", marginBottom: "10px" }}
                 />
                 <div style={{ height: "120px" }}>
                     <Dragger
@@ -410,7 +412,7 @@ export default class DefaultTab extends Component {
                     </Dragger>
                 </div>
                 <Spin tip={this.state.loadingTips} spinning={this.state.loading}>
-                    <div className="user-upload-list" style={{ height: this.props.contentHeight-170 }}>
+                    <div className="user-upload-list" style={{ height: this.props.contentHeight - 170 }}>
                         <Collapse accordion bordered={false} activeKey={this.state.activeKey} onChange={this.callback} style={{ height: this.props.contentHeight - 170 }} >
                             <Panel header={"Image (" + imageList.length + ")"} key="image" className="collaspe-panel">
                                 <List

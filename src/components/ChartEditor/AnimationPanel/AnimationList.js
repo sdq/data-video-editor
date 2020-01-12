@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { List, Divider, Row, Col ,Tag,Tooltip} from 'antd';
+import { Divider, Row, Col ,Tag,Tooltip} from 'antd';
 import AnimationCard from './AnimationCard';
 import { getAnimations } from '@/charts/Info';
 

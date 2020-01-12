@@ -6,6 +6,7 @@ import { Element, GifInfo } from '@/models/Element';
 // import Scene from '@/models/Scene';
 import _ from 'lodash';
 import './gifcard.css';
+var gifFrames = require('gif-frames');
 
 //gif size
 let w = 100;
@@ -13,8 +14,27 @@ let h = 100;
 //drag end pos
 let x = 240;
 let y = 100;
+let gifDataFrames;
 
 const imageSource = {
+    canDrag(props) {
+        //console.log("canDrag", props.info.src)
+        let gifUrl = props.info.src;
+        //gif-frame 解析
+        (async () => {
+            await gifFrames(
+                { url: gifUrl, frames: 'all', outputType: 'canvas', cumulative: true },
+                function (err, frameData) {
+                    if (err) {
+                        throw err;
+                    }
+                    gifDataFrames = frameData;
+                    //console.log("gifDataFrames", frameData)
+                }
+            );
+        })();
+        return true;
+    },
 
     beginDrag(props) {
         props.displayResourceTargetArea(true);
@@ -31,11 +51,11 @@ const imageSource = {
         let e = window.event;       //Firefox下是没有event这个对象的！！
         let canvas = document.getElementsByTagName("canvas")[0];
         let pos = canvas.getBoundingClientRect();//获取canvas基于父页面的位差
-        let scale = pos.height/450;
-        if((Number(e.clientX)-Number(pos.left))>0){
-            x = Number(e.clientX)-Number(pos.left)-w; //为什么gif不能减去二分之一宽高度？
-            y = Number(e.clientY)-Number(pos.top);
-       }
+        let scale = pos.height / 450;
+        if ((Number(e.clientX) - Number(pos.left)) > 0) {
+            x = Number(e.clientX) - Number(pos.left) - w; //为什么gif不能减去二分之一宽高度？
+            y = Number(e.clientY) - Number(pos.top);
+        }
 
         if (dropResult) {
             // console.log(item);
@@ -46,14 +66,11 @@ const imageSource = {
 
                 //console.log("gifData", item.gifData);
                 let delay = 1;
-                let gifFrames;
-                if (item.gifData) {
-                    gifFrames = item.gifData;
-                    //console.log("gifDuration", item.gifData[0].frameInfo.delay);
-                }
+                //console.log("gifDataFrames",gifDataFrames)
+                if (!gifDataFrames) return;
                 //console.log("endDrag",w,h)
-
-                const newImage = new GifInfo(item.name, item.src, delay, gifFrames, x/scale, y/scale, w, h, 0);
+                //console.log("item.id",item.id)
+                const newImage = new GifInfo(item.id, item.name, item.src, delay, gifDataFrames, x / scale, y / scale, w, h, 0);
                 const newElement = new Element(ElementType.GIF, newImage);
                 newScene.addElement(newElement);
                 props.addElement(newElement);
@@ -70,6 +87,7 @@ const imageSource = {
         }
     },
 }
+
 
 class GifCard extends Component {
 
@@ -92,7 +110,7 @@ class GifCard extends Component {
         const { connectDragSource } = this.props;
         return connectDragSource(
             <div className="gifcard" align="center">
-                 <img src={this.props.info.src} alt={this.props.info.name} /> 
+                <img src={this.props.info.src} alt={this.props.info.name} />
             </div>
         )
     }

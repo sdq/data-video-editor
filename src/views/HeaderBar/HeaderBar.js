@@ -8,6 +8,8 @@ import { Element, ImageInfo, ChartInfo, TextInfo, VideoInfo, ShapeInfo, GifInfo,
 import AnimationModel from '@/animation/AnimationModel';
 //import { saveAs } from 'file-saver';
 import './headerbar.css';
+import WebApi from '../../axios/api';
+var gifFrames = require('gif-frames');
 
 const recorder = new Recorder();
 const player = new Player();
@@ -61,7 +63,7 @@ export default class HeaderBar extends Component {
             //更新项目文件
             this.props.removeProject();
             //this.props.addProject(jsonObj); 
-
+            //console.log("导入...",jsonObj)
             //项目文件载入
             for (let i = 0; i < jsonObj.length; i++) {
                 const newScene = new Scene(jsonObj[i]._script, 700);
@@ -114,22 +116,43 @@ export default class HeaderBar extends Component {
 
                             break;
                         case ElementType.GIF:
-                            const newGif = new GifInfo(newE.name, newE.src, newE.delay, newE.gifFrames, newE.x, newE.y, newE.width, newE.height, newE.rotation, newE.opacity);
-                            newElement = new Element(ElementType.GIF, newGif);
-                            newScene.addElement(newElement);//无法被直接解析
-                            newElement.start(jsonObj[i]._elements[m]._start);
-                            newElement.duration(jsonObj[i]._elements[m]._duration);
+                            let gifId = newE.assetId;
+                            let gifDataFrames;
+                            //console.log("导入gifId...",gifId)
+                            //解析gifFrames todo gif id需要在导出的时候，存
+                            WebApi.GetGIFAsset(gifId).then(async fileURL => {
+                                //console.log("newSrc", fileURL)
+                                await gifFrames(
+                                    { url: fileURL, frames: 'all', outputType: 'canvas', cumulative: true },
+                                    function (err, frameData) {
+                                        //console.log("frameData", frameData)
+                                        gifDataFrames = frameData
+                                    }
+                                );
+                                //console.log("gifDataFrames", gifDataFrames)
+                                if (!gifDataFrames) return;
+                                const newGif = new GifInfo(newE.id, newE.name, fileURL, newE.delay, gifDataFrames, newE.x, newE.y, newE.width, newE.height, newE.rotation, newE.opacity);
+                                newElement = new Element(ElementType.GIF, newGif);
+                                newElement.start(jsonObj[i]._elements[m]._start);
+                                newElement.duration(jsonObj[i]._elements[m]._duration);
 
-                            //animation
-                            for (let n = 0; n < jsonObj[i]._elements[m]._animations.length; n++) {
-                                aniM = jsonObj[i]._elements[m]._animations[n];
+                                //animation
+                                for (let n = 0; n < jsonObj[i]._elements[m]._animations.length; n++) {
+                                    aniM = jsonObj[i]._elements[m]._animations[n];
 
-                                animation = new AnimationModel(aniM._type, aniM._name);
-                                animation.start(aniM._start);
-                                animation.duration(aniM._duration);
-                                animation.pathinfo(aniM._pathinfo);
-                                newElement.add(animation);
-                            }
+                                    animation = new AnimationModel(aniM._type, aniM._name);
+                                    animation.start(aniM._start);
+                                    animation.duration(aniM._duration);
+                                    animation.pathinfo(aniM._pathinfo);
+                                    newElement.add(animation);
+                                }
+                                //更新newElement
+                                //console.log("newElement", newElement)
+                                this.props.addElement(newElement);
+                                newScene.addElement(newElement);
+                                //console.log("newScene", newScene)
+                                this.props.updateScene(this.props.sceneIndex, newScene);
+                            })
                             break;
                         case ElementType.CHART:
                             const newChart = new ChartInfo(newE.dataIndex, newE.category, newE.type, newE.spec, newE.x, newE.y, newE.width, newE.height, newE.rotation);
@@ -183,8 +206,8 @@ export default class HeaderBar extends Component {
                             //add videoResource to videoList
                             let videoResource = {};
                             videoResource.id = newElement.id();
-                            this.createElement(ElementType.VIDEO, newE.src).then(reslove=>{
-                                videoResource.element= reslove;
+                            this.createElement(ElementType.VIDEO, newE.src).then(reslove => {
+                                videoResource.element = reslove;
                                 //console.log("添加", videoResource) 
                                 newScene.addVideoTag(videoResource);
                                 this.props.updateScene(this.props.sceneIndex, newScene);
@@ -232,9 +255,19 @@ export default class HeaderBar extends Component {
         return false;
     }
 
+    getBase64Image = (img) => {
+        let canvas = document.createElement("canvas");
+        canvas.width = img.width;
+        canvas.height = img.height;
+        let ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, img.width, img.height);
+        let ext = img.src.substring(img.src.lastIndexOf(".") + 1).toLowerCase();
+        let dataURL = canvas.toDataURL("image/" + ext);
+        return dataURL;
+    }
     createElement = (elementType, src) => {
         return new Promise(reslove => {
-            console.log("createElement", elementType)
+            //console.log("createElement", elementType)
             switch (elementType) {
                 case "video_element":
                     let video = document.createElement("video")
@@ -249,7 +282,7 @@ export default class HeaderBar extends Component {
                     audio.src = src;
                     audio.id = 'audio_import' + Math.random()
                     audio.addEventListener("canplay", () => {
-                        console.log("createElement", audio)
+                        //console.log("createElement", audio)
                         reslove(audio)
                     })
                     break;
@@ -295,7 +328,7 @@ export default class HeaderBar extends Component {
         //     return value;
         //     });
         //     cache = null; // 清空变量，便于垃圾回收机制回收
-        
+
         //上传前上传文件到pimcore后台，生成文件的url
 
 
@@ -311,6 +344,7 @@ export default class HeaderBar extends Component {
 
         //var filecontent =  JSON.stringify(this.props.scenes);
         var filecontent = JSON.stringify(scenesWithoutCircular);;
+        //console.log("导出filecontent...", filecontent)
         var file = new File([filecontent], saveName + ".idv", { type: "text/plain;charset=utf-8" });//特殊后缀名
         FileSaver.saveAs(file);
 
@@ -410,10 +444,10 @@ export default class HeaderBar extends Component {
                     link.click();
                     link.remove();
                 }, function (error) {
-                    console.log(error);
+                    //console.log(error);
                 })
                 .catch(function (error) {
-                    console.log(error);
+                    //console.log(error);
                 });
         }, prepareTime); // TODO: show animation layer before record
     };
@@ -538,7 +572,7 @@ export default class HeaderBar extends Component {
                         allowClear
                         onChange={value => this.saveChange(value)}
                     />
-                    Attention：cannot save video audio gif and path animation !
+                    {/* Attention：cannot save video audio gif and path animation ! */}
                 </Modal>
             </div>
         )
