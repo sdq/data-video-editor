@@ -89,7 +89,7 @@ export default class Player {
                 this._clearTimeouts();
                 const current = this.scenePosition;
                 const end = this.currentSceneDuration;
-                console.log(end)
+                // console.log(end)
                 const msOffset = (end - current) * 1000;
                 const playScene = false;
                 AudioController.init(this.sceneIndex,current,playScene);
@@ -99,7 +99,7 @@ export default class Player {
                         const position = current + index / 10 ;
                         store.dispatch(sceneActions.setPosition(position));
                         const sceneOver = (index === n-1);
-                        console.log(sceneOver)
+                        // console.log(sceneOver)
                         AudioController.playAudio(backgroundMusicID,sceneOver)
                         if (index === (n-1)) {
                             //this.pauseScene();
