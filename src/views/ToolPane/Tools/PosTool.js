@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { InputNumber, Row, Col,Icon } from 'antd';
+import ElementType from '@/constants/ElementType';
 import _ from 'lodash';
 
 export default class PosTool extends Component {
@@ -43,10 +44,11 @@ export default class PosTool extends Component {
      }
 
      changeW = (w) => {
-         // 此时要先显示一个假的宽度，让他坚持300
+         //此时要先显示一个假的宽度，让他坚持300
          //拖拽时的数字对于300的突变太大，应该再拖动结束还未点击pos之间更新origin并且不能够使用 
          //再点击postool的时候就应该更新origin
         this.props.currentElement.info().isPosTool = true;   //mark: Transform from toolpane
+
 
         let r = this.props.currentElement.info().rotation;  // need a real size to effect
         let h = this.props.currentElement.info().height; 
@@ -56,6 +58,12 @@ export default class PosTool extends Component {
         newScene.updateElement(this.props.currentElement, this.props.elementIndex);
         this.props.updateScene(this.props.sceneIndex, newScene);
         this.props.currentElement.info().width = w;
+
+
+        //图表 比例固定
+        if(this.props.currentElement.type() == ElementType.CHART){
+            this.changeH(w);
+        }
 
         
      };

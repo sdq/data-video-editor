@@ -96,7 +96,8 @@ export default class ImageElement extends Component {
     }
 
     render() {
-        const isPosTool =this.props.element?this.props.element.info().isPosTool:null;
+        const isPosTool = this.props.element?this.props.element.info().isPosTool:null;
+        console.log("image",isPosTool,this.props.element.info().width)
         return (
             <Group name={this.props.name} 
                 draggable = {this.props.draggable}
@@ -120,8 +121,6 @@ export default class ImageElement extends Component {
             >
                 <Image 
                     ref={node=>this.imageref=node}
-                    // width={this.props.element.info().width}
-                    // height={this.props.element.info().height}
                     width={isPosTool?this.props.element.info().width:(this.props.draggable?this.originWidth:this.props.element.info().width)}
                     height={isPosTool?this.props.element.info().height:(this.props.draggable?this.originHeight:this.props.element.info().height)}
                     name={this.props.name}

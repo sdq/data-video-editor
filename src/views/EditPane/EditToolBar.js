@@ -351,20 +351,20 @@ export default class EditToolBar extends Component {
                      style={{ top: 115 , left : document.getElementById('quickalign') ? (document.getElementById('assist-position').offsetLeft-450)/2 : 200}} 
                      //getContainer = {document.getElementById('quickalign')}
                     >
-                    <Row>
-                     <Col span={8}> <button type="button" id = 'TL'  onClick = {()=> this.setElementPos('TL')} > </button></Col>
-                     <Col span={8}> <button type="button" id = 'Top' onClick = {()=> this.setElementPos('Top')} > </button></Col>
-                     <Col span={8}> <button type="button" id = 'TR'  onClick = {()=> this.setElementPos('TR')} > </button></Col>
+                    <Row >
+                     <Col span={8}> <button class="quickbutton" type="button" id = 'TL' onClick = {()=> this.setElementPos('TL')}></button></Col>
+                     <Col span={8}> <button class="quickbutton" type="button" id = 'Top' onClick = {()=> this.setElementPos('Top')}></button></Col>
+                     <Col span={8}> <button class="quickbutton" type="button" id = 'TR'  onClick = {()=> this.setElementPos('TR')}></button></Col>
                      </Row>
-                     <Row>
-                     <Col span={8}> <button type="button" id = 'Left'   onClick = {()=> this.setElementPos('Left' )} > </button></Col>
-                     <Col span={8}> <button type="button" id = 'Center' onClick = {()=> this.setElementPos('Center')} > </button></Col>
-                     <Col span={8}> <button type="button" id = 'Right'  onClick = {()=> this.setElementPos('Right' )} > </button></Col>
+                     <Row >
+                     <Col span={8}> <button class="quickbutton" type="button" id = 'Left'   onClick = {()=> this.setElementPos('Left' )} ></button></Col>
+                     <Col span={8}> <button class="quickbutton" type="button" id = 'Center' onClick = {()=> this.setElementPos('Center')} ></button></Col>
+                     <Col span={8}> <button class="quickbutton" type="button" id = 'Right'  onClick = {()=> this.setElementPos('Right' )} ></button></Col>
                      </Row>
-                     <Row>
-                     <Col span={8}> <button type="button" id = 'BL'     onClick = {()=> this.setElementPos('BL')} > </button></Col>
-                     <Col span={8}> <button type="button" id = 'Bottom' onClick = {()=> this.setElementPos('Bottom')} > </button></Col>
-                     <Col span={8}> <button type="button" id = 'BR'     onClick = {()=> this.setElementPos('BR')} > </button></Col>
+                     <Row >
+                     <Col span={8}> <button class="quickbutton" type="button" id = 'BL'     onClick = {()=> this.setElementPos('BL')} ></button></Col>
+                     <Col span={8}> <button class="quickbutton" type="button" id = 'Bottom' onClick = {()=> this.setElementPos('Bottom')} ></button></Col>
+                     <Col span={8}> <button class="quickbutton" type="button" id = 'BR'     onClick = {()=> this.setElementPos('BR')} ></button></Col>
                     </Row>
                 </Modal> 
                 <Button icon="table" style = { {padding: '0 20px 0 20px'} } disabled={isPerforming} onClick={this.showGrid}/>

@@ -79,7 +79,7 @@ export default class ChartEditor extends Component {
     };
     saveChartAnimation = () => {
         //有动画
-        let animationSteps = this.props.displaySpec.animation
+        let animationSteps = this.props.displaySpec.animation;
         if (this.isRecording && animationSteps.length) {
             //点击保存,但是没有录制完毕,弹窗显示等待时间或者用户取消保s存
             this.setState({
