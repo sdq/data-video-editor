@@ -66,7 +66,7 @@ export default class HeaderBar extends Component {
             //console.log("导入...",jsonObj)
             //项目文件载入
             for (let i = 0; i < jsonObj.length; i++) {
-                const newScene = new Scene(jsonObj[i]._script, 700);
+                const newScene = new Scene(jsonObj[i]._script, 10);
                 //background
                 if (jsonObj[i]._backgroundColor) { newScene.backgroundColor(jsonObj[i]._backgroundColor) }
                 if (jsonObj[i]._backgroundImage) { newScene.backgroundImage(jsonObj[i]._backgroundImage) }
