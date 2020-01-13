@@ -9,7 +9,7 @@ const draw = (animation, props) => {
     let areaPath = areaG.selectAll("path")
 
     let series = getSeriesValue(data, encoding);
-    console.log(animation.spec.series1, animation.spec.series2)
+    //console.log(animation.spec.series1, animation.spec.series2)
     let compareIndex1 = series.indexOf(animation.spec.series1),
         compareIndex2 = series.indexOf(animation.spec.series2)
     let duration = animation.duration;
@@ -68,7 +68,7 @@ const draw = (animation, props) => {
         comparePath[0] = areaG.select('#series_' + compareIndex1)
         comparePath[1] = areaG.select('#series_' + compareIndex2)
         compareArray.forEach((s, i) => {
-            console.log(s, i)
+            //console.log(s, i)
             let lastArray = [comparePath[i]['_groups'][0][0].__data__.slice(-1)[0][0], areaPath['_groups'][0][0].__data__.slice(-1)[0][1]]
             let middleX = width - 30
             let middleY = (y(lastArray[0]) + y(lastArray[1])) / 2

@@ -15,7 +15,7 @@ const draw = (props) => {
     // TODO: unselect
     // props.selectChartElement(false, {});
     
-    console.log(props.selectingParameter);
+    //console.log(props.selectingParameter);
     let selectingParameter = props.selectingParameter;
     let selectType = selectingParameter.type;
     let a = document.createElement("div");
@@ -134,7 +134,7 @@ const draw = (props) => {
         .on('click', function(d, i) {
             let animation = props.selectedAnimation;
             animation.spec[selectingParameter.key2] = d[encoding.color.field];
-            console.log(selectingParameter);
+            //console.log(selectingParameter);
             props.modifyChartAnimation(props.selectedAnimationIndex, animation);
             props.selectChartElement(false, {});
         })

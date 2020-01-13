@@ -44,7 +44,7 @@ const draw = (animation, props) => {
     //     var s=encoding.size.field;
     // }
 
-    console.log(categories)
+    //console.log(categories)
 
     // data = getAggregatedRows(data, encoding);
 
@@ -171,7 +171,7 @@ const draw = (animation, props) => {
                 .text(d => d[encoding.color.field]);
 
     // Animation
-    console.log(data);
+    //console.log(data);
     let aggregatedDS = data.concat();  //不能改变原始data
     if (animation.spec.extreme === 'max') {
         aggregatedDS.sort(function(a, b){
@@ -182,7 +182,7 @@ const draw = (animation, props) => {
     }
     let extremeCategory = aggregatedDS[0][encoding.color.field];
     let extremeValue = aggregatedDS[0][encoding.size.field];
-    console.log(animation.spec.effect);
+    //console.log(animation.spec.effect);
     if (animation.spec.effect === 'flicker') {
                 // flicker animation
                 content.selectAll('circle')

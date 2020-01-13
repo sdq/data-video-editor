@@ -30,7 +30,7 @@ const draw = (animation, props) => {
 
     //Get Encoding
     const encoding = props.spec.encoding;
-    console.log(encoding);
+    //console.log(encoding);
     if(_.isEmpty(encoding) || !('size' in encoding) || _.isEmpty(encoding.size) ){
         svg.append("circle")
             .attr("cx", width / 2)

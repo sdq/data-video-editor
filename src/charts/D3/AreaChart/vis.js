@@ -21,7 +21,7 @@ const draw = (props) => {
 
     // Encoding
     const encoding = props.spec.encoding;
-    console.log(encoding)
+    //console.log(encoding)
 
     let hasSeries = 'color' in encoding;
     let layout = 'stacked';// basic/stacked/percent 
@@ -37,7 +37,7 @@ const draw = (props) => {
     }
 
     data = getMaxRows(data, encoding);
-    console.log(data)
+    //console.log(data)
 
     // Style
     // const style = props.spec.style;

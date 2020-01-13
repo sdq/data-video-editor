@@ -159,7 +159,7 @@ const draw = (animation, props) => {
             return d[encoding.color.field];
         })
     }
-    console.log(newX);
+    //console.log(newX);
 
     if (animation.spec.effect === 'switch'){
         svg.selectAll("circle")

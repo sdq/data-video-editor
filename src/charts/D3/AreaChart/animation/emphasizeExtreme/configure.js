@@ -15,7 +15,7 @@ export default class configure extends Component {
     }
 
     handleValueChange = (value) => {
-        console.log(value)
+        //console.log(value)
         const {index, animation} = this.props;
         animation.spec.value = value;
         animation.description = "Emphasize the " + animation.spec.value + " value in the " + animation.spec.series + " series";

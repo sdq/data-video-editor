@@ -90,7 +90,7 @@ const draw = (props) => {
                 }
                 return colorScale(i);
             });
-        console.log(hoverSeries)
+        //console.log(hoverSeries)
         areaPath.attr("stroke", "yellow")
             .attr("stroke-opacity", 1)
             .attr("stroke-width", (d) => {
@@ -139,7 +139,7 @@ const draw = (props) => {
                 }
                 return colorScale(i);
             });
-        console.log(hoverSeries)
+        //console.log(hoverSeries)
         areaPath.attr("stroke", "yellow")
             .attr("stroke-opacity", 1)
             .attr("stroke-width", (d) => {
@@ -153,7 +153,7 @@ const draw = (props) => {
             hoverSeries = Array.from(hoverSeries)[0];
         }
         category = point.x
-        console.log(category)
+        //console.log(category)
         let series = getSeriesValue(data, encoding);
         let categoryList = []
         stackedData[0].forEach(d => {

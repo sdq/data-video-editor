@@ -9,7 +9,7 @@ import _ from 'lodash';
 const pathToPoints = (path) => {
 
     var number = path.split(/[M,A,L,Z]/);
-    console.log(number);
+    //console.log(number);
 
     var points = [];
 
@@ -110,7 +110,7 @@ const inArea = (point, polygon) =>{
 
         p4 = polygon[i + 1];
 
-        console.log(p3);
+        //console.log(p3);
 
         if (checkCross(p1, p2, p3, p4) === true) {
             count++;
@@ -134,7 +134,7 @@ const inArea = (point, polygon) =>{
 
 
 
-    console.log(count)
+    //console.log(count)
 
     return (count % 2 === 0) ? false : true;
 
