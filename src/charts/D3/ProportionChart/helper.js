@@ -103,7 +103,7 @@ const getMaxRows = (rawData, encoding) =>{
             return d.values[0]
         }
     });
-    console.log(data);
+    //console.log(data);
     return data;
 }
 

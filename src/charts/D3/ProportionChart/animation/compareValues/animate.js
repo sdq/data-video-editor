@@ -78,7 +78,7 @@ const draw = (animation, props) => {
         dataValues[data[i][encoding.color.field]] = data[i][encoding.size.field];
     }
 
-    console.log(dataValues);
+    //console.log(dataValues);
 
 
     const chartWidth = width,

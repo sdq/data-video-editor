@@ -44,7 +44,7 @@ const draw = (animation, props) => {
     //     var s=encoding.size.field;
     // }
 
-    console.log(categories)
+    //console.log(categories)
 
     // data = getAggregatedRows(data, encoding);
 
@@ -223,7 +223,7 @@ const draw = (animation, props) => {
         }
     for (let index = 0; index < trendData.length; index++) {
         const timeData = trendData[index];
-        console.log(timeData)
+        //console.log(timeData)
         animateStep(timeData, animationDelay);
         animationDelay += stepDuration;
     }

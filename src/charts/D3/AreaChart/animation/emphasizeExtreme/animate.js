@@ -31,7 +31,7 @@ const draw = (animation, props) => {
         data = getAggregatedRows(data, encoding);
     }
 
-    console.log(stackedData)
+    //console.log(stackedData)
     //X轴
     var x = d3.scalePoint()
         .domain(data.map(function (d) { return d[encoding.x.field]; }))

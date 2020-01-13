@@ -78,7 +78,7 @@ const draw = (animation, props) => {
         dataValues[data[i][encoding.color.field]] = data[i][encoding.size.field];
     }
 
-    console.log(dataValues);
+    //console.log(dataValues);
 
 
     const chartWidth = width,
@@ -179,7 +179,7 @@ const draw = (animation, props) => {
     // let dataSeries = getSeries(props.data, encoding);
     let selectedCategory = animation.spec.category ? animation.spec.category : categories[0];
 
-    console.log(selectedCategory);
+    //console.log(selectedCategory);
     if (animation.spec.effect === 'flicker') {
         // flicker animation
             content.selectAll('circle')

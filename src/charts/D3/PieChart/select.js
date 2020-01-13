@@ -69,7 +69,7 @@ const draw = (props) => {
     let pie = d3.pie()
         .value(function(d){ return d[encoding.size.field]; });
     let pieData = pie(data);
-    console.log(pieData);
+    //console.log(pieData);
 
     //Build the pie chart
     let arc = d3.arc() //弧生成器
@@ -158,7 +158,7 @@ const draw = (props) => {
         .on('click', function(d, i) {
             let animation = props.selectedAnimation;
             animation.spec[selectingParameter.key] = d.data[encoding.color.field];
-            console.log(selectingParameter.key);
+            //console.log(selectingParameter.key);
             props.modifyChartAnimation(props.selectedAnimationIndex, animation);
             props.selectChartElement(false, {});
         })
