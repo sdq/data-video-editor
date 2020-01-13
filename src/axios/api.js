@@ -36,16 +36,16 @@ var request = ({ url, method, param, data }) => {
                 reslove(response.data);
             } else {
                 reject();
-               // message.error('error message');
+                // message.error('error message');
             }
         }).catch(error => {
             reject();
-          //  message.error('error message');
+            //  message.error('error message');
         })
     })
 };
 
-var request1 = ({ url, method, param, data }) => {
+var requestWithOutApiKey = ({ url, method, param, data }) => {
     //console.log("request...",data)
     return new Promise((reslove, reject) => {
         axios({
@@ -54,23 +54,23 @@ var request1 = ({ url, method, param, data }) => {
             url: composeUrl1(url, param),
             data: data
         }).then((response) => {
-            //console.log("request1",response)
+            //console.log("requestWithOutApiKey",response)
             if (response.status === 200) {
                 reslove(response.data);
             } else {
                 reject();
-               // message.error('error message');
+                // message.error('error message');
             }
         }).catch(error => {
             reject();
-           // message.error('error message');
+            // message.error('error message');
         })
     })
 };
 
 var WebApi = {
     checkUser: function (name, psw) {
-        return request1({
+        return requestWithOutApiKey({
             url: '/login',
             method: 'post',
             data: {
@@ -80,7 +80,7 @@ var WebApi = {
         })
     },
     registerUser: function (name, psw, userFolderId) {
-        return request1({
+        return requestWithOutApiKey({
             url: '/register',
             method: 'post',
             data: {
@@ -142,6 +142,28 @@ var WebApi = {
             param: {
                 light: true
             },
+        })
+    },
+    //获取base64图片数据,用本地内存中的url进行gif-frame解析。解决线上跨域问题
+    GetGIFAsset(id) {
+        return request({
+            url: `${config.api.asset}/id/${id}`,
+            method: 'get',
+            param: {
+                //light: true  //返回base64格式图片数据
+            },
+        }).then(data => {
+            //let base64File = "data:image/jpeg;base64," + data.data;
+            //console.log("GetGIFAsset",data.data.data)
+            let bstr = atob(data.data.data);
+            let n = bstr.length;
+            let u8arr = new Uint8Array(n);
+            while (n--) {
+                u8arr[n] = bstr.charCodeAt(n);
+            }
+            let blobfile = new Blob([u8arr], { type: 'image/gif' })
+            let fileURL = URL.createObjectURL(blobfile)
+            return fileURL;
         })
     },
     CreatNewAsset(folderId, filetype, filname, data) {

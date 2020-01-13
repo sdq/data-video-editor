@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Tabs, Modal, Input, Icon, Spin } from 'antd';
 import IllustrationTab from './IllustrationTab/IllustrationTab';
 import ChartTab from './ChartTab/ChartTab';
-import UserTab from './UserTab';
+//import UserTab from './UserTab';
 import DefaultTab from './DefaultTab';
 import './resourcepane.css';
 import WebApi from '@/axios/api';
