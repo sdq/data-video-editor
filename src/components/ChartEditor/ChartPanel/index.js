@@ -36,6 +36,12 @@ class ChartPanel extends Component {
     render() {
         const { canDrop, isOver, connectDropTarget, chartInfo, choosenAnimation, chooseChartAnimation, selectedAnimation, selectedAnimationIndex, isSelectingChartElement, selectingParameter, selectChartElement, modifyChartAnimation } = this.props;
         const { pointx, pointy } = this.state;
+        
+        // const width=this.props.currentElement.info().width;
+        // const height=this.props.currentElement.info().height;
+
+        // console.log(width,height)
+
         const isActive = canDrop && isOver;
         let backgroundColor = 'white';
         if (isActive) {
@@ -51,8 +57,10 @@ class ChartPanel extends Component {
                     type={chartInfo.type}
                     data={this.props.data}
                     spec={this.props.spec}
-                    width={600} 
+                    width={600} //600比画布上大
                     height={600}
+                    // width={400} 
+                    // height={400}
                     pointx={pointx}
                     pointy={pointy}
                     choosenAnimation={choosenAnimation}

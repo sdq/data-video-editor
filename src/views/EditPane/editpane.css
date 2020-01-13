@@ -34,3 +34,9 @@
     border-top-color: #FFC107;
     
 }
+
+.quickbutton{
+height:15px;
+width: 15px;
+text-align: center;
+}

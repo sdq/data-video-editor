@@ -75,9 +75,11 @@ export default class ChartElement extends Component {
         this.props.transformEnding(e,index,originWidth,originHeight);
     }
 
-    chooseChart() {
+    chooseChart(width,height) {
+        //no use 
         var data = {};
         const chartInfo = this.props.element.info();
+
         if (!_.isEmpty(this.props.dataList)) {
             data = this.props.dataList[chartInfo.dataIndex];
         }
@@ -87,8 +89,8 @@ export default class ChartElement extends Component {
                     name={this.props.name} 
                     data={data} 
                     spec={chartInfo.spec}
-                    width={this.props.draggable?this.originWidth:this.props.element.info().width}
-                    height={this.props.draggable?this.originHeight:this.props.element.info().height}
+                    width={width}
+                    height={height}
                     onCanvas={true} 
                     showAnimation={this.props.showAnimation} 
                     animations={this.props.element.animations()} 
@@ -98,20 +100,17 @@ export default class ChartElement extends Component {
     }
 
 
-    // //监听窗口大小变化的方法
-    // handleResize = e => {
-    //     console.log('浏览器窗口大小改变事件', e.target.innerWidth)
-    //   }
-    // componentDidMount() {
-    //     window.addEventListener('resize', this.handleResize.bind(this)) //监听窗口大小改变
-    //   }
-    //   componentWillUnmount() { //一定要最后移除监听器，以防多个组件之间导致this的指向紊乱
-    //     window.removeEventListener('resize', this.handleResize.bind(this))
-    //   }
-
-
-
     render() {
+
+        var data = {};
+        const chartInfo = this.props.element.info();
+
+        if (!_.isEmpty(this.props.dataList)) {
+            data = this.props.dataList[chartInfo.dataIndex];
+        }
+        const isPosTool =this.props.element?this.props.element.info().isPosTool:null;
+        console.log("chart",isPosTool,this.props.element.info().width)
+
         return (
             <Group 
                 ref={this.saveRef}
@@ -120,8 +119,6 @@ export default class ChartElement extends Component {
                 draggable = {this.props.draggable}
                 x={this.props.element.info().x}
                 y={this.props.element.info().y}
-                width={this.originWidth}
-                height={this.originHeight}
                 rotation={this.props.element.info().rotation}
                 //click
                 onClick= {e => {
@@ -142,7 +139,26 @@ export default class ChartElement extends Component {
                 onTransformEnd={this.onTransformEnd}
                 visible={this.props.visible}
             >
-                {this.chooseChart()}
+                {/* {this.chooseChart(width,height)} */}
+
+                <ChartContainer  
+                    // ref={(ref)=>this.myComponent=ref}
+                    ref={node=>this.chartref=node}
+                    category={chartInfo.category}
+                    type={chartInfo.type}
+                    name={this.props.name} 
+                    data={data} 
+                    spec={chartInfo.spec}
+                    // width={this.props.draggable?this.originWidth:this.props.element.info().width}
+                    // height={this.props.draggable?this.originHeight:this.props.element.info().height}
+                    width={isPosTool?this.props.element.info().width:(this.props.draggable?this.originWidth:this.props.element.info().width)}
+                    height={isPosTool?this.props.element.info().height:(this.props.draggable?this.originHeight:this.props.element.info().height)}
+                    onCanvas={true} 
+                    showAnimation={this.props.showAnimation} 
+                    animations={this.props.element.animations()} 
+                    current={this.props.scenePosition}
+                    isVideoPerforming={this.props.isVideoPerforming}
+                />
             </Group>
         )
     }

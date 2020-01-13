@@ -192,6 +192,7 @@ export default class EditableLayer extends Component {
                     transforminfo = {w,h,r};
                     this.props.transformElement(transforminfo);
                 return ;
+                /*
             case ElementType.CHART:
                     //Determine whether scale is equal to last time(Rotation only)
                     //So scale calculation is not performed at this time
@@ -211,6 +212,7 @@ export default class EditableLayer extends Component {
                     transforminfo = {w,h,r};
                     this.props.transformElement(transforminfo);
                 return ;
+                */
             default: //gif video image
                     let {x, y, scaleX, scaleY} = e.currentTarget.attrs;
                     r = e.currentTarget.rotation();

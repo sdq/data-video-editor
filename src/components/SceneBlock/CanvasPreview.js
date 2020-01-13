@@ -46,16 +46,15 @@ export default class  extends Component {
                 >
                     <Layer>
                         {scene.elements().map(function(element, index) {
-                            
                             switch (element.type()) {
                                 case ElementType.TEXT:
                                     return <TextElement key={sceneIndex+"-"+index} element={element} name={sceneIndex+"-"+index} draggable = {false} {...this.props}/>
                                 case ElementType.IMAGE:
                                     return <ImageElement key={sceneIndex+"-"+index} element={element} name={sceneIndex+"-"+index} draggable = {false} {...this.props}/>
                                 case ElementType.GIF:
-                                    return <GifElement key={sceneIndex + "-" + index} element={element} name={sceneIndex + "-" + index} draggable={false} {...this.props} />
+                                    return <GifElement key={sceneIndex+"-"+index} element={element} name={sceneIndex + "-" + index} draggable={false} {...this.props} />
                                 case ElementType.CHART:
-                                    return <ChartElement key={sceneIndex+"-"+index} element={element} name={sceneIndex+"-"+index}  width={200} height={200} draggable = {false} {...this.props}/>
+                                    return <ChartElement key={sceneIndex+"-"+index} element={element} name={sceneIndex+"-"+index}  draggable = {false} {...this.props}/>
                                 case ElementType.SHAPE:
                                     return <ShapeElement key={sceneIndex+"-"+index} element={element} name={sceneIndex+"-"+index} draggable = {false} {...this.props}/>
                                     case ElementType.VIDEO:
