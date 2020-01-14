@@ -109,8 +109,6 @@ export default class ChartElement extends Component {
             data = this.props.dataList[chartInfo.dataIndex];
         }
         const isPosTool =this.props.element?this.props.element.info().isPosTool:null;
-        console.log("chart",isPosTool,this.props.element.info().width)
-
         return (
             <Group 
                 ref={this.saveRef}
@@ -149,8 +147,6 @@ export default class ChartElement extends Component {
                     name={this.props.name} 
                     data={data} 
                     spec={chartInfo.spec}
-                    // width={this.props.draggable?this.originWidth:this.props.element.info().width}
-                    // height={this.props.draggable?this.originHeight:this.props.element.info().height}
                     width={isPosTool?this.props.element.info().width:(this.props.draggable?this.originWidth:this.props.element.info().width)}
                     height={isPosTool?this.props.element.info().height:(this.props.draggable?this.originHeight:this.props.element.info().height)}
                     onCanvas={true} 

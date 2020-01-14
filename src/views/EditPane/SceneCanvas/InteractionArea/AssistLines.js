@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ElementType from '@/constants/ElementType';
 
 
 let assistlinecolor = '#DCDCDC';
@@ -52,13 +51,6 @@ export default class AssistLines extends Component {
              if(w<100){smallW=true;}
              if(h<100){smallH=true;}
         }
-
-
-        // //TODO:优化图表高宽度，才可以正确使用辅助线
-        // if(this.props.currentElement.type()=== ElementType.CHART){
-        //     //isChartLine = true;
-        //     isChartLine = false;
-        // }
 
 
         //判定显示辅助线的margin（略大于显示margin）

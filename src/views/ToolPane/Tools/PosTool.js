@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { InputNumber, Row, Col,Icon } from 'antd';
-import ElementType from '@/constants/ElementType';
 import _ from 'lodash';
 
 export default class PosTool extends Component {
@@ -49,7 +48,6 @@ export default class PosTool extends Component {
          //再点击postool的时候就应该更新origin
         this.props.currentElement.info().isPosTool = true;   //mark: Transform from toolpane
 
-
         let r = this.props.currentElement.info().rotation;  // need a real size to effect
         let h = this.props.currentElement.info().height; 
         let transformInfo = {w,h,r}; 
@@ -60,10 +58,10 @@ export default class PosTool extends Component {
         this.props.currentElement.info().width = w;
 
 
-        //图表 比例固定
-        if(this.props.currentElement.type() == ElementType.CHART){
-            this.changeH(w);
-        }
+        // //图表 比例固定
+        // if(this.props.currentElement.type() == ElementType.CHART){
+        //     this.changeH(w);
+        // }
 
         
      };
