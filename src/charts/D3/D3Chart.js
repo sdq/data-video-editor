@@ -192,9 +192,6 @@ export default class D3Chart extends Component {
         }
     }
 
-    componentWillUpdate(){
-        this.getSvg2ImageUrl();
-    }
 
     render() {
         if (this.props.onCanvas) {
