@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { message } from 'antd';
 
 export default class ChartInteractionArea extends Component {
     constructor(props) {
@@ -13,6 +14,8 @@ export default class ChartInteractionArea extends Component {
             return null;
         }
         if (!this.chartInfo.src) {
+            //提示用户去图表editor-animation-保存动画
+            message.info("please set Animation Plan in Chart Editor first !")
             return null;
         }
         return (

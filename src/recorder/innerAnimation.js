@@ -1,4 +1,5 @@
-
+//import FileChange from '@/utils/fileChange';
+//import WebApi from '@/axios/api';
 let data = []
 let recorder
 let context
@@ -38,7 +39,7 @@ export default class innerAnimationRecorder {
         }
         recorder = new MediaRecorder(stream, options);
         this.recorder = recorder;
-        recorder.start(10)
+        recorder.start();
         recorder.ondataavailable = function (event) {
             data.push(event.data);
             // console.log("event.data", event.data, recorder.state)
@@ -72,7 +73,19 @@ export default class innerAnimationRecorder {
                 recorder.stop();
                 this.recorder = null
                 setTimeout(() => {
-                    url = URL.createObjectURL(new Blob(data, { type: "video/webm" }))
+                    let videoBlob = new Blob(data, { type: "video/mp4" });
+                    url = URL.createObjectURL(videoBlob);
+                    //fileChange
+                    // FileChange.blobToDataURL(videoBlob, (dataURI) => {
+                    //     let base64Data = dataURI.split(",")[1];
+                    //     console.log("base64Data", base64Data)
+                    //     let folderId = '4962';
+                    //     let name = "chartvideo";//重名会引起接口报错
+                    //     let type = 'video' //文件夹不会显示此类型文件
+                    //     WebApi.CreatNewAsset(folderId, type, name, dataURI).then(resolve => {
+                    //         console.log("上传", resolve.data.id)
+                    //     })
+                    // })
                     //console.log("url...", url)
                     resolve(url)
                 }, 2000)

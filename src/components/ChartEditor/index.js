@@ -7,7 +7,7 @@ import AnimationPanel from './AnimationPanel';
 import ChartPanel from './ChartPanel';
 import TablePanel from './TablePanel';
 import carsSchema from '@/datasets/carsSchema';
-import _ from 'lodash'
+import _ from 'lodash';
 import './charteditor.css';
 
 const { Sider, Content } = Layout;
@@ -56,6 +56,9 @@ export default class ChartEditor extends Component {
             this.setState({
                 isShowRecordingModal: false
             })
+            setTimeout(()=>{
+                this.props.handleOk();//录制完毕直接返回到画布上;500ms容易接受
+            },500)
             clearTimeout(this.timer)
         }
     }
@@ -81,7 +84,7 @@ export default class ChartEditor extends Component {
         //有动画
         let animationSteps = this.props.displaySpec.animation;
         if (this.isRecording && animationSteps.length) {
-            //点击保存,但是没有录制完毕,弹窗显示等待时间或者用户取消保s存
+            //点击保存,但是没有录制完毕,弹窗显示等待时间或者用户取消保存
             this.setState({
                 isShowRecordingModal: true,
                 remainTime: this.totalDelay
@@ -94,7 +97,7 @@ export default class ChartEditor extends Component {
                     remainTime
                 })
                 if (this.timer && remainTime <= 0) {
-                    clearTimeout(this.timer)
+                    clearTimeout(this.timer);
                 }
             }, 1000)
         } else {

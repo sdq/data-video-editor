@@ -29,6 +29,7 @@ const initialState = {
     selectedAnimationIndex: -1,
     isSelectingChartElement: false,
     selectingParameter: {},
+    isGenerateChartVideoUrl: true,
     // history
     actionHistory: [{
         "type": "none",
@@ -284,7 +285,9 @@ export default (state = initialState, action) => {
             newState.specIndex++;
             newState.displaySpec = newSpec;
             return newState;
-
+        case VisActionType.INTERRUPT_SAVE_CHART_VIDEO_ANIMATION:
+            newState.isGenerateChartVideoUrl = false;
+            return newState;
         // Meta
 
         default:

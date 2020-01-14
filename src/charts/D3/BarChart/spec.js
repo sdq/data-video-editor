@@ -1,8 +1,9 @@
 const defaultSpec = {
     "encoding": {
-        "y": {
-            "aggregation": "average",
-        }
+        "x": { "field": "Year", "type": "temporal" },
+        "y": { "field": "Horsepower", "type": "quantitative" },
+        "color": { "field": "Origin", "type": "nordinal" },
+        "time": { "field": "Year", "type": "temporal" },
     },
     "style": {
         "layout": "stacked",
