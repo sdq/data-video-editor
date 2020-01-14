@@ -82,13 +82,35 @@ export default class VideoElement extends Component {
             }
         }
     }
-
+    componentWillReceiveProps(nextProps) {
+        if (!this.props.showAnimation && nextProps.tag && nextProps.tag !== this.state.video) {
+            //console.log("componentWillReceiveProps 更新", nextProps.tag)
+            this.setState({
+                video: nextProps.tag
+            });
+            let currentVideoList = this.props.scenes[this.props.sceneIndex] && this.props.scenes[this.props.sceneIndex].videos();
+            //console.log("currentVideoList",currentVideoList)
+            let isInList = false;
+            if (currentVideoList.length !== 0) {
+                currentVideoList.map(video => {
+                    if (video.id === "video-" + this.props.element.id()) {
+                        isInList = true;
+                    }
+                    return video;
+                })
+            }
+            if (!isInList) {
+                //准备可以播放的资源,并且添加到播放列表中
+                this.loadVideo();
+            }
+        }
+    }
     componentWillUnmount() {
-        console.log("componentWillUnmount....",this.state.video)
-        // if (this.state.video && !this.state.video.paused) {
-        //     this.state.video.pause();
-        //     //console.log("pause....")
-        // }
+       // console.log("componentWillUnmount....",this.state.video)
+        if (this.state.video && !this.state.video.paused) {
+            this.state.video.pause();
+            //console.log("pause....")
+        }
     }
 
     loadVideo() {

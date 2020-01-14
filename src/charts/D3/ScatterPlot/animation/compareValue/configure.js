@@ -4,20 +4,6 @@ import { getSeries } from '../../helper';
 import _ from 'lodash';
 const { Option } = Select;
 
-// function setDescription(animation){
-//     let des = "Compare the " + animation.spec.value1 + " value";
-//     if(animation.spec.value1 === "min" || animation.spec.value1 === "max"){
-//         des += " in the " + animation.spec.channel1 + " channel";
-//     }
-//     des += " in the " + animation.spec.series1 + " series";
-
-//     des += " with the " + animation.spec.value2 + " value";
-//     if(animation.spec.value2 === "min" || animation.spec.value2 === "max"){
-//         des += " in the " + animation.spec.channel2 + " channel";
-//     }
-//     des += " in the " + animation.spec.series2 + " series";
-//     animation.description = des;
-// }
 function setDescription(animation){
     let des = "Compare the " + animation.spec.value1 + " value";
     des += " in the " + animation.spec.channel + " channel";

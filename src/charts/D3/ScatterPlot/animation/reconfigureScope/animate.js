@@ -16,81 +16,48 @@ const draw = (animation, props) => {
     svg.selectAll(".temporal-content").remove();
 
     let xScale,axisX,yScale,axisY;
-    // let xScale = d3.scaleLinear()
-    //     .domain(animation.spec.oldRangeX? animation.spec.oldRangeX:[0, d3.max(data.map(d => parseFloat(d[encoding.x.field])))])
-    //     .range([0, chartWidth])
-    //     .nice();
+    if(animation.spec.rangeX || animation.spec.rangeY){
+        xScale = d3.scaleLinear()
+            .domain(animation.spec.rangeX)
+            .range([0, chartWidth])
+            .nice();
 
-    // let axisX = d3.axisBottom(xScale)
-    //     .ticks(10)
-    //     .tickPadding(5);
+        axisX = d3.axisBottom(xScale)
+            .ticks(10)
+            .tickPadding(5);
 
-    // let yScale = d3.scaleLinear()
-    //     .domain(animation.spec.oldRangeY? animation.spec.oldRangeY: [0, d3.max(data.map(d => parseFloat(d[encoding.y.field])))])
-    //     .range([chartHeight, 0])
-    //     .nice();
+        yScale = d3.scaleLinear()
+            .domain(animation.spec.rangeY)
+            .range([chartHeight, 0])
+            .nice();
 
-    // let axisY = d3.axisLeft(yScale)
-    //     .ticks(10)
-    //     .tickPadding(5);
+        axisY = d3.axisLeft(yScale)
+            .ticks(10)
+            .tickPadding(5);
 
-    // svg.select("g.axis_x")
-    //     .call(axisX)
-    //     .selectAll('line')
-    //     .attr("opacity", 0.4)
-    //     .attr("y2", -chartHeight)
-    //     .attr("stroke-dasharray","5,5");
+        svg.select("g.axis_x")
+            .transition()
+            .duration(animation.duration)
+            .call(axisX)
+            .selectAll('line')
+            .attr("opacity", 0.4)
+            .attr("y2", -chartHeight)
+            .attr("stroke-dasharray","5,5");
 
-    // svg.select("g.axis_y")
-    //     .call(axisY)
-    //     .selectAll('line')
-    //     .attr("opacity", 0.4)
-    //     .attr("x2", chartWidth)
-    //     .attr("stroke-dasharray","5,5");
+        svg.select("g.axis_y")
+            .transition()
+            .duration(animation.duration)
+            .call(axisY)
+            .selectAll('line')
+            .attr("opacity", 0.4)
+            .attr("x2", chartWidth)
+            .attr("stroke-dasharray","5,5");
 
-    // items.attr("cx", d => xScale(d[encoding.x.field]))
-    //     .attr("cy", d => yScale(d[encoding.y.field]));
-    
-    xScale = d3.scaleLinear()
-        .domain(animation.spec.rangeX)
-        .range([0, chartWidth])
-        .nice();
-
-    axisX = d3.axisBottom(xScale)
-        .ticks(10)
-        .tickPadding(5);
-
-    yScale = d3.scaleLinear()
-        .domain(animation.spec.rangeY)
-        .range([chartHeight, 0])
-        .nice();
-
-    axisY = d3.axisLeft(yScale)
-        .ticks(10)
-        .tickPadding(5);
-
-    svg.select("g.axis_x")
-        .transition()
-        .duration(animation.duration)
-        .call(axisX)
-        .selectAll('line')
-        .attr("opacity", 0.4)
-        .attr("y2", -chartHeight)
-        .attr("stroke-dasharray","5,5");
-
-    svg.select("g.axis_y")
-        .transition()
-        .duration(animation.duration)
-        .call(axisY)
-        .selectAll('line')
-        .attr("opacity", 0.4)
-        .attr("x2", chartWidth)
-        .attr("stroke-dasharray","5,5");
-
-    items.transition()
-        .duration(animation.duration)
-        .attr("cx", d => xScale(d[encoding.x.field]))
-        .attr("cy", d => yScale(d[encoding.y.field]));
+        items.transition()
+            .duration(animation.duration)
+            .attr("cx", d => xScale(d[encoding.x.field]))
+            .attr("cy", d => yScale(d[encoding.y.field]));
+    }
 
     return svg;
 }

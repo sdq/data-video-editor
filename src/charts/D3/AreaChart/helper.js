@@ -28,7 +28,6 @@ const getSeries = (rawData, encoding) => {
 }
 const getSeriesValue = (rawData, encoding) => {
     if(('color' in encoding) && !_.isEmpty(encoding.color)){
-    // console.log(new Set(rawData.map(d => d[encoding.color.field])))
         return Array.from(new Set(rawData.map(d => d[encoding.color.field])));}
     else return [];
 }
@@ -47,7 +46,6 @@ const getStackedData = (rawData, encoding) => {
         dataSeries[s] = getAggregatedRows(dataSeries[s], encoding);
         for (let index = 0; index < dataSeries[s].length; index++) {
             const rowData = dataSeries[s][index];
-            // console.log(rowData);
             dataSeriesCategories[s][rowData[encoding.x.field]] = rowData[encoding.y.field]
         }
     }

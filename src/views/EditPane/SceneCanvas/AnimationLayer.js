@@ -7,6 +7,7 @@ import TextElement from '@/components/Elements/TextElement';
 import ShapeElement from '@/components/Elements/ShapeElement';
 import ChartElement from '@/components/Elements/ChartElement';
 import VideoElement from '@/components/Elements/VideoElement';
+import ChartVideoElement from '@/components/Elements/ChartVideoElement'
 import ElementType from '@/constants/ElementType';
 
 export default class AnimationLayer extends Component {
@@ -138,18 +139,28 @@ export default class AnimationLayer extends Component {
                             />
 
                         case ElementType.CHART:
-                            return <ChartElement 
-                                ref={node => (this.elementNodes[index] = node)}
-                                key={this.props.sceneIndex+"-"+index} 
-                                element={element} 
-                                name={this.props.sceneIndex+"-"+index} 
-                                width={200} 
-                                height={200} 
-                                draggable={false} 
-                                visible={this.isElementDisplay(element)}
-                                showAnimation={true}
-                                {...this.props}
-                            />
+                            if (element.info().src) {
+                                return <ChartVideoElement
+                                    key={this.props.sceneIndex + "-" + index}
+                                    element={element}
+                                    visible={this.isElementDisplay(element)}
+                                    {...this.props}
+                                />
+
+                            } else {
+                                return <ChartElement
+                                    ref={node => (this.elementNodes[index] = node)}
+                                    key={this.props.sceneIndex + "-" + index}
+                                    element={element}
+                                    name={this.props.sceneIndex + "-" + index}
+                                    width={200}
+                                    height={200}
+                                    draggable={false}
+                                    visible={this.isElementDisplay(element)}
+                                    showAnimation={true}
+                                    {...this.props}
+                                />
+                            }
                         case ElementType.SHAPE:
                                 return <ShapeElement
                                     ref={node => (this.elementNodes[index] = node)} 

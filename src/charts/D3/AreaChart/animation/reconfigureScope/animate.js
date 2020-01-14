@@ -37,7 +37,6 @@ const draw = (animation, props) => {
     //     .y1(d => y(d[1]))
 
     var stacked_area_generator = (rangeY, rangeX) => {
-        //console.log(rangeY)
         let x0 = rangeX[0];
         let x1 = rangeX[1];
         let scale = (x1 - x0) / 100;
@@ -104,7 +103,6 @@ const draw = (animation, props) => {
         if (animation.spec.rangeY || animation.spec.rangeX) {
             if (animation.spec.rangeY) {
                 y.domain([0, d3.max(stackedData[stackedData.length - 1], d => d[1])]).nice().range([height, 0]);
-                //console.log(y.domain())
                 areaLayer.selectAll(".y.axis")
                     .call(d3.axisLeft(y));
                 y.domain(rangeY)
@@ -129,7 +127,6 @@ const draw = (animation, props) => {
         }
 
     } else if (animation.spec.effect === "zoom out") {
-        //console.log('out')
         let x0 = rangeX[0];
         let x1 = rangeX[1];
         let scale = (x1 - x0) / 100;
@@ -151,7 +148,6 @@ const draw = (animation, props) => {
             .transition()
             .duration(animation.duration)
             .attr("d", stacked_area_generator([0, d3.max(stackedData[stackedData.length - 1], d => d[1])], [0, 100]))
-            //console.log(y.domain())
             if (animation.spec.rangeY) {
                 y.domain(rangeY)
                 areaLayer.selectAll(".y.axis")

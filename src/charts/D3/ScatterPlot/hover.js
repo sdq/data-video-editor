@@ -125,7 +125,7 @@ const draw = (props) => {
                 break;
             case ChartAnimationType.COMPARE_SERIES:
                 choosenAnimation.spec.series1 = hoverSeries;
-                choosenAnimation.description = "Compare the "+ choosenAnimation.spec.series1 +" and "+ choosenAnimation.spec.series2 +" series";
+                choosenAnimation.description = "Compare two series";
                 break;
             case ChartAnimationType.COMPARE_EXTREMES:
                 choosenAnimation.spec.series1 = hoverSeries === "all" ? null : hoverSeries;

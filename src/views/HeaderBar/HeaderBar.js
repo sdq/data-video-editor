@@ -119,7 +119,7 @@ export default class HeaderBar extends Component {
                             let gifId = newE.assetId;
                             let gifDataFrames;
                             //console.log("导入gifId...",gifId)
-                            //解析gifFrames todo gif id需要在导出的时候，存
+                            //解析gifFrames
                             WebApi.GetGIFAsset(gifId).then(async fileURL => {
                                 //console.log("newSrc", fileURL)
                                 await gifFrames(
@@ -271,8 +271,11 @@ export default class HeaderBar extends Component {
             switch (elementType) {
                 case "video_element":
                     let video = document.createElement("video")
-                    video.src = src;
-                    video.id = 'video_import' + Math.random()
+                    let source = document.createElement("source")
+                    source.src = src;
+                    video.appendChild(source);
+                    video.id = 'video_import' + Math.random();
+                    video.preload = "auto";
                     video.addEventListener("canplay", () => {
                         reslove(video)
                     })

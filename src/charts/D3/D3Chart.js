@@ -18,7 +18,7 @@ export default class D3Chart extends Component {
             isSelecting: false,
         };
         this._animations = [];
-        this.innnerAnimataionTimer = 0;
+        this.drawFramesTimer = 0;
         this.recorderTimer = 0;
     }
 
@@ -64,11 +64,7 @@ export default class D3Chart extends Component {
             })
         }
     }
-
-    componentWillUnmount() {
-        this.cancelAnimation();
-    }
-
+    
     renderChart = () => {
         this.cancelAnimation();
         const svg = this.props.draw(this.props);
@@ -104,7 +100,7 @@ export default class D3Chart extends Component {
         }
         //准备录制画布 captureStream
         chartRecorderInstance.initRecorder(canvasOptions);
-        this.innnerAnimataionTimer = setInterval(() => {
+        this.drawFramesTimer = setInterval(() => {
             //每隔16豪秒截取此刻svg生成image
             let svg2ImageUrl = this.getSvg2ImageUrl();
             //绘制到canvas,通过canvas录制
@@ -133,20 +129,15 @@ export default class D3Chart extends Component {
             //关闭录制中弹窗显示 
             this.props.addRecordingStateListener(isRecording, 0);
             //播放完毕！ 生成video url
-            clearInterval(this.innnerAnimataionTimer)
+            clearInterval(this.drawFramesTimer)
             chartRecorderInstance.finish().then(VideoURL => {
+                console.log("VideoURL",VideoURL)
                 if (VideoURL) {
                     this.props.currentElement.info().src = VideoURL
                     const newScene = _.cloneDeep(this.props.currentScene);
                     newScene.updateElement(this.props.currentElement, this.props.elementIndex);
                     this.props.updateScene(this.props.sceneIndex, newScene);
                 }
-            }, reject => {
-                //用户取消制作chartAnimation过程
-                this.props.currentElement.info().src = null
-                const newScene = _.cloneDeep(this.props.currentScene);
-                newScene.updateElement(this.props.currentElement, this.props.elementIndex);
-                this.props.updateScene(this.props.sceneIndex, newScene);
             });
         }, totalDelay)
         //totalDelay 是为了倒计时的初始值
@@ -162,7 +153,7 @@ export default class D3Chart extends Component {
         for (var i = 0; i < this._animations.length; i++) {
             clearTimeout(this._animations[i]);
         }
-        clearInterval(this.innnerAnimataionTimer)
+        clearInterval(this.drawFramesTimer)
         clearTimeout(this.recorderTimer)
     }
 

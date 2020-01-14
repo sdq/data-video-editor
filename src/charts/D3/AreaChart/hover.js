@@ -84,13 +84,11 @@ const draw = (props) => {
         areaPath
             .style('fill', (d, i) => {
                 let area = d.filter(d => d.data.x === point.x)
-                // console.log(area)
                 if (inArea(point, area[0])) {
                     hoverSeries.add(d.key);
                 }
                 return colorScale(i);
             });
-        //console.log(hoverSeries)
         areaPath.attr("stroke", "yellow")
             .attr("stroke-opacity", 1)
             .attr("stroke-width", (d) => {
@@ -139,7 +137,6 @@ const draw = (props) => {
                 }
                 return colorScale(i);
             });
-        //console.log(hoverSeries)
         areaPath.attr("stroke", "yellow")
             .attr("stroke-opacity", 1)
             .attr("stroke-width", (d) => {
@@ -153,14 +150,12 @@ const draw = (props) => {
             hoverSeries = Array.from(hoverSeries)[0];
         }
         category = point.x
-        //console.log(category)
         let series = getSeriesValue(data, encoding);
         let categoryList = []
         stackedData[0].forEach(d => {
             categoryList.push(d.data.x)
         })
         let categoryIndex = categoryList.indexOf(category)
-        // console.log(categoryIndex)
         let seriesIndex = series.indexOf(hoverSeries)
         if (hoverSeries !== "all") {
             let vLine = stackedData[seriesIndex][categoryIndex]
@@ -172,18 +167,15 @@ const draw = (props) => {
         choosenAnimation.description = "Emphasize the " + choosenAnimation.spec.value + " value in the " + choosenAnimation.spec.series + " series";
 
 
-        // console.log(category)
         // let series = getSeriesValue(data, encoding);
         // choosenAnimation.spec.series = hoverSeries;
         // choosenAnimation.spec.category = category
         // let index = series.indexOf(hoverSeries)
-        // console.log(stackedData[index])
         // let categoryList= []
         // stackedData[0].forEach(d => {
         //     categoryList.push(d.data.x)
         // })
         // let categoryIndex = categoryList.indexOf(category)
-        // // console.log(stackedData[index][categoryIndex])
         // let vLine = stackedData[index][categoryIndex]
         // choosenAnimation.spec.category = `(${category}, ${vLine[1]-vLine[0]})`
         // choosenAnimation.description = "Emphasize the " + choosenAnimation.spec.value + " value in the " + choosenAnimation.spec.series + " series";

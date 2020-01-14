@@ -4,7 +4,8 @@ import LazyLoad from 'react-lazyload';
 import ChartCard from '@/components/ChartCard';
 import ChartCategory from '@/constants/ChartCategory';
 import './charttab.css';
-import {vegaliteCharts, d3Charts} from './chartList';
+//import {vegaliteCharts, d3Charts} from './chartList';
+import {d3Charts} from './chartList';
 
 const { Panel } = Collapse;
 
@@ -40,8 +41,8 @@ export default class ChartTab extends Component {
     render() {
         return (
             <div className="charttab" style={{ height: this.props.contentHeight}}>
-                <Collapse accordion bordered={false} activeKey={this.state.activeKey} onChange={this.callback} style={{ height: this.props.contentHeight-25 }}>
-                    <Panel header={"VegaLite (" + vegaliteCharts.length + ")"} key={ChartCategory.VEGALITE} className="collaspe-panel">
+                <Collapse accordion bordered={false} activeKey={ChartCategory.D3} onChange={this.callback} style={{ height: this.props.contentHeight-25 }}>
+                    {/* <Panel header={"VegaLite (" + vegaliteCharts.length + ")"} key={ChartCategory.VEGALITE} className="collaspe-panel">
                         <List
                             grid={{ gutter: 17, column: 3 }}
                             dataSource={vegaliteCharts}
@@ -58,8 +59,8 @@ export default class ChartTab extends Component {
                             </List.Item>
                             )}
                         />
-                    </Panel>
-                    <Panel header={"D3 (" + d3Charts.length + ")"} key={ChartCategory.D3} className="collaspe-panel">
+                    </Panel> */}
+                    <Panel header={"D3 (" + d3Charts.length + ")"} key={ChartCategory.D3} activeKey={ChartCategory.D3} className="collaspe-panel">
                         <List
                             grid={{ gutter: 17, column: 3 }}
                             dataSource={d3Charts}
