@@ -86,7 +86,6 @@ export default class D3Chart extends Component {
     }
     getSvg2ImageUrl = () => {
         if (!document.getElementsByClassName(this.props.chartId)[0]) {
-            // console.log(document.getElementsByClassName((this.props.chartId)[0]),this.props.width)//重新获取大小
             return;
         }
         let svg = document.getElementsByClassName(this.props.chartId)[0].getElementsByTagName('svg')[0]
@@ -198,9 +197,8 @@ export default class D3Chart extends Component {
     }
 
     render() {
-       // console.log(this.props)
         if (this.props.onCanvas) {
-            return <ChartImage name={this.props.name} src={this.state.chartImageUrl} getImageRef={this.getImageRef} />;
+            return <ChartImage name={this.props.name} src={this.state.chartImageUrl} getImageRef={this.getImageRef} {...this.props} />;
         } else {
             return <div className={this.props.chartId} />;
         }

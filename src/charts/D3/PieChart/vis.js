@@ -24,7 +24,7 @@ const draw = (props) => {
 
     let legendSvg = svg
                 //在svg之前添加center元素以保证svg居中显示
-                // .append("center")    
+                //.append("center")    
                 .append("svg")
                 .attr("width", width + margin.left + margin.right)
                 .attr("height", height + margin.top + margin.bottom)
@@ -72,13 +72,14 @@ const draw = (props) => {
         .enter()
         .append("g")
         .attr("transform", "translate(" + width/2 + "," + height/2 + ")");
-                
-    let path = arcs.append("path")
+
+         
+    // let path = arcs.append("path")
+        arcs.append("path")
         .attr("fill", function(d){ return(color(d.data[encoding.color.field])); })
         .attr("d", function(d,i){
             return arc(d);
         });
-    //console.log(path);
     
     //draw text-label
     arcs.append("text")
