@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import ChartImage from '../ChartImage';
 import { AnimationCreator } from '@/animation';
 import canvg from 'canvg';
-import ChartRecorderInstance from '@/recorder/innerAnimation'
+import ChartRecorderInstance from '@/recorder/innerAnimation';
+//import Fragment from '@/models/element/Fragment';
 import _ from 'lodash'
 
 const chartRecorderInstance = new ChartRecorderInstance();
@@ -84,9 +85,9 @@ export default class D3Chart extends Component {
         if (!document.getElementsByClassName(this.props.chartId)[0]) {
             return;
         }
-        let svg = document.getElementsByClassName(this.props.chartId)[0].getElementsByTagName('svg')[0]
-        let visSourc = svg.innerHTML
+        let svg = document.getElementsByClassName(this.props.chartId)[0].getElementsByTagName('svg')[0] 
         if (svg) {
+            let visSourc = svg.innerHTML
             return this.getImageUrl(visSourc);
         }
     }
@@ -131,12 +132,19 @@ export default class D3Chart extends Component {
             //播放完毕！ 生成video url
             clearInterval(this.drawFramesTimer)
             chartRecorderInstance.finish().then(VideoURL => {
-                console.log("VideoURL",VideoURL)
+                //console.log("VideoURL", VideoURL)
                 if (VideoURL) {
-                    this.props.currentElement.info().src = VideoURL
-                    const newScene = _.cloneDeep(this.props.currentScene);
-                    newScene.updateElement(this.props.currentElement, this.props.elementIndex);
-                    this.props.updateScene(this.props.sceneIndex, newScene);
+                    //console.log("this.props.currentElement", this.props.currentElement)
+                    this.props.currentElement.info().src = VideoURL; //VideoURL内存中的地址，上传pimcore转换成线上地址；项目导入导出需要
+                    this.loadVideoDuration(VideoURL).then(duration => {
+                        //console.log("duration...", typeof duration, duration)
+                        this.props.currentElement.duration(duration);
+                        const newScene = _.cloneDeep(this.props.currentScene);
+                        //console.log("fragments()", this.props.currentElement.fragments());
+                        this.props.currentElement.fragments()[0].duration(duration);
+                        newScene.updateElement(this.props.currentElement, this.props.elementIndex);
+                        this.props.updateScene(this.props.sceneIndex, newScene);
+                    })
                 }
             });
         }, totalDelay)
@@ -182,8 +190,28 @@ export default class D3Chart extends Component {
             }
         }
     }
-
-
+    loadVideoDuration = (url) => {
+        return new Promise((reslove) => {
+            let video = document.createElement('video');
+            let source = document.createElement("source");
+            source.src = url;
+            video.appendChild(source);
+            video.preload = "auto";
+            video.addEventListener("canplay", () => {
+                //console.log("canplay",video.duration,typeof video.duration)
+                if (video.duration === Infinity) {
+                    video.currentTime = 100000;//set the element’s currentTime pointer long past the end of the clip,and the duration property will be updated
+                } else {
+                    reslove(video.duration)
+                }
+            })
+            
+            video.addEventListener("timeupdate", () => {
+                //console.log("timeupdate...", video.duration)
+                reslove(video.duration)
+            })
+        })
+    }
     render() {
         if (this.props.onCanvas) {
             return <ChartImage name={this.props.name} src={this.state.chartImageUrl} getImageRef={this.getImageRef} {...this.props} />;

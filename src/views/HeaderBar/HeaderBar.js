@@ -156,6 +156,7 @@ export default class HeaderBar extends Component {
                             break;
                         case ElementType.CHART:
                             const newChart = new ChartInfo(newE.dataIndex, newE.category, newE.type, newE.spec, newE.x, newE.y, newE.width, newE.height, newE.rotation);
+                            newChart.src = newE.src; //newE.src为内存中的地址，所以如果页面刷新后导入，则双击预览功能失效
                             newElement = new Element(ElementType.CHART, newChart);
                             newScene.addElement(newElement);
                             newElement.start(jsonObj[i]._elements[m]._start);
