@@ -12,7 +12,8 @@ module.exports = function (app) {
    }));
 
    app.use(proxy('/aliApi', {
-      target: "http://47.96.122.250:3001",
+      //target: "http://47.96.122.250:3001",
+      target :'https://datavideoapi.idvxlab.com',
       changeOrigin: true,
       pathRewrite:{
          '^/aliApi':'/'

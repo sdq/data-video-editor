@@ -41,4 +41,7 @@ export default {
     //Project Action
     ADD_PROJECT: "ADD_PROJECT",
     REMOVE_PROJECT: "REMOVE_PROJECT",
+    //User Actions
+    UPDATE_USER_FOLDER: 'UPDATE_USER_FOLDER',
+    UPDATE_USER_INFO: 'UPDATE_USER_INFO',
 }

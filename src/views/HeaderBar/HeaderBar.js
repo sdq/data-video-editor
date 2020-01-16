@@ -512,11 +512,14 @@ export default class HeaderBar extends Component {
     }
 
     render() {
+        const { userInfo } = this.props;
+        //console.log("userInfo",userInfo)
         return (
             <div className="headerbar">
                 <font color="white"><b>Data Video Editor</b></font>
-                <Button type="primary" icon="logout" shape="round" onClick={this.logout} style={{ float: 'right', marginLeft: 12 }}>
-                    Logout
+                <div style={{ flex: 1 }}>
+                    <Button type="primary" icon="logout" shape="round" onClick={this.logout} style={{ float: 'right', marginLeft: 12 }}>
+                        Logout
                 </Button>
                 <Upload
                     showUploadList={false}
@@ -526,9 +529,10 @@ export default class HeaderBar extends Component {
                     <Button type="primary" shape="round" style={{ marginLeft: 12 }}>
                         <Icon type="import" /> Import
                  </Button>
-                </Upload>
-                <Button type="primary" icon="export" shape="round" style={{ float: 'right', marginLeft: 12 }} onClick={this.showModal}>
-                    Export
+                    </Upload>
+
+                    <Button type="primary" icon="export" shape="round" style={{ float: 'right', marginLeft: 12 }} onClick={this.showModal}>
+                        Export
                 </Button>
                 <Button type="primary" icon="save" shape="round" style={{ float: 'right', marginLeft: 12 }} onClick={this.saveProject}>
                     Save
@@ -536,6 +540,11 @@ export default class HeaderBar extends Component {
                 <Button type="primary" shape="round" icon={this.state.isVideoPerforming ? "pause" : "caret-right"} onClick={this.play} style={{ float: 'right', marginLeft: 12 }}>
                     Preview
                 </Button>
+                </div>
+                <div className='userInfo'>
+                    <Icon type="user" />
+                    <p>{userInfo.emailNum}</p>
+                </div>
                 <Modal
                     title="Export Video"
                     visible={this.state.visible}

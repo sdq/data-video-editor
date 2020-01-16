@@ -6,7 +6,7 @@ import ChartTab from './ChartTab/ChartTab';
 import DefaultTab from './DefaultTab';
 import './resourcepane.css';
 import WebApi from '@/axios/api';
-//import config from '@/constants/ApiConfig';
+import config from '@/constants/ApiConfig';
 const { TabPane } = Tabs;
 
 let tabName = '';
@@ -59,8 +59,7 @@ export default class ResourcePane extends Component {
   }
 
   componentWillMount() {
-    //let parentId = config.userFolderId;
-    let parentId = 4962;///test
+    let parentId = config.userFolderId;
     //console.log("parentId...",parentId)
     let type = 'folder'
     WebApi.GetAssetsInExistingFolder(parentId, type).then(this.GetAsset).then(resolve => {
@@ -98,8 +97,7 @@ export default class ResourcePane extends Component {
     })
   }
   addTab = (name) => {
-     let parentId = 4962;/////////////////////////test
-    //let parentId = config.userFolderId;
+    let parentId = config.userFolderId;
     WebApi.CreatNewFolder(name, parentId).then((resolve) => {
       //console.log("FolderId...", resolve)
       let id = resolve.data.id;

@@ -2,36 +2,40 @@ import React, { Component } from 'react'
 import { Input, Button, message, Checkbox } from 'antd';
 import config from '@/constants/ApiConfig';
 import WebApi from '@/axios/api';
+import regex from '@/utils/regex';
 import './LogInView.css'
 
 export default class LogInView extends Component {
     constructor(props) {
         super(props)
-        this.emailNum = '';
-        this.psw = '';
+        this.state = {
+            // emailNum: 'm13676059895@163.com',
+            // psw: '123456',
+            emailNum:'',
+            psw:''
+        }
     }
 
     userLogIn = () => {
-        if (this.emailNum === '' ) {
-            message.error("请输入邮箱号码！")
-            return;
-        }
-        if (this.psw === '') {
-            message.error("请输入密码！")
-            return;
-        }
-        //console.log("checkUser...",this.emailNum,this.psw)
-        WebApi.checkUser(this.emailNum, this.psw).then(reslove => {
-            //console.log("checkUser...",reslove.data)
-            config.userFolderId = reslove.data.userFolderId;
-            //console.log("config",reslove.data.userFolderId)
-            this.props.history.push('/index')
-        }, reject => {
-
-
-            //console.log("WebApi...",reject)
-            message.error("用户名或密码不正确！请再次输入")
-            return;
+        regex.checkEmail(this.state.emailNum).then(regex.checkPassword(this.state.psw)).then(() => {
+            //检验邮箱与密码格式正确后，检验用户名与密码
+            WebApi.checkUser(this.state.emailNum, this.state.psw).then(reslove => {
+                config.userFolderId = reslove.data.userFolderId;
+                this.props.updateUserFolder(reslove.data.userFolderId);
+                this.props.updateUserInfo({
+                    emailNum: this.state.emailNum
+                })
+                this.props.history.push({
+                    pathname: '/index',
+                })
+            }, () => {
+                message.error("Unable to log you in. Please double check your email address and password, then try again");
+                // this.setState({
+                //     emailNum: '',
+                //     psw: ""
+                // })
+                return;
+            })
         })
     }
 
@@ -44,30 +48,36 @@ export default class LogInView extends Component {
         //console.log(`checked = ${e.target.checked}`);
     }
     emailChange = (e) => {
-        this.emailNum = e.target.value
+        this.setState({
+            emailNum: e.target.value
+        })
+
     }
     pswChange = (e) => {
-        this.psw = e.target.value
+        this.setState({
+            psw: e.target.value
+        })
     }
     render() {
+        const { emailNum, psw } = this.state;
         return (
             <div className='loginWrapper'>
                 <div className='logo'></div>
                 <div className='leftRectangle'></div>
                 <div className='rightRectangle'></div>
                 <div className='formWrapper'>
-                    <span className='bigTxt'>登陆</span>
-                    <span>邮箱</span>
-                    <Input placeholder='请输入邮箱号码' onChange={this.emailChange}></Input>
-                    <span>密码</span>
-                    <Input.Password placeholder='请输入密码' onChange={this.pswChange}/>
-                    <Checkbox onChange={this.onChange}>记住我</Checkbox>
-                    <Button type="primary" onClick={this.userLogIn}>登陆</Button>
+                    <span className='bigTxt'>Sign In</span>
+                    <span>Email</span>
+                    <Input value={emailNum} placeholder='Email' onChange={this.emailChange}></Input>
+                    <span>Password</span>
+                    <Input.Password value={psw} placeholder='Password' onChange={this.pswChange} />
+                    <Checkbox onChange={this.onChange}>Remember me</Checkbox>
+                    <Button type="primary" onClick={this.userLogIn}>SIGN IN</Button>
                 </div>
-                <div className='smallTxt'>
-                    <div>忘记密码</div>
+                <div className='LoginsmallTxt'>
+                    <p>FORGOT PASSWORD</p>
                     <p className='line'></p>
-                    <div onClick={this.userRegiste}>创建账户</div>
+                    <p onClick={this.userRegiste}>CREATE AN ACCOUNT</p>
                 </div>
             </div>
         );

@@ -5,6 +5,8 @@ import canvas from './canvas';
 import player from './player';
 import vis from './vis';
 import scene from './scene';
+import user from './user';
+
 export default combineReducers({
     ui,
     video,
@@ -12,4 +14,5 @@ export default combineReducers({
     canvas,
     player,
     vis,
+    user,
 });
