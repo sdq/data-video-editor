@@ -17,10 +17,11 @@ const draw = (animation, props) => {
     let series = getSeriesValue(data, encoding);
     let seriesIndex = series.indexOf(animation.spec.series)
 
+    let hasSeries = ('color' in encoding) && ('field' in encoding.color);
     areaG.selectAll('g').attr("stroke-width", 0);
 
     let isOnebyone = animation.isOnebyone;
-    if (animation.spec.effect === "wipe" && isOnebyone) {
+    if (hasSeries && animation.spec.effect === "wipe" && isOnebyone) {
         if (animation.spec.series === "all") {
             let i = 0
             areaG.selectAll('path').attr("fill-opacity", 0)
@@ -67,7 +68,7 @@ const draw = (animation, props) => {
                 .attr("width", width);
         }
     }
-    else if (animation.spec.effect === "fadeIn" && isOnebyone) {
+    else if (hasSeries && animation.spec.effect === "fadeIn" && isOnebyone) {
         if (animation.spec.series === "all") {
             let series = getSeriesValue(data, encoding);
             let i = 0

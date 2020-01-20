@@ -11,7 +11,7 @@ const draw = (animation, props) => {
     const offset = 20;
     const margin = { top: 10, right: 10, bottom: 40, left: 40 };
     const width = props.width - margin.left - margin.right - offset;
-    const height = props.height - margin.top - margin.bottom - offset;
+    const height = props.height - margin.top - margin.bottom - offset - 40;
 
     let hasSeries = ('color' in encoding) && ('field' in encoding.color);
     // Process Data
@@ -41,7 +41,7 @@ const draw = (animation, props) => {
     if (hasSeries) {
         y.domain([0, d3.max(stackedData[stackedData.length - 1], d => d[1])]).nice().range([height, 0]);
     } else
-        y.domain([0, d3.max(data, function (d) { return d[encoding.y.field]; })]).range([height, 0]);
+        y.domain([0, d3.max(data, function (d) { return d[encoding.y.field]; })]).nice().range([height, 0]);
 
     function getMaxIndex(array) {
         return d3.scan(array, function (a, b) {
@@ -60,34 +60,53 @@ const draw = (animation, props) => {
     if (animation.spec.effect === "filter") {
         const tick = 8;
         // all
-        if (animation.spec.series === "all") { 
-            let mData=[], 
-            mDataIndex=[];
+        if (animation.spec.series === "all") {
+            let mData = [],
+                mDataIndex = [];
             if (animation.spec.value === 'min') {
-                stackedData.forEach((d, i) => {
-                    let temp = []
-                    d.forEach(ds => {
-                        temp.push(ds[1] - ds[0])
-                    });
-                    mData.push(d3.max(temp))
-                    mDataIndex.push(getMinIndex(temp))
-                })      
+                if (hasSeries) {
+                    stackedData.forEach((d, i) => {
+                        let temp = []
+                        d.forEach(ds => {
+                            temp.push(ds[1] - ds[0])
+                        });
+                        mData.push(d3.max(temp))
+                        mDataIndex.push(getMinIndex(temp))
+                    })
+                    extremeValue = d3.min(mData)
+                    seriesIndex = getMinIndex(mData)
+                    extremeIndex = mDataIndex[seriesIndex]
+                    vLine = stackedData[seriesIndex][extremeIndex]
+                } else {
+                    let dataArr = data.map((d) => d[encoding.y.field])
+                    extremeIndex = getMinIndex(dataArr)
+                    extremeValue = d3.min(dataArr)
+                    vLine = [0, d3.min(dataArr)]
+                }
             } else if (animation.spec.value === 'max') {
-                
-                stackedData.forEach((d, i) => {
-                    let temp = []
-                    d.forEach(ds => {
-                        temp.push(ds[1] - ds[0])
-                    });
-                    mData.push(d3.max(temp))
-                    mDataIndex.push(getMaxIndex(temp))
-                })           
+                if (hasSeries) {
+                    stackedData.forEach((d, i) => {
+                        let temp = []
+                        d.forEach(ds => {
+                            temp.push(ds[1] - ds[0])
+                        });
+                        mData.push(d3.max(temp))
+                        mDataIndex.push(getMaxIndex(temp))
+                    })
+                    extremeValue = d3.max(mData)
+                    seriesIndex = getMaxIndex(mData)
+                    extremeIndex = mDataIndex[seriesIndex]
+                    vLine = stackedData[seriesIndex][extremeIndex]
+                } else {
+                    let dataArr = data.map((d) => d[encoding.y.field])
+                    extremeIndex = getMaxIndex(dataArr)
+                    extremeValue = d3.max(dataArr)
+                    vLine = [0, d3.max(dataArr)]
+                }
             }
-            extremeValue = d3.max(mData)
-            seriesIndex = getMaxIndex(mData)
-            extremeIndex = mDataIndex[seriesIndex]
-            vLine = stackedData[seriesIndex][extremeIndex]
-        } else { 
+
+
+        } else {
             // a series
             seriesIndex = series.indexOf(animation.spec.series)
 
@@ -136,7 +155,6 @@ const draw = (animation, props) => {
         }
 
         areaG.selectAll('line').remove()
-
         // vLine
         areaG.append('line')
             .attr('class', 'animation')

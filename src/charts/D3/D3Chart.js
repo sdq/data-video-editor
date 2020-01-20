@@ -24,7 +24,7 @@ export default class D3Chart extends Component {
     }
 
     componentDidMount() {
-        if (this.props.showChartAnimation) {
+        if (this.props.showChartAnimation && this.props.spec.animation.length > 0) {
             this.renderAnimation();
         } else {
             this.renderChart();
@@ -68,7 +68,10 @@ export default class D3Chart extends Component {
     
     renderChart = () => {
         this.cancelAnimation();
-        const svg = this.props.draw(this.props);
+        const newProps = _.cloneDeep(this.props);
+        newProps.width = 600; //为了分辨率
+        newProps.height = 600;
+        const svg = this.props.draw(newProps);
         this.setState({
             showAnimation: this.props.showAnimation
         });
@@ -167,8 +170,10 @@ export default class D3Chart extends Component {
 
     getImageUrl = (source) => {
         var canvas = document.createElement('canvas');
-        canvas.width = this.props.width;
-        canvas.height = this.props.height;
+        //canvas.width = this.props.width;
+        //canvas.height = this.props.height;
+        canvas.width = 600;
+        canvas.height = 600; //为了分辨率
         canvg(canvas, source);
         return canvas.toDataURL('image/png');
     }

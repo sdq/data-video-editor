@@ -1,40 +1,23 @@
 import * as d3 from 'd3';
-import { getStackedData } from '../../helper';
-// import _ from 'lodash';
-
-const offset = 20; // To show whole chart
+import { getCategories, getStackedData } from '../../helper';
 
 const draw = (animation, props) => {
-    const margin = { top: 10, right: 80, bottom: 40, left: 40 };
+    const offset = 20;
+    const margin = { top: 10, right: 10, bottom: 40, left: 40 };
     const width = props.width - margin.left - margin.right - offset;
-    const height = props.height - margin.top - margin.bottom - offset;
+    const height = props.height - margin.top - margin.bottom - offset - 40;
 
     const encoding = props.spec.encoding;
     const svg = d3.select('.vis-areachart svg');
 
-    //TODO: percent and basic
-
-    let colorScale = d3.scaleOrdinal(d3.schemeCategory10);
-
-    let hasSeries = 'color' in encoding;
     let data = props.data;
+    let hasSeries = 'color' in encoding;
     let stackedData = [];
+    // let series
     if (hasSeries) {
         stackedData = getStackedData(data, encoding);
+        // series = getSeriesValue(data, encoding);
     }
-
-    var x = d3.scalePoint()
-        .domain(data.map(function (d) { return d[encoding.x.field]; }))
-        .range([0, width]);
-    var y = d3.scaleLinear()
-    if (hasSeries) {
-        y.domain([0, d3.max(stackedData[stackedData.length - 1], d => d[1])]).nice().range([height, 0]);
-    }
-
-    // var stacked_area_generator = d3.area()
-    //     .x(d => x(d.data.x))
-    //     .y0(d => y(d[0]))
-    //     .y1(d => y(d[1]))
 
     var stacked_area_generator = (rangeY, rangeX) => {
         let x0 = rangeX[0];
@@ -46,6 +29,9 @@ const draw = (animation, props) => {
         } else {
             y.domain(rangeY);
         }
+        var x = d3.scalePoint()
+            .domain(data.map(function (d) { return d[encoding.x.field]; }))
+            .range([0, width]);
         var stacked_area_generator = d3.area()
             .x(d => ((x(d.data.x) - width * (x0 / 100)) / scale))
             // .x(d => x(d.data.x))
@@ -53,127 +39,82 @@ const draw = (animation, props) => {
             .y1(d => y(d[1]))
         return stacked_area_generator;
     }
-    // Animation
-    let rangeY = animation.spec.rangeY
-    let rangeX = animation.spec.rangeX ? animation.spec.rangeX : [0, 100];
 
+    var y = d3.scaleLinear()
+        var x = d3.scalePoint()
+        let areaLayer = svg.select('#areaLayer')
     if (animation.spec.effect === "zoom in") {
-
+        let rangeX = animation.spec.rangeX ? animation.spec.rangeX : [0, 100];
         let x0 = rangeX[0];
         let x1 = rangeX[1];
-        let scale = (x1 - x0) / 100;
-        svg.selectAll('g').remove();
-        let areaLayer = svg.append("g").attr('id', 'areaLayer')
-            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-        areaLayer.append('defs').append('clipPath')
-            .attr('id', 'clip')
-            .append('rect')
-            .attr('width', width)
-            .attr('height', height)
-
-        const areaG = areaLayer.append('g').attr('clip-path', 'url(#clip)').attr('class', 'areaG')
-
-
-        // Axis
-        areaLayer.append("g")
-            .attr("class", "x axis")
-            .attr("transform", "translate(0," + height + ")")
-            .call(d3.axisBottom(x))
-            .selectAll("text")
-            .attr('transform', 'translate(37,28) rotate(30)')
-            .style("text-anchor", "end")
-        // .attr('clip-path', 'url(#clip)');
-        areaLayer.append("g")
-            .attr("class", "y axis")
-            .call(d3.axisLeft(y))
-        // .attr('clip-path', 'url(#clip)');
-
-        areaG.append("g")
-            .selectAll("path")
-            .data(stackedData)
-            .join("path")
-            .attr('id', ({ index }) => 'series_' + index)
-            .attr("fill", ({ key }) => colorScale(key))
-            .attr("d", stacked_area_generator(y.domain(), [0, 100]))
-            .transition()
-            .duration(animation.duration)
-            .attr("d", stacked_area_generator(rangeY, rangeX))
-
-
-        if (animation.spec.rangeY || animation.spec.rangeX) {
-            if (animation.spec.rangeY) {
-                y.domain([0, d3.max(stackedData[stackedData.length - 1], d => d[1])]).nice().range([height, 0]);
-                areaLayer.selectAll(".y.axis")
-                    .call(d3.axisLeft(y));
-                y.domain(rangeY)
-                areaLayer.selectAll(".y.axis")
-                    .transition()
-                    .duration(animation.duration)
-                    .call(d3.axisLeft(y));
-            }
-            if (animation.spec.rangeX) {
-                x = d3.scalePoint()
-                    .domain(data.map(function (d) { return d[encoding.x.field]; }))
-                    .range([0, width]);
-                areaLayer.selectAll(".x.axis")
-                    .call(d3.axisBottom(x));
-
-                x.range([0 - (width * x0 / 100) / scale, width + (width * (100 - x1) / 100) / scale]);
-                areaLayer.selectAll(".x.axis")
-                    .transition()
-                    .duration(animation.duration)
-                    .call(d3.axisBottom(x));
+        let dataCategories = getCategories(data, encoding);
+        let categories = Object.keys(dataCategories);
+        let n_categories = categories.length;
+        let n_categories_ = 100 / n_categories;
+        // let category0 = categories[Math.floor(x0 / n_categories_)];
+        // let category1 = x1 === 100 ? categories.slice(-1)[0] : categories[Math.floor(x1 / n_categories_)];
+        x0 = Math.floor(x0 / n_categories_)
+        x1 = x1 === 100 ? n_categories - 1 : Math.floor(x1 / n_categories_);
+        // 极端情况 只有一个值
+        if (x0 === x1) {
+            if (x1 !== n_categories - 1) {
+                x1 = x0 + 1
+            } else {
+                x0 = x1 - 1
             }
         }
-
-    } else if (animation.spec.effect === "zoom out") {
-        let x0 = rangeX[0];
-        let x1 = rangeX[1];
-        let scale = (x1 - x0) / 100;
-
-        const areaLayer = svg.select('#areaLayer')
-        const areaG = svg.select('.areaG')
+      
         if (animation.spec.rangeY || animation.spec.rangeX) {
-            areaG.selectAll('path').remove()
 
-            y.domain([0, d3.max(stackedData[stackedData.length - 1], d => d[1])]).nice().range([height, 0]);
-                
-            areaG.append("g")
+            y.domain(animation.spec.rangeY).nice().range([height, 0]);
+            areaLayer.selectAll(".y.axis")
+                .transition()
+                .duration(animation.duration)
+                .call(d3.axisLeft(y));
+
+            // 经过计算得到的chart真实偏移量
+            let rangeX_ = [100 / (n_categories - 1) * x0, 100 / (n_categories - 1) * x1]
+
+            x.domain(categories.slice(x0, x1 + 1)).range([0, width]);
+
+            areaLayer.selectAll(".x.axis")
+                .transition()
+                .duration(animation.duration)
+                .call(d3.axisBottom(x))
+                .selectAll("text")
+                .attr("transform", "translate(-10,0)rotate(-45)")
+                .style("text-anchor", "end");
+
+            areaLayer.select('.areaG')
+                .selectAll("path")
+                .transition()
+                .duration(animation.duration)
+                .attr("d", stacked_area_generator(animation.spec.rangeY, rangeX_))
+
+        }
+    } else {
+        y.domain([0, d3.max(stackedData[stackedData.length - 1], d => d[1])]).nice().range([height, 0]);
+        areaLayer.selectAll(".y.axis")
+            .transition()
+            .duration(animation.duration)
+            .call(d3.axisLeft(y));
+
+        x.domain(data.map(function (d) { return d[encoding.x.field]; })).range([0, width]);
+
+        areaLayer.selectAll(".x.axis")
+            .transition()
+            .duration(animation.duration)
+            .call(d3.axisBottom(x))
+            .selectAll("text")
+            .attr("transform", "translate(-10,0)rotate(-45)")
+            .style("text-anchor", "end");
+
+            areaLayer.select('.areaG')
             .selectAll("path")
-            .data(stackedData)
-            .join("path")
-            .attr('id', ({ index }) => 'series_' + index)
-            .attr("fill", ({ key }) => colorScale(key))
-            .attr("d", stacked_area_generator(rangeY, rangeX))
             .transition()
             .duration(animation.duration)
             .attr("d", stacked_area_generator([0, d3.max(stackedData[stackedData.length - 1], d => d[1])], [0, 100]))
-            if (animation.spec.rangeY) {
-                y.domain(rangeY)
-                areaLayer.selectAll(".y.axis")
-                    .call(d3.axisLeft(y));
-                y.domain([0, d3.max(stackedData[stackedData.length - 1], d => d[1])]).nice().range([height, 0]);
-                areaLayer.selectAll(".y.axis")
-                    .transition()
-                    .duration(animation.duration)
-                    .call(d3.axisLeft(y));
-            }
-            if (animation.spec.rangeX) {
-                x.range([0 - (width * x0 / 100) / scale, width + (width * (100 - x1) / 100) / scale]);
-                areaLayer.selectAll(".x.axis")
-                    .call(d3.axisBottom(x));
-                x.range([0, width]);
-
-                areaLayer.selectAll(".x.axis")
-                    .transition()
-                    .duration(animation.duration)
-                    .call(d3.axisBottom(x));
-            }
-        }
-
     }
-
-
     return svg;
 }
 

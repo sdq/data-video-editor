@@ -9,9 +9,9 @@ const draw = (animation, props) => {
     let areaPath = areaG.selectAll("path")
 
     const offset = 20;
-    const margin = { top: 10, right: 80, bottom: 40, left: 40 };
+    const margin = { top: 10, right: 10, bottom: 40, left: 40 };
     const width = props.width - margin.left - margin.right - offset;
-    const height = props.height - margin.top - margin.bottom - offset;
+    const height = props.height - margin.top - margin.bottom - offset - 40;
 
     let hasSeries = ('color' in encoding) && ('field' in encoding.color);
     // Process Data
@@ -42,7 +42,7 @@ const draw = (animation, props) => {
     if (hasSeries) {
         y.domain([0, d3.max(stackedData[stackedData.length - 1], d => d[1])]).nice().range([height, 0]);
     } else
-        y.domain([0, d3.max(data, function (d) { return d[encoding.y.field]; })]).range([height, 0]);
+        y.domain([0, d3.max(data, function (d) { return d[encoding.y.field]; })]).nice().range([height, 0]);
 
     function getMaxIndex(array) {
         return d3.scan(array, function (a, b) {
@@ -170,17 +170,34 @@ const draw = (animation, props) => {
             }, duration / tick * (tick - 1));
 
             // for categorylist
-
-            areaG.selectAll('line').remove()
-            seriesIndex = series.indexOf(animation.spec.series)
-            category = animation.spec.category
             let categoryIndex;
             let categoryList = []
-            stackedData[0].forEach(d => {
-                categoryList.push(d.data.x)
-            })
-            categoryIndex = categoryList.indexOf(category)
-            vLine = stackedData[seriesIndex][categoryIndex] // 一个数组
+            areaG.selectAll('line').remove()
+            if (hasSeries) {
+                if (animation.spec.series === 'all') {
+                    seriesIndex = series.length - 1
+                }
+                else {
+                    seriesIndex = series.indexOf(animation.spec.series)
+                }
+                category = animation.spec.category
+                
+                stackedData[0].forEach(d => {
+                    categoryList.push(d.data.x)
+                })
+                categoryIndex = categoryList.indexOf(category)
+                vLine = stackedData[seriesIndex][categoryIndex] // 一个数组
+            }
+            else {
+                category = animation.spec.category
+                
+                data.forEach(d => {
+                    categoryList.push(d[encoding.x.field])
+                })
+                categoryIndex = categoryList.indexOf(category)
+                vLine = [0, data[categoryIndex][encoding.y.field]]
+            }
+
         }
         // vLine
         areaG.append('line')

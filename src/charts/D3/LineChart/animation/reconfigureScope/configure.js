@@ -104,7 +104,8 @@ export default class configure extends Component {
                             range
                             min={0}
                             max={Math.ceil(this.state.yrange[1])}
-                            defaultValue={[0, Math.ceil(this.state.yrange[1])]}
+                            // defaultValue={[0, Math.ceil(this.state.yrange[1])]}
+                            defaultValue={animation.spec.rangeY}
                             onAfterChange={this.handleRangeYChange}
                         />
                     </Col>
@@ -117,7 +118,7 @@ export default class configure extends Component {
                             min={0}
                             max={100}
                             tooltipVisible={false}
-                            defaultValue={[0,100]}
+                            defaultValue={animation.spec.rangeX}
                             onAfterChange={this.handleRangeXChange}
                         />
                     </Col>

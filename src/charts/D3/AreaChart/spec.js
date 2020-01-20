@@ -1,7 +1,7 @@
 const defaultSpec = {
     "encoding": {
         "x": {"field": "Year", "type": "ordinal"},
-        "y": {"field": "Displacement", "type": "quantitative"},
+        "y": {"field": "Displacement", "type": "quantitative","aggregation": "average"},
         "color": {"field": "Origin", "type": "nordinal"},
     },
     "style": {

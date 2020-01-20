@@ -1,7 +1,7 @@
 import * as d3 from 'd3';
 import ChartAnimationTask from '../ChartAnimationTask';
 import ChartAnimationType from '../ChartAnimationType';
-import { getStackedData, getSeriesValue } from './helper';
+import { getStackedData, getSeriesValue,getAggregatedRows } from './helper';
 
 const inArea = (point, area) => {
     // check dragging mouse area
@@ -26,7 +26,6 @@ const draw = (props) => {
         return;
     }
 
-
     let data = props.data;
     const encoding = props.spec.encoding;
     const offset = 20;
@@ -39,9 +38,11 @@ const draw = (props) => {
     let areaPath = areaG.selectAll("path")
 
     let stackedData = [];
-    let hasSeries = 'color' in encoding;
+    let hasSeries = ('color' in encoding) && ('field' in encoding.color);
     if (hasSeries) {
         stackedData = getStackedData(data, encoding);
+    } else {
+        data = getAggregatedRows(data, encoding);
     }
 
     let colorScale = d3.scaleOrdinal(d3.schemeCategory10);
@@ -56,8 +57,6 @@ const draw = (props) => {
         y.domain([0, d3.max(stackedData[stackedData.length - 1], d => d[1])]).nice().range([height, 0]);
     } else
         y.domain([0, d3.max(data, function (d) { return d[encoding.y.field]; })]).range([height, 0]);
-
-
 
     let pointScreen = {
         x: props.pointx - 40, // offset
@@ -81,25 +80,29 @@ const draw = (props) => {
 
     if (animationType === ChartAnimationType.DATA_TREND || animationType === ChartAnimationType.EMPHASIZE_SERIES || animationType === ChartAnimationType.COMPARE_SERIES || animationType === ChartAnimationType.EMPHASIZE_EXTREME) {
         let hoverSeries = new Set();
-        areaPath
-            .style('fill', (d, i) => {
-                let area = d.filter(d => d.data.x === point.x)
-                if (inArea(point, area[0])) {
-                    hoverSeries.add(d.key);
-                }
-                return colorScale(i);
-            });
-        areaPath.attr("stroke", "yellow")
-            .attr("stroke-opacity", 1)
-            .attr("stroke-width", (d) => {
-                if (hoverSeries.has(d.key))
-                    return 2;
-                else return 0;
-            });
-        if (!hoverSeries.size) {
-            hoverSeries = "all";
+        if (hasSeries) {
+            areaPath
+                .style('fill', (d, i) => {
+                    let area = d.filter(d => d.data.x === point.x)
+                    if (inArea(point, area[0])) {
+                        hoverSeries.add(d.key);
+                    }
+                    return colorScale(i);
+                });
+            areaPath.attr("stroke", "yellow")
+                .attr("stroke-opacity", 1)
+                .attr("stroke-width", (d) => {
+                    if (hoverSeries.has(d.key))
+                        return 2;
+                    else return 0;
+                });
+            if (!hoverSeries.size) {
+                hoverSeries = "all";
+            } else {
+                hoverSeries = Array.from(hoverSeries)[0];
+            }
         } else {
-            hoverSeries = Array.from(hoverSeries)[0];
+            hoverSeries = "all";
         }
 
         switch (animationType) {
@@ -119,7 +122,10 @@ const draw = (props) => {
                 choosenAnimation.spec.series = hoverSeries;
                 choosenAnimation.description = "Emphasize the " + choosenAnimation.spec.value + " value in the " + choosenAnimation.spec.series + " series";
                 break;
-
+            case ChartAnimationType.COMPARE_SERIES:
+                choosenAnimation.spec.series = hoverSeries;
+                choosenAnimation.description = "Compare two series";
+                break;
             default:
                 break;
 
@@ -128,85 +134,57 @@ const draw = (props) => {
     else if (animationType === ChartAnimationType.EMPHASIZE_VALUE) {
         let hoverSeries = new Set();
         let category;
-        areaPath
-            .style('fill', (d, i) => {
-                let area = d.filter(d => d.data.x === point.x)
+        if (hasSeries) {
+            areaPath
+                .style('fill', (d, i) => {
+                    let area = d.filter(d => d.data.x === point.x)
 
-                if (inArea(point, area[0])) {
-                    hoverSeries.add(d.key);
-                }
-                return colorScale(i);
-            });
-        areaPath.attr("stroke", "yellow")
-            .attr("stroke-opacity", 1)
-            .attr("stroke-width", (d) => {
-                if (hoverSeries.has(d.key))
-                    return 2;
-                else return 0;
-            });
-        if (!hoverSeries.size) {
-            hoverSeries = "all";
-        } else {
-            hoverSeries = Array.from(hoverSeries)[0];
-        }
-        category = point.x
-        let series = getSeriesValue(data, encoding);
-        let categoryList = []
-        stackedData[0].forEach(d => {
-            categoryList.push(d.data.x)
-        })
-        let categoryIndex = categoryList.indexOf(category)
-        let seriesIndex = series.indexOf(hoverSeries)
-        if (hoverSeries !== "all") {
-            let vLine = stackedData[seriesIndex][categoryIndex]
-            choosenAnimation.spec.value = `(${category}, ${vLine[1]-vLine[0]})`
+                    if (inArea(point, area[0])) {
+                        hoverSeries.add(d.key);
+                    }
+                    return colorScale(i);
+                });
+            areaPath.attr("stroke", "yellow")
+                .attr("stroke-opacity", 1)
+                .attr("stroke-width", (d) => {
+                    if (hoverSeries.has(d.key))
+                        return 2;
+                    else return 0;
+                });
+            if (!hoverSeries.size) {
+                hoverSeries = "all";
+            } else {
+                hoverSeries = Array.from(hoverSeries)[0];
+            }
+            category = point.x
+            let series = getSeriesValue(data, encoding);
+            let categoryList = []
+            stackedData[0].forEach(d => {
+                categoryList.push(d.data.x)
+            })
+            let categoryIndex = categoryList.indexOf(category)
+            let seriesIndex = series.indexOf(hoverSeries)
+            if (hoverSeries !== "all") {
+                let vLine = stackedData[seriesIndex][categoryIndex]
+                choosenAnimation.spec.value = `(${category}, ${vLine[1] - vLine[0]})`
+            }
+        } else{
+            hoverSeries = "all"
+            category = point.x
+            let categoryList = []
+            data.forEach(d => {
+                categoryList.push(d[encoding.x.field])
+            })
+            let categoryIndex = categoryList.indexOf(category)
+            let vLine = [0, data[categoryIndex][encoding.y.field]]
+            choosenAnimation.spec.value = `(${category}, ${vLine[1] - vLine[0]})`
         }
 
         choosenAnimation.spec.series = hoverSeries;
         choosenAnimation.spec.category = category
         choosenAnimation.description = "Emphasize the " + choosenAnimation.spec.value + " value in the " + choosenAnimation.spec.series + " series";
 
-
-        // let series = getSeriesValue(data, encoding);
-        // choosenAnimation.spec.series = hoverSeries;
-        // choosenAnimation.spec.category = category
-        // let index = series.indexOf(hoverSeries)
-        // let categoryList= []
-        // stackedData[0].forEach(d => {
-        //     categoryList.push(d.data.x)
-        // })
-        // let categoryIndex = categoryList.indexOf(category)
-        // let vLine = stackedData[index][categoryIndex]
-        // choosenAnimation.spec.category = `(${category}, ${vLine[1]-vLine[0]})`
-        // choosenAnimation.description = "Emphasize the " + choosenAnimation.spec.value + " value in the " + choosenAnimation.spec.series + " series";
-
-
-
-        // areaPath.nodes().forEach((item) => {
-        //     const _path = d3.select(areaPath);
-        //     let area = {
-
-        //     }
-        //     if (inArea(point, area)) {
-        //         _path.attr("stroke", "yellow")
-        //             .attr("stroke-opacity", 1)
-        //             .attr("stroke-width", 2);
-        //     } else {
-        //         _path.attr("stroke-width", 0);
-        //     }
-        // });
-        // if (animationType === ChartAnimationType.EMPHASIZE_VALUE) {
-        //     // choosenAnimation.spec.series = hoverSeries;
-        //     // choosenAnimation.spec.category = hoverCategory;
-        //     // choosenAnimation.description = "Emphasize the value of " + hoverCategory + " of in the " + hoverSeries + " series";
-        // } else {
-        //     // choosenAnimation.spec.series1 = hoverSeries;
-        //     // choosenAnimation.spec.category1 = hoverCategory;
-        //     // choosenAnimation.description = "Compare between the values of " + hoverCategory + " in " + hoverSeries + " and the other one";
-        // }
     }
-
-
     props.chooseChartAnimation(choosenAnimation);
 }
 

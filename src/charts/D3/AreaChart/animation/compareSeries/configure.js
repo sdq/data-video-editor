@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, Select, Radio, Button } from 'antd';
+import { Row, Col, Select, Radio,  } from 'antd';
 import { getSeries } from '../../helper';
 // import _ from 'lodash';
 
@@ -61,10 +61,10 @@ export default class configure extends Component {
                         </Select>
                     </Col>
                     <Col span={4}>
-                        <p style={{ marginTop: 8 }}>{encoding.color.field}</p>
+                        {/* <p style={{ marginTop: 8 }}>{encoding.color.field}</p> */}
                     </Col>
                     <Col span={5}>
-                        <Button size={'small'} style={{ marginTop: 8 }} onClick={() => this.props.selectChartElement(true, {type: 'series', key: 'series1'})}>Select</Button>
+                        {/* <Button size={'small'} style={{ marginTop: 8 }} onClick={() => this.props.selectChartElement(true, {type: 'series', key: 'series1'})}>Select</Button> */}
                     </Col>
                 </Row>
                 <Row  style={{ height: 50 }}>
@@ -75,10 +75,10 @@ export default class configure extends Component {
                         </Select>
                     </Col>
                     <Col span={4}>
-                        <p style={{ marginTop: 8 }}>{encoding.color.field}</p>
+                        {/* <p style={{ marginTop: 8 }}>{encoding.color.field}</p> */}
                     </Col>
                     <Col span={5}>
-                        <Button size={'small'} style={{ marginTop: 8 }} onClick={() => this.props.selectChartElement(true, {type: 'series', key: 'series2'})}>Select</Button>
+                        {/* <Button size={'small'} style={{ marginTop: 8 }} onClick={() => this.props.selectChartElement(true, {type: 'series', key: 'series2'})}>Select</Button> */}
                     </Col>
                 </Row>
                 <Row  style={{ height: 50 }}>

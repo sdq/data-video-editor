@@ -32,11 +32,12 @@ const draw = (props) => {
                 .append("g")
                 .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    let legendSvg = d3.select(a)
+    let legendSvg = svg
                 //在svg之前添加center元素以保证svg居中显示
                 // .append("center")    
                 .append("svg")
-                .attr("height", 30)
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
                 .attr("transform", "translate(0,-60)");
     
     //Get Encoding
@@ -69,7 +70,6 @@ const draw = (props) => {
     let pie = d3.pie()
         .value(function(d){ return d[encoding.size.field]; });
     let pieData = pie(data);
-    //console.log(pieData);
 
     //Build the pie chart
     let arc = d3.arc() //弧生成器
@@ -127,7 +127,7 @@ const draw = (props) => {
         .attr("fill",function(d){ return(color(d)); })
         .attr("transform", function(d,i){
             let offset = 100 * i + 70;
-            return "translate(" + offset + "," + 420 + ")";
+            return "translate(" + offset + "," + 445 + ")";
         })
         .attr("z-index",99999);
 
@@ -138,7 +138,7 @@ const draw = (props) => {
         .text(function(d, i){ return d; })
         .attr("transform", function(d,i){
             let offset = 100 * i + 100;
-            return "translate(" + offset + "," + 435 + ")";
+            return "translate(" + offset + "," + 460 + ")";
         });
 
 
@@ -158,7 +158,6 @@ const draw = (props) => {
         .on('click', function(d, i) {
             let animation = props.selectedAnimation;
             animation.spec[selectingParameter.key] = d.data[encoding.color.field];
-            //console.log(selectingParameter.key);
             props.modifyChartAnimation(props.selectedAnimationIndex, animation);
             props.selectChartElement(false, {});
         })

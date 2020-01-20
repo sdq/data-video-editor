@@ -59,8 +59,7 @@ const draw = (props) => {
             .attr("chartWidth", chartWidth)
             .attr("chartHeight", chartHeight)
             .attr("clip-path", "url(#clip-rect)"),
-        legend = svg.append("g")
-            .attr("transform", `translate(0, ${chartHeight + 60})`);
+        legend = svg.append("g");
 
     // X channel
     const xScale = d3.scaleLinear()
@@ -162,15 +161,27 @@ const draw = (props) => {
                 .data(colorSet)
                 .enter().append("g")
                 .attr("class", "legend_color")
-                .attr('transform', (d, i) =>`translate(${i * 80 + (chartWidth - 80 * colorSet.length)/2}, 0)`);
+                .attr('transform', (d, i) =>`translate(${10}, 0)`);//i * 80 + (chartWidth - 80 * colorSet.length)/2
             legends.append("circle")
                 .attr("fill", d => color(d))
                 .attr("r", 6)
                 .attr("cy", -5);
             legends.append("text")
                 .attr("fill", config["legend-text-color"])
-                .attr("x", 12)
+                .attr("x", 10)
                 .text(d => d);
+            let legend_nodes=legends.nodes();
+            let before = legend_nodes[0];
+            let current;
+            let offset = 10;
+            for(let i = 1; i< legend_nodes.length; i++){
+                current = legend_nodes[i];
+                offset += d3.select(before).select("text").node().getComputedTextLength();
+                d3.select(current)
+                    .attr('transform', `translate(${i*30 + offset}, 0)`);
+                before = current;
+            }
+            legend.attr("transform", `translate(${(chartWidth - legend.node().getBBox().width)/2}, ${chartHeight + 60})`);
         }
     }else{
         points.attr("fill", color(0))//color

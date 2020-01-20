@@ -14,13 +14,15 @@ export default class configure extends Component {
         const { index, animation } = this.props;
         animation.spec.lastRangeY = Object.assign([], animation.spec.rangeY);
         animation.spec.rangeY = range;
+        animation.description = "Reconfigure the range in x:[" + animation.spec.rangeX + "],y:[" + animation.spec.rangeY+"]";
         this.props.modifyChartAnimation(index, animation);
     }
-    
+
     handleRangeXChange = (range) => {
         const { index, animation } = this.props;
         animation.spec.lastRangeX = Object.assign([], animation.spec.rangeX);
         animation.spec.rangeX = range;
+        animation.description = "Reconfigure the range in x:[" + animation.spec.rangeX + "],y:[" + animation.spec.rangeY+"]";
         this.props.modifyChartAnimation(index, animation);
     }
 
@@ -52,7 +54,10 @@ export default class configure extends Component {
             })
             maxY = Math.max(...maxArr)
         }
+        if (!animation.spec.rangeY) animation.spec.rangeY = [0, maxY]
+        if (!animation.spec.rangeX) animation.spec.rangeX = [0, 100]
 
+       
         let rangeSetting = (
             <div>
                 <Row style={{ height: 50 }}>
@@ -62,7 +67,7 @@ export default class configure extends Component {
                             range
                             min={0}
                             max={maxY}
-                            defaultValue={[0, maxY]}
+                            defaultValue={animation.spec.rangeY}
                             onAfterChange={this.handleRangeYChange}
                         />
                     </Col>
@@ -75,7 +80,7 @@ export default class configure extends Component {
                             min={0}
                             max={100}
                             tooltipVisible={false}
-                            defaultValue={[0, 100]}
+                            defaultValue={animation.spec.rangeX}
                             onAfterChange={this.handleRangeXChange}
                         />
                     </Col>

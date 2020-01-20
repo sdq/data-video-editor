@@ -9,7 +9,6 @@ import _ from 'lodash';
 const pathToPoints = (path) => {
 
     var number = path.split(/[M,A,L,Z]/);
-    //console.log(number);
 
     var points = [];
 
@@ -110,7 +109,6 @@ const inArea = (point, polygon) =>{
 
         p4 = polygon[i + 1];
 
-        //console.log(p3);
 
         if (checkCross(p1, p2, p3, p4) === true) {
             count++;
@@ -133,8 +131,6 @@ const inArea = (point, polygon) =>{
     }
 
 
-
-    //console.log(count)
 
     return (count % 2 === 0) ? false : true;
 
@@ -288,7 +284,7 @@ const draw = (props) => {
         })
         .attr("transform", function (d, i) {
             let offset = 100 * i + 70;
-            return "translate(" + offset + "," + 420 + ")";
+            return "translate(" + offset + "," + 445 + ")";
         })
         .attr("z-index", 99999);
 
@@ -301,7 +297,7 @@ const draw = (props) => {
         })
         .attr("transform", function (d, i) {
             let offset = 100 * i + 100;
-            return "translate(" + offset + "," + 435 + ")";
+            return "translate(" + offset + "," + 460 + ")";
         });
 
     if (animationType === ChartAnimationType.EMPHASIZE_VALUE || animationType === ChartAnimationType.COMPARE_VALUES) {

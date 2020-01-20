@@ -1,5 +1,5 @@
 import * as d3 from 'd3';
-import {getCategories, parseTime, formatTick} from '../../helper';
+import {getCategories, parseTime, formatTick, formatTicksCount} from '../../helper';
 
 const draw = (animation, props) => {
 
@@ -12,13 +12,13 @@ const draw = (animation, props) => {
 
     if (animation.spec.effect === "zoom in") {
         // if(!svg.select('defs').node)
-        if(!svg.select('defs').node()) {
+        if(!svg.select('.zoom-defs').node()) {
             svg.append('defs')
             .attr('class', 'zoom-defs')
             .append('clipPath')
             .attr("id", 'clip-rect')
             .append('rect')
-            .attr("width", chartWidth+10)
+            .attr("width", `${+chartWidth+10}`)
             .attr("height", chartHeight)
             .attr('x', -5);
         }
@@ -33,9 +33,15 @@ const draw = (animation, props) => {
         let n_categories_ = 100 / n_categories; // 100份平均分给n个x轴tick
         x0 = categories[Math.floor(x0 / n_categories_)];
         x1 = x1 === 100 ? categories.slice(-1)[0] : categories[Math.floor(x1 / n_categories_)];
+        if (x0 === x1) {
+            x0 = categories[categories.indexOf(x0) - 1]
+            x1 = categories[categories.indexOf(x1) + 1]
+        }
         var lineGen;
+        
 
         if (animation.spec.rangeY || animation.spec.rangeX) {
+            let format_TicksCount = formatTicksCount(data[0][encoding.x.field])
             let tick_format = formatTick(data[0][encoding.x.field])
             let xScale, yScale, axisX, axisY;
             xScale = d3.scaleTime()
@@ -47,9 +53,15 @@ const draw = (animation, props) => {
                 .domain(animation.spec.rangeY)
                 .range([chartHeight, 0])
                 .nice();
-            axisX = d3.axisBottom(xScale)
+            if(format_TicksCount === d3.timeYear) {
+                axisX = d3.axisBottom(xScale)
+                .ticks(format_TicksCount)
                 .tickFormat(tick_format);
-
+            } else {
+                axisX = d3.axisBottom(xScale)
+                .tickFormat(tick_format);
+            }
+            
             axisY = d3.axisLeft(yScale);
 
             // line Function
@@ -97,20 +109,25 @@ const draw = (animation, props) => {
         // let x_domain = svg.select(".axis_x").attr('xScale');
         let y_domain = svg.select(".axis_y").attr('yScale');
         // console.log(x_domain.split(",")[0], x_domain.split(',')[1])
-
+        let format_TicksCount = formatTicksCount(data[0][encoding.x.field])
         let tick_format = formatTick(data[0][encoding.x.field])
         let xScale, yScale, axisX, axisY;
         xScale = d3.scaleTime()
             .domain(d3.extent(data, function(d) { return parseTime(d[encoding.x.field]);}))
             .range([0, chartWidth]);
-        // console.log(xScale.domain())
         // Y channel
         yScale = d3.scaleLinear()
             .domain([y_domain.split(',')[0], y_domain.split(',')[1]])
             .range([chartHeight, 0])
             .nice();
-        axisX = d3.axisBottom(xScale)
+        if(format_TicksCount === d3.timeYear) {
+            axisX = d3.axisBottom(xScale)
+            .ticks(format_TicksCount)
             .tickFormat(tick_format);
+        } else {
+            axisX = d3.axisBottom(xScale)
+            .tickFormat(tick_format);
+        }
 
         axisY = d3.axisLeft(yScale);
 

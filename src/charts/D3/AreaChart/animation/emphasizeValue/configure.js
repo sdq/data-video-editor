@@ -41,7 +41,7 @@ export default class configure extends Component {
         let series = Object.keys(getSeries(data, encoding)); 
         let selectSeries = animation.spec.series? animation.spec.series: 'all';
 
-        let value = ["Max", "Min"]
+        // let value = ["Max", "Min"]
 
         return (
             <div>
@@ -58,7 +58,7 @@ export default class configure extends Component {
                     <Col span={6}><h3 style={{ marginTop: 6 }}>Value:</h3></Col>
                     <Col span={13}>
                         <Select value={animation.spec.value} style={{ width: 180, marginTop: 4 }} onChange={this.handleValueChange}>
-                            {value.map((key) => <Option key={key} value={key.toLowerCase()}>{key}</Option>)}
+                            {/* {value.map((key) => <Option key={key} value={key.toLowerCase()}>{key}</Option>)} */}
                         </Select>
                     </Col>
                     {/* <Col span={5}>

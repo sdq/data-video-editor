@@ -10,8 +10,8 @@ const draw = (animation, props) => {
 
     const offset = 20;
     const margin = { top: 10, right: 10, bottom: 40, left: 40 };
-    const width = props.width - margin.left - margin.right - offset;
-    const height = props.height - margin.top - margin.bottom - offset;
+    // const width = props.width - margin.left - margin.right - offset;
+    const height = props.height - margin.top - margin.bottom - offset -40;
 
     let series = getSeriesValue(data, encoding);
     let seriesIndex = series.indexOf(animation.spec.series)
@@ -30,8 +30,6 @@ const draw = (animation, props) => {
         y.domain([0, d3.max(data, function (d) { return d[encoding.y.field]; })]).range([height, 0]);
 
 
-
-
     if (animation.spec.effect === "flicker") {
         const tick = 12;
 
@@ -39,12 +37,13 @@ const draw = (animation, props) => {
 
             areaPath = areaG.selectAll('#series_' + seriesIndex)
 
-            let lastArray = [areaPath['_groups'][0][0].__data__.slice(-1)[0][0], areaPath['_groups'][0][0].__data__.slice(-1)[0][1]]
+            // let lastArray = [areaPath['_groups'][0][0].__data__.slice(-1)[0][0], areaPath['_groups'][0][0].__data__.slice(-1)[0][1]]
             // TODO: tooltip position
-            let middleX = width - 30
-            let middleY = (y(lastArray[0]) + y(lastArray[1])) / 2
+            let firstArray = [stackedData[seriesIndex][0][0], stackedData[seriesIndex][0][1]]
+            let middleX = 0
+            let middleY = (y(firstArray[0]) + y(firstArray[1])) / 2
 
-            let tooltip = svg.append('line')
+            let tooltip = areaG.append('line')
                 .attr('class', 'animation')
                 .attr('x1', middleX)
                 .attr('y1', middleY)
@@ -59,7 +58,7 @@ const draw = (animation, props) => {
                 .duration(duration / tick * 2)
                 .attr("x2", middleX + 20)
                 .attr("y2", middleY);
-            let tooltipText = svg.append('text')
+            let tooltipText = areaG.append('text')
                 .attr('class', 'animation')
                 .attr("font-size", 0)
                 .attr('x', middleX + 45)
@@ -134,11 +133,11 @@ const draw = (animation, props) => {
 
 
             // tooltip
-            let lastArray = [areaPath['_groups'][0][0].__data__.slice(-1)[0][0], areaPath['_groups'][0][0].__data__.slice(-1)[0][1]]
-            let middleX = width - 30
-            let middleY = (y(lastArray[0]) + y(lastArray[1])) / 2
-
-            let tooltip = svg.append('line')
+            // let lastArray = [areaPath['_groups'][0][0].__data__.slice(-1)[0][0], areaPath['_groups'][0][0].__data__.slice(-1)[0][1]]
+            let firstArray = [stackedData[seriesIndex][0][0], stackedData[seriesIndex][0][1]]
+            let middleX = 0
+            let middleY = (y(firstArray[0]) + y(firstArray[1])) / 2
+            let tooltip = areaG.append('line')
                 .attr('class', 'animation')
                 .attr('x1', middleX)
                 .attr('y1', middleY)
@@ -153,7 +152,7 @@ const draw = (animation, props) => {
                 .duration(duration / tick * 2)
                 .attr("x2", middleX + 20)
                 .attr("y2", middleY);
-            let tooltipText = svg.append('text')
+            let tooltipText = areaG.append('text')
                 .attr('class', 'animation')
                 .attr("font-size", 0)
                 .attr('x', middleX + 45)

@@ -5,7 +5,12 @@ export default class configure extends Component {
 
     handleExtreme1Change = e => {
         const {index, animation} = this.props;
-        animation.spec.extreme1 = e.target.value;
+        animation.spec.extreme1 = e.target.value;    
+        if(animation.spec.extreme1 === 'max'){
+            animation.spec.extreme2 = 'min';
+        }else {
+            animation.spec.extreme2 = 'max';
+        } 
         this.props.modifyChartAnimation(index, animation);
         animation.description = "Compare the extreme values between " + animation.spec.extreme1 + " and " + animation.spec.extreme2;
     }
@@ -13,6 +18,11 @@ export default class configure extends Component {
     handleExtreme2Change = e => {
         const {index, animation} = this.props;
         animation.spec.extreme2 = e.target.value;
+        if(animation.spec.extreme2 === 'max'){
+            animation.spec.extreme1 = 'min';
+        }else {
+            animation.spec.extreme1 = 'max';
+        } 
         this.props.modifyChartAnimation(index, animation);
         animation.description = "Compare the extreme values between " + animation.spec.extreme1 + " and " + animation.spec.extreme2;
     }

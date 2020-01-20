@@ -85,10 +85,17 @@ const draw = (animation, props) => {
         const tick = time.length + 1;
         let duration = (animation.duration) / tick;
 
-        data.forEach(d => {
-            if(data_time[parseTime(d)])
-                data_time[parseTime(d)].push(d);
-        });
+        if(animation.spec.series === "all"){
+            data.forEach(d => {
+                if(data_time[parseTime(d)])
+                    data_time[parseTime(d)].push(d);
+            });
+        }else{
+            data.forEach(d => {
+                if(data_time[parseTime(d)] && d[encoding.color.field] === animation.spec.series)
+                    data_time[parseTime(d)].push(d);
+            });
+        }
         //clear
         svg.select(".chart").transition()
             .attr("opacity", 0);
@@ -151,13 +158,31 @@ const draw = (animation, props) => {
             .attr("opacity", 1);
         
         const color = d3.scaleOrdinal(d3.schemeCategory10);
+
+        if(animation.spec.series !== "all"){
+            new_content.append("g")
+                .selectAll("circle")
+                .data(data, d => d[encoding.id.field])
+                .enter().append("circle")
+                .attr("r", 8)//size
+                .attr("stroke", "#FFF")
+                .attr("stroke-width", 0)
+                .attr("fill-opacity", 0.06)
+                .attr("fill", d => color(d[encoding.color.field]))
+                .attr("cx", d => xScale(d[encoding.x.field]))
+                .attr("cy", d => yScale(d[encoding.y.field]))
+                .filter(d => d[encoding.color.field] === animation.spec.series)
+                .remove();
+        }
+
         let i = 0;
         let timeid = setInterval(() => {
-            let new_data = new_content.selectAll('circle')
+            let new_data = new_content.selectAll('.node')
                 .data(data_time[time[i]], d => d[encoding.id.field]);
 
             let new_points = new_data.enter()
                 .append("circle")
+                .attr('class', 'node')
                 .attr("r", 8)//size
                 .attr("stroke", "#FFF")
                 .attr("stroke-width", 0)
