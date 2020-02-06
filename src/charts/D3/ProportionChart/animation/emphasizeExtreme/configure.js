@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, Radio} from 'antd';
+import { Row, Col,  Radio } from 'antd';
 // import {getCategories} from '../../helper';
 // const { Option } = Select;
 
@@ -25,7 +25,7 @@ export default class configure extends Component {
     }
 
     render() {
-        const {animation} = this.props;
+        const {animation,} = this.props;
         // let data = currentData.data;
         // let encoding = displaySpec.encoding;
         // let dataCategories = getCategories(data, encoding);

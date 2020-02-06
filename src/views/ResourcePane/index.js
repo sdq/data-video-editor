@@ -1,10 +1,13 @@
 import { connect } from 'react-redux';
 import ResourcePane from './ResourcePane';
 import {currentScene, sceneIndex,scenes} from '@/selectors/video';
+import {isCleanInterationLayer} from '@/selectors/canvas';
 import * as videoActions from '@/actions/videoAction';
 import * as canvasActions from '@/actions/canvasAction';
 import * as uiActions from '@/actions/uiAction';
-import {uimode, showResourcePane} from '@/selectors/ui';
+import * as visActions from '@/actions/visAction';
+import { uimode, showResourcePane } from '@/selectors/ui';
+import { currentData, fieldsList, dataNameList, dataList, } from '@/selectors/vis';
 
 const mapStateToProps = state => {
     return {
@@ -13,6 +16,12 @@ const mapStateToProps = state => {
         currentScene: currentScene(state),
         uimode: uimode(state),
         showResourcePane: showResourcePane(state),
+        isCleanInterationLayer: isCleanInterationLayer(state),
+        // data
+        fieldsList: fieldsList(state),
+        currentData: currentData(state),
+        dataNameList: dataNameList(state), //[cars.csv]
+        dataList: dataList(state),
     }
 }
 
@@ -26,6 +35,9 @@ const mapDispatchToProps = dispatch => {
         displayResourceTargetArea: (isActive) => dispatch(uiActions.displayResourceTargetArea(isActive)),
         displayResourcePane: (isActive) => dispatch(uiActions.displayResourcePane(isActive)),
         displayMusicTargetArea: (isActive) => dispatch(uiActions.displayMusicTargetArea(isActive)),
+        cleanInterationLayer: (isClean) => dispatch(canvasActions.cleanInterationLayer(isClean)),
+        //vis
+        updateDefaultData: (index, data, dataSchema, dataName) => dispatch(visActions.updateDefaultData(index, data, dataSchema, dataName)),
     }
 }
 

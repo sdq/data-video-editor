@@ -65,7 +65,9 @@ const imageSource = {
           return true;
     },
 
+
 	beginDrag(props,monitor) {
+        props.cleanInterationLayer(true);
         props.displayResourceTargetArea(true);
         return props;
 	},

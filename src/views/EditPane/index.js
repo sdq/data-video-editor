@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import EditPane from './EditPane';
 import {currentScene, sceneIndex, scenes, isFirstScene, isLastScene, past, future} from '@/selectors/video';
-import {currentElement, currentElements, elementIndex, elementName, isElementSelected, dragPos, transformInfo} from '@/selectors/canvas';
+import {currentElement, currentElements, elementIndex, elementName, isElementSelected, dragPos, transformInfo, isCleanInterationLayer} from '@/selectors/canvas';
 import { scenePosition } from '@/selectors/scene';
 import { isPerforming, isScenePerforming, isVideoPerforming } from '@/selectors/player';
 import { showAnimationTargetArea, showResourceTargetArea,showMusicTargetArea,uimode, showResourcePane, showToolPane, showPathLayer } from '@/selectors/ui';
@@ -27,6 +27,7 @@ const mapStateToProps = state => {
         currentElement: currentElement(state),
         currentElements: currentElements(state),
         isElementSelected: isElementSelected(state),
+        isCleanInterationLayer: isCleanInterationLayer(state),
         isPerforming: isPerforming(state),
         isScenePerforming: isScenePerforming(state),
         isVideoPerforming: isVideoPerforming(state),
@@ -61,6 +62,7 @@ const mapDispatchToProps = dispatch => {
         updateScene: (index, scene) => dispatch(videoActions.updateScene(index, scene)),
         selectElement: (elementIndex, elementName) => dispatch(canvasActions.selectElement(elementIndex, elementName)),
         unselectElement: () => dispatch(canvasActions.unselectElement()),
+        cleanInterationLayer: (isClean) => dispatch(canvasActions.cleanInterationLayer(isClean)),
         addElement: (element) => dispatch(canvasActions.addElement(element)),
         removeElement: (elementIndex) => dispatch(canvasActions.selectElement(elementIndex)),
         updateElement: (element, elementIndex, elementName) => dispatch(canvasActions.updateElement(element, elementIndex, elementName)),

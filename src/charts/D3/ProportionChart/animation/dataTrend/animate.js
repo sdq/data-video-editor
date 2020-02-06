@@ -1,5 +1,9 @@
 import * as d3 from 'd3';
-import {getAggregatedRows, getCategories} from '../../helper';
+import {
+    getCategories,
+    getAggregatedRows,
+    getSize
+} from '../../helper';
 import _ from 'lodash';
 
 const offset = 20; // To show whole chart
@@ -11,19 +15,24 @@ const draw = (animation, props) => {
         a = '.vis-proportionchart';
     }
 
-    const margin = {top: 10, right: 10, bottom: 40, left: 40};
+    const margin = {
+        top: 10,
+        right: 10,
+        bottom: 40,
+        left: 40
+    };
     const width = props.width - margin.left - margin.right - offset;
     const height = props.height - margin.top - margin.bottom - offset;
     let svg = d3.select(a)
-                .append("svg")
-                .attr("width", width + margin.left + margin.right)
-                .attr("height", height + margin.top + margin.bottom)
-                .append("g")
-                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+        .append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     // Get Encoding
     const encoding = props.spec.encoding;
-    if (_.isEmpty(encoding) || !('size' in encoding) || !('color' in encoding) || _.isEmpty(encoding.size) || _.isEmpty(encoding.color) ) {
+    if (_.isEmpty(encoding) || !('size' in encoding) || !('color' in encoding) || _.isEmpty(encoding.size) || _.isEmpty(encoding.color)) {
         svg.append("rect")
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
@@ -32,7 +41,7 @@ const draw = (animation, props) => {
     }
 
     let hasTrend = ('time' in encoding) && ('field' in encoding.time);
-    
+
     // Process Data
     let data = props.data;
 
@@ -44,7 +53,7 @@ const draw = (animation, props) => {
     //     var s=encoding.size.field;
     // }
 
-    //console.log(categories)
+    // console.log(categories)
 
     // data = getAggregatedRows(data, encoding);
 
@@ -54,13 +63,13 @@ const draw = (animation, props) => {
         // if (animation.spec.range === 'customize' && animation.spec.rangeScope.length > 0) {
         //     time = time.filter(d => (d >= animation.spec.rangeScope[0] && d <= animation.spec.rangeScope[1]));
         // }
-        if (animation.spec.range === 'customize' && animation.spec.rangeScope.length > 0) {
-            time = time.filter(d => (d.split("-")[0] >= animation.spec.rangeScope[0] && d.split("-")[0] <= animation.spec.rangeScope[1]));
+        if (animation.spec.range === 'customize' && animation.spec.rangeScope.length > 0) {
+            time = time.filter(d => (d.split("-")[0] >= animation.spec.rangeScope[0] && d.split("-")[0] <= animation.spec.rangeScope[1]));
         }
         time.forEach(timePoint => {
             let td = data.filter(d => d[encoding.time.field] === timePoint);
             let subCategories = td.map(d => d[encoding.color.field]);
-            let missCategories = categories.filter(x => subCategories.indexOf(x)===-1);
+            let missCategories = categories.filter(x => subCategories.indexOf(x) === -1);
             missCategories.forEach(missCategory => {
                 let color = {};
                 color[encoding.color.field] = missCategory;
@@ -76,60 +85,91 @@ const draw = (animation, props) => {
     }
 
     data = getAggregatedRows(data, encoding);
+    let dataSize = getSize(data, encoding);
+    let sizes = Object.keys(dataSize);
 
 
     const chartWidth = width,
         chartHight = height - 60;
 
     let content = svg.append("g")
-                .attr("class","content")
-                .attr("chartWidth",chartWidth)
-                .attr("chartHight", chartHight),
+        .attr("class", "content")
+        .attr("chartWidth", chartWidth)
+        .attr("chartHight", chartHight),
         legend = svg.append("g")
-                    .attr("transform",`translate(0, ${chartHight + 60})`);
+        .attr("transform", `translate(0, ${chartHight + 60})`);
 
 
     //Size channels
     let size = d3.scaleLinear()
-                .domain([0, d3.max(data, function(d){ 
-                    return Math.sqrt(d[encoding.size.field]/Math.PI); })])
-                .range([ 0 , width/(categories.length*2.5) ]);
+        .domain([0, d3.max(data, function (d) {
+            return Math.sqrt(d[encoding.size.field] / Math.PI);
+        })])
+        .range([0, width / (categories.length * 2.5)]);
 
     //x
     // let x = d3.scaleBand()
-    //         .range([ 75, chartWidth ])
-    //         .domain(data.map(function(d) { return d[encoding.color.field]; }))
-    //         .padding(0);
+    //     .range([75, chartWidth])
+    //     .domain(data.map(function (d) {
+    //         return d[encoding.color.field];
+    //     }))
+    //     .padding(0);
 
 
     // Color channel
     let colorScale = d3.scaleOrdinal(d3.schemeCategory10);
-    let color = colorScale.domain(data.map(function (d){ 
-            return d[encoding.color.field]; }));
-    
-    
+    let color = colorScale.domain(data.map(function (d) {
+        return d[encoding.color.field];
+    }));
+
+
     // Draw Circles  
     let proportionAreas = content
-    .selectAll("circle")
-    .data(data)
-    .enter()
-    .append("circle")
-    .style('stroke-width','0')
-    .attr("class", "data-item")
-    .attr("size", function(d) { return d[encoding.size.field]; })
-    .attr("color", function(d) { return d[encoding.color.field]; })
-    .attr("r", function(d) { return size(Math.sqrt(d[encoding.size.field]/Math.PI)); })
-    .attr("cx", function(d) {
-        for (var i=0; i<categories.length; i++){
-            if(d[encoding.color.field] === categories[i]){
-                return i * 2*chartWidth/(categories.length*2.5) + (chartWidth - 2*chartWidth/(categories.length*2.5) * (categories.length-1))/2;
+        .selectAll("circle")
+        .data(data)
+        .enter()
+        .append("circle")
+        .style('stroke-width', '0')
+        .attr("class", "data-item")
+        .attr("size", function (d) {
+            return d[encoding.size.field];
+        })
+        .attr("color", function (d) {
+            return d[encoding.color.field];
+        })
+        .attr("r", function (d) {
+            return size(Math.sqrt(d[encoding.size.field] / Math.PI));
+        })
+        .attr("cx", function (d) {
+            // for (var i=0; i<categories.length; i++){
+            //     if(d[encoding.color.field] == categories[i]){
+            //         return i * 2*chartWidth/(categories.length*2.5) + (chartWidth - 2*chartWidth/(categories.length*2.5) * (categories.length-1))/2;
+            //     }
+            // }
+            var inner = 0;
+            for (var j = 0; j < categories.length; j++) {
+                inner = inner + size(Math.sqrt(sizes[j] / Math.PI));
             }
-        }
-    })
-    .attr("cy", chartHight/2)
+            for (var i = 0; i < categories.length; i++) {
+                if (d[encoding.color.field].toString() === categories[i]) {
+                    // return i * 2*chartWidth/(categories.length*2.5) + (chartWidth - 2*chartWidth/(categories.length*2.5) * (categories.length-1))/2;
+                    var size_all = 0;
+                    var space = 15;
+                    for (var t = 0; t < i; t++) {
+                        size_all = size_all + 2 * size(Math.sqrt(sizes[t] / Math.PI));
+                        if (t >= 0) {
+                            size_all = size_all + space;
+                        }
+                    }
+                    size_all = size_all + size(Math.sqrt(sizes[i] / Math.PI))
+                    return size_all + (chartWidth - 2 * inner - space * (categories.length - 1)) / 2;
+                }
+            }
+        })
+        .attr("cy", chartHight / 2)
     // .attr('transform', (d, i) =>`translate(${i * chartHight/3 + (chartWidth - chartHight/3 * (categories.length-1))/2}, 0)`);
     // .attr('transform', (d, i) =>`translate(${i * 2*chartWidth/(categories.length*2.5) + (chartWidth - 2*chartWidth/(categories.length*2.5) * (categories.length-1))/2}, 0)`);
-        
+
     // svg.selectAll(".circle")
     //     .data(data)
     //     .enter()
@@ -143,7 +183,7 @@ const draw = (animation, props) => {
     //     .attr("cy", height/2)
 
     //Fill Color 
-    
+
     // svg.selectAll("circle")
     //     .data(data)
     //     .attr("fill", function (d){ return color(d[encoding.color.field]); });
@@ -153,30 +193,30 @@ const draw = (animation, props) => {
     //Show Legend
     // var dataCategories = getCategories(data, encoding);
     var legends = legend.selectAll("legend_color")
-                .data(data)
-                .enter().append("g")
-                .attr("class", "legend_color")
-                .attr('transform', (d, i) =>`translate(${i * 80 + (chartWidth - 80 * categories.length)/2}, 0)`);
+        .data(data)
+        .enter().append("g")
+        .attr("class", "legend_color")
+        .attr('transform', (d, i) => `translate(${i * 80 + (chartWidth - 80 * categories.length)/2}, 0)`);
 
 
     legends.append("rect")
-                .attr("fill", d => color(d[encoding.color.field]))
-                .attr("width", 10)
-                .attr("height", 10)
-                .attr("y",-15);
-                // .attr("r", 6)
-                // .attr("cy", -5);
+        .attr("fill", d => color(d[encoding.color.field]))
+        .attr("width", 10)
+        .attr("height", 10)
+        .attr("y", -15);
+    // .attr("r", 6)
+    // .attr("cy", -5);
 
     legends.append("text")
-                .attr("x", 12)
-                .attr("y",-5)
-                .text(d => d[encoding.color.field]);
+        .attr("x", 12)
+        .attr("y", -5)
+        .text(d => d[encoding.color.field]);
 
     // Animation
     let animationDelay = 0;
     let stepDuration = animation.duration / trendData.length;
     let hasGap = animation.spec.gap !== 0;
-    
+
     let lastCache = {};
 
     categories.forEach(ck => {
@@ -192,38 +232,82 @@ const draw = (animation, props) => {
                 .data(timeData)
                 .enter()
                 .append("circle")
-                .style('stroke-width','0')
+                .style('stroke-width', '0')
                 .attr("class", "data-item")
-                .attr("size", function(d) { return d[encoding.size.field]; })
-                .attr("color", function(d) { return d[encoding.color.field]; })
-                .attr("r", function(d) {
-                    return size(Math.sqrt(lastCache[d[encoding.color.field]]/Math.PI)); })
-                .attr("cx", function(d) {
-                    for (var i=0; i<categories.length; i++){
-                        if(d[encoding.color.field] === categories[i]){
-                            return i * 2*chartWidth/(categories.length*2.5) + (chartWidth - 2*chartWidth/(categories.length*2.5) * (categories.length-1))/2;
+                .attr("size", function (d) {
+                    return d[encoding.size.field];
+                })
+                .attr("color", function (d) {
+                    return d[encoding.color.field];
+                })
+                .attr("r", function (d) {
+                    return size(Math.sqrt(lastCache[d[encoding.color.field]] / Math.PI));
+                })
+                .attr("cx", function (d) {
+                    // for (var i=0; i<categories.length; i++){
+                    //     if(d[encoding.color.field] == categories[i]){
+                    //         return i * 2*chartWidth/(categories.length*2.5) + (chartWidth - 2*chartWidth/(categories.length*2.5) * (categories.length-1))/2;
+                    //     }
+                    // }
+                    var inner = 0;
+                    for (var j = 0; j < categories.length; j++) {
+                        inner = inner + size(Math.sqrt(sizes[j] / Math.PI));
+                    }
+                    for (var i = 0; i < categories.length; i++) {
+                        if (d[encoding.color.field].toString() === categories[i]) {
+                            // return i * 2*chartWidth/(categories.length*2.5) + (chartWidth - 2*chartWidth/(categories.length*2.5) * (categories.length-1))/2;
+                            var size_all = 0;
+                            var space = 15;
+                            for (var t = 0; t < i; t++) {
+                                size_all = size_all + 2 * size(Math.sqrt(sizes[t] / Math.PI));
+                                if (t >= 0) {
+                                    size_all = size_all + space;
+                                }
+                            }
+                            size_all = size_all + size(Math.sqrt(sizes[i] / Math.PI))
+                            return size_all + (chartWidth - 2 * inner - space * (categories.length - 1)) / 2;
                         }
                     }
                 })
-                .attr("cy", chartHight/2)  
+                .attr("cy", chartHight / 2)
                 .transition()
-                .duration(hasGap?stepDuration/3:stepDuration)
-                .attr("r", function(d) { 
+                .duration(hasGap ? stepDuration / 3 : stepDuration)
+                .attr("r", function (d) {
                     lastCache[d[encoding.color.field]] = d[encoding.size.field];
-                    return size(Math.sqrt(d[encoding.size.field]/Math.PI)); })
-                .attr("cx", function(d) {
-                    for (var i=0; i<categories.length; i++){
-                        if(d[encoding.color.field] === categories[i]){
-                            return i * 2*chartWidth/(categories.length*2.5) + (chartWidth - 2*chartWidth/(categories.length*2.5) * (categories.length-1))/2;
+                    return size(Math.sqrt(d[encoding.size.field] / Math.PI));
+                })
+                .attr("cx", function (d) {
+                    // for (var i=0; i<categories.length; i++){
+                    //     if(d[encoding.color.field] == categories[i]){
+                    //         return i * 2*chartWidth/(categories.length*2.5) + (chartWidth - 2*chartWidth/(categories.length*2.5) * (categories.length-1))/2;
+                    //     }
+                    // }
+                    var inner = 0;
+                    for (var j = 0; j < categories.length; j++) {
+                        inner = inner + size(Math.sqrt(sizes[j] / Math.PI));
+                    }
+                    for (var i = 0; i < categories.length; i++) {
+                        if (d[encoding.color.field].toString() === categories[i]) {
+                            // return i * 2*chartWidth/(categories.length*2.5) + (chartWidth - 2*chartWidth/(categories.length*2.5) * (categories.length-1))/2;
+                            var size_all = 0;
+                            var space = 15;
+                            for (var t = 0; t < i; t++) {
+                                size_all = size_all + 2 * size(Math.sqrt(sizes[t] / Math.PI));
+                                if (t >= 0) {
+                                    size_all = size_all + space;
+                                }
+                            }
+                            size_all = size_all + size(Math.sqrt(sizes[i] / Math.PI))
+                            return size_all + (chartWidth - 2 * inner - space * (categories.length - 1)) / 2;
                         }
                     }
                 })
                 .attr("fill", d => color(d[encoding.color.field]))
-            }, animationDelay)
-        }
+        }, animationDelay)
+    }
     for (let index = 0; index < trendData.length; index++) {
         const timeData = trendData[index];
-        //console.log(timeData)
+        // console.log(timeData)
         animateStep(timeData, animationDelay);
         animationDelay += stepDuration;
     }

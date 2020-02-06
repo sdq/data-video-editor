@@ -1,5 +1,5 @@
 import * as d3 from 'd3';
-import { getCategories,  getAggregatedRows} from './helper';
+import { getCategories,  getAggregatedRows, getSize} from './helper';
 import ChartAnimationTask from '../ChartAnimationTask';
 import ChartAnimationType from '../ChartAnimationType';
 import _ from 'lodash';
@@ -67,6 +67,8 @@ const draw = (props) => {
     let dataCategories = getCategories(data, encoding);
     let categories = Object.keys(dataCategories);
     data = getAggregatedRows(data, encoding);
+    let dataSize = getSize(data, encoding);
+    let sizes = Object.keys(dataSize);
 
     const chartWidth = width,
         chartHight = height - 60;
@@ -114,9 +116,23 @@ const draw = (props) => {
         // .attr("r", function(d) { return Math.sqrt( size(d[encoding.size.field]) / Math.PI ); })
         .attr("r", function(d) { return size(Math.sqrt(d[encoding.size.field]/Math.PI)); })
         .attr("cx", function(d) {
+            var inner = 0;
+            for (var j=0; j<categories.length; j++){
+                inner = inner + size(Math.sqrt(sizes[j]/Math.PI));
+            }
             for (var i=0; i<categories.length; i++){
-                if(d[encoding.color.field] === categories[i]){
-                    return i * 2*chartWidth/(categories.length*2.5) + (chartWidth - 2*chartWidth/(categories.length*2.5) * (categories.length-1))/2;
+                if(d[encoding.color.field].toString() === categories[i]){
+                    // return i * 2*chartWidth/(categories.length*2.5) + (chartWidth - 2*chartWidth/(categories.length*2.5) * (categories.length-1))/2;
+                    var size_all=0;
+                    var space = 15;
+                    for(var t=0; t<i; t++){
+                        size_all = size_all + 2*size(Math.sqrt(sizes[t]/Math.PI));
+                        if (t>=0){
+                            size_all = size_all + space;
+                        }
+                    } 
+                    size_all = size_all + size(Math.sqrt(sizes[i]/Math.PI))
+                    return size_all + (chartWidth - 2*inner - space*(categories.length-1))/2;
                 }
             }
         })

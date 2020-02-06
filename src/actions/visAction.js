@@ -27,6 +27,14 @@ export const updateData = (index, data, dataSchema) => ({
     dataSchema
 })
 
+export const updateDefaultData = (index, data, dataSchema, dataName) => ({
+    type: VisActionType.UPDATE_DEFAULT_DATA,
+    index,
+    data,
+    dataSchema,
+    dataName
+})
+
 export const deleteData = (index) => ({
     type: VisActionType.DELETE_DATA,
     index

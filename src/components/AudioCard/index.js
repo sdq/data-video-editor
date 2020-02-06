@@ -11,7 +11,7 @@ const audioSource = {
 
 	beginDrag(props) {
         props.displayMusicTargetArea(true);
-
+        props.cleanInterationLayer(true);
         props.displayResourceTargetArea(true);
 		return props.info;
 	},

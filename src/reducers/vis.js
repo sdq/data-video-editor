@@ -40,7 +40,8 @@ const initialState = {
 export default (state = initialState, action) => {
     const newSpec = JSON.parse(state.specHistory[state.specIndex]);
     const newState = Object.assign({}, state);
-    const newList = newState.dataNameList.slice();
+    const newList = newState.dataNameList.slice();//[cars.csv]
+    const dataList = newState.dataList.slice();
     var newSpecHistory = [];
     var newActionHistory = [];
     switch (action.type) {
@@ -69,9 +70,21 @@ export default (state = initialState, action) => {
 
         case VisActionType.UPDATE_DATA:
             newState.dataIndex = action.index;
-            const dataList = newState.dataList.slice();
             dataList[action.index] = action.data;
             newState.dataList = dataList;
+            return newState
+
+        case VisActionType.UPDATE_DEFAULT_DATA:
+            newState.dataIndex = action.index;
+            //data
+            dataList[action.index] = action.data;
+            newState.dataList = dataList;
+            //dataSchema
+            const fieldsList = newState.fieldsList.slice();
+            fieldsList[action.index] = action.dataSchema;
+            newState.fieldsList = fieldsList;
+            newList[action.index] = action.dataName;
+            newState.dataNameList = newList
             return newState
 
         case VisActionType.DELETE_DATA:

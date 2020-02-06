@@ -6,6 +6,10 @@ import ElementType from '@/constants/ElementType';
 import {Element, ChartInfo} from '@/models/Element';
 import {getDefaultSpec} from '@/charts/Info';
 // import Scene from '@/models/Scene';
+import countrys from '@/datasets/scatterPlot/countrys';
+import countrysSchema from '@/datasets/scatterPlot/countrysSchema';
+import cars from '@/datasets/cars';
+import carsSchema from '@/datasets/carsSchema';
 import _ from 'lodash';
 import './chartcard.css';
 
@@ -19,7 +23,14 @@ let y = 100;
 
 const chartSource = {
 
-	beginDrag(props) {
+    beginDrag(props) {
+        //判断是scatterPlot类型，使用scatterPlot线上数据
+        if (props.charttype === 'scatterplot') {
+            props.updateDefaultData(props.currentData.dataIndex, countrys, countrysSchema,'countrys.csv')
+        } else {
+            props.updateDefaultData(props.currentData.dataIndex, cars, carsSchema,'cars.csv')
+        }
+        props.cleanInterationLayer(true);
         props.displayResourceTargetArea(true);
 		return {
             category: props.chartcategory,

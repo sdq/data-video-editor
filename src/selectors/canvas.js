@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect';
 
 export const isElementSelected = state => state.canvas.isElementSelected;
+export const isCleanInterationLayer = state => state.canvas.isCleanInterationLayer;
 export const elementIndex = state => state.canvas.elementIndex;
 export const elementName = state => state.canvas.elementName;
 export const actionHistory = state => state.canvas.actionHistory;
@@ -13,7 +14,7 @@ const sceneIndex = state => state.video.index;
 export const currentElements = createSelector(
     scenes,
     sceneIndex,
-    function(scenes, sceneIndex) {
+    function (scenes, sceneIndex) {
         return scenes[sceneIndex].elements();
     }
 )
@@ -21,7 +22,7 @@ export const currentElements = createSelector(
 export const currentElement = createSelector(
     currentElements,
     elementIndex,
-    function(currentElements, elementIndex) {
+    function (currentElements, elementIndex) {
         return currentElements[elementIndex];
     }
 )

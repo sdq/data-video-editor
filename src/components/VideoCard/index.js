@@ -16,6 +16,7 @@ let y = 100;
 const videoSource = {
 
 	beginDrag(props) {
+        props.cleanInterationLayer(true);
         props.displayResourceTargetArea(true);
         return props.info;
     },

@@ -2,15 +2,16 @@ import ActionType from '../actions/types';
 
 const initialState = {
     isElementSelected: false,
+    isCleanInterationLayer: false,
     elementIndex: -1,
     elementName: '',
     actionHistory: [],
-    dragPos:'', // for tool display
-    transformInfo:'', // for tool display
+    dragPos: '', // for tool display
+    transformInfo: '', // for tool display
 }
 
 export default (state = initialState, action) => {
-    const newState = Object.assign({},state);
+    const newState = Object.assign({}, state);
     newState.actionHistory = state.actionHistory.slice();
     newState.actionHistory.push(action);
     switch (action.type) {
@@ -30,6 +31,9 @@ export default (state = initialState, action) => {
             newState.elementIndex = -1;
             newState.elementName = '';
             return newState;
+        case ActionType.CLEAN_INTERACTION_LAYER: 
+            newState.isCleanInterationLayer = action.isCleanInterationLayer;
+            return newState
         case ActionType.ADD_ELEMENT:
             newState.isElementSelected = false;
             newState.elementIndex = -1;
