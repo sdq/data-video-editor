@@ -30,7 +30,6 @@ const draw = (animation, props) => {
 
     //Get Encoding
     const encoding = props.spec.encoding;
-    //console.log(encoding);
     if(_.isEmpty(encoding) || !('size' in encoding) || _.isEmpty(encoding.size) ){
         svg.append("circle")
             .attr("cx", width / 2)
@@ -121,7 +120,7 @@ const draw = (animation, props) => {
         .attr("fill",function(d){ return(color(d)); })
         .attr("transform", function(d,i){
             let offset = 100 * i + 70;
-            return "translate(" + offset + "," + 420 + ")";
+            return "translate(" + offset + "," + 445 + ")";
         })
         .attr("z-index",99999);
 
@@ -132,7 +131,7 @@ const draw = (animation, props) => {
         .text(function(d, i){ return d; })
         .attr("transform", function(d,i){
             let offset = 100 * i + 100;
-            return "translate(" + offset + "," + 435 + ")";
+            return "translate(" + offset + "," + 460 + ")";
         });
     
     let extremeCategory = data[0][encoding.size.field];
@@ -162,6 +161,13 @@ const draw = (animation, props) => {
                     return 5;
                 } else {
                     return 0;
+                }
+            })
+            .attr("fill-opacity", function (d, i){  
+                if (d.data[encoding.size.field] === extremeCategory) {
+                    return 1;
+                } else {
+                    return 0.5;
                 }
             });
 

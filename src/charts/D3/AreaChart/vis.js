@@ -1,5 +1,5 @@
 import * as d3 from 'd3';
-import { getStackedData, getMaxRows} from './helper';
+import { getStackedData, getSeriesValue, getAggregatedRows } from './helper';
 
 const draw = (props) => {
     let a = document.createElement("div");
@@ -8,16 +8,15 @@ const draw = (props) => {
         a = '.vis-areachart';
     }
     const offset = 20;
-    const margin = { top: 10, right: 80, bottom: 40, left: 40 };
+    const margin = { top: 10, right: 10, bottom: 40, left: 40 };
     const width = props.width - margin.left - margin.right - offset;
-    const height = props.height - margin.top - margin.bottom - offset;
+    const height = props.height - margin.top - margin.bottom - offset - 40;
     let svg = d3.select(a)
         .append("svg")
         .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
+        .attr("height", height + margin.top + margin.bottom + 40)
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
 
     // Encoding
     const encoding = props.spec.encoding;
@@ -27,15 +26,13 @@ const draw = (props) => {
 
     // Process Data
     let data = props.data;
-
-
-
+    let series;
     let stackedData = [];
     if (hasSeries) {
         stackedData = getStackedData(data, encoding);
+        series = getSeriesValue(data, encoding);
     }
-
-    data = getMaxRows(data, encoding);
+    data = getAggregatedRows(data, encoding);
 
     // Style
     // const style = props.spec.style;
@@ -60,7 +57,7 @@ const draw = (props) => {
     if (hasSeries) {
         y.domain([0, d3.max(stackedData[stackedData.length - 1], d => d[1])]).nice().range([height, 0]);
     } else
-        y.domain([0, d3.max(data, function (d) { return d[encoding.y.field]; })]).range([height, 0]);
+        y.domain([0, d3.max(data, function (d) { return d[encoding.y.field]; })]).nice().range([height, 0]);
 
     // basic area
     var area_generator = d3.area()
@@ -115,6 +112,9 @@ const draw = (props) => {
     const areaG = areaLayer.append('g')
         .attr('clip-path', 'url(#clip)').attr('class', 'areaG')
 
+    const legend = svg.append("g")
+        .attr("transform", `translate(0, ${height + 60})`);
+
     if (hasSeries && layout === 'stacked') {
         y.domain([0, d3.max(stackedData[stackedData.length - 1], d => d[1])]).nice().range([height, 0]);
         areaG.selectAll("path")
@@ -128,6 +128,25 @@ const draw = (props) => {
 
         d3.select("#clip rect").attr("width", width);
 
+        var legends = legend.selectAll("legend_color")
+            .data(series)
+            .enter()
+            .append("g")
+            .attr("class", "legend_color")
+            .attr('transform', (d, i) => `translate(${i * (80 + 10) + (width - (series.length * 80 + (series.length - 1) * 10)) / 2}, 0)`);
+        legends.append("rect")
+            .attr("fill", d => colorScale(d))
+            .attr('y', -9)
+            .attr("width", '10px')
+            .attr('height', '10px')
+            .attr("rx", 1.5)
+            .attr("ry", 1.5)
+        // .attr("cy", -5);
+        legends.append("text")
+            .attr("fill", 'black')
+            .attr("x", 15)
+            .text(d => d);
+
     } else if (hasSeries && layout === 'percent') {
         y.domain([0, 1]);
         areaG.selectAll("path")
@@ -136,6 +155,25 @@ const draw = (props) => {
             .attr('id', ({ index }) => 'series_' + index)
             .attr("fill", ({ key }) => colorScale(key))
             .attr("d", percent_area_generator)
+
+        legends = legend.selectAll("legend_color")
+            .data(series)
+            .enter()
+            .append("g")
+            .attr("class", "legend_color")
+            .attr('transform', (d, i) => `translate(${i * (80 + 10) + (width - (series.length * 80 + (series.length - 1) * 10)) / 2}, 0)`);
+        legends.append("rect")
+            .attr("fill", d => colorScale(d))
+            .attr('y', -9)
+            .attr("width", '10px')
+            .attr('height', '10px')
+            .attr("rx", 1.5)
+            .attr("ry", 1.5)
+        // .attr("cy", -5);
+        legends.append("text")
+            .attr("fill", 'black')
+            .attr("x", 15)
+            .text(d => d);
     } else {
         y.domain([0, d3.max(data, function (d) { return d[encoding.y.field]; })]).range([height, 0]);
         areaG.append("path")
@@ -145,30 +183,31 @@ const draw = (props) => {
         // .style('fill-opacity', 0.5);
     }
 
-    let rotate = false
-    let tickText = areaLayer.append("g")
-        .attr("class", "x axis")
+    // let rotate = false
+    // let tickText = areaLayer.append("g")
+    //     .attr("class", "x axis")
+    //     .call(d3.axisBottom(x))
+    //     .attr("transform", "translate(0," + height + ")")
+    //     // .attr("stroke-dasharray","5,5")
+    //     .selectAll('.tick text')
+    //     .each(function (d) {
+    //         if (this.getComputedTextLength() > 20)
+    //             rotate = true
+    //     })
+    // if (rotate)
+    //     tickText.attr('transform', 'translate(14,14) rotate(30)')
+
+    areaLayer.append("g")
+        .attr("class", "x axis")        
         .call(d3.axisBottom(x))
         .attr("transform", "translate(0," + height + ")")
-        // .attr("stroke-dasharray","5,5")
-        .selectAll('.tick text')
-        .each(function (d) {
-            if (this.getComputedTextLength() > 20)
-                rotate = true
-        })
-    if (rotate)
-        tickText.attr('transform', 'translate(14,14) rotate(30)')
+        .selectAll("text")
+        .attr("transform", "translate(-10,0)rotate(-45)")
+        .style("text-anchor", "end");
     areaLayer.append("g")
         .attr("class", "y axis")
         .call(d3.axisLeft(y))
     // .attr("stroke-dasharray","5,5");
-
-    //y轴文字
-    // svg.append("text")
-    //     .text("Displacement")
-    //     .attr("transform", "rotate(-90)")
-    //     .attr("dy", "1em")
-    //     .attr("text-anchor", "end")
 
     return svg;
 }

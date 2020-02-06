@@ -49,7 +49,7 @@ const animations = {
             duration: 1000,
             spec: {
                 extreme1: "max",
-                extreme2: "max",
+                extreme2: "min",
                 effect: "juxtaposition" 
             }
         },

@@ -13,11 +13,11 @@ const draw = (animation, props) => {
 
     const margin = { top: 10, right: 10, bottom: 40, left: 40 };
     const width = props.width - margin.left - margin.right - offset;
-    const height = props.height - margin.top - margin.bottom - offset;
+    const height = props.height - margin.top - margin.bottom - offset - 40;
     let svg = d3.select(a)
         .append("svg")
         .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
+        .attr("height", height + margin.top + margin.bottom + 40)
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -118,9 +118,9 @@ const draw = (animation, props) => {
                     }
                 })
                 .transition()
-                .duration(animation.duration/3)
+                .duration(animation.duration / 3)
                 .style("stroke", "yellow")
-                .style("stroke-width", function (d, i){  
+                .style("stroke-width", function (d, i) {
                     if (d.data.x.toString() === selectedCategory.toString()) {
                         return 5;
                     } else {
@@ -128,11 +128,11 @@ const draw = (animation, props) => {
                     }
                 })
                 .transition()
-                .duration(animation.duration/3)
+                .duration(animation.duration / 3)
                 .style("stroke-width", 0)
                 .transition()
-                .duration(animation.duration/3)
-                .style("stroke-width", function (d, i){  
+                .duration(animation.duration / 3)
+                .style("stroke-width", function (d, i) {
                     if (d.data.x.toString() === selectedCategory.toString()) {
                         return 5;
                     } else {
@@ -170,7 +170,7 @@ const draw = (animation, props) => {
                     }
                 })
                 .style("stroke", "yellow")
-                .style("stroke-width", function (d, i){  
+                .style("stroke-width", function (d, i) {
                     if (d.data.x.toString() === selectedCategory.toString()) {
                         return 5;
                     } else {
@@ -179,7 +179,34 @@ const draw = (animation, props) => {
                 });
         }
     }
-
+    let dataSeries = [];
+    let series = [];
+    if (hasSeries) {
+        dataSeries = getSeries(data, encoding);
+        series = Object.keys(dataSeries);
+    }
+    // legend
+    let colorScale = d3.scaleOrdinal(d3.schemeCategory10);
+    const legend = svg.append("g")
+        .attr("transform", `translate(0, ${height + 60})`);
+    var legends = legend.selectAll("legend_color")
+        .data(series)
+        .enter()
+        .append("g")
+        .attr("class", "legend_color")
+        .attr('transform', (d, i) => `translate(${i * (80 + 10) + (width - (series.length * 80 + (series.length - 1) * 10)) / 2}, 0)`);
+    legends.append("rect")
+        .attr("fill", d => colorScale(d))
+        .attr('y', -9)
+        .attr("width", '10px')
+        .attr('height', '10px')
+        .attr("rx", 1.5)
+        .attr("ry", 1.5)
+    // .attr("cy", -5);
+    legends.append("text")
+        .attr("fill", 'black')
+        .attr("x", 15)
+        .text(d => d);
     return svg;
 }
 

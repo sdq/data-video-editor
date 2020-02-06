@@ -130,14 +130,6 @@ const draw = (animation,props) => {
                     // console.log(lastCache);
                     return arc(d);
                 })
-                // .attrTween("d", tweenArc(function(d, i) {
-                //     lastCache['startAngle'] = d._startAngle;
-                //     lastCache['endAngle'] = d._endAngle;
-				// 	return {
-				// 		startAngle: d._startAngle,	
-				// 		endAngle: d._endAngle
-				// 	};
-				// }))
                 .attr("fill", function(d){ return(color(d.data[encoding.color.field])); });
         }, animationDelay)
     }
@@ -153,17 +145,6 @@ const draw = (animation,props) => {
         animationDelay += stepDuration;
     }
 
-    // function tweenArc(b) {
-    //     return function(a, i) {s
-    //         var d = b.call(this, a, i),
-    //             i = d3.interpolate(a, d);
-    //             //d保存转换之后的信息
-    //             //插值模式，从d.endAnle=d.startAngle到d.endAngle=d._endAngle转换
-    //         return function(t) {
-    //             return arc(i(t));
-    //         };
-    //     };
-    // }
     
     //draw legend
     legendSvg.selectAll("rect")
@@ -175,7 +156,7 @@ const draw = (animation,props) => {
         .attr("fill",function(d){ return(color(d)); })
         .attr("transform", function(d,i){
             let offset = 100 * i + 70;
-            return "translate(" + offset + "," + 420 + ")";
+            return "translate(" + offset + "," + 445 + ")";
         })
         .attr("z-index",99999);
 
@@ -186,7 +167,7 @@ const draw = (animation,props) => {
         .text(function(d, i){ return d; })
         .attr("transform", function(d,i){
             let offset = 100 * i + 100;
-            return "translate(" + offset + "," + 435 + ")";
+            return "translate(" + offset + "," + 460 + ")";
         });
 
     // Style

@@ -1,5 +1,5 @@
 import * as d3 from 'd3';
-import {getSeries, getCategories, parseTime, formatTick, getAggregatedRows} from './helper';
+import {getSeries, getCategories, parseTime, formatTick, getAggregatedRows, formatTicksCount, sortByDateAscending} from './helper';
 import _ from 'lodash';
 
 const offset = 20; 
@@ -116,9 +116,13 @@ const draw = (props) => {
             .attr("transform", `translate(0, ${chartHeight + 60})`);
 
     let tick_format = formatTick(data[0][encoding.x.field])
-    
-    let axisX = d3.axisBottom(xScale)
+    let format_TicksCount = formatTicksCount(data[0][encoding.x.field])
+    var axisX = d3.axisBottom(xScale)
+                .ticks(format_TicksCount)
                 .tickFormat(tick_format);
+    if(format_TicksCount === d3.timeYear) {
+        axisX.ticks(format_TicksCount)
+    }
 
     let axisY = d3.axisLeft(yScale);
 
@@ -162,6 +166,7 @@ const draw = (props) => {
                     color: s
                 })
             });
+            sData = sData.sort(sortByDateAscending);
             preparedData[s] = sData;
         })
         var allGroup = content.append('g')
@@ -228,6 +233,7 @@ const draw = (props) => {
                 color: 'overall'
             })
         })
+        averageData = averageData.sort(sortByDateAscending)
         let group = content.append('g')
                 .attr('id', 'series_overall')
                 .attr('clip-path', 'url(#clip_overall)');

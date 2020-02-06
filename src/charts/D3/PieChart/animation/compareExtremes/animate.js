@@ -3,7 +3,6 @@ import {  getCategories, getAggregatedRows } from '../../helper';
 import _ from 'lodash';
 
 const draw = (animation, props) => {
-    console.log("change");
     let a = document.createElement("div");
     if (!props.onCanvas) {
         d3.select('.vis-piechart > *').remove();
@@ -119,7 +118,7 @@ const draw = (animation, props) => {
         .attr("fill",function(d){ return(color(d)); })
         .attr("transform", function(d,i){
             let offset = 100 * i + 70;
-            return "translate(" + offset + "," + 420 + ")";
+            return "translate(" + offset + "," + 445 + ")";
         })
         .attr("z-index",99999);
 
@@ -130,7 +129,7 @@ const draw = (animation, props) => {
         .text(function(d, i){ return d; })
         .attr("transform", function(d,i){
             let offset = 100 * i + 100;
-            return "translate(" + offset + "," + 435 + ")";
+            return "translate(" + offset + "," + 460 + ")";
         });
     
     

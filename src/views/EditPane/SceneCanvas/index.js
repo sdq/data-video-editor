@@ -116,7 +116,7 @@ export default class EditCanvas extends Component {
 
         if (e.evt.button === 2) {
             // TODO: right click
-            console.log('right click:'+name);
+            //console.log('right click:'+name);
         }
     };
 

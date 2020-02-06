@@ -7,7 +7,7 @@ const offset = 20; // To show whole chart
 const draw = (animation, props) => {
     const margin = { top: 10, right: 10, bottom: 40, left: 40 };
     const width = props.width - margin.left - margin.right - offset;
-    const height = props.height - margin.top - margin.bottom - offset;
+    const height = props.height - margin.top - margin.bottom - offset -40;
 
     let data = props.data,
         encoding = props.spec.encoding;
@@ -27,6 +27,7 @@ const draw = (animation, props) => {
         // series = Object.keys(dataSeries);
     } else {
         data = getAggregatedRows(data, encoding);
+        return svg;
     }
 
     var x = d3.scalePoint()

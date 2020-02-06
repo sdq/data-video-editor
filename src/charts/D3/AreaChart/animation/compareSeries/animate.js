@@ -9,6 +9,16 @@ const draw = (animation, props) => {
     const areaG = svg.select('.areaG')
     let areaPath = areaG.selectAll("path")
 
+    const offset = 20;
+    const margin = { top: 10, right: 10, bottom: 40, left: 40 };
+    // const width = props.width - margin.left - margin.right - offset;
+    const height = props.height - margin.top - margin.bottom - offset -40;
+    let hasSeries = ('color' in encoding) && ('field' in encoding.color);
+    let stackedData = [];
+    
+    if (hasSeries) {
+        stackedData = getStackedData(data, encoding);
+    } 
     let series = getSeriesValue(data, encoding);
     animation.spec.series1 = animation.spec.series1 && animation.spec.series1 !== "all" ? animation.spec.series1:series[0];
     animation.spec.series2 = animation.spec.series2 && animation.spec.series2 !== "all" ? animation.spec.series2:series[1];
@@ -17,16 +27,6 @@ const draw = (animation, props) => {
         compareIndex2 = series.indexOf(animation.spec.series2)
     let duration = animation.duration;
     let tick = 12;
-
-    const offset = 20;
-    const margin = { top: 10, right: 10, bottom: 40, left: 40 };
-    const width = props.width - margin.left - margin.right - offset;
-    const height = props.height - margin.top - margin.bottom - offset;
-    let hasSeries = 'color' in encoding;
-    let stackedData = [];
-    if (hasSeries) {
-        stackedData = getStackedData(data, encoding);
-    }
     //Y轴        
     var y = d3.scaleLinear()
     if (hasSeries) {
@@ -35,7 +35,7 @@ const draw = (animation, props) => {
         y.domain([0, d3.max(data, function (d) { return d[encoding.y.field]; })]).range([height, 0]);
 
 
-    if (animation.spec.effect === "superposition") {
+    if (hasSeries && animation.spec.effect === "superposition") {
         // 隐藏其他没被选中的path      
         areaPath
             .attr('opacity', 1)
@@ -58,15 +58,17 @@ const draw = (animation, props) => {
 
         let compareArray = new Array(2);
         let comparePath = new Array(2);
+        let compareIndex = [compareIndex1,compareIndex2]
         compareArray[0] = animation.spec.series1
         compareArray[1] = animation.spec.series2
         comparePath[0] = areaG.select('#series_' + compareIndex1)
         comparePath[1] = areaG.select('#series_' + compareIndex2)
-        compareArray.forEach((s, i) => {
-            let lastArray = [comparePath[i]['_groups'][0][0].__data__.slice(-1)[0][0], areaPath['_groups'][0][0].__data__.slice(-1)[0][1]]
-            let middleX = width - 30
-            let middleY = (y(lastArray[0]) + y(lastArray[1])) / 2
-            let tooltip = svg.append('line')
+        compareIndex.forEach((s, i) => {
+            // let lastArray = [comparePath[i]['_groups'][0][0].__data__.slice(-1)[0][0], areaPath['_groups'][0][0].__data__.slice(-1)[0][1]]
+            let middleX = 0
+            let firstArray = [stackedData[s][0][0],stackedData[s][0][1]]
+            let middleY = (y(firstArray[0]) + y(firstArray[1])) / 2
+            let tooltip = areaG.append('line')
                 .attr('class', 'animation')
                 .attr('x1', middleX)
                 .attr('y1', middleY)
@@ -81,7 +83,7 @@ const draw = (animation, props) => {
                 .duration(duration / tick * 2)
                 .attr("x2", middleX + 20)
                 .attr("y2", middleY);
-            let tooltipText = svg.append('text')
+            let tooltipText = areaG.append('text')
                 .attr('class', 'animation')
                 .attr("font-size", 0)
                 .attr('x', middleX + 45)

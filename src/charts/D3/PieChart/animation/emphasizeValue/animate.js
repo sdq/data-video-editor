@@ -116,7 +116,7 @@ const draw = (animation, props) => {
         .attr("fill",function(d){ return(color(d)); })
         .attr("transform", function(d,i){
             let offset = 100 * i + 70;
-            return "translate(" + offset + "," + 420 + ")";
+            return "translate(" + offset + "," + 445 + ")";
         })
         .attr("z-index",99999);
 
@@ -127,7 +127,7 @@ const draw = (animation, props) => {
         .text(function(d, i){ return d; })
         .attr("transform", function(d,i){
             let offset = 100 * i + 100;
-            return "translate(" + offset + "," + 435 + ")";
+            return "translate(" + offset + "," + 460 + ")";
         });
        
     if(animation.spec.effect === "filter") {
@@ -155,6 +155,13 @@ const draw = (animation, props) => {
                     return 5;
                 } else {
                     return 0;
+                }
+            })
+            .attr("fill-opacity", function (d, i){  
+                if (d.data[encoding.color.field] === animation.spec.category) {
+                    return 1;
+                } else {
+                    return 0.5;
                 }
             });
 

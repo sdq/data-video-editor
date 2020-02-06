@@ -182,6 +182,25 @@ const formatTick = (date) => {
         return d3.timeFormat("%Y")
 }
 
+const formatTicksCount = (date) => {
+    if (d3.timeParse("%Y-%m-%d")(date)) 
+        return d3.timeDay
+    else if (d3.timeParse("%Y/%m/%d")(date))
+        return d3.timeDay
+    else if (d3.timeParse("%Y-%m")(date))
+        return d3.timeMonth
+    else if (d3.timeParse("%Y/%m")(date))
+        return d3.timeMonth
+    else if (d3.timeParse("%Y")(date))
+        return d3.timeYear
+}
+
+function sortByDateAscending(a, b) {
+    // Dates will be cast to numbers automagically:
+    return parseTime(a.x) - parseTime(b.x);
+}
 
 
-export { getCategories, getSeries, getMinRows, getMaxRows, parseTime, formatTick, getLeastSquares, getAggregatedRows }
+
+
+export { getCategories, getSeries, getMinRows, getMaxRows, parseTime, formatTick, getLeastSquares, getAggregatedRows, formatTicksCount, sortByDateAscending }

@@ -1,9 +1,9 @@
 const defaultSpec = {
     "encoding": {
-        "x": {"field": "Displacement", "type": "quantitative"},
-        "y": {"field": "Horsepower", "type": "quantitative"},
-        "color": {"field": "Origin", "type": "nordinal"},
-        "id":{"field":"Name"},
+        "x": {"field": "Income", "type": "quantitative"},
+        "y": {"field": "Life_expectancy", "type": "quantitative"},
+        "color": {"field": "Country", "type": "nordinal"},
+        "id":{"field":"Country"},
         "time":{"field":"Year"}
     },
     "style": {},
