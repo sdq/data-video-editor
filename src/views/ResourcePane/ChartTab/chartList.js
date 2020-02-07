@@ -26,26 +26,32 @@ export const vegaliteCharts = [
 
 export const d3Charts = [
     {
+        name:"Area",
         chart: ChartType.AREACHART,
         src: MyURL.OSS+"/charts/areachart.png"
     },
     {
+        name:"Bar",
         chart: ChartType.BARCHART,
         src: MyURL.OSS+"/charts/barchart.png"
     },
     {
+        name:"Line",
         chart: ChartType.LINECHART,
         src: MyURL.OSS+"/charts/linechart.png"
     },
     {
+        name:"Scatterplot",
         chart: ChartType.SCATTERPLOT,
         src: MyURL.OSS+"/charts/scatterplot.png"
     },
     {
+        name:"Proportion",
         chart: ChartType.PROPORTIONCHART,
         src: MyURL.OSS+"/charts/proportionchart.png"
     },
     {
+        name:"Pie",
         chart: ChartType.PIECHART,
         src: MyURL.OSS+"/charts/piechart.png"
     }

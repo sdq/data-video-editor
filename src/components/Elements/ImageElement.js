@@ -96,7 +96,9 @@ export default class ImageElement extends Component {
     }
 
     render() {
+        
         const isPosTool = this.props.element?this.props.element.info().isPosTool:null;
+ 
         return (
             <Group name={this.props.name} 
                 draggable = {this.props.draggable}

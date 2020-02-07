@@ -80,6 +80,7 @@ export default class PosTool extends Component {
 
     render() {
         const {currentElement,dragPos} = this.props;
+        const currentElementType = currentElement.type();
 
         return (
             <div style={{padding: '0px 10px 5px 10px', fontSize: '14px', backgroundColor: 'white',height:'90px',overflow: 'auto'}}>
@@ -101,13 +102,13 @@ export default class PosTool extends Component {
 
                 <Row style={{margin: '15px 15px 0px 12px', fontSize: '14px'}}>
                    <Col span={2} style={{textAlign:'center', padding: '0px 0px 0px 0px'}}>W</Col>
-                   <Col span={6}><InputNumber min={0} max={800} 
+                   <Col span={6}><InputNumber min={0} max={800}  disabled = {currentElementType==="text_element"?true:false}
                    value={this.props.transformInfo ? this.props.transformInfo.w : currentElement.info().width} precision={0.1} size="small" style={{width: '100%',padding: '0px 0px 0px 0px'}}
                    onChange = {value => this.changeW(value)}
                    /></Col>
                    <Col span={2} style={{textAlign:'center', padding: '0px 0px 0px 0px'}}>H</Col>
                    <Col span={6}><InputNumber min={0} max={450} 
-                   disabled={currentElement.type()==="shape_element"?(currentElement.info().shapeType==="line"||currentElement.info().shapeType==="arrow"?true:false):false}
+                   disabled={(currentElement.type()==="shape_element"?(currentElement.info().shapeType==="line"||currentElement.info().shapeType==="arrow"?true:false):false)||(currentElementType==="text_element"?true:false)}
                    value={this.props.transformInfo ? this.props.transformInfo.h : currentElement.info().height} precision={0.1} size="small" style={{width: '100%',padding: '0px 0px 0px 0px'}}
                    onChange = {value => this.changeH(value)}
                    /></Col>

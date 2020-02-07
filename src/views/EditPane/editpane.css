@@ -40,3 +40,7 @@ height:15px;
 width: 15px;
 text-align: center;
 }
+
+.ant-layout-content{
+    overflow-y: hidden;
+}

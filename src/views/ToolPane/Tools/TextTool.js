@@ -90,7 +90,7 @@ export default class TextTool extends Component {
         const newScene = Object.assign({},this.props.currentScene);
         this.props.currentElement.info().color = color;
         this.props.updateScene(this.props.sceneIndex, newScene);
-        this.handleColorClose();
+        //this.handleColorClose();
     }
   
 

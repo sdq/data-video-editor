@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Button, Row, Col, Input, Collapse, List } from 'antd';
-import LazyLoad from 'react-lazyload';
-import ImageCard from '@/components/ImageCard';
+//import LazyLoad from 'react-lazyload';
+//import ImageCard from '@/components/ImageCard';
 import UndrawCard from '@/components/UndrawCard';
 import { SketchPicker } from 'react-color';
 import './illustrationtab.css';
-import data from './data';
+//import data from './data';
 //import undrawdata from './undrawdata/undrawdata';
 import test from './undrawdata/test';
 
@@ -93,13 +93,14 @@ export default class ImageTab extends Component {
         this.setState({
             primaryColor: color
         });
-        this.handleColorClose();
+        //this.handleColorClose();
     }
 
 
     handleColorClose = () => {
         this.setState({ displayColorPicker: false })
     };
+
 
 
 
@@ -190,11 +191,21 @@ export default class ImageTab extends Component {
                         />
                     </Col>
                     <Col span={3} style={{ margin: '1px 0px 0px 7px', fontSize: '14px' }}>
-                        <Button onClick={this.handleColorClick} style={{ width: '100%', height: "24px", margin: '0px 0px 0px 0px', background: primaryColor, border: "#ffffff", verticalAlign: "middle" }}></Button>
+                        {/* <Button onClick={this.handleColorClick} 
+                        style={{ width: '100%', height: "24px", margin: '0px 0px 0px 0px', 
+                        background: primaryColor, border: "#ffffff", verticalAlign: "middle" }}></Button>
                         {this.state.displayColorPicker ? <div style={popover}>
                             <div style={cover} onClick={this.handleColorClose} />
                             <SketchPicker color={primaryColor} onChange={this.handleColorChange} />
-                        </div> : null}
+                        </div> : null} */}
+
+                    <Button size='small' icon="bg-colors" onClick={ this.handleColorClick } 
+                    style={{width: '100%',height: "24px",margin: '0px 0px 0px 0px',
+                    background:primaryColor,border:"#ffffff",verticalAlign: "middle"}}></Button> 
+                    {this.state.displayColorPicker ? <div style={ popover }>
+                     <div style={ cover } onClick={ this.handleColorClose } />
+                     <SketchPicker color={primaryColor}  onChange={this.handleColorChange}  />
+                     </div>:null }
                     </Col>
                 </Row>
                 <Collapse
@@ -295,9 +306,7 @@ export default class ImageTab extends Component {
                         Show {limit}/{shown[4]},Load more..  
                         </Button>)}
                     </Panel>
-
-
-                    <Panel header={"Other"} key="oldMaterial" className="collaspe-panel">
+                    {/* <Panel header={"Other"} key="oldMaterial" className="collaspe-panel">
                         <List
                             className="collaspe-list"
                             grid={{ gutter: 17, column: 3 }}
@@ -307,7 +316,7 @@ export default class ImageTab extends Component {
                                     <LazyLoad><ImageCard info={item} {...this.props} /></LazyLoad>
                                 </List.Item>
                             )} />
-                    </Panel>
+                    </Panel> */}
                 </Collapse>
             </div>
 
