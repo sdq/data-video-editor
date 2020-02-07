@@ -259,6 +259,7 @@ export default class EditableLayer extends Component {
 
         return (
             <Layer 
+                style={{width:'100%',height:'100%'}}
                 ref={node => (this.editableLayer = node)}
             >
                 {this.props.currentScene.elements().map(function(element, index) {

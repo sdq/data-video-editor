@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { message } from 'antd';
 import { DragSource } from 'react-dnd';
 import DNDType from '@/constants/DNDType';
 import ElementType from '@/constants/ElementType';
@@ -20,6 +21,11 @@ const imageSource = {
     canDrag(props) {
         //console.log("canDrag", props.info.src)
         let gifUrl = props.info.src;
+        if(!gifUrl) {
+            message.info("please try again!")
+            return
+        }
+
         //gif-frame 解析
         (async () => {
             await gifFrames(

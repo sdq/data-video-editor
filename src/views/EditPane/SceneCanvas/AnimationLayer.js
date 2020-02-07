@@ -66,21 +66,23 @@ export default class AnimationLayer extends Component {
     }
 
     render() {
-        const { currentScene } = this.props;
-        const canvasW = 800*(this.props.contentHeight-100)/450;
-        const canvasH = this.props.contentHeight-100;
+        const { currentScene, layerSize } = this.props;
+        // const canvasW = 800*(this.props.contentHeight-100)/450;
+        // const canvasH = this.props.contentHeight-100;
         const hasBackgroundImage = currentScene.backgroundImage() !== "";
         return (
             <Layer 
                 ref={node => (this.animationLayer = node)}
-                style={{width:canvasW+"px",height:canvasH+"px"}}
+                style={{width:'100%',height:'100%'}}
             >
                 {/* background */}
                 <Rect
                     x={0}
                     y={0}
-                    width={800}
-                    height={450}
+                    // width={800}
+                    // height={450}
+                    width={layerSize.width}
+                    height={layerSize.height}
                     fill={currentScene.backgroundColor()}
                 />
                 {
@@ -89,8 +91,10 @@ export default class AnimationLayer extends Component {
                         ref={node=>this.imageref=node}
                         x={0}
                         y={0}
-                        width={800}
-                        height={450}
+                        // width={800}
+                        // height={450}
+                        width={layerSize.width}
+                        height={layerSize.height}
                         name={this.props.name}
                         image={this.state.image} 
                     />

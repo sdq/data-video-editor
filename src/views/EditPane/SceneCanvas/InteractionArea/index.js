@@ -16,7 +16,7 @@ export default class InteractionArea extends Component {
 
         const { showAnimationTargetArea, showResourceTargetArea, showMusicTargetArea, showAssistLines, showTextEditor, showGridLines, showGifEditor, showVideoEditor, showChartPreview } = this.props;
         return ( 
-            <div style={{position:'absolute', zIndex:1}}>
+            <div style={{position:'absolute', zIndex:1,width:'100%',height:'100%'}}>
                 {showAnimationTargetArea?<AnimationTargetArea {...this.props}/>:null}
                 {showResourceTargetArea?<ResourceTargetArea {...this.props}/>:null}
                 {showMusicTargetArea?<MusicTargetArea {...this.props}/>:null}
