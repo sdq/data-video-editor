@@ -82,7 +82,7 @@ class ImageCard extends Component {
     render() {
         const { connectDragSource } = this.props;
         return connectDragSource(
-            <div className="imagecard" align="center">
+            <div className="imagecard" align="center" style={{zIndex:5}}>
                 <img  src={this.props.info.src} alt={this.props.info.name} style={{ align:"center",verticalAlign: 'center' }}/>
             </div>
         )

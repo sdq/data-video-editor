@@ -24,7 +24,6 @@ let newimage;
 const imageSource = {
 
     canDrag(props){
-        
         let dragSVG = 0;//获取当前拖拽的svg在列表中的序号
         let alldiv = document.querySelectorAll("p[class='card-text mb-0 text-center']");
         for (let i = 0;i<alldiv.length;i++){
@@ -66,15 +65,16 @@ const imageSource = {
           return true;
     },
 
-	beginDrag(props) {
+	beginDrag(props,monitor) {
         props.displayResourceTargetArea(true);
-		return props;
+        return props;
 	},
 
 	endDrag(props, monitor) {
+
         props.displayResourceTargetArea(false);
         const dropResult = monitor.getDropResult();
-
+        
         ////获取鼠标结束拖拽的位置，基于canvas基点计算位置
         let e = window.event;       //Firefox下是没有event这个对象的！！
         let canvas=document.getElementsByTagName("canvas")[0];
@@ -84,7 +84,6 @@ const imageSource = {
         x = Number(e.clientX)-Number(pos.left)-w/2; //根据鼠标位置计算画布上元素位置,强制类型转换
         y = Number(e.clientY)-Number(pos.top)-h/2;
        }
-
 
 		if (dropResult) {
             if (dropResult.target === "canvas") {
@@ -134,7 +133,7 @@ class UndrawCard extends Component {
     render() {
         const { connectDragSource } = this.props;
         return connectDragSource(
-            <div className="undrawcard" id = "undrawcard" align="center">
+            <div className="undrawcard" id = "undrawcard" align="center" style={{zIndex:5}}>
               <Undraw 
               name={this.props.name} 
               primaryColor={this.props.primaryColor} 

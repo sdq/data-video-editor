@@ -71,6 +71,7 @@ export default class ChartTab extends Component {
                                         chartcategory={ChartCategory.D3}
                                         chartsrc={item.src} 
                                         charttype={item.chart} 
+                                        chartname={item.name}
                                         {...this.props}
                                     />
                                 </LazyLoad>

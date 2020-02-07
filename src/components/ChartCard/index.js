@@ -89,6 +89,7 @@ class ChartCard extends Component {
         return connectDragSource(
             <div className="chartcard" align="center">
                 <img src={this.props.chartsrc} alt={this.props.charttype} />
+                <p style={{ fontSize: '10px',marginTop:'5px'}}>{this.props.chartname}</p>
             </div>
         )
     }

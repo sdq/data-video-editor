@@ -25,7 +25,13 @@ class ResourceTargetArea extends Component {
 			backgroundColor = Color.LIGHT_BLUE;
         }
         return connectDropTarget(
-            <div style={{ backgroundColor: backgroundColor, opacity: 0.4, height: canvasH, width: canvasW, border:"dotted 2px black", }}/>
+            <div style={{ 
+                backgroundColor: backgroundColor, 
+                opacity: 0.4, 
+                height: canvasH, 
+                width: canvasW, 
+                zIndex:1,
+                border:"dotted 2px black", }}/>
         )
     }
 }

@@ -53,7 +53,7 @@ export default class ShapeTool extends Component {
         }
         this.props.currentElement.info().color = color;
         this.props.updateScene(this.props.sceneIndex, newScene);
-        this.handleColorClose();
+        //this.handleColorClose();
     }
   
     handleColorClose = () => {
@@ -77,7 +77,7 @@ export default class ShapeTool extends Component {
         const newScene = Object.assign({},this.props.currentScene);
         this.props.currentElement.info().stroke = color;
         this.props.updateScene(this.props.sceneIndex, newScene);
-        this.handleStrokeColorClose();
+        //this.handleStrokeColorClose();
     }
   
     handleStrokeColorClose = () => {
@@ -101,7 +101,7 @@ export default class ShapeTool extends Component {
         const newScene = Object.assign({},this.props.currentScene);
         this.props.currentElement.info().shadowColor = color;
         this.props.updateScene(this.props.sceneIndex, newScene);
-        this.handleStrokeColorClose();
+        //this.handleShadowColorClose();
     }
   
     handleShadowColorClose = () => {
@@ -166,7 +166,7 @@ export default class ShapeTool extends Component {
     render() {
         const shapeType =this.props.currentElement.info().shapeType;
         const popover = {
-            position: 'absolute',
+            position: 'fixed',
             zIndex: '2',
         }
         const cover = {
@@ -176,6 +176,7 @@ export default class ShapeTool extends Component {
             bottom: '0px',
             left: '0px',
         }
+
 
         return (
                 <div style={{padding: '0px 10px 10px 10px', fontSize: '14px', backgroundColor: 'white',height:this.props.contentHeight-140+'px',overflow: 'auto'}}>
