@@ -12,12 +12,12 @@ const draw = (animation, props) => {
 
     const margin = {top: 100, right: 100, bottom: 100, left: 100};
     const width = props.width - margin.left - margin.right;
-    const height = props.height - margin.top - margin.bottom;
+    const height = props.height - margin.top - margin.bottom - 80;
     let svg = d3.select(a)
                 .append("center")
                 .append("svg")
                 .attr("width", width + margin.left + margin.right)
-                .attr("height", height + margin.top + margin.bottom)
+                .attr("height", height + margin.top + margin.bottom+ 80)
                 .append("g")
                 .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
     

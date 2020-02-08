@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, Radio} from 'antd';
+import { Row, Col, Radio } from 'antd';
 // import {getCategories} from '../../helper';
 // const { Option } = Select;
 

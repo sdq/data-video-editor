@@ -1,5 +1,5 @@
 import * as d3 from 'd3';
-import {getAggregatedRows, getCategories} from '../../helper';
+import {getCategories, getAggregatedRows, getSize} from '../../helper';
 import _ from 'lodash';
 
 const offset = 20; // To show whole chart
@@ -35,7 +35,7 @@ const draw = (animation, props) => {
     
     // Process Data
     let data = props.data;
-
+    
     // Get categories
     let dataCategories = getCategories(data, encoding);
     let categories = Object.keys(dataCategories);
@@ -44,7 +44,11 @@ const draw = (animation, props) => {
     //     var s=encoding.size.field;
     // }
 
-    // data = getAggregatedRows(data, encoding);
+    data = getAggregatedRows(data, encoding);
+    let dataSize = getSize(data, encoding);
+    let sizes = Object.keys(dataSize);
+    // console.log(sizes);
+
 
     let trendData = []
     if (hasTrend) {
@@ -67,8 +71,12 @@ const draw = (animation, props) => {
             trendData.push(td);
         });
         data = getAggregatedRows(data, encoding);
+        // let dataSize = getSize(data, encoding);
+        // let sizes = Object.keys(dataSize);
     } else {
         data = getAggregatedRows(data, encoding);
+        // let dataSize = getSize(data, encoding);
+        // let sizes = Object.keys(dataSize);
     }
 
     // data = getAggregatedRows(data, encoding);
@@ -78,7 +86,7 @@ const draw = (animation, props) => {
         dataValues[data[i][encoding.color.field]] = data[i][encoding.size.field];
     }
 
-    //console.log(dataValues);
+    // console.log(dataValues);
 
 
     const chartWidth = width,
@@ -123,9 +131,23 @@ const draw = (animation, props) => {
     .attr("color", function(d) { return d[encoding.color.field]; })
     .attr("r", function(d) { return size(Math.sqrt(d[encoding.size.field]/Math.PI)); })
     .attr("cx", function(d) {
+        var inner = 0;
+        for (var j=0; j<categories.length; j++){
+            inner = inner + size(Math.sqrt(sizes[j]/Math.PI));
+        }
         for (var i=0; i<categories.length; i++){
-            if(d[encoding.color.field] === categories[i]){
-                return i * 2*chartWidth/(categories.length*2.5) + (chartWidth - 2*chartWidth/(categories.length*2.5) * (categories.length-1))/2;
+            if(d[encoding.color.field].toString() === categories[i]){
+                // return i * 2*chartWidth/(categories.length*2.5) + (chartWidth - 2*chartWidth/(categories.length*2.5) * (categories.length-1))/2;
+                var size_all=0;
+                var space = 15;
+                for(var t=0; t<i; t++){
+                    size_all = size_all + 2*size(Math.sqrt(sizes[t]/Math.PI));
+                    if (t>=0){
+                        size_all = size_all + space;
+                    }
+                } 
+                size_all = size_all + size(Math.sqrt(sizes[i]/Math.PI))
+                return size_all + (chartWidth - 2*inner - space*(categories.length-1))/2;
             }
         }
     })
@@ -223,9 +245,28 @@ const draw = (animation, props) => {
                     .data(data)
                     .attr("dy", function(d){return chartHight/2 - size(Math.sqrt(dataValues[extremeCategory1]/Math.PI)) - 20})
                     .attr("dx", function(d) {
+                        // for (var i=0; i<categories.length; i++){
+                        //     if(extremeCategory1.toString() === categories[i]){
+                        //         return i * 2*chartWidth/(categories.length*2.5) + (chartWidth - 2*chartWidth/(categories.length*2.5) * (categories.length-1))/2 - chartWidth/(categories.length*2.5*3);
+                        //     }
+                        // }
+                        var inner = 0;
+                        for (var j=0; j<categories.length; j++){
+                            inner = inner + size(Math.sqrt(sizes[j]/Math.PI));
+                        }
                         for (var i=0; i<categories.length; i++){
                             if(extremeCategory1.toString() === categories[i]){
-                                return i * 2*chartWidth/(categories.length*2.5) + (chartWidth - 2*chartWidth/(categories.length*2.5) * (categories.length-1))/2 - chartWidth/(categories.length*2.5*3);
+                                // return i * 2*chartWidth/(categories.length*2.5) + (chartWidth - 2*chartWidth/(categories.length*2.5) * (categories.length-1))/2;
+                                var size_all=0;
+                                var space = 15;
+                                for(var t=0; t<i; t++){
+                                    size_all = size_all + 2*size(Math.sqrt(sizes[t]/Math.PI));
+                                    if (t>=0){
+                                        size_all = size_all + space;
+                                    }
+                                } 
+                                size_all = size_all + size(Math.sqrt(sizes[i]/Math.PI))
+                                return size_all + (chartWidth - 2*inner - space*(categories.length-1)*2.5)/2;
                             }
                         }
                     })
@@ -236,9 +277,28 @@ const draw = (animation, props) => {
                     .data(data)
                     .attr("dy", function(d){return chartHight/2 - size(Math.sqrt(dataValues[extremeCategory2]/Math.PI)) - 20})
                     .attr("dx", function(d) {
+                        // for (var i=0; i<categories.length; i++){
+                        //     if(extremeCategory2.toString() === categories[i]){
+                        //         return i * 2*chartWidth/(categories.length*2.5) + (chartWidth - 2*chartWidth/(categories.length*2.5) * (categories.length-1))/2 - chartWidth/(categories.length*2.5*3);
+                        //     }
+                        // }
+                        var inner = 0;
+                        for (var j=0; j<categories.length; j++){
+                            inner = inner + size(Math.sqrt(sizes[j]/Math.PI));
+                        }
                         for (var i=0; i<categories.length; i++){
                             if(extremeCategory2.toString() === categories[i]){
-                                return i * 2*chartWidth/(categories.length*2.5) + (chartWidth - 2*chartWidth/(categories.length*2.5) * (categories.length-1))/2 - chartWidth/(categories.length*2.5*3);
+                                // return i * 2*chartWidth/(categories.length*2.5) + (chartWidth - 2*chartWidth/(categories.length*2.5) * (categories.length-1))/2;
+                                var size_all=0;
+                                var space = 15;
+                                for(var t=0; t<i; t++){
+                                    size_all = size_all + 2*size(Math.sqrt(sizes[t]/Math.PI));
+                                    if (t>=0){
+                                        size_all = size_all + space;
+                                    }
+                                } 
+                                size_all = size_all + size(Math.sqrt(sizes[i]/Math.PI))
+                                return size_all + (chartWidth - 2*inner - space*(categories.length-1)*2.5)/2;
                             }
                         }
                     })
