@@ -174,14 +174,25 @@ const draw = (props) => {
             let before = legend_nodes[0];
             let current;
             let offset = 10;
+            let offsetArray=[36.189453125,59.0556640625,33.1884765625,76.3095703125]
             for(let i = 1; i< legend_nodes.length; i++){
                 current = legend_nodes[i];
-                offset += d3.select(before).select("text").node().getComputedTextLength();
+                if(d3.select(before).select("text").node().getComputedTextLength()){
+                    offset += d3.select(before).select("text").node().getComputedTextLength();
+                    //console.log("getComputedTextLength",d3.select(before).select("text").node().getComputedTextLength())
+                }else{
+                    offset += offsetArray[i-1]; //暂时这样处理吧，在拖拽到画布上render获取不到getComputedTextLength()总为0
+                } 
                 d3.select(current)
                     .attr('transform', `translate(${i*30 + offset}, 0)`);
                 before = current;
             }
-            legend.attr("transform", `translate(${(chartWidth - legend.node().getBBox().width)/2}, ${chartHeight + 60})`);
+            if(legend.node().getBBox().width){
+                legend.attr("transform", `translate(${(chartWidth - legend.node().getBBox().width)/2}, ${chartHeight + 60})`);
+                //console.log("getBBox",legend.node().getBBox().width)
+            }else{
+                legend.attr("transform", `translate(${(chartWidth - 394.1806640625)/2}, ${chartHeight + 60})`);
+            }
         }
     }else{
         points.attr("fill", color(0))//color

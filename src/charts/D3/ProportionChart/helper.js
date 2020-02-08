@@ -13,6 +13,19 @@ const getCategories = (rawData, encoding) => {
     return dataCategories;
 }
 
+const getSize = (rawData, encoding) => {
+    let dataSize = {}
+    for (let i = 0; i < rawData.length; i++) {
+        if (dataSize[rawData[i][encoding.size.field]]) {
+            dataSize[rawData[i][encoding.size.field]].push(rawData[i]);
+        }
+        else {
+            dataSize[rawData[i][encoding.size.field]] = [rawData[i]];
+        }
+    }
+    return dataSize;
+}
+
 // const getSeries = (rawData, encoding) => {
 //     let dataSeries = {}
 //     for (let i = 0; i < rawData.length; i++) {
@@ -103,7 +116,7 @@ const getMaxRows = (rawData, encoding) =>{
             return d.values[0]
         }
     });
-    //console.log(data);
+    // console.log(data);
     return data;
 }
 
@@ -158,4 +171,4 @@ const getAggregatedRows = (rawData, encoding) => {
     return data;
 }
 
-export {getCategories,  getAggregatedRows}
+export {getCategories,  getAggregatedRows, getSize}
