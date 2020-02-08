@@ -53,6 +53,7 @@ export default class EditCanvas extends Component {
         //每当切换元素时，清空公用dragpos,transinfo
         this.props.dragElement('');
         this.props.transformElement('');
+        this.props.cleanInterationLayer(true);
 
         // remove animation
         this.setState({
@@ -132,6 +133,8 @@ export default class EditCanvas extends Component {
             this.setState({
                 dbClickedElementIndex: eleIndex,
             });
+            this.props.cleanInterationLayer(false);
+
             if (dbElement.type() === ElementType.TEXT) {
                 this.setState({
                     showTextEditor: true,
@@ -171,7 +174,8 @@ export default class EditCanvas extends Component {
 
     render() {
         //isPerforming判断是否在播放，showPathLayer用于anicard拖拽管理，isElementSelected判断是否有元素被选中,判断选中的元素是否含有path动画
-        const { isPerforming,showPathLayer} = this.props; 
+
+        const { isPerforming,showPathLayer, isCleanInterationLayer} = this.props; 
         //const canvasW = 800*(this.props.contentHeight-100)/450;
         const canvasW = this.props.contentWidth;
         const canvasH = this.props.contentHeight-100;
@@ -195,7 +199,7 @@ export default class EditCanvas extends Component {
 
         let editable = !isPerforming;  
         let { dbClickedElementIndex, showTextEditor, showChartPreview, showGifEditor, showVideoEditor, showAssistLines,windowWidth } = this.state;
-        if (this.props.sceneIndex!==this.lastscene)
+        if (this.props.sceneIndex!==this.lastscene || isCleanInterationLayer)
         {
             //切换屏幕时，保证交互层不显示，双击元素置空
             dbClickedElementIndex = -1;

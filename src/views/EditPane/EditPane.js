@@ -5,6 +5,8 @@ import EditToolBar from './EditToolBar';
 import PlayControlBar from './PlayControlBar';
 import SceneCanvas from './SceneCanvas';
 import { Element } from '@/models/Element';
+import createElementUtils  from "../../utils/creatElement";
+import { message } from 'antd';
 import _ from 'lodash';
 import './editpane.css';
 
@@ -69,14 +71,51 @@ export default class EditPane extends Component {
     }
 
     pasteElement() {
+        if (!this.state.copiedElement) {
+            message.info("Please try copy element again!")
+            return
+        };
+
         const newScene = _.cloneDeep(this.props.currentScene);
         const newInfo = _.cloneDeep(this.state.copiedElement.info());
         newInfo.x = newInfo.x + 10; // offset
         newInfo.y = newInfo.y + 10;
         const type = this.state.copiedElement.type();
-        const newElement = new Element(type, newInfo);
-        newScene.addElement(newElement);
-        this.props.updateScene(this.props.sceneIndex, newScene);
+        // const newElement = new Element(type, newInfo);
+        // newScene.addElement(newElement);
+        // this.props.updateScene(this.props.sceneIndex, newScene);
+        if (type === 'video_element') {
+            const newElement = new Element(type, newInfo);
+            newElement.start(this.state.copiedElement.start());
+            newElement.duration(this.state.copiedElement.duration())
+            newScene.addElement(newElement);
+            //add videoResource to videoList
+            let videoResource = {};
+            videoResource.id = newElement.id();
+            createElementUtils.createElement('video_element', newInfo.src).then(reslove => {
+                videoResource.element = reslove;
+                newScene.addVideoTag(videoResource);
+                this.props.updateScene(this.props.sceneIndex, newScene);
+            })
+        } else if (type === 'audio_element') {
+            const newElement = new Element(type, newInfo);
+            newElement.start(this.state.copiedElement.start());
+            newElement.duration(this.state.copiedElement.duration())
+            newScene.addElement(newElement);
+            //add audioResource to audioList
+            let audioResource = {};
+            audioResource.id = newElement.id();
+            //解析
+            createElementUtils.createElement("audio_element", newInfo.src).then(reslove => {
+                audioResource.element = reslove;
+                newScene.addAudio(audioResource);
+                this.props.updateScene(this.props.sceneIndex, newScene);
+            })
+        } else {
+            const newElement = new Element(type, newInfo);
+            newScene.addElement(newElement);
+            this.props.updateScene(this.props.sceneIndex, newScene);
+        }
     }
 
     deleteElement() {
