@@ -85,15 +85,19 @@ export default class PlayControlBar extends Component {
 
         return (
             <div id='playcontrol' style = { { background: Color.LIGHT_ORANGE} }>
+                <div className='bgMusicWrapper'>
                 <Button icon="delete" type="link" style = { {float:"left",margin:"10px 0px 10px 12px"} }  onClick={this.deleteBackgroundMusic}/> 
                 <p style = { {float:"left",paddingTop:"15px",marginLeft:"10px",textAlign:"left",zIndex:5} }>Music: {this.state.backgroundMusic}</p>  
                 <div style = { {textAlign:"center",paddingRight: '90px'}}>
-                <ButtonGroup style = { {textAlign:"center",paddingTop:"10px",width:"180px",zIndex:2}}>
+                </div>
+                </div>
+                <ButtonGroup style = { {textAlign:"center",
+                // paddingTop:"10px",
+                width:"180px",zIndex:2}}>
                     <Button icon="step-backward" style = { {paddingRight: '20px',paddingLeft:"20px"} } disabled = {isFirstScene || isPerforming} onClick={this.lastScene}/>
                     <Button icon={isPerforming?"pause":"caret-right"} disabled = {isVideoPerforming} onClick={this.playScene} style = { {padding: '0 20px 0 20px'} }/>
                     <Button icon="step-forward" style = { {padding: '0 20px 0 20px'} } disabled = {isLastScene || isPerforming} onClick={this.nextScene}/>
                 </ButtonGroup>
-                </div>
             </div>
         )
     }

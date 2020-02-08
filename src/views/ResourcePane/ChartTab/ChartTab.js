@@ -40,7 +40,10 @@ export default class ChartTab extends Component {
 
     render() {
         return (
-            <div className="charttab" style={{ height: this.props.contentHeight}}>
+            <div className="charttab" style={{ 
+                //height: this.props.contentHeight
+                height:"100%"
+                }}>
                 <Collapse accordion bordered={false} activeKey={ChartCategory.D3} onChange={this.callback} style={{ height: this.props.contentHeight-25 }}>
                     {/* <Panel header={"VegaLite (" + vegaliteCharts.length + ")"} key={ChartCategory.VEGALITE} className="collaspe-panel">
                         <List

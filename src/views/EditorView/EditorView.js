@@ -82,24 +82,36 @@ export default class EditorView extends Component {
         //const canvasW = 800*(this.state.contentHeight-100)/450;
         const canvasH = this.state.contentHeight-100;
         return (
-            <div id="editview" style={{ height: windowHeight+'px',width: windowWidth+'px' }}  >
+            <div id="editview" style={{ height: windowHeight+'px',width: windowWidth+'px',display:"flex",flexDirection:'column' }}  >
             <DndProvider backend={HTML5Backend}>
                 <HeaderBar history={this.props.history}/>
-                <Layout style={{ height: windowHeight+'px' }}>
-                    <Layout style={{ height: contentHeight+'px' }}>
+                <Layout style={{ 
+                    // height: windowHeight+'px' 
+                    flex:1,
+                    display: "flex",
+                    flexDirection: "column",
+                    }}>
+                    <Layout 
+                    //style={{ height: contentHeight+'px' }}
+                    style={{ display:"flex",flex:1 }}
+                    >
                         <Sider 
                             width={360} 
-                            style={{ background: '#fff', height: contentHeight+'px',
+                            style={{ background: '#fff', 
+                            //height: contentHeight+'px',
+                            height: '100%',
                             borderRightStyle: "solid",
                             borderRightWidth: "1px",
                             borderRightColor: "#FFC107",
-                            zIndex:99999}} 
+                            }} 
                             // trigger={null} 
                             // collapsible 
                             collapsedWidth={0} 
                             collapsed={!showResourcePane}
                         >
-                            <ResourcePane contentHeight={contentHeight}/>
+                            <ResourcePane 
+                            contentHeight={contentHeight}
+                            />
                             {/* 收起左边栏按钮 */}
                             <div className="maskbutton1" 
                              onClick={this.showMedia}
@@ -108,16 +120,23 @@ export default class EditorView extends Component {
                          </div>
                         </Sider>
 
-                        <Content style={{ background: '#fff', height: contentHeight+'px' }}>
+                        <Content style={{ 
+                            background: '#fff', 
+                            //height: contentHeight+'px',
+                            height: '100%', 
+                            }}>
                             <EditPane contentHeight={contentHeight} contentWidth={contentWidth}/>
                         </Content>
                         <Sider 
                             width={300}                            
-                            style={{ background: '#fff', height: contentHeight+'px',
+                            style={{ background: '#fff', 
+                            // height: contentHeight+'px',
+                            height: '100%',
                             borderLeftStyle: "solid",
                             borderLeftWidth: "1px",
                             borderLeftColor: "#FFC107",
-                            zIndex:99999 }} 
+                            zIndex:0
+                            }} 
                             // trigger={null} 
                             // collapsible 
                             collapsedWidth={0} 
@@ -139,7 +158,7 @@ export default class EditorView extends Component {
                         </div>
 
                     </Layout>
-                    <Layout style={{ height: '370px' }}>
+                    <Layout style={{ maxHeight: '320px',zIndex:0 }}>
                         <Content
                         style={{ background: '#eee', height: '320px',zIndex:9999 }} 
                         >

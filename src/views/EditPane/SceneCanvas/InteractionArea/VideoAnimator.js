@@ -16,12 +16,12 @@ export default class VideoAnimator extends Component {
 
     handleStateChange(state, prevState) {
         // copy player state to this component's state
-       //console.log("handleStateChange",state,prevState)
+        //console.log("handleStateChange",state,prevState)
     }
 
     render() {
         //画布伸缩
-        const scale = (this.props.contentHeight-100)/450;
+        //const scale = (this.props.contentHeight - 100) / 450;
         //console.log("this._videoInfo", this._videoInfo)
 
         if (!this._videoInfo) {
@@ -29,12 +29,17 @@ export default class VideoAnimator extends Component {
         }
 
         return (
-            <div style={{marginLeft:this._videoInfo && this._videoInfo.x*scale,marginTop:this._videoInfo && this._videoInfo.y*scale}} >
+            <div style={{
+                // marginLeft:this._videoInfo && this._videoInfo.x*scale,
+                // marginTop:this._videoInfo && this._videoInfo.y*scale
+            }} >
                 <Player
-                     ref={(player) => { this.videoPlayer = player }}
-                     fluid={false}
-                     width={ this._videoInfo && this._videoInfo.width*scale }
-                     height={ this._videoInfo && this._videoInfo.height*scale }
+                    ref={(player) => { this.videoPlayer = player }}
+                    fluid={false}
+                    //  width={ this._videoInfo && this._videoInfo.width*scale }
+                    //  height={ this._videoInfo && this._videoInfo.height*scale }
+                    width={this._videoInfo && this._videoInfo.width}
+                    height={this._videoInfo && this._videoInfo.height}
                     autoPlay
                 >
                     <source src={this._videoInfo.src} />

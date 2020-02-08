@@ -13,20 +13,27 @@ import ChartInteractionArea from './ChartInteractionArea';
 export default class InteractionArea extends Component {
 
     render() {
-
-        const { showAnimationTargetArea, showResourceTargetArea, showMusicTargetArea, showAssistLines, showTextEditor, showGridLines, showGifEditor, showVideoEditor, showChartPreview } = this.props;
-        return ( 
-            <div style={{position:'absolute', zIndex:1,width:'100%',height:'100%'}}>
-                {showAnimationTargetArea?<AnimationTargetArea {...this.props}/>:null}
-                {showResourceTargetArea?<ResourceTargetArea {...this.props}/>:null}
-                {showMusicTargetArea?<MusicTargetArea {...this.props}/>:null}
-                {showAssistLines ? <AssistLines {...this.props}/> : null }
+        const { showAnimationTargetArea, showResourceTargetArea, showMusicTargetArea, showAssistLines, showTextEditor, showGridLines, showGifEditor, showVideoEditor, showChartPreview, dbClickedElementIndex } = this.props;
+        let top = 0;
+        let left = 0;
+        if (this.props.currentElements[dbClickedElementIndex]) {
+            //console.log("InteractionArea",this.props.currentElements,dbClickedElementIndex,this.props.currentElements[dbClickedElementIndex].info())
+            let dbClickedElementInfo = this.props.currentElements[dbClickedElementIndex].info();
+            top = dbClickedElementInfo.y;
+            left = dbClickedElementInfo.x;
+        }
+        return (
+            <div id='interactionLayer' style={{ position: 'absolute', zIndex: 1, top: top, left: left }}>
+                {showAnimationTargetArea ? <AnimationTargetArea {...this.props} /> : null}
+                {showResourceTargetArea ? <ResourceTargetArea {...this.props} /> : null}
+                {showMusicTargetArea ? <MusicTargetArea {...this.props} /> : null}
+                {showAssistLines ? <AssistLines {...this.props} /> : null}
                 {/* {showPathAnimator ? <PathAnimator {...this.props}/> : null } */}
-                {showGridLines ? <GridLines {...this.props}/> : null }
-                {showTextEditor ? <TextEditor {...this.props}/> : null }
-                {showGifEditor ? <GifEditor  {...this.props}/> : null }
-                {showVideoEditor ? <VideoEiditor {...this.props}/> : null}
-                {showChartPreview ? <ChartInteractionArea  {...this.props}/> : null }
+                {showGridLines ? <GridLines {...this.props} /> : null}
+                {showTextEditor ? <TextEditor {...this.props} /> : null}
+                {showGifEditor ? <GifEditor  {...this.props} /> : null}
+                {showVideoEditor ? <VideoEiditor {...this.props} /> : null}
+                {showChartPreview ? <ChartInteractionArea  {...this.props} /> : null}
             </div>
         )
     }

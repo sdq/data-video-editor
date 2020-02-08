@@ -181,7 +181,9 @@ export default class ImageTab extends Component {
             }
         }
         return (
-            <div className="imagetab" style={{ height: this.props.contentHeight }}>
+            <div className="imagetab" style={{ 
+                height: this.props.contentHeight 
+                }}>
                 <Row>
                     <Col span={20}>
                         <Search
@@ -216,7 +218,10 @@ export default class ImageTab extends Component {
                     //defaultActiveKey={['C1']}
                     activeKey={this.state.activeKey}
                     onChange={this.callback}
-                    style={{ height: this.props.contentHeight-25 }}
+                    style={{ 
+                        height: this.props.contentHeight-25,
+                        overflowY:'scroll'
+                    }}
                     >
                     
                     <Panel header={search !== "" ? "Business & Technology (" + shown[0] + ")" : "Business & Technology"} key="C1" className="collaspe-panel">

@@ -132,7 +132,7 @@ export default class EditPane extends Component {
     render() {
         return (
             <div id="editpane">
-                <HotKeys keyMap={shortcuts} handlers={this.handlers}>
+                <HotKeys keyMap={shortcuts} handlers={this.handlers} style={{height:"100%",display:"flex",flexDirection:'column',flex:1}}>
                     <EditToolBar
                         copyElement={this.copyElement}
                         cutElement={this.cutElement}

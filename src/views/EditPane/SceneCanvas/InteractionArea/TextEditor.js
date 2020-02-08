@@ -88,15 +88,17 @@ export default class TextEditor extends Component {
               //判断当前element是否存在，保证编辑时切换scene运行正确
               fontFamily:(this.props.currentElement) ? this.props.currentElement.info().fontFamily:"Arial",
               fontSize:(this.props.currentElement) ? this.props.currentElement.info().textSize*scale:20,
-              top:(this.props.currentElement) ? (this.props.currentElement.info().y-offsetY)*scale : 0,
-              left:(this.props.currentElement) ? (this.props.currentElement.info().x-offsetX)*scale : 0,
-              width:(this.props.currentElement) ? (this.props.currentElement.info().width+offsetW*offwidth)*scale: 0, 
-              height:(this.props.currentElement) ? (this.props.currentElement.info().height+offsetH)*scale: 0,
+            //   top:(this.props.currentElement) ? (this.props.currentElement.info().y-offsetY)*scale : 0,
+            //   left:(this.props.currentElement) ? (this.props.currentElement.info().x-offsetX)*scale : 0,
+            //   width:(this.props.currentElement) ? (this.props.currentElement.info().width+offsetW*offwidth)*scale: 0, 
+            //   height:(this.props.currentElement) ? (this.props.currentElement.info().height+offsetH)*scale: 0,
+            width:(this.props.currentElement) ? (this.props.currentElement.info().width+offsetW*offwidth): 0, 
+            height:(this.props.currentElement) ? (this.props.currentElement.info().height+offsetH): 0,
               fillOpacity:0.5
             }}
-            autofocus  //自动获取焦点 no use
+            autoFocus  //自动获取焦点 no use
             //cursor={1} //设置光标 no use
-            spellcheck ={false}//关闭拼写检查
+            spellCheck ={false}//关闭拼写检查
             value = {this.state.text}
             onChange={(value) => {this.onTextChange(value)}}
              />

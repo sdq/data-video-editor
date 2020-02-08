@@ -7,6 +7,7 @@
 
 .card-container > .ant-spin-nested-loading > .ant-spin-container >.ant-tabs-card > .ant-tabs-content > .ant-tabs-tabpane {
     background: #fff;
+    /* height: 100%; */
 }
 
 .card-container > .ant-spin-nested-loading > .ant-spin-container >.ant-tabs-card > .ant-tabs-bar .ant-tabs-tab {
@@ -34,6 +35,7 @@
 }
 
 .card-container >.ant-spin-nested-loading > .ant-spin-container > .ant-tabs .ant-tabs-left-content{
+    height: 100%;
     padding-left: 0px;
 }
 
@@ -42,6 +44,15 @@
 /* contenheight- 上下箭头 */
 .card-container >.ant-spin-nested-loading > .ant-spin-container > .ant-tabs .ant-tabs-left-bar .ant-tabs-nav{
     overflow-x:hidden;
-    overflow-y:auto;
-    height:100%;
+    /* height:100%; */
+}
+.card-container >.ant-spin-nested-loading > .ant-spin-container > .ant-tabs{
+    height: 100%;
+}
+.card-container > .ant-spin-nested-loading{
+    height: 100%;
+}
+
+.card-container > .ant-spin-nested-loading > .ant-spin-container{
+    height: 100%;
 }

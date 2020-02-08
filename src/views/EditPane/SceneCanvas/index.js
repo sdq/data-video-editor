@@ -164,7 +164,7 @@ export default class EditCanvas extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log("componentWillReceiveProps", nextProps.showToolPane, this.props.showToolPane)
+        //console.log("componentWillReceiveProps", nextProps.showToolPane, this.props.showToolPane)
         if (nextProps.showToolPane !== this.props.showToolPane) {
             //showToolPane 300px
             if (nextProps.showToolPane) {
@@ -290,11 +290,12 @@ export default class EditCanvas extends Component {
                     showVideoEditor={showVideoEditor}
                     showAssistLines={showAssistLines} 
                     dynamicAssistLines = {this.state.dynamicAssistLines}
+                    dbClickedElementIndex={dbClickedElementIndex}
                     {...this.props}
                 />: 
                 null}
                 <div style={{width:'100%',height:'100%'}}
-                ref={node => { this.container = node; }}>
+                ref={node => { this.container = node; }}> 
                 <Stage 
                     ref={ref => { this.stageRef = ref; }}
                     //控制画布缩放，限定大于800*450时

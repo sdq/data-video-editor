@@ -9,7 +9,7 @@ export default class ChartInteractionArea extends Component {
 
     render() {
         //画布伸缩
-        const scale = (this.props.contentHeight - 100) / 450;
+        //const scale = (this.props.contentHeight - 100) / 450;
         if (!this.chartInfo) {
             return null;
         }
@@ -19,10 +19,15 @@ export default class ChartInteractionArea extends Component {
             return null;
         }
         return (
-            <div style={{ position: 'absolute', zIndex: 1, marginLeft: this.chartInfo.x * scale, marginTop: this.chartInfo.y * scale }}>
+            <div style={{ position: 'absolute', zIndex: 1, 
+            // marginLeft: this.chartInfo.x * scale, 
+            // marginTop: this.chartInfo.y * scale 
+            }}>
                 <video
-                    width={this.chartInfo && this.chartInfo.width * scale}
-                    height={this.chartInfo && this.chartInfo.height * scale}
+                    // width={this.chartInfo && this.chartInfo.width * scale}
+                    // height={this.chartInfo && this.chartInfo.height * scale}
+                    width={this.chartInfo && this.chartInfo.width }
+                    height={this.chartInfo && this.chartInfo.height }
                     autoPlay
                 >
                     <source src={this.chartInfo.src} />

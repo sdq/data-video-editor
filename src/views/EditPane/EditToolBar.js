@@ -320,7 +320,7 @@ export default class EditToolBar extends Component {
         let currentPast = past[sceneIndex]?past[sceneIndex]:0;//避免删除问题
         let currentFuture = future[sceneIndex]?future[sceneIndex]:0;
         return (
-            <div id='edittoolbar' style={{ background: Color.LIGHT_ORANGE,zIndex:99999 }}> 
+            <div id='edittoolbar' style={{ background: Color.LIGHT_ORANGE,zIndex:1 }}> 
                 <ButtonGroup style = { {margin: '10px 0px 0px 20px', float:'left'} }>
                     <Button icon="copy" style = { {padding: '0 20px 0 20px'} } onClick={this.copyElement} disabled={!isElementSelected || isPerforming}/>
                     <Button icon="scissor" style = { {padding: '0 20px 0 20px'} } onClick={this.cutElement} disabled={!isElementSelected || isPerforming}/>
