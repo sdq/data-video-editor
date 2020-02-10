@@ -107,7 +107,7 @@ export default class EditorView extends Component {
                          </div>
                         </Sider>
 
-                        <Content style={{ background: '#fff', height: contentHeight+'px' }}>
+                        <Content style={{ background: '#fff', height: contentHeight+'px',width: contentWidth+'px'  }}>
                             <EditPane contentHeight={contentHeight} contentWidth={contentWidth}/>
                         </Content>
                         <Sider 
