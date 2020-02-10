@@ -107,7 +107,8 @@ export default class EditPane extends Component {
                         // setIsshowPathAnimator={this.setIsshowPathAnimator}
                         { ...this.props }
                     />
-                    <div style={{ background: '#eee', height: this.props.contentHeight-100+'px' }}>
+                    <div>
+                       
                         <SceneCanvas 
                             showGridLines={this.state.showGridLines}
                             // showPathAnimator={this.state.showPathAnimator}

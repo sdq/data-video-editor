@@ -22,6 +22,7 @@ export default class EditCanvas extends Component {
             dbClickedElementIndex: -1,
             isElementWithPath:false,
             windowWidth:window.innerWidth,//init
+            windowHeight:window.innerHeight,//init
         };
         this.handleStageDblClick = this.handleStageDblClick.bind(this);
         this.lastscene = props.sceneIndex; //进入界面的第一个scene编号
@@ -163,6 +164,7 @@ export default class EditCanvas extends Component {
     handleResize = e => {
         this.setState({
             windowWidth: window.innerWidth,
+            windowHeight: window.innerHeight,
         })
       }
 
@@ -170,9 +172,25 @@ export default class EditCanvas extends Component {
     render() {
         //isPerforming判断是否在播放，showPathLayer用于anicard拖拽管理，isElementSelected判断是否有元素被选中,判断选中的元素是否含有path动画
         const { isPerforming,showPathLayer} = this.props; 
-        const canvasW = 800*(this.props.contentHeight-100)/450;
+        //const canvasW = 800*(this.props.contentHeight-100)/450;
+        const canvasW = this.props.contentWidth;
         const canvasH = this.props.contentHeight-100;
         const { showResourcePane, showToolPane} = this.props;
+
+        //当宽高同时变化，按照最小的scale缩放
+        const scaleX = canvasW/800;
+        const scaleY = canvasH/450;
+        const scale = scaleX>scaleY?scaleY:scaleX;
+        //获取现在画布的真实大小
+        var fakeWidth = 0;
+        var fakeHeight = 0;
+        if(scaleX>scaleY){
+            fakeWidth = 800*canvasH/450;
+            fakeHeight = canvasH;
+        }else {
+            fakeWidth = canvasW;
+            fakeHeight = canvasW*450/800;
+        }
         
 
         let editable = !isPerforming;  
@@ -210,13 +228,17 @@ export default class EditCanvas extends Component {
             <div id="canvasContainer" 
                  style={{  
                  height: canvasH+'px',
-                 //缩放策略 全局统一缩放
+                 width: canvasW+'px',
+                 //缩放居中策略 全局统一缩放
+                
                  marginLeft:
-                 showResourcePane&&showToolPane?(windowWidth-660-canvasW)/2+'px'
-                 :!showResourcePane&&showToolPane?(windowWidth-300-canvasW)/2+'px'
-                 :showResourcePane&&!showToolPane?(windowWidth-360-canvasW)/2+'px'
-                 :(windowWidth-canvasW)/2+'px'
-                 
+                 showResourcePane&&showToolPane?(windowWidth-660-fakeWidth)/2+'px'
+                 :!showResourcePane&&showToolPane?(windowWidth-300-fakeWidth)/2+'px'
+                 :showResourcePane&&!showToolPane?(windowWidth-360-fakeWidth)/2+'px'
+                 :(windowWidth-fakeWidth)/2+'px',
+
+                  marginTop:
+                  (canvasH-fakeHeight)/2+'px'
                 }
             } 
                  >
@@ -236,8 +258,11 @@ export default class EditCanvas extends Component {
                     //控制画布缩放，限定大于800*450时
                     // width={canvasW>800?canvasW:800} height={canvasH>450?canvasH:450} 
                     // scale={{x: canvasW>800?canvasH/450:1, y:canvasH>450?canvasH/450:1}}
-                    width={canvasW} height={canvasH} 
-                    scale={{x:canvasH/450, y:canvasH/450}}
+                    marginTop={canvasH-fakeHeight}
+                    width={fakeWidth} 
+                    height={fakeHeight} 
+                    //scale={{x:canvasH/450, y:canvasH/450}}
+                    scale={{x:scale, y:scale}}
                     onMouseDown={editable?this.handleStageMouseDown:null}
                     onDblClick={editable?this.handleStageDblClick:null}
                 >

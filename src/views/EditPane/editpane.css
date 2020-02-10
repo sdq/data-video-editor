@@ -6,11 +6,12 @@
     text-align: center;
     overflow-x: hidden;
     overflow-y: hidden;
+    background-color: #eee;
 }
 
 #canvasContainer {
     /* height: 450px; */
-    width: 800px;
+    /* width: 800px; */
      /* border-style: solid;
     border-color: #FFC107;
     border-width: 1px;  */

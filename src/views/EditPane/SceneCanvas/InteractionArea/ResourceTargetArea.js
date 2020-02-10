@@ -14,8 +14,22 @@ const canvasTarget = {
 class ResourceTargetArea extends Component {
     render() {
         const { canDrop, isOver, connectDropTarget } = this.props;
-        const canvasW = 800*(this.props.contentHeight-100)/450;
+        const canvasW = this.props.contentWidth;
         const canvasH = this.props.contentHeight-100;
+
+        const scaleX = canvasW/800;
+        const scaleY = canvasH/450;
+        var fakeWidth = 0;
+        var fakeHeight = 0;
+        if(scaleX>scaleY){
+            fakeWidth = 800*canvasH/450;
+            fakeHeight = canvasH;
+        }else {
+            fakeWidth = canvasW;
+            fakeHeight = canvasW*450/800;
+        }
+
+
         const isActive = canDrop && isOver;
         let backgroundColor = '#fff';
         if (isActive) {
@@ -28,8 +42,8 @@ class ResourceTargetArea extends Component {
             <div style={{ 
                 backgroundColor: backgroundColor, 
                 opacity: 0.4, 
-                height: canvasH, 
-                width: canvasW, 
+                height: fakeHeight, 
+                width: fakeWidth, 
                 zIndex:1,
                 border:"dotted 2px black", }}/>
         )
