@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import ResourcePane from './ResourcePane';
 import {currentScene, sceneIndex,scenes} from '@/selectors/video';
+import {isCleanInterationLayer} from '@/selectors/canvas';
 import * as videoActions from '@/actions/videoAction';
 import * as canvasActions from '@/actions/canvasAction';
 import * as uiActions from '@/actions/uiAction';
@@ -13,6 +14,7 @@ const mapStateToProps = state => {
         currentScene: currentScene(state),
         uimode: uimode(state),
         showResourcePane: showResourcePane(state),
+        isCleanInterationLayer: isCleanInterationLayer(state),
     }
 }
 
@@ -26,6 +28,7 @@ const mapDispatchToProps = dispatch => {
         displayResourceTargetArea: (isActive) => dispatch(uiActions.displayResourceTargetArea(isActive)),
         displayResourcePane: (isActive) => dispatch(uiActions.displayResourcePane(isActive)),
         displayMusicTargetArea: (isActive) => dispatch(uiActions.displayMusicTargetArea(isActive)),
+        cleanInterationLayer: (isClean) => dispatch(canvasActions.cleanInterationLayer(isClean)),
     }
 }
 

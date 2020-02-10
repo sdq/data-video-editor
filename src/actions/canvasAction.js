@@ -10,6 +10,11 @@ export const unselectElement = () => ({
     type: ActionType.UNSELECT_ELEMENT,
 })
 
+export const cleanInterationLayer =(isCleanInterationLayer)=>({
+    type:ActionType.CLEAN_INTERACTION_LAYER,
+    isCleanInterationLayer
+})
+
 export const addElement = (element) => ({
     type: ActionType.ADD_ELEMENT,
     element,

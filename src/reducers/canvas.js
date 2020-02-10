@@ -2,6 +2,7 @@ import ActionType from '../actions/types';
 
 const initialState = {
     isElementSelected: false,
+    isCleanInterationLayer: false,
     elementIndex: -1,
     elementName: '',
     actionHistory: [],
@@ -29,6 +30,9 @@ export default (state = initialState, action) => {
             newState.isElementSelected = false;
             newState.elementIndex = -1;
             newState.elementName = '';
+            return newState;
+        case ActionType.CLEAN_INTERACTION_LAYER: 
+            newState.isCleanInterationLayer = action.isCleanInterationLayer;
             return newState;
         case ActionType.ADD_ELEMENT:
             newState.isElementSelected = false;

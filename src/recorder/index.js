@@ -182,7 +182,7 @@ export default class Recorder {
         if (!this.isRecording) {
             return;
         } else {
-            this.recorder.stop();
+            this.recorder && this.recorder.stop();
         }
     }
 

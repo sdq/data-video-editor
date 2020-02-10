@@ -20,6 +20,7 @@ let y = 100;
 const chartSource = {
 
 	beginDrag(props) {
+        props.cleanInterationLayer(true);
         props.displayResourceTargetArea(true);
 		return {
             category: props.chartcategory,

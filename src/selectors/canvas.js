@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect';
 
 export const isElementSelected = state => state.canvas.isElementSelected;
+export const isCleanInterationLayer = state => state.canvas.isCleanInterationLayer;
 export const elementIndex = state => state.canvas.elementIndex;
 export const elementName = state => state.canvas.elementName;
 export const actionHistory = state => state.canvas.actionHistory;

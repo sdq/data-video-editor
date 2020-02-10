@@ -10,6 +10,7 @@ import './audiocard.css';
 const audioSource = {
 
 	beginDrag(props) {
+        props.cleanInterationLayer(true);
         props.displayMusicTargetArea(true);
 
         props.displayResourceTargetArea(true);

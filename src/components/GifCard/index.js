@@ -4,6 +4,7 @@ import DNDType from '@/constants/DNDType';
 import ElementType from '@/constants/ElementType';
 import { Element, GifInfo } from '@/models/Element';
 // import Scene from '@/models/Scene';
+import { message } from 'antd';
 import _ from 'lodash';
 import './gifcard.css';
 var gifFrames = require('gif-frames');
@@ -20,6 +21,10 @@ const imageSource = {
     canDrag(props) {
         //console.log("canDrag", props.info.src)
         let gifUrl = props.info.src;
+        if(!gifUrl) {
+            message.info("please try again!")
+            return
+        }
         //gif-frame 解析
         (async () => {
             await gifFrames(
@@ -37,6 +42,7 @@ const imageSource = {
     },
 
     beginDrag(props) {
+        props.cleanInterationLayer(true);
         props.displayResourceTargetArea(true);
         return props.info;
     },
