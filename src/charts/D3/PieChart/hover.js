@@ -179,11 +179,6 @@ const draw = (props) => {
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    // let legendSvg = svg  
-    //     .append("svg")
-    //     .attr("width", width + margin.left + margin.right)
-    //     .attr("height", height + margin.top + margin.bottom)
-    //     .attr("transform", "translate(0,-60)");
 
     //Get Encoding
     const encoding = props.spec.encoding;
@@ -229,6 +224,8 @@ const draw = (props) => {
         .data(pieData)
         .enter()
         .append("g")
+        // .attr("class","pie_path")
+        // .attr("z-index",9999)
         .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
     arcs.append("path")
@@ -272,40 +269,11 @@ const draw = (props) => {
         })
         .attr("opacity", "0");
 
-    //draw legend
-    // legendSvg.selectAll("rect")
-    //     .data(categories)
-    //     .enter()
-    //     .append("rect")
-    //     .attr("width", 20)
-    //     .attr("height", 20)
-    //     .attr("fill", function (d) {
-    //         return (color(d));
-    //     })
-    //     .attr("transform", function (d, i) {
-    //         let offset = 100 * i + 70;
-    //         return "translate(" + offset + "," + 445 + ")";
-    //     })
-    //     .attr("z-index", 99999);
-
-    // legendSvg.selectAll("text")
-    //     .data(categories)
-    //     .enter()
-    //     .append("text")
-    //     .text(function (d, i) {
-    //         return d;
-    //     })
-    //     .attr("transform", function (d, i) {
-    //         let offset = 100 * i + 100;
-    //         return "translate(" + offset + "," + 460 + ")";
-    //     });
-
 
     if (animationType === ChartAnimationType.EMPHASIZE_VALUE || animationType === ChartAnimationType.COMPARE_VALUES) {
         let hoverCategory;
         svg.selectAll('path')
             .attr('fill', (d, i) => {
-
                 let area = pathToPoints(arc(d));
                 if (inArea(point, area)) {
                     hoverCategory = d.data[encoding.color.field];
@@ -332,28 +300,31 @@ const draw = (props) => {
         }
         props.chooseChartAnimation(choosenAnimation);
     }
-      // legend
-    const legend = svg.append("g")
-        .attr("transform", `translate(0, ${height + 60})`);
-    var legends = legend.selectAll("legend_color")
-        .data(categories)
-        .enter()
-        .append("g")
-        .attr("class", "legend_color")
-        .attr('transform', (d, i) => `translate(${i * (80 + 10) + (width - (categories.length * 80 + (categories.length - 1) * 10)) / 2}, 0)`);
+ // legend
+ const legend = svg.append("g")
+ .attr("transform", `translate(0, ${height + 60})`);
+var legends = legend.selectAll("legend_color")
+ .data(categories)
+ .enter()
+ .append("g")
+ .attr("class", "legend_color")
+ .attr('transform', (d, i) => `translate(${i * (80 + 10) + (width - (categories.length * 80 + (categories.length - 1) * 10)) / 2}, 0)`);
 
-    legends.append("rect")
-        .attr("fill", d => color(d))
-        .attr('y', -9)
-        .attr("width", '10px')
-        .attr('height', '10px')
-        .attr("rx", 1.5)
-        .attr("ry", 1.5)
-    // .attr("cy", -5);
-    legends.append("text")
-        .attr("fill", 'black')
-        .attr("x", 15)
-        .text(d => d);
+legends.append("rect")
+ .attr("fill", d => color(d))
+ .attr('y', -9)
+ .attr("width", '10px')
+ .attr('height', '10px')
+ .attr("rx", 1.5)
+ .attr("ry", 1.5)
+// .attr("cy", -5);
+legends.append("text")
+ .attr("fill", 'black')
+ .attr("x", 15)
+ .text(d => d);
+
+    
+        
 
 }
 
