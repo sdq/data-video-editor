@@ -105,10 +105,19 @@ export default class ChartElement extends Component {
         var data = {};
         const chartInfo = this.props.element.info();
 
+
         if (!_.isEmpty(this.props.dataList)) {
             data = this.props.dataList[chartInfo.dataIndex];
         }
         const isPosTool =this.props.element?this.props.element.info().isPosTool:null;
+        let draggable = this.props.draggable;
+        // let isDrag = this.props.isDrag;
+        // if(isDrag===true||!isDrag){
+        //     draggable = false;
+        // }else{
+        //     draggable = this.props.draggable
+        // }
+
         return (
             <Group 
                 ref={this.saveRef}
@@ -147,8 +156,8 @@ export default class ChartElement extends Component {
                     name={this.props.name} 
                     data={data} 
                     spec={chartInfo.spec}
-                    width={isPosTool?this.props.element.info().width:(this.props.draggable?this.originWidth:this.props.element.info().width)}
-                    height={isPosTool?this.props.element.info().height:(this.props.draggable?this.originHeight:this.props.element.info().height)}
+                    width={isPosTool?this.props.element.info().width:(draggable?this.originWidth:this.props.element.info().width)}
+                    height={isPosTool?this.props.element.info().height:(draggable?this.originHeight:this.props.element.info().height)}
                     onCanvas={true} 
                     showAnimation={this.props.showAnimation} 
                     animations={this.props.element.animations()} 

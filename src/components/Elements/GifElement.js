@@ -142,6 +142,14 @@ export default class GifElement extends Component {
     render() {
         let { canvas } = this.state;
         const isPosTool =this.props.element?this.props.element.info().isPosTool:null;
+        let draggable = this.props.draggable;
+         /*可以使得postool更改后，拖拽不再变形，但影响其他功能*/
+        // let isDrag = this.props.isDrag;
+        // if(isDrag===true||!isDrag){
+        //     draggable = false;
+        // }else{
+        //     draggable = this.props.draggable
+        // }
         return (
             <Group name={this.props.name} 
                 draggable = {this.props.draggable}
@@ -165,8 +173,8 @@ export default class GifElement extends Component {
             >
                 <Image 
                     ref={node=>this.imageref=node}
-                    width={isPosTool?this.props.element.info().width:(this.props.draggable?this.originWidth:this.props.element.info().width)}
-                    height={isPosTool?this.props.element.info().height:(this.props.draggable?this.originHeight:this.props.element.info().height)}
+                    width={isPosTool?this.props.element.info().width:(draggable?this.originWidth:this.props.element.info().width)}
+                    height={isPosTool?this.props.element.info().height:(draggable?this.originHeight:this.props.element.info().height)}
                     name={this.props.name}
                     crossOrigin='anonymous'
                     image={canvas}

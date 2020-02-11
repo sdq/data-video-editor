@@ -11,8 +11,6 @@ export default class AssistLines extends Component {
  
 
     render() {
-        const canvasW = 800*(this.props.contentHeight-100)/450;
-        const canvasH = this.props.contentHeight-100;
         //获取当前元素信息（不考虑旋转情况）
         let x = 0;
         let y = 0;
@@ -25,6 +23,8 @@ export default class AssistLines extends Component {
 
         // const shapeType = (this.props.currentElement.type()==="shape_element");
         // const shapeCircle = (this.props.currentElement.info().shapeType==="circle"||this.props.currentElement.info().shapeType==="ellipse"||this.props.currentElement.info().shapeType==="star");
+
+
 
 
         if(this.props.currentElement && this.props.currentElement.info()){
@@ -41,10 +41,12 @@ export default class AssistLines extends Component {
                 w = this.props.transformInfo.w;
                 h = this.props.transformInfo.h;
                 r = this.props.transformInfo.r;
+               // console.log("this.props.transformInfo",this.props.transformInfo.w)
             }else{
                 w = this.props.currentElement.info().width;
                 h = this.props.currentElement.info().height;
                 r = this.props.currentElement.info().rotation;
+                //console.log("this.props.currentElement.info()",this.props.currentElement.info())
             }
 
 
@@ -71,10 +73,30 @@ export default class AssistLines extends Component {
         let marginBottomC = Math.abs(y+h - originH/2);  //素材下-画布中
 
         //Gridline、Assistline使用的不是konva图层，需要将x y w h 在显示前转换成普通canvas系统
-        x = x*(canvasW/originW);
-        y = y*(canvasH/originH);
-        w = w*(canvasW/originW);
-        h = h*(canvasW/originW);
+
+        const canvasW = this.props.contentWidth;
+        const canvasH = this.props.contentHeight-100;
+
+        //当宽高同时变化，按照最小的scale缩放
+        const scaleX = canvasW/800;
+        const scaleY = canvasH/450;
+        //获取现在画布的真实大小
+        var fakeWidth = 0;
+        var fakeHeight = 0;
+        if(scaleX>scaleY){
+            fakeWidth = 800*canvasH/450;
+            fakeHeight = canvasH;
+        }else {
+            fakeWidth = canvasW;
+            fakeHeight = canvasW*450/800;
+        }
+        
+
+
+        x = x*(fakeWidth/originW);
+        y = y*(fakeHeight/originH);
+        w = w*(fakeWidth/originW);
+        h = h*(fakeHeight/originH);
         
         //显示固定辅助线和动态辅助线
         return (

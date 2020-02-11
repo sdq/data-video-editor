@@ -28,7 +28,9 @@
 
 #playcontrol {
     margin-bottom: 1px;
+    /* margin-top:-60px; */
     height: 49px;
+    /* position: absolute; */
     /* text-align: center; */
     border-top-style: solid;
     border-top-width: 1px;
