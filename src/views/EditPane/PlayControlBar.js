@@ -83,8 +83,27 @@ export default class PlayControlBar extends Component {
     render() {  
         const { isVideoPerforming, isPerforming, isLastScene, isFirstScene } = this.props;
 
+        const canvasW = this.props.contentWidth;
+        const canvasH = this.props.contentHeight-100;
+    
+
+        //当宽高同时变化，按照最小的scale缩放
+        const scaleX = canvasW/800;
+        const scaleY = canvasH/450;
+        //获取现在画布的真实大小
+        //let fakeWidth = 0;
+        let fakeHeight = 0;
+        if(scaleX>scaleY){
+            //fakeWidth = 800*canvasH/450;
+            fakeHeight = canvasH;
+        }else {
+            //fakeWidth = canvasW;
+            fakeHeight = canvasW*450/800;
+        }
+        var margin = -(canvasH-fakeHeight);
+        
         return (
-            <div id='playcontrol' style = { { background: Color.LIGHT_ORANGE} }>
+            <div id='playcontrol' style = { { background: Color.LIGHT_ORANGE,marginTop:margin} }>
                 <Button icon="delete" type="link" style = { {float:"left",margin:"10px 0px 10px 12px"} }  onClick={this.deleteBackgroundMusic}/> 
                 <p style = { {float:"left",paddingTop:"15px",marginLeft:"10px",textAlign:"left",zIndex:5} }>Music: {this.state.backgroundMusic}</p>  
                 <div style = { {textAlign:"center",paddingRight: '90px'}}>

@@ -26,6 +26,7 @@ export default class EditableLayer extends Component {
                 left: 0,
                 top: 0
             },
+            isDrag : false,
         };
         this.elementNodes = new Array(props.currentElements.length).fill({});
         this.editStart = this.editStart.bind(this);
@@ -79,7 +80,8 @@ export default class EditableLayer extends Component {
     }
 
     dragMoving(x,y,e) {
-
+        this.setState({isDrag : true});
+        
 
         const canvasH = this.props.contentHeight-100;
         let w = this.props.currentElement.info().width;
@@ -163,6 +165,7 @@ export default class EditableLayer extends Component {
     }
 
     transforming(e,originWidth,originHeight) {
+        this.setState({isDrag:false});
         //different element
         let currentWidth = this.props.currentElement.info().width;
         let currentHeight = this.props.currentElement.info().height;
@@ -256,7 +259,7 @@ export default class EditableLayer extends Component {
     render() {
         const { isPerforming } = this.props;
         const editable = !isPerforming;
-
+        
         return (
             <Layer 
                 ref={node => (this.editableLayer = node)}
@@ -303,6 +306,7 @@ export default class EditableLayer extends Component {
                                     element={element} 
                                     name={this.props.sceneIndex+"-"+index} 
                                     draggable={editable} 
+                                    isDrag={this.state.isDrag}
                                     visible={true}
                                     showAnimation={false}
                                     {...this.props}
@@ -325,6 +329,7 @@ export default class EditableLayer extends Component {
                                     element={element}
                                     name={this.props.sceneIndex + "-" + index}
                                     draggable={editable}
+                                    isDrag={this.state.isDrag}
                                     visible={true}
                                     showAnimation={false}
                                     isAnimateGifBydbClicked={element.isAnimateGif}
@@ -348,6 +353,7 @@ export default class EditableLayer extends Component {
                                         element={element} 
                                         name={this.props.sceneIndex+"-"+index} 
                                         draggable={editable} 
+                                        isDrag={this.state.isDrag}
                                         visible={true}
                                         showAnimation={false}
                                         {...this.props}
@@ -369,6 +375,7 @@ export default class EditableLayer extends Component {
                                     element={element} 
                                     name={this.props.sceneIndex+"-"+index} 
                                     draggable={editable} 
+                                    isDrag={this.state.isDrag}
                                     visible={true}
                                     showAnimation={false}
                                     {...this.props}
@@ -403,6 +410,7 @@ export default class EditableLayer extends Component {
                                     width={200} 
                                     height={200} 
                                     draggable={editable} 
+                                    isDrag={this.state.isDrag}
                                     visible={true}
                                     showAnimation={false}
                                     {...this.props}

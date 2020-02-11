@@ -43,6 +43,8 @@ export default class TransformerComponent extends Component {
                 ref={node => {
                     this.transformer = node;
                 }}
+                // width={this.props.element.info().width}
+                // height={this.props.element.info().height}
                 borderStroke="#DCDCDC"
                 anchorStroke="#DCDCDC"
                 anchorFill={Color.LIGHT_ORANGE}
