@@ -199,7 +199,7 @@ export default class EditCanvas extends Component {
 
         let editable = !isPerforming;  
         let { dbClickedElementIndex, showTextEditor, showChartPreview, showGifEditor, showVideoEditor, showAssistLines,windowWidth } = this.state;
-        if (this.props.sceneIndex!==this.lastscene || isCleanInterationLayer)
+        if (this.props.sceneIndex!==this.lastscene)
         {
             //切换屏幕时，保证交互层不显示，双击元素置空
             dbClickedElementIndex = -1;
@@ -210,6 +210,14 @@ export default class EditCanvas extends Component {
             showVideoEditor = false;
             showAssistLines = false;
             this.props.displayPathLayer(false);
+        }
+        if (isCleanInterationLayer)
+        {
+            dbClickedElementIndex = -1;
+            showTextEditor = false;
+            showChartPreview = false;
+            showGifEditor = false;
+            showVideoEditor = false;
         }
         const editableLayer = <EditableLayer 
                 displayAssistLines={(active) => this.displayAssistLines(active)}
