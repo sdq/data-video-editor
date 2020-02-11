@@ -22,9 +22,18 @@ const chartSource = {
 	beginDrag(props) {
         props.cleanInterationLayer(true);
         props.displayResourceTargetArea(true);
+        let dataIndex = 0
+        if (props.charttype === 'scatterplot') {
+            props.switchData(1); //countrys.csv
+            dataIndex = 1
+        }else{
+            props.switchData(0); //car.csv
+        }
+       
 		return {
             category: props.chartcategory,
-            type: props.charttype
+            type: props.charttype,
+            dataIndex: dataIndex
         };
 	},
 
@@ -47,7 +56,7 @@ const chartSource = {
                 //add element to scene
                 const newScene = _.cloneDeep(dropResult.currentScene);
                 const newChart = new ChartInfo(
-                    0,
+                    item.dataIndex,
                     item.category, // category
                     item.type, //type
                     getDefaultSpec(item.category, item.type), //spec

@@ -108,6 +108,7 @@ export default class ChartElement extends Component {
 
         if (!_.isEmpty(this.props.dataList)) {
             data = this.props.dataList[chartInfo.dataIndex];
+            //console.log("dataIndex",chartInfo.dataIndex,"data...",data)
         }
         const isPosTool =this.props.element?this.props.element.info().isPosTool:null;
         let draggable = this.props.draggable;
