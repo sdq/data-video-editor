@@ -25,7 +25,7 @@ export default class ChartEditor extends Component {
             //录制倒计时
             remainTime: 0,
         }
-        this.isRecording = true;
+        this.isRecording = false;
         this.totalDelay = 0;
         this.timer = 0;
     }
