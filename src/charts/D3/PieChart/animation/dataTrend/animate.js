@@ -18,13 +18,6 @@ const draw = (animation,props) => {
                 .attr("height", height + margin.top + margin.bottom + 80)
                 .append("g")
                 .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-    let legendSvg = svg
-    //在svg之前添加center元素以保证svg居中显示
-    // .append("center")    
-    .append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-    .attr("transform", "translate(0,-60)");
 
     //Get Encoding
     const encoding = props.spec.encoding;
@@ -114,25 +107,39 @@ const draw = (animation,props) => {
                     
             arcs.append("path")
                 .attr("d", function(d,i){
-                    // d._startAngle = d.startAngle;
-                    // d._endAngle = d.endAngle;
-                    // d.startAngle = lastCache['startAngle'];
-                    // d.endAngle = lastCache['endAngle'];
                     return arc(d);
                 })
                 .transition()
                 .duration(hasGap?stepDuration/2:stepDuration)
                 .attr("d", function(d,i){
-                    // lastCache['startAngle'] = d._startAngle;
-                    // lastCache['endAngle'] = d._endAngle;
-                    // d.startAngle = d._startAngle;
-                    // d.endAngle = d._endAngle;
-                    // console.log(lastCache);
                     return arc(d);
                 })
                 .attr("fill", function(d){ return(color(d.data[encoding.color.field])); });
+                // legend
+                let legend = svg.append("g")
+                .attr("transform", `translate(0, ${height + 60})`);
+                var legends = legend.selectAll("legend_color")
+                    .data(categories)
+                    .enter()
+                    .append("g")
+                    .attr("class", "legend_color")
+                    .attr('transform', (d, i) => `translate(${i * (80 + 10) + (width - (categories.length * 80 + (categories.length - 1) * 10)) / 2}, 0)`);
+
+                legends.append("rect")
+                    .attr("fill", d => color(d))
+                    .attr('y', -9)
+                    .attr("width", '10px')
+                    .attr('height', '10px')
+                    .attr("rx", 1.5)
+                    .attr("ry", 1.5)
+                // .attr("cy", -5);
+                legends.append("text")
+                    .attr("fill", 'black')
+                    .attr("x", 15)
+                    .text(d => d);
         }, animationDelay)
     }
+
    
     for (let index = 0; index < trendData.length; index++) {       
         trendData[index].sort(function(a,b){
@@ -146,29 +153,31 @@ const draw = (animation,props) => {
     }
 
     
-    //draw legend
-    legendSvg.selectAll("rect")
-        .data(categories)
-        .enter()
-        .append("rect")
-        .attr("width", 20)
-        .attr("height", 20)
-        .attr("fill",function(d){ return(color(d)); })
-        .attr("transform", function(d,i){
-            let offset = 100 * i + 70;
-            return "translate(" + offset + "," + 445 + ")";
-        })
-        .attr("z-index",99999);
+    // //draw legend
+    // legendSvg.selectAll("rect")
+    //     .data(categories)
+    //     .enter()
+    //     .append("rect")
+    //     .attr("width", 20)
+    //     .attr("height", 20)
+    //     .attr("fill",function(d){ return(color(d)); })
+    //     .attr("transform", function(d,i){
+    //         let offset = 100 * i + 70;
+    //         return "translate(" + offset + "," + 445 + ")";
+    //     })
+    //     .attr("z-index",99999);
 
-    legendSvg.selectAll("text")
-        .data(categories)
-        .enter()
-        .append("text")
-        .text(function(d, i){ return d; })
-        .attr("transform", function(d,i){
-            let offset = 100 * i + 100;
-            return "translate(" + offset + "," + 460 + ")";
-        });
+    // legendSvg.selectAll("text")
+    //     .data(categories)
+    //     .enter()
+    //     .append("text")
+    //     .text(function(d, i){ return d; })
+    //     .attr("transform", function(d,i){
+    //         let offset = 100 * i + 100;
+    //         return "translate(" + offset + "," + 460 + ")";
+    //     });
+
+
 
     // Style
     // const style = props.spec.style;

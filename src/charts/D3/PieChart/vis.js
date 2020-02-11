@@ -22,14 +22,6 @@ const draw = (props) => {
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    // let legendSvg = svg
-    //     //在svg之前添加center元素以保证svg居中显示
-    //     // .append("center")    
-    //     .append("svg")
-    //     .attr("width", width + margin.left + margin.right)
-    //     .attr("height", height + margin.top + margin.bottom)
-    //     .attr("transform", "translate(0,-60)");
-
     //Get Encoding
     const encoding = props.spec.encoding;
     if (_.isEmpty(encoding) || !('size' in encoding) || _.isEmpty(encoding.size)) {
@@ -106,30 +98,6 @@ const draw = (props) => {
             return arc.centroid(d)[1] * 2.3;
         })
         .attr("opacity", "0");
-
-    //draw legend
-    // legendSvg.selectAll("rect")
-    //     .data(categories)
-    //     .enter()
-    //     .append("rect")
-    //     .attr("width", 20)
-    //     .attr("height", 20)
-    //     .attr("fill", function (d) { return (color(d)); })
-    //     .attr("transform", function (d, i) {
-    //         let offset = 100 * i + 70;
-    //         return "translate(" + offset + "," + 445 + ")";
-    //     })
-    //     .attr("z-index", 99999);
-
-    // legendSvg.selectAll("text")
-    //     .data(categories)
-    //     .enter()
-    //     .append("text")
-    //     .text(function (d, i) { return d; })
-    //     .attr("transform", function (d, i) {
-    //         let offset = 100 * i + 100;
-    //         return "translate(" + offset + "," + 460 + ")";
-    //     });
 
     // Style
     // const style = props.spec.style;

@@ -1,5 +1,6 @@
 import * as d3 from 'd3';
 import { getStackedData, getSeriesValue, getAggregatedRows } from './helper';
+import _ from 'lodash';
 
 const draw = (props) => {
     let a = document.createElement("div");
@@ -18,8 +19,15 @@ const draw = (props) => {
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    // Encoding
+    //Get Encoding
     const encoding = props.spec.encoding;
+    if (_.isEmpty(encoding) || !('x' in encoding) || !('y' in encoding) || _.isEmpty(encoding.x) || _.isEmpty(encoding.y)) {
+        svg.append("rect")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .attr("fill", "pink");
+        return svg;
+    }
 
     let hasSeries = 'color' in encoding;
     let layout = 'stacked';// basic/stacked/percent 

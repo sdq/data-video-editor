@@ -21,7 +21,7 @@ const animations = {
             type: ChartAnimationType.EMPHASIZE_EXTREME,
             task: ChartAnimationTask.EMPHASIZE,
             title: "Extreme",
-            description: "Emphasize the  maximum value",
+            description: "Emphasize the  max value",
             duration: 1000,
             spec: {
                 extreme: "max",
