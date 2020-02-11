@@ -103,7 +103,7 @@ export default class PlayControlBar extends Component {
         var margin = -(canvasH-fakeHeight);
         
         return (
-            <div id='playcontrol' style = { { background: Color.LIGHT_ORANGE,marginTop:margin} }>
+            <div id='playcontrol' style = { { background: Color.LIGHT_ORANGE,marginTop:margin,zIndex:5,position:"relative"} }>
                 <Button icon="delete" type="link" style = { {float:"left",margin:"10px 0px 10px 12px"} }  onClick={this.deleteBackgroundMusic}/> 
                 <p style = { {float:"left",paddingTop:"15px",marginLeft:"10px",textAlign:"left",zIndex:5} }>Music: {this.state.backgroundMusic}</p>  
                 <div style = { {textAlign:"center",paddingRight: '90px'}}>

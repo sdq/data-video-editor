@@ -3,6 +3,8 @@
     height: 60px;
     padding: 16px;
     font-size: 20px;
+    position: relative;
+    z-index: 5;
 }
 
 .recordConfirm {

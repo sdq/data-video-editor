@@ -94,9 +94,11 @@ const draw = (props) => {
 
     // 100% stacked area
     let totalDict = {};
-    stackedData[stackedData.length - 1].forEach(d => {
-        totalDict[d.data.x] = d[1];
-    });
+    if (hasSeries) {
+        stackedData[stackedData.length - 1].forEach(d => {
+            totalDict[d.data.x] = d[1];
+        });
+    }
     var percent_area_generator = d3.area()
         .x(d => x(d.data.x))
         .y0(d => {

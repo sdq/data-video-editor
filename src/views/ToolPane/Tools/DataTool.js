@@ -5,6 +5,7 @@ import ChartEditor from '@/components/ChartEditor';
 import SimpleDataPreview from '@/components/DataPreview/SimpleDataPreview';
 import DataProcessor from '@/components/DataPreview/processor';
 import ChartRecorderInstance from '@/recorder/innerAnimation';
+import {getDefaultSpec} from '@/charts/Info';
 //import _ from 'lodash'
 
 const { Dragger } = Upload;
@@ -86,7 +87,14 @@ export default class DataTool extends Component {
     changeDataConfirm = () => {
         message.info('You have changed the chart data.');
         this.setState({ confirmVisible: false })
-        let spec = {}
+        //let spec = {}
+        let elementInfo = this.props.currentElement.info();
+        let defaultStyle= getDefaultSpec(elementInfo.category, elementInfo.type).style;
+        let spec = {
+            "encoding": {},
+            "style": defaultStyle,
+            "animation": []
+        } //清空encoding
         this.props.openEditor(this.props.currentData.dataIndex, spec);
         this.setState({
             chartvisible: true,
