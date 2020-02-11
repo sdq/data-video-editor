@@ -153,7 +153,7 @@ class EditableTable extends Component {
             });
 
         return (
-            <div>
+            <div style={{height:'100%',overflowY: "scroll"}}>
                 <EditableContext.Provider value={this.props.form}>
                     <Table
                         components={components}

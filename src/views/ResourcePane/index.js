@@ -5,6 +5,7 @@ import {isCleanInterationLayer} from '@/selectors/canvas';
 import * as videoActions from '@/actions/videoAction';
 import * as canvasActions from '@/actions/canvasAction';
 import * as uiActions from '@/actions/uiAction';
+import * as visActions from '@/actions/visAction';
 import {uimode, showResourcePane} from '@/selectors/ui';
 
 const mapStateToProps = state => {
@@ -29,6 +30,8 @@ const mapDispatchToProps = dispatch => {
         displayResourcePane: (isActive) => dispatch(uiActions.displayResourcePane(isActive)),
         displayMusicTargetArea: (isActive) => dispatch(uiActions.displayMusicTargetArea(isActive)),
         cleanInterationLayer: (isClean) => dispatch(canvasActions.cleanInterationLayer(isClean)),
+        //vis
+        switchData : (index) => dispatch(visActions.switchData(index)),
     }
 }
 

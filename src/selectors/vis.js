@@ -28,6 +28,7 @@ export const currentData = createSelector(
     dataList,
     fieldsList,
     (dataIndex, dataNameList, dataList, fieldsList) => {
+        //console.log("currentData...dataIndex ",dataIndex,"dataNameList",dataNameList[dataIndex],"dataList",dataList[dataIndex],"fieldsList",fieldsList[dataIndex])
         return {
             'dataIndex': dataIndex,
             'name': dataNameList[dataIndex],
