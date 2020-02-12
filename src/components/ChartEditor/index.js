@@ -108,6 +108,7 @@ export default class ChartEditor extends Component {
     render() {
         const { showChart, showChartAnimation, isShowRecordingModal, remainTime } = this.state;
         const { currentData, currentElement, displaySpec } = this.props;
+        //console.log("ChartEditor...",this.props)
         if (!currentData.data) return null;
         const datapreview = <TablePanel {...this.props} />
         const chartInfo = currentElement.info();

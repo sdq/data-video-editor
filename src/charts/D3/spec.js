@@ -6,6 +6,7 @@ import piechartSpec from './PieChart/spec';
 import proportionSpec from './ProportionChart/spec';
 import treemapSpec from './TreeMap/spec';
 import scatterplotSpec from './ScatterPlot/spec';
+import mapSpec from './Map/spec';
 
 export default function d3DefaultSpec(chartType) {
     switch (chartType) {
@@ -30,6 +31,8 @@ export default function d3DefaultSpec(chartType) {
         case ChartType.SCATTERPLOT:
             return scatterplotSpec;
     
+        case ChartType.MAP:
+            return mapSpec;
         default:
             return {}
     }
