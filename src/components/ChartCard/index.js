@@ -26,6 +26,9 @@ const chartSource = {
         if (props.charttype === 'scatterplot') {
             props.switchData(1); //countrys.csv
             dataIndex = 1
+        }else if(props.charttype === 'map'){
+            props.switchData(2); //china.csv
+            dataIndex = 2
         }else{
             props.switchData(0); //car.csv
         }

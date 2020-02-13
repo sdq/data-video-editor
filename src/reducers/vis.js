@@ -3,6 +3,8 @@ import cars from '@/datasets/cars';
 import carsSchema from '@/datasets/carsSchema';
 import countrys from '@/datasets/scatterPlot/countrys';
 import countrysSchema from '@/datasets/scatterPlot/countrysSchema';
+import tourism from '@/datasets/map/tourism';
+import tourismSchema from '@/datasets/map/tourismSchema';
 import Color from '@/constants/Color';
 import _ from 'lodash';
 
@@ -18,9 +20,9 @@ const originSpec = {
 const initialState = {
     // data
     dataIndex: 0,
-    dataNameList: ['cars.csv','countrys.csv'],
-    dataList: [cars,countrys],
-    fieldsList: [carsSchema,countrysSchema],
+    dataNameList: ['cars.csv','countrys','tourism.csv'],
+    dataList: [cars,countrys,tourism],
+    fieldsList: [carsSchema,countrysSchema,tourismSchema],
     // vis
     specIndex: 0,
     specHistory: [JSON.stringify(originSpec)],
@@ -67,7 +69,7 @@ export default (state = initialState, action) => {
 
         case VisActionType.SWITCH_DATA:
             newState.dataIndex = action.index
-            console.log("SWITCH_DATA",newState)
+            //console.log("SWITCH_DATA",newState)
             return newState
 
         case VisActionType.UPDATE_DATA:

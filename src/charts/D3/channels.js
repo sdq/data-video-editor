@@ -6,6 +6,7 @@ import piechartChannels from './PieChart/channels';
 import proportionChannels from './ProportionChart/channels';
 import treemapChannels from './TreeMap/channels';
 import scatterplotChannels from './ScatterPlot/channels';
+import mapChannels from './Map/channels';
 
 export default function d3Channels(chartType) {
     switch (chartType) {
@@ -29,7 +30,9 @@ export default function d3Channels(chartType) {
 
         case ChartType.SCATTERPLOT:
             return scatterplotChannels;
-    
+        
+        case ChartType.MAP:
+            return mapChannels;
         default:
             return {}
     }

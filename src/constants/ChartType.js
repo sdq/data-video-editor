@@ -7,4 +7,5 @@ export default {
     PIECHART : 'pie chart',
     PROPORTIONCHART : 'proportion chart',
     TREEMAP : 'treemap',
+    MAP:'map',
 }

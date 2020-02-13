@@ -7,6 +7,7 @@ import PieChart from './PieChart';
 import ProportionChart from './ProportionChart';
 import TreeMap from './TreeMap';
 import ScatterPlot from './ScatterPlot';
+import Map from './Map';
 
 export default class D3Container extends Component {
     chooseChart() {
@@ -31,7 +32,8 @@ export default class D3Container extends Component {
 
             case ChartType.SCATTERPLOT:
                 return  <ScatterPlot {...this.props}/>
-        
+            case ChartType.MAP:
+                return  <Map {...this.props}/> 
             default:
                 console.log('error in chart type');
                 return  null
