@@ -249,8 +249,11 @@ export default class EditCanvas extends Component {
                  :showResourcePane&&!showToolPane?(windowWidth-360-fakeWidth)/2+'px'
                  :(windowWidth-fakeWidth)/2+'px',
 
-                  marginTop:
-                  (canvasH-fakeHeight)/2+'px'
+                marginTop:
+                showResourcePane&&showToolPane?(canvasH-fakeHeight)/2+'px'
+                :!showResourcePane&&showToolPane?(canvasH-fakeHeight)/2+'px'
+                :showResourcePane&&!showToolPane?'0px'
+                :'0px',                    
                 }
             } 
                  >
