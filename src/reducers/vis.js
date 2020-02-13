@@ -18,7 +18,7 @@ const originSpec = {
 const initialState = {
     // data
     dataIndex: 0,
-    dataNameList: ['cars.csv','countrys'],
+    dataNameList: ['cars.csv','countrys.csv'],
     dataList: [cars,countrys],
     fieldsList: [carsSchema,countrysSchema],
     // vis

@@ -241,6 +241,7 @@ export default class EditCanvas extends Component {
                  style={{  
                  height: canvasH+'px',
                  width: canvasW+'px',
+                 zIndex:1,
                  //缩放居中策略 全局统一缩放
                 
                  marginLeft:

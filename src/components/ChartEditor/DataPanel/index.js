@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { Upload, Button, Icon, Select } from 'antd';
+import { Upload, Button, Icon, Select, message } from 'antd';
 import DataProcessor from '@/components/DataPreview/processor';
-
+import {getDefaultSpec} from '@/charts/Info';
 const { Dragger } = Upload;
 const { Option } = Select;
 const dataProcessor = new DataProcessor();
@@ -13,6 +13,15 @@ export default class DataPanel extends Component {
             .then((dataItem) => {
                 this.props.addData(file.name, dataItem.data, dataItem.schema);
                 this.props.switchData(this.props.dataNameList.length - 1)
+                message.info('You have changed the chart data.');
+                let elementInfo = this.props.currentElement.info();
+                let defaultStyle= getDefaultSpec(elementInfo.category, elementInfo.type).style;
+                let spec = {
+                    "encoding": {},
+                    "style": defaultStyle,
+                    "animation": []
+                } //清空encoding
+                this.props.openEditor(this.props.dataNameList.length - 1, spec);
             }).catch((reason) => {
                 this.setState({
                     alertvisible: true,
@@ -28,7 +37,16 @@ export default class DataPanel extends Component {
     handleDataSelect = (e) => {
         let dataIndex = this.props.dataNameList.indexOf(e)
         if (dataIndex + 1) {
-            this.props.switchData(dataIndex)
+            this.props.switchData(dataIndex);
+            message.info('You have changed the chart data.');
+            let elementInfo = this.props.currentElement.info();
+            let defaultStyle= getDefaultSpec(elementInfo.category, elementInfo.type).style;
+            let spec = {
+                "encoding": {},
+                "style": defaultStyle,
+                "animation": []
+            } //清空encoding
+            this.props.openEditor(dataIndex, spec);
         }
     }
 

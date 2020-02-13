@@ -92,7 +92,8 @@ export default class EditorView extends Component {
                             style={{ background: '#fff', height: contentHeight+'px',
                             borderRightStyle: "solid",
                             borderRightWidth: "1px",
-                            borderRightColor: "#FFC107" }} 
+                            borderRightColor: "#FFC107",
+                            zIndex:5}} 
                             // trigger={null} 
                             // collapsible 
                             collapsedWidth={0} 
@@ -139,7 +140,7 @@ export default class EditorView extends Component {
                     </Layout>
                     <Layout style={{ height: '370px' }}>
                         <Content
-                        style={{ background: '#eee', height: '320px' }} 
+                        style={{ background: '#eee', height: '320px',zIndex:5 }} 
                         >
                             {this.props.uimode === UIMode.TRACK_MODE?<TrackPane />:<StorylinePane />}
                             
