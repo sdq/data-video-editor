@@ -100,7 +100,7 @@ const draw = (animation, props) => {
     let size = d3.scaleLinear()
                 .domain([0, d3.max(data, function(d){ 
                     return Math.sqrt(d[encoding.size.field]/Math.PI); })])
-                .range([ 0 , width/(categories.length*2.5) ]);
+                .range([ 0 , width/(categories.length*2.7) ]);
 
     //x
     // let x = d3.scaleBand()
@@ -182,20 +182,32 @@ const draw = (animation, props) => {
                 .data(data)
                 .enter().append("g")
                 .attr("class", "legend_color")
-                .attr('transform', (d, i) =>`translate(${i * 80 + (chartWidth - 80 * categories.length)/2}, 0)`);
+                // .attr('transform', (d, i) =>`translate(${i * 80 + (chartWidth - 80 * (categories.length))/2}, 0)`);
+                // .attr('transform',(d,i) => `translate(${i*70 + (i-1)*10 +(chartWidth-categories.length*70-(categories.length-1)*10)/2},0)`);
+                .attr('transform', (d, i) =>`translate(${i*(80 + 10) + (chartWidth - (categories.length * 80 + (categories.length - 1) * 10)) / 2}, 0)`);
+                // .attr('transform',(d) => `translate(${(chartWidth-categories.length*70-(categories.length-1)*10)/2},0)`);
 
 
     legends.append("rect")
                 .attr("fill", d => color(d[encoding.color.field]))
-                .attr("width", 10)
-                .attr("height", 10)
-                .attr("y",-15);
-                // .attr("r", 6)
-                // .attr("cy", -5);
+                // .attr("width", 10)
+                // .attr("height", 10)
+                // .attr("y",-15);
+                // // .attr("r", 6)
+                // // .attr("cy", -5);
+                .attr('x', 15)
+                .attr('y', -10)
+                .attr("width", '10px')
+                .attr('height', '10px')
+                .attr("rx", 1.5)
+                .attr("ry", 1.5);
 
+                
     legends.append("text")
-                .attr("x", 12)
-                .attr("y",-5)
+                // .attr("x", 12)
+                // .attr("y",-5)
+                .attr("fill", 'black')
+                .attr("x", 35)
                 .text(d => d[encoding.color.field]);
 
     // Animation
@@ -255,7 +267,7 @@ const draw = (animation, props) => {
                                     }
                                 } 
                                 size_all = size_all + size(Math.sqrt(sizes[i]/Math.PI))
-                                return size_all + (chartWidth - 2*inner - space*(categories.length-1)*2.5)/2;
+                                return size_all + (chartWidth - 2*inner - space*(categories.length-1)*2.7)/2;
                             }
                         }
                 })
@@ -315,7 +327,7 @@ const draw = (animation, props) => {
                                     }
                                 } 
                                 size_all = size_all + size(Math.sqrt(sizes[i]/Math.PI))
-                                return size_all + (chartWidth - 2*inner - space*(categories.length-1)*2.5)/2;
+                                return size_all + (chartWidth - 2*inner - space*(categories.length-1)*2.7)/2;
                             }
                         }
                 })

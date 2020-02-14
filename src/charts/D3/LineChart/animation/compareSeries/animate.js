@@ -40,7 +40,7 @@ const draw = (animation, props) => {
             
         // 显示第一个信息
         [animation.spec.series1, animation.spec.series2].forEach((s, i)=> {
-            let lastCircle = d3.selectAll('circle.series_'+s).nodes().slice(-1);
+            let lastCircle = d3.selectAll('circle.series_'+s).nodes().slice(0,1);
             lastCircle = d3.select(lastCircle[0]);
             const x = parseFloat(lastCircle.attr('cx')),
                   y = parseFloat(lastCircle.attr('cy'));

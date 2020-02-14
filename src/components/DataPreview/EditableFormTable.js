@@ -60,7 +60,7 @@ class EditableTable extends Component {
         };
     }
 
-    isEditing = rowIndex => rowIndex === this.state.editingKey;
+    isEditing = record => record.key === this.state.editingKey;
 
     cancel = () => {
         this.setState({ editingKey: '' });
@@ -108,27 +108,27 @@ class EditableTable extends Component {
                 width: 120,
                 key: 'operation',
                 fixed: 'right',
-                render: (text, record, rowIndex) => {
+                render: (text, record, index, dataIndex) => {
                     const { editingKey } = this.state;
-                    const editable = this.isEditing(rowIndex);
+                    const editable = this.isEditing(record);
                     return editable ? (
                         <span style={{display:'table'}}>
                             <EditableContext.Consumer>
                                 {form => (
                                     <Button 
-                                        onClick={() => this.save(form, rowIndex)}
+                                        onClick={() => this.save(form, record.key)}
                                         style={{background: 'none',border:'none',padding:0, marginRight: 8, width: '30px', display: 'table-cell' }}
                                     >
                                         Save
                                     </Button>
                                 )}
                             </EditableContext.Consumer>
-                            <Button onClick={() => this.cancel(rowIndex)} style={{background: 'none',border:'none', padding:0,width: '45px', display: 'table-cell'  }} >
+                            <Button onClick={() => this.cancel(record.key)} style={{background: 'none',border:'none', padding:0,width: '45px', display: 'table-cell'  }} >
                                 Cancel
                             </Button>
                         </span>
                     ) : (
-                            <Button style={{background: 'none',border:'none',padding:0, width: '26px',display: 'table-cell' }} disabled={editingKey !== ''} onClick={() => this.edit(rowIndex)}>
+                            <Button style={{background: 'none',border:'none',padding:0, width: '26px',display: 'table-cell' }} disabled={editingKey !== ''} onClick={() => this.edit(record.key)}>
                                 Edit
                         </Button>
                         );
@@ -147,11 +147,12 @@ class EditableTable extends Component {
                         rowIndex,
                         dataIndex: col.dataIndex,
                         title: col.title,
-                        editing: this.isEditing(rowIndex),
+                        editing: this.isEditing(record),
                     }),
                 };
             });
 
+          //  console.log(columns)
         return (
             <div style={{height:'100%',overflowY: "scroll"}}>
                 <EditableContext.Provider value={this.props.form}>
@@ -161,11 +162,11 @@ class EditableTable extends Component {
                         size={'small'}
                         dataSource={this.props.dataSource}
                         columns={columns}
-                        scroll={{ x: 1000}}
-                        rowKey={columns[0].title}
+                        scroll={{ x: 1300}}
+                        // rowKey={columns[0].title + columns[1].title}
                         rowClassName="editable-row"
                         pagination={{
-                            pageSize: 6,
+                            // pageSize: 10,
                             onChange: this.cancel,
                         }}
                     />
