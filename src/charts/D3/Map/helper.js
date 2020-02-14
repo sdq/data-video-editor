@@ -1,14 +1,143 @@
 import * as d3 from 'd3';
 import _ from 'lodash';
+import chinaData from '@/datasets/map/chinaGeo';
+import worldData from '@/datasets/map/worldGeo';
+import usStateData from '@/datasets/map/usStateGeo';
+//验证是否是中文
+var pattern = new RegExp("[\u4E00-\u9FA5]+");
 
 const getProvinceData = (rawData, encoding) => {
+    let obj = {
+        isEN: true
+    }
     let values = [];
     for (var i = 0; i < rawData.length; i++) {
-        values[rawData[i][encoding.area.field]] = rawData[i][encoding.color.field]
+        if (encoding.color) { //有数值
+            if (i === 0) {  //一次就可以判断出中英文
+                if (pattern.test(rawData[i][encoding.area.field])) { //中文
+                    obj.isEN = false
+                }
+                //console.log("pattern",pattern.test(rawData[i][encoding.area.field]),rawData[i][encoding.area.field],obj.isEN)
+            }
+            values[rawData[i][encoding.area.field]] = rawData[i][encoding.color.field]//索引号为各省的名称
+        } else { //只有国家，没有数值（0）
+            values[rawData[i][encoding.area.field]] = 0
+        }
     }
-    return values
+    obj.values = values;
+    return obj
 }
 
+const getMapType = (rawData, encoding) => {
+    if (encoding.area && encoding.area.field === 'Country') {
+        for (let i = 0; i < rawData.length; i++) {
+            if (rawData[i][encoding.area.field] === 'China' || rawData[i][encoding.area.field] === '中国') {
+                continue;
+            }
+            //有不是“China” || "中国"的Country
+            if (pattern.test(rawData[i][encoding.area.field])) { //中文 0
+                //循环找到是否在feature里边
+                if (isInChinaMap(rawData[i][encoding.area.field], 0)) {
+                    return "ChinaMap"
+                } else if (isInWorldMap(rawData[i][encoding.area.field], 0)) {
+                    return "WorldMap"
+                }
+            } else { //英文 1
+                //循环找到是否在feature里边
+                if (isInChinaMap(rawData[i][encoding.area.field], 1)) {
+                    return "ChinaMap"
+                } else if (isInWorldMap(rawData[i][encoding.area.field], 1)) {
+                    return "WorldMap"
+                }
+            }
+        }
+        return 'ChinaMap' //所有数据都是“China” || "中国"
+    } else if (encoding.area && encoding.area.field === 'Province') {
+        //中国或者美国
+        for (let i = 0; i < rawData.length; i++) {
+            if (pattern.test(rawData[i][encoding.area.field])) { //中文 0
+                //循环找到是否在feature里边
+                if (isInChinaMap(rawData[i][encoding.area.field], 0)) {
+                    return "ChinaMap"
+                }
+            } else { //英文 1
+                //循环找到是否在feature里边
+                if (isInChinaMap(rawData[i][encoding.area.field], 1)) {
+                    return "ChinaMap"
+                } else if (isInUsStateMap(rawData[i][encoding.area.field], 1)) {
+                    return "USMap"
+                }
+            }
+        }
+        return null
+    }
+    return null
+}
+const isInChinaMap = (value, language) => {
+    let chinaCountryNameList = chinaData.features;
+    if (language === 0) {
+        for (let i = 0; i < chinaCountryNameList.length; i++) {
+            if (value !== chinaCountryNameList[i].properties.name) {
+                continue;
+            }
+            //匹配到
+            return true;
+        }
+        return false;
+    } else if (language === 1) {
+        for (let i = 0; i < chinaCountryNameList.length; i++) {
+            if (value !== chinaCountryNameList[i].properties.enName) {
+                continue;
+            }
+            //匹配到
+            //console.log("匹配到...")
+            return true;
+        }
+        return false
+    }
+}
+
+const isInWorldMap = (value, language) => {
+    let worldCountryNameList = worldData.features;
+    if (language === 0) {
+        for (let i = 0; i < worldCountryNameList.length; i++) {
+            if (value !== worldCountryNameList[i].properties.name) {
+                continue;
+            }
+            //匹配到
+            return true;
+        }
+        return false;
+    } else if (language === 1) {
+        for (let i = 0; i < worldCountryNameList.length; i++) {
+            if (value !== worldCountryNameList[i].properties.enName) {
+                //console.log("value", value, worldCountryNameList[i].properties.enName)
+                continue;
+            }
+            //匹配到
+            //console.log("匹配到...")
+            return true;
+        }
+        //console.log("isInWorldMap    NOT.....")
+        return false;
+    }
+
+}
+const isInUsStateMap = (value, language) => {
+    let usStateNameList = usStateData.features;
+    for (let i = 0; i < usStateNameList.length; i++) {
+        if (value !== usStateNameList[i].properties.name) {
+            //console.log("value", value, usStateNameList[i].properties.name)
+            continue;
+        }
+        //匹配到
+        //console.log("匹配到...")
+        return true;
+    }
+    //console.log("isInUSMap    NOT.....")
+    return false;
+
+}
 const getCategories = (rawData, encoding) => {
     let dataCategories = {}
     for (let i = 0; i < rawData.length; i++) {
@@ -188,4 +317,4 @@ const getAggregatedRows = (rawData, encoding) => {
     return data;
 }
 
-export { getCategories, getSeries, getAreaData, getStackedData, getAggregatedRows, getMaxRows, getSeriesValue, getProvinceData }
+export { getCategories, getSeries, getAreaData, getStackedData, getAggregatedRows, getMaxRows, getSeriesValue, getProvinceData, getMapType }

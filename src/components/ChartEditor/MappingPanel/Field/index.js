@@ -22,7 +22,7 @@ const boxSource = {
 
 class Field extends Component {
     render() {
-        const { connectDragSource } = this.props;
+		const { connectDragSource } = this.props;
         return connectDragSource(
             <div className="field">
 				<div style={{display: "inline-block"}}>{this.props.field.name}</div>
