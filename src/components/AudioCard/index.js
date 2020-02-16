@@ -4,6 +4,7 @@ import { DragSource } from 'react-dnd';
 import DNDType from '@/constants/DNDType';
 import ElementType from '@/constants/ElementType';
 import {Element, AudioInfo} from '@/models/Element';
+import WebApi from '@/axios/api';
 import _ from 'lodash';
 import './audiocard.css';
 
@@ -12,8 +13,13 @@ const audioSource = {
 	beginDrag(props) {
         props.cleanInterationLayer(true);
         props.displayMusicTargetArea(true);
-
         props.displayResourceTargetArea(true);
+        //console.log("beginDrag",props.info)
+        //本地内存中的url,解决视频渲染MediaElementAudioSource outputs zeroes due to CORS access restrictions问题
+        WebApi.GetGIFAsset(props.info.id).then((fileURL) => {
+            //console.log("newSrc",fileURL)
+            props.info.src = fileURL;
+        })
 		return props.info;
 	},
 
@@ -32,7 +38,7 @@ const audioSource = {
                 }
                 //add element to scene
                 const newScene = _.cloneDeep(dropResult.currentScene);
-                const newAudio = new AudioInfo(item.name,item.src,Math.round( props.info.audio && props.info.audio.duration));
+                const newAudio = new AudioInfo(item.id, item.name,item.src,Math.round( props.info.audio && props.info.audio.duration));
                 const newElement = new Element(ElementType.AUDIO, newAudio);
                 //解析音频时长
                 newElement.duration(Math.round( props.info.audio && props.info.audio.duration))
@@ -66,7 +72,7 @@ const audioSource = {
                 //设置全局backgroundmusicname,用于显示name
                 props.scenes[0].backgroundMusic(item.name);
                 //新增新背景音乐
-                const newbackGroundMusic = new AudioInfo(item.name,item.src,Math.round( props.info.audio && props.info.audio.duration),true);
+                const newbackGroundMusic = new AudioInfo(item.id, item.name,item.src,Math.round( props.info.audio && props.info.audio.duration),true);
                 const newElement = new Element(ElementType.AUDIO, newbackGroundMusic);
                 props.scenes[0].addElement(newElement); //添加给scene0
                 //add audioResource to audioList

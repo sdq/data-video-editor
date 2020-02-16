@@ -3,6 +3,7 @@ import { DragSource } from 'react-dnd';
 import DNDType from '@/constants/DNDType';
 import ElementType from '@/constants/ElementType';
 import { Element, VideoInfo } from '@/models/Element';
+import WebApi from '@/axios/api';
 // import Scene from '@/models/Scene';
 import './videocard.css';
 import { Player, ControlBar } from 'video-react';
@@ -18,6 +19,12 @@ const videoSource = {
 	beginDrag(props) {
         props.cleanInterationLayer(true);
         props.displayResourceTargetArea(true);
+        //console.log("beginDrag",props.info)
+          //本地内存中的url,解决视频渲染MediaElementVideoSource outputs zeroes due to CORS access restrictions问题
+          WebApi.GetGIFAsset(props.info.id).then((fileURL) => {
+            //console.log("newSrc",fileURL)
+            props.info.src = fileURL;
+        })
         return props.info;
     },
 
@@ -43,8 +50,7 @@ const videoSource = {
                  x = Number(e.clientX)-Number(pos.left)-videoElement.clientWidth/2; //根据鼠标位置计算画布上元素位置,强制类型转换
                  y = Number(e.clientY)-Number(pos.top)-videoElement.clientHeight/2;
                  }
-
-                const newVideo = new VideoInfo(item.name, item.src, videoElement.duration, x/scale, y/scale, videoElement.clientWidth, videoElement.clientHeight, 0);
+                const newVideo = new VideoInfo(item.id, item.name, item.src, videoElement.duration, x/scale, y/scale, videoElement.clientWidth, videoElement.clientHeight, 0);
                 const newElement = new Element(ElementType.VIDEO, newVideo);
                 //解析视频时长
                 newElement.duration(videoElement.duration)

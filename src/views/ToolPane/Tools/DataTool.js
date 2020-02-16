@@ -5,7 +5,7 @@ import ChartEditor from '@/components/ChartEditor';
 import SimpleDataPreview from '@/components/DataPreview/SimpleDataPreview';
 import DataProcessor from '@/components/DataPreview/processor';
 import ChartRecorderInstance from '@/recorder/innerAnimation';
-import {getDefaultSpec} from '@/charts/Info';
+import { getDefaultSpec } from '@/charts/Info';
 //import _ from 'lodash'
 
 const { Dragger } = Upload;
@@ -89,7 +89,7 @@ export default class DataTool extends Component {
         this.setState({ confirmVisible: false })
         //let spec = {}
         let elementInfo = this.props.currentElement.info();
-        let defaultStyle= getDefaultSpec(elementInfo.category, elementInfo.type).style;
+        let defaultStyle = getDefaultSpec(elementInfo.category, elementInfo.type).style;
         let spec = {
             "encoding": {},
             "style": defaultStyle,
@@ -198,8 +198,11 @@ export default class DataTool extends Component {
                     {dataNameList.map((d, i) => (
                         <Option label={d} key={d}>{d}
                             <span aria-label={d}>
-                                <Button shape="circle" icon="close" size='small' style={{ float: 'right', fontSize: 10 }}
-                                    onClick={(e) => { this.deleteData(i); e.stopPropagation() }} />
+                                {
+                                    (i === 0 || i === 1 || i === 2) ? null :
+                                        <Button shape="circle" icon="close" size='small' style={{ float: 'right', fontSize: 10 }}
+                                            onClick={(e) => { this.deleteData(i); e.stopPropagation() }} />
+                                }
                             </span>
                         </Option>)
                     )}

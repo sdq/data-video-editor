@@ -51,7 +51,7 @@ const draw = (props) => {
     //定义最小值和最大值对应的颜色
     let minColorValue = d3.rgb(31, 72, 233);  //蓝色
     let maxColorValue = d3.rgb(192, 86, 36);    //黄色
-    let color = d3.interpolate(minColorValue, maxColorValue);        //颜色插值函数
+    //let color = d3.interpolate(minColorValue, maxColorValue);        //颜色插值函数
     //颜色插值函数
     let computeColor = d3.interpolate(minColorValue, maxColorValue);
 
