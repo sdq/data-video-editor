@@ -7,9 +7,11 @@ import AnimationPanel from './AnimationPanel';
 import ChartPanel from './ChartPanel';
 import TablePanel from './TablePanel';
 import carsSchema from '@/datasets/carsSchema';
+import ChartRecorderInstance from '@/recorder/innerAnimation';
 import _ from 'lodash';
 import './charteditor.css';
 
+const chartRecorderInstance = new ChartRecorderInstance();
 const { Sider, Content } = Layout;
 const { TabPane } = Tabs;
 
@@ -24,6 +26,8 @@ export default class ChartEditor extends Component {
             isShowRecordingModal: false,
             //录制倒计时
             remainTime: 0,
+            startAnimation : false,
+            cleanAnimation : false,
         }
         this.isRecording = false;
         this.totalDelay = 0;
@@ -70,21 +74,26 @@ export default class ChartEditor extends Component {
         this.setState({
             isShowRecordingModal: false
         });
-        //如果没有动画
-        let animationSteps = this.props.displaySpec.animation
-        if (!animationSteps.length) {
-            this.props.currentElement.info().src = null   //这样在双击图表，就不显示录制好的video
-            const newScene = _.cloneDeep(this.props.currentScene);
-            newScene.updateElement(this.props.currentElement, this.props.elementIndex);
-            this.props.updateScene(this.props.sceneIndex, newScene);
-        }
 
+        if (chartRecorderInstance.recorder) { //说明有录制的进程
+            chartRecorderInstance.stop();
+        }
+         //animation clean
+         this.setState({
+            cleanAnimation: true,
+            startAnimation: false
+        })
     };
-    saveChartAnimation = () => {
-        //有动画
+    saveChartEditor = () => {
         let animationSteps = this.props.displaySpec.animation;
-        if (this.isRecording && animationSteps.length) {
-            //点击保存,但是没有录制完毕,弹窗显示等待时间或者用户取消保存
+        
+        if (!this.props.chartAnimationVideoURL && animationSteps.length) {//有动画配置但是没有完成录制video的情况
+            //animation play
+            this.setState({
+                cleanAnimation: false,
+                startAnimation: true
+            })
+            //弹窗显示等待时间或者等用户取消保存
             this.setState({
                 isShowRecordingModal: true,
                 remainTime: this.totalDelay
@@ -106,20 +115,20 @@ export default class ChartEditor extends Component {
         }
     }
     render() {
-        const { showChart, showChartAnimation, isShowRecordingModal, remainTime } = this.state;
+        const { showChart, showChartAnimation, isShowRecordingModal, remainTime, startAnimation, cleanAnimation } = this.state;
         const { currentData, currentElement, displaySpec } = this.props;
         //console.log("ChartEditor...",this.props)
         if (!currentData.data) return null;
         const datapreview = <TablePanel {...this.props} />
         const chartInfo = currentElement.info();
-        const chart = <ChartPanel data={currentData.data} chartInfo={chartInfo} spec={displaySpec} showChartAnimation={showChartAnimation} addRecordingStateListener={this.addRecordingStateListener} {...this.props} />;
+        const chart = <ChartPanel data={currentData.data} chartInfo={chartInfo} spec={displaySpec} showChartAnimation={showChartAnimation} addRecordingStateListener={this.addRecordingStateListener} startAnimation = {startAnimation} cleanAnimation={cleanAnimation} {...this.props} />;
         return (
             <div>
                 <Modal
                     title="Chart Editor"
                     visible={this.props.visible}
                     // onOk={this.props.handleOk}
-                    onOk={this.saveChartAnimation}
+                    onOk={this.saveChartEditor}
                     width={1050}
                     bodyStyle={{ height: 600, padding: 0 }}
                     onCancel={this.props.handleCancel}

@@ -102,8 +102,11 @@ export const reorderChartAnimation = (animations) => ({
     type: VisActionType.REORDER_CHART_ANIMATION,
     animations
 })
-export const interruptSaveChartVideoProcess = ()=>({
-    type: VisActionType.INTERRUPT_SAVE_CHART_VIDEO_ANIMATION
+
+
+export const updatChartInnerAnimationUrl = (chartAnimationVideoUrl)=>({
+    type:VisActionType.UPDATE_CHART_ANIMATION_VIDEO_URL,
+    chartAnimationVideoUrl
 })
 
 // Meta

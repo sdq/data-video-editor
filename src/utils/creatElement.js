@@ -27,6 +27,28 @@ var createElementUtils = {
                     break;
             }
         })
+    },
+    loadVideoDuration (url) {
+        return new Promise((reslove) => {
+            let video = document.createElement('video');
+            let source = document.createElement("source");
+            source.src = url;
+            video.appendChild(source);
+            video.preload = "auto";
+            video.addEventListener("canplay", () => {
+                //console.log("canplay",video.duration,typeof video.duration)
+                if (video.duration === Infinity) {
+                    video.currentTime = 100000;//set the element’s currentTime pointer long past the end of the clip,and the duration property will be updated
+                } else {
+                    reslove(video.duration)
+                }
+            })
+            
+            video.addEventListener("timeupdate", () => {
+                //console.log("timeupdate...", video.duration)
+                reslove(video.duration)
+            })
+        })
     }
 }
 
