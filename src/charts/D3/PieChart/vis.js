@@ -11,7 +11,7 @@ const draw = (props) => {
 
     const margin = { top: 100, right: 100, bottom: 100, left: 100 };
     const width = props.width - margin.left - margin.right;
-    const height = props.height - margin.top - margin.bottom - 80
+    const height = props.height - margin.top - margin.bottom - 80;
 
     let svg = d3.select(a)
         //在svg之前添加center元素以保证svg居中显示
@@ -104,7 +104,7 @@ const draw = (props) => {
 
     // legend
     const legend = svg.append("g")
-        .attr("transform", `translate(0, ${height + 60})`);
+        .attr("transform", `translate(0, ${height + 140})`);
     var legends = legend.selectAll("legend_color")
         .data(categories)
         .enter()
@@ -114,7 +114,8 @@ const draw = (props) => {
 
     legends.append("rect")
         .attr("fill", d => color(d))
-        .attr('y', -9)
+        .attr('x', 15)
+        .attr('y', -10)
         .attr("width", '10px')
         .attr('height', '10px')
         .attr("rx", 1.5)
@@ -122,7 +123,7 @@ const draw = (props) => {
     // .attr("cy", -5);
     legends.append("text")
         .attr("fill", 'black')
-        .attr("x", 15)
+        .attr("x", 35)
         .text(d => d);
 
     return svg;

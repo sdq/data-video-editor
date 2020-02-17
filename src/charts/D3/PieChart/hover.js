@@ -302,26 +302,27 @@ const draw = (props) => {
     }
  // legend
  const legend = svg.append("g")
- .attr("transform", `translate(0, ${height + 60})`);
-var legends = legend.selectAll("legend_color")
- .data(categories)
- .enter()
- .append("g")
- .attr("class", "legend_color")
- .attr('transform', (d, i) => `translate(${i * (80 + 10) + (width - (categories.length * 80 + (categories.length - 1) * 10)) / 2}, 0)`);
+        .attr("transform", `translate(0, ${height + 140})`);
+    var legends = legend.selectAll("legend_color")
+        .data(categories)
+        .enter()
+        .append("g")
+        .attr("class", "legend_color")
+        .attr('transform', (d, i) => `translate(${i * (80 + 10) + (width - (categories.length * 80 + (categories.length - 1) * 10)) / 2}, 0)`);
 
-legends.append("rect")
- .attr("fill", d => color(d))
- .attr('y', -9)
- .attr("width", '10px')
- .attr('height', '10px')
- .attr("rx", 1.5)
- .attr("ry", 1.5)
-// .attr("cy", -5);
-legends.append("text")
- .attr("fill", 'black')
- .attr("x", 15)
- .text(d => d);
+    legends.append("rect")
+        .attr("fill", d => color(d))
+        .attr('x', 15)
+        .attr('y', -10)
+        .attr("width", '10px')
+        .attr('height', '10px')
+        .attr("rx", 1.5)
+        .attr("ry", 1.5)
+    // .attr("cy", -5);
+    legends.append("text")
+        .attr("fill", 'black')
+        .attr("x", 35)
+        .text(d => d);
 
     
         

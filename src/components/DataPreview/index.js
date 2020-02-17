@@ -34,6 +34,13 @@ export default class DataPreview extends Component {
             return column;
         });
 
+        let tableData = []
+        currentData.data.forEach((d,i) => {
+            let dataItem = d
+            d.key = i
+            tableData.push(dataItem)
+        });
+
         return (
             <div>
 
@@ -45,7 +52,7 @@ export default class DataPreview extends Component {
                     bodyStyle={{ height: 650 }}
                     onCancel={this.handleOk}
                 >
-                    <EditableFormTable columns={customizedColumns} dataSource={currentData.data} handleDataUpdate={this.handleDataUpdate}/>
+                    <EditableFormTable columns={customizedColumns} dataSource={tableData} handleDataUpdate={this.handleDataUpdate}/>
                 </Modal>
             </div>
 

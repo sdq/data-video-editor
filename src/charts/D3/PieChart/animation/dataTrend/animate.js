@@ -116,8 +116,8 @@ const draw = (animation,props) => {
                 })
                 .attr("fill", function(d){ return(color(d.data[encoding.color.field])); });
                 // legend
-                let legend = svg.append("g")
-                .attr("transform", `translate(0, ${height + 60})`);
+                const legend = svg.append("g")
+                    .attr("transform", `translate(0, ${height + 140})`);
                 var legends = legend.selectAll("legend_color")
                     .data(categories)
                     .enter()
@@ -127,7 +127,8 @@ const draw = (animation,props) => {
 
                 legends.append("rect")
                     .attr("fill", d => color(d))
-                    .attr('y', -9)
+                    .attr('x', 15)
+                    .attr('y', -10)
                     .attr("width", '10px')
                     .attr('height', '10px')
                     .attr("rx", 1.5)
@@ -135,7 +136,7 @@ const draw = (animation,props) => {
                 // .attr("cy", -5);
                 legends.append("text")
                     .attr("fill", 'black')
-                    .attr("x", 15)
+                    .attr("x", 35)
                     .text(d => d);
         }, animationDelay)
     }
@@ -151,31 +152,6 @@ const draw = (animation,props) => {
         animateStep(timeData, animationDelay);
         animationDelay += stepDuration;
     }
-
-    
-    // //draw legend
-    // legendSvg.selectAll("rect")
-    //     .data(categories)
-    //     .enter()
-    //     .append("rect")
-    //     .attr("width", 20)
-    //     .attr("height", 20)
-    //     .attr("fill",function(d){ return(color(d)); })
-    //     .attr("transform", function(d,i){
-    //         let offset = 100 * i + 70;
-    //         return "translate(" + offset + "," + 445 + ")";
-    //     })
-    //     .attr("z-index",99999);
-
-    // legendSvg.selectAll("text")
-    //     .data(categories)
-    //     .enter()
-    //     .append("text")
-    //     .text(function(d, i){ return d; })
-    //     .attr("transform", function(d,i){
-    //         let offset = 100 * i + 100;
-    //         return "translate(" + offset + "," + 460 + ")";
-    //     });
 
 
 

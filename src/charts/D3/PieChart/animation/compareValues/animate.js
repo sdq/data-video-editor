@@ -106,7 +106,7 @@ const draw = (animation, props) => {
 
     // legend
     const legend = svg.append("g")
-        .attr("transform", `translate(0, ${height + 60})`);
+        .attr("transform", `translate(0, ${height + 140})`);
     var legends = legend.selectAll("legend_color")
         .data(categories)
         .enter()
@@ -116,7 +116,8 @@ const draw = (animation, props) => {
 
     legends.append("rect")
         .attr("fill", d => color(d))
-        .attr('y', -9)
+        .attr('x', 15)
+        .attr('y', -10)
         .attr("width", '10px')
         .attr('height', '10px')
         .attr("rx", 1.5)
@@ -124,7 +125,7 @@ const draw = (animation, props) => {
     // .attr("cy", -5);
     legends.append("text")
         .attr("fill", 'black')
-        .attr("x", 15)
+        .attr("x", 35)
         .text(d => d);
     
     if(animation.spec.effect === "juxtaposition") {
