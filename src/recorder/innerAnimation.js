@@ -88,7 +88,7 @@ export default class innerAnimationRecorder {
                         //         console.log("上传", resolve.data.id)
                         //     })
                         // })
-                        console.log("setTimeout...", url)
+                        //console.log("setTimeout...", url)
                         resolve(url)
                     }
                 }, 16)

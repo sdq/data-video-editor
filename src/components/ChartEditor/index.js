@@ -8,7 +8,7 @@ import ChartPanel from './ChartPanel';
 import TablePanel from './TablePanel';
 import carsSchema from '@/datasets/carsSchema';
 import ChartRecorderInstance from '@/recorder/innerAnimation';
-import _ from 'lodash';
+//import _ from 'lodash';
 import './charteditor.css';
 
 const chartRecorderInstance = new ChartRecorderInstance();
