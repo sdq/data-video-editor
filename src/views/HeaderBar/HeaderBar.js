@@ -9,6 +9,7 @@ import AnimationModel from '@/animation/AnimationModel';
 //import { saveAs } from 'file-saver';
 import './headerbar.css';
 import WebApi from '../../axios/api';
+import Fragment from '@/models/element/Fragment';
 var gifFrames = require('gif-frames');
 
 const recorder = new Recorder();
@@ -78,16 +79,20 @@ export default class HeaderBar extends Component {
                     let newElement = '';
                     let animation = "";
                     let aniM = '';
-
+                    let fragments = jsonObj[i]._elements[m]._fragments;
                     switch (jsonObj[i]._elements[m]._type) {
                         case ElementType.IMAGE:
                             const newImage = new ImageInfo(newE.name, newE.src, newE.x, newE.y, newE.width, newE.height, newE.rotation, newE.opacity);
                             newElement = new Element(ElementType.IMAGE, newImage);//为什么不显示
-                            newScene.addElement(newElement);
                             newElement.start(jsonObj[i]._elements[m]._start);
-                            //直接设置duration没用
                             newElement.duration(jsonObj[i]._elements[m]._duration);
-
+                            newScene.addElement(newElement);
+                            //时间片段
+                            fragments.map((fragment, fragmentIndex) => {
+                                let newFragment = new Fragment(fragment._start, fragment._duration)
+                                newElement.updateFragment(fragmentIndex, newFragment);
+                                return fragment;
+                            })
                             //animation
                             for (let n = 0; n < jsonObj[i]._elements[m]._animations.length; n++) {
                                 aniM = jsonObj[i]._elements[m]._animations[n];
@@ -101,10 +106,15 @@ export default class HeaderBar extends Component {
                         case ElementType.TEXT:
                             const newText = new TextInfo(newE.text, newE.x, newE.y, newE.rotation, newE.color, newE.textSize, newE.fontFamily, newE.fontStyle, newE.textDecorationLine, newE.opacity, newE.textAlign, newE.width, newE.height);
                             newElement = new Element(ElementType.TEXT, newText);
-                            newScene.addElement(newElement);
                             newElement.start(jsonObj[i]._elements[m]._start);
                             newElement.duration(jsonObj[i]._elements[m]._duration);
-
+                            newScene.addElement(newElement);
+                            //时间片段
+                            fragments.map((fragment, fragmentIndex) => {
+                                let newFragment = new Fragment(fragment._start, fragment._duration)
+                                newElement.updateFragment(fragmentIndex, newFragment);
+                                return fragment;
+                            })
                             //animation
                             for (let n = 0; n < jsonObj[i]._elements[m]._animations.length; n++) {
                                 aniM = jsonObj[i]._elements[m]._animations[n];
@@ -134,9 +144,6 @@ export default class HeaderBar extends Component {
                                 if (!gifDataFrames) return;
                                 const newGif = new GifInfo(newE.id, newE.name, fileURL, newE.delay, gifDataFrames, newE.x, newE.y, newE.width, newE.height, newE.rotation, newE.opacity);
                                 newElement = new Element(ElementType.GIF, newGif);
-                                newElement.start(jsonObj[i]._elements[m]._start);
-                                newElement.duration(jsonObj[i]._elements[m]._duration);
-
                                 //animation
                                 for (let n = 0; n < jsonObj[i]._elements[m]._animations.length; n++) {
                                     aniM = jsonObj[i]._elements[m]._animations[n];
@@ -150,7 +157,15 @@ export default class HeaderBar extends Component {
                                 //更新newElement
                                 //console.log("newElement", newElement)
                                 this.props.addElement(newElement);
+                                newElement.start(jsonObj[i]._elements[m]._start);
+                                newElement.duration(jsonObj[i]._elements[m]._duration);
                                 newScene.addElement(newElement);
+                                //时间片段
+                                fragments.map((fragment, fragmentIndex) => {
+                                    let newFragment = new Fragment(fragment._start, fragment._duration)
+                                    newElement.updateFragment(fragmentIndex, newFragment);
+                                    return fragment;
+                                })
                                 //console.log("newScene", newScene)
                                 this.props.updateScene(this.props.sceneIndex, newScene);
                             })
@@ -159,9 +174,15 @@ export default class HeaderBar extends Component {
                             const newChart = new ChartInfo(newE.dataIndex, newE.category, newE.type, newE.spec, newE.x, newE.y, newE.width, newE.height, newE.rotation);
                             newChart.src = newE.src; //newE.src为内存中的地址，所以如果页面刷新后导入，则双击预览功能失效
                             newElement = new Element(ElementType.CHART, newChart);
-                            newScene.addElement(newElement);
                             newElement.start(jsonObj[i]._elements[m]._start);
                             newElement.duration(jsonObj[i]._elements[m]._duration);
+                            newScene.addElement(newElement);
+                            //时间片段
+                            fragments.map((fragment, fragmentIndex) => {
+                                let newFragment = new Fragment(fragment._start, fragment._duration)
+                                newElement.updateFragment(fragmentIndex, newFragment);
+                                return fragment;
+                            })
                             //animation
                             for (let n = 0; n < jsonObj[i]._elements[m]._animations.length; n++) {
                                 aniM = jsonObj[i]._elements[m]._animations[n];
@@ -175,9 +196,15 @@ export default class HeaderBar extends Component {
                         case ElementType.SHAPE:
                             const newShape = new ShapeInfo(newE.shapeType, newE.x, newE.y, newE.rotation, newE.color, newE.opacity, newE.width, newE.height, newE.stroke, newE.strokeWidth, newE.shadowColor, newE.shadowBlur, newE.cornerRadius, newE.numPoints, newE.pointerLength, newE.pointerWidth, newE.isPosTool);
                             newElement = new Element(ElementType.SHAPE, newShape);
-                            newScene.addElement(newElement);
                             newElement.start(jsonObj[i]._elements[m]._start);
                             newElement.duration(jsonObj[i]._elements[m]._duration);
+                            newScene.addElement(newElement);
+                            //时间片段
+                            fragments.map((fragment, fragmentIndex) => {
+                                let newFragment = new Fragment(fragment._start, fragment._duration)
+                                newElement.updateFragment(fragmentIndex, newFragment);
+                                return fragment;
+                            })
                             //animation
                             for (let n = 0; n < jsonObj[i]._elements[m]._animations.length; n++) {
                                 aniM = jsonObj[i]._elements[m]._animations[n];
@@ -193,8 +220,6 @@ export default class HeaderBar extends Component {
                             WebApi.GetGIFAsset(videoId).then(fileURL => {
                                 const newVideo = new VideoInfo(newE.assetId, newE.name, fileURL, newE.duration, newE.x, newE.y, newE.width, newE.height, newE.rotation, newE.opacity);
                                 newElement = new Element(ElementType.VIDEO, newVideo);
-                                newElement.start(jsonObj[i]._elements[m]._start);
-                                newElement.duration(jsonObj[i]._elements[m]._duration);
                                 //animation
                                 for (let n = 0; n < jsonObj[i]._elements[m]._animations.length; n++) {
                                     aniM = jsonObj[i]._elements[m]._animations[n];
@@ -207,7 +232,15 @@ export default class HeaderBar extends Component {
                                 //更新newElement
                                 //console.log("newElement",newElement)
                                 this.props.addElement(newElement);
+                                newElement.start(jsonObj[i]._elements[m]._start);
+                                newElement.duration(jsonObj[i]._elements[m]._duration);
                                 newScene.addElement(newElement);
+                                //时间片段
+                                fragments.map((fragment, fragmentIndex) => {
+                                    let newFragment = new Fragment(fragment._start, fragment._duration)
+                                    newElement.updateFragment(fragmentIndex, newFragment);
+                                    return fragment;
+                                })
                                 //add videoResource to videoList
                                 let videoResource = {};
                                 videoResource.id = newElement.id();
@@ -225,12 +258,18 @@ export default class HeaderBar extends Component {
                             WebApi.GetGIFAsset(audioId).then(fileURL => {
                                 const newAudio = new AudioInfo(newE.assetId, newE.name, fileURL, Math.round(newE.duration), newE.backgroundmusic, newE.volume);
                                 newElement = new Element(ElementType.AUDIO, newAudio);
-                                newElement.start(jsonObj[i]._elements[m]._start);
-                                newElement.duration(jsonObj[i]._elements[m]._duration);
                                 //更新newElement
                                 //console.log("newElement",newElement)
                                 this.props.addElement(newElement);
+                                newElement.start(jsonObj[i]._elements[m]._start);
+                                newElement.duration(jsonObj[i]._elements[m]._duration);
                                 newScene.addElement(newElement);
+                                //时间片段
+                                fragments.map((fragment, fragmentIndex) => {
+                                    let newFragment = new Fragment(fragment._start, fragment._duration)
+                                    newElement.updateFragment(fragmentIndex, newFragment);
+                                    return fragment;
+                                })
                                 //add audioResource to audioList
                                 let audioResource = {};
                                 audioResource.id = newElement.id();

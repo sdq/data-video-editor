@@ -1,10 +1,28 @@
 import * as d3 from 'd3';
-import chinaData from '@/datasets/map/chinaGeo';
-import worldData from '@/datasets/map/worldGeo';
-import usStateData from '@/datasets/map/usStateGeo';
+import chinaData from './geo/chinaGeo';
+import worldData from './geo/worldGeo';
+import usStateData from './geo/usStateGeo';
 import { getData, getMapType} from './helper';
 import _ from 'lodash';
 
+const mapParams = {
+    "ChinaMap": {
+        geoFeatures: chinaData.features,
+        center: [102, 35],
+        scale: 550 //TODO: 根据屏幕大小做适配
+    },
+    "WorldMap": {
+        geoFeatures: worldData.features,
+        center: [0, 30],
+        scale: 80//TODO: 根据屏幕大小做适配
+    },
+    "USMap": {
+        geoFeatures: usStateData.features,
+        center: [487.5, 305], //TODO:暂时显示不出来，需调试
+        scale: 550//TODO: 根据屏幕大小做适配
+    },
+
+}
 
 const draw = (props) => {
     let a = document.createElement("div");
@@ -26,36 +44,19 @@ const draw = (props) => {
     //  获取地图类型
     let chartType = getMapType(parseData, encoding);
     //console.log("parseData...chartType", chartType)
-    let geoFeatures;
-    let center;
-    let scale;
+    let mapdata = {};
     if (!chartType) { //默认中国 
-        geoFeatures = chinaData.features
-        center = [102, 35];
-        scale = 550;
+        mapdata = mapParams.ChinaMap
     } else {
         //console.log("chartType...", chartType)
-        if (chartType === 'ChinaMap') { //中国地图
-            //console.log("ChinaMap...")
-            geoFeatures = chinaData.features
-            center = [102, 35];
-            scale = 550;
-        } else if (chartType === 'WorldMap') { //世界地图
-            //console.log("WorldMap...")
-            //
-            geoFeatures = worldData.features;
-            center = [0, 30];
-            scale = 80;
-        } else if (chartType === 'USMap') { //美国地图
-            //console.log("USMap...")
-            geoFeatures = usStateData.features;
-            center = [487.5, 305];
-            scale = 550;
+        if (chartType === 'ChinaMap') {
+            mapdata = mapParams.ChinaMap
+        } else if (chartType === 'WorldMap') {
+            mapdata = mapParams.WorldMap
+        } else if (chartType === 'USMap') {
+            mapdata = mapParams.USMap
         } else { //默认中国地图
-            //console.log("else...")
-            geoFeatures = chinaData.features;
-            center = [102, 35];
-            scale = 550;
+            mapdata = mapParams.ChinaMap
         }
     }
 
@@ -106,8 +107,8 @@ const draw = (props) => {
 
     // 定义地图投影
     const projection = d3.geoMercator()
-        .center(center)
-        .scale(scale)
+        .center(mapdata.center)
+        .scale(mapdata.scale)
         .translate([width / 2, height / 2]);
     // 定义地理路径生成器
     const path = d3.geoPath()
@@ -115,7 +116,7 @@ const draw = (props) => {
 
     //包含中国各省路径的分组元素
     svg.selectAll('path')
-        .data(geoFeatures)
+        .data(mapdata.geoFeatures)
         .enter()
         .append('path')
         .attr('stroke', '#000')

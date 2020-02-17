@@ -57,7 +57,7 @@ const mapDispatchToProps = dispatch => {
         cleanInterationLayer: (isClean) => dispatch(canvasActions.cleanInterationLayer(isClean)),
         //project
         addProject: (source) => dispatch(videoActions.addProject(source)),
-        removeProject: () => dispatch(videoActions.removeProject()),
+        removeProject: () => dispatch(videoActions.removeProject())
     }
 }
 

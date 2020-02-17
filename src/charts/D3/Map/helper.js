@@ -1,8 +1,8 @@
 import * as d3 from 'd3';
 import _ from 'lodash';
-import chinaData from '@/datasets/map/chinaGeo';
-import worldData from '@/datasets/map/worldGeo';
-import usStateData from '@/datasets/map/usStateGeo';
+import chinaData from './geo/chinaGeo';
+import worldData from './geo/worldGeo';
+import usStateData from './geo/usStateGeo';
 //验证是否是中文
 var pattern = new RegExp("[\u4E00-\u9FA5]+");
 
@@ -12,7 +12,7 @@ const getData = (rawData, encoding) => {
         isEN: true
     }
     let values = [];
-    for (var i = 0; i < rawData.length; i++) {
+    for (let i = 0; i < rawData.length; i++) {
         if (encoding.color) { //有数值
             if (i === 0) {  //一次就可以判断出中英文
                 if (pattern.test(rawData[i][encoding.area.field])) { //中文
@@ -22,13 +22,13 @@ const getData = (rawData, encoding) => {
             }
             //console.log("开始值:",rawData[i][encoding.area.field],values[rawData[i][encoding.area.field]])
             let keys = Object.keys(values);
-            let isInList = keys.some(key => {
-                if (key === rawData[i][encoding.area.field]) { //类别存在，累加  
-                    values[rawData[i][encoding.area.field]] += parseInt(rawData[i][encoding.color.field]) //索引号为各省的名称
-                    return true;
-                }
-                return false;
-            })
+            let isInList = false;
+            for (let m = 0; m < keys.length; m++) {
+                if (keys[m] !== rawData[i][encoding.area.field]) continue;
+                values[rawData[i][encoding.area.field]] += parseInt(rawData[i][encoding.color.field]) //索引号为各省的名称
+                isInList = true
+                break;
+            }
             //console.log("结束值",isInList,values[rawData[i][encoding.area.field]])
             if (!isInList) {
                 values[rawData[i][encoding.area.field]] = parseInt(rawData[i][encoding.color.field])//索引号为各省的名称
