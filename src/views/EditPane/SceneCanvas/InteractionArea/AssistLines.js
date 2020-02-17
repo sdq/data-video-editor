@@ -100,7 +100,10 @@ export default class AssistLines extends Component {
         
         //显示固定辅助线和动态辅助线
         return (
-            <div style={{ position: 'absolute', zIndex: 1 }}>
+            <div style={{ 
+            position: 'absolute', 
+            zIndex: 1 ,
+           }}>
                 
                 {/* 四周 */}
                 <div style={{ display: marginLeftL < margin ? 'block' : 'none', position: 'absolute', zIndex: 1, marginLeft: 1, height: canvasH, width: 1, borderLeftColor: assistlinecolor, borderLeftWidth: 1, borderLeftStyle: 'dashed' }} />

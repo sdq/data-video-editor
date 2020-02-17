@@ -19,15 +19,22 @@ export default class ChartInteractionArea extends Component {
             return null;
         }
         return (
-            <div style={{ position: 'absolute', zIndex: 1, marginLeft: this.chartInfo.x * scale, marginTop: this.chartInfo.y * scale }}>
-                <video
-                    width={this.chartInfo && this.chartInfo.width * scale}
-                    height={this.chartInfo && this.chartInfo.height * scale}
-                    autoPlay
+               <video
+               style={{
+                    position: 'absolute', 
+                    zIndex: 1,
+                    marginTop: this.chartInfo.y * scale,
+                    marginLeft: this.chartInfo.x * scale, 
+                    transformOrigin:"left top",
+                    transform:"rotate("+this.props.currentElement.info().rotation+"deg)",
+                    width:this.chartInfo && this.chartInfo.width * scale,
+                    height:this.chartInfo && this.chartInfo.height * scale, 
+                  }}
+                  autoPlay
                 >
                     <source src={this.chartInfo.src} />
                 </video>
-            </div>
+
         )
     }
 }

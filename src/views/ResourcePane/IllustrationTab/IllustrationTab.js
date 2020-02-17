@@ -88,6 +88,7 @@ export default class ImageTab extends Component {
     };
 
 
+
     handleColorChange = (value) => {
         let color = value.hex;
         this.setState({
@@ -131,21 +132,20 @@ export default class ImageTab extends Component {
 
 
     render() {
-
         const popover = {
             position: 'absolute',
             //position: 'relative',
-            left: '-180px',
             zIndex: '2',
         }
         const cover = {
             position: 'fixed',
             //position:
-            // top: '0px',
-            //right: '0px',
-            // bottom: '0px',
-            // left: '0px',
+            top: '0px',
+            right: '0px',
+            bottom: '0px',
+            left: '0px',
         }
+
 
 
         //define
@@ -183,22 +183,7 @@ export default class ImageTab extends Component {
         return (
             <div className="imagetab" style={{ height: this.props.contentHeight }}>
                 <Row>
-                    <Col span={20}>
-                        <Search
-                            size="small"
-                            placeholder="search illustration"
-                            onChange={value => this.onSearch(value)}
-                        />
-                    </Col>
-                    <Col span={3} style={{ margin: '1px 0px 0px 7px', fontSize: '14px' }}>
-                        {/* <Button onClick={this.handleColorClick} 
-                        style={{ width: '100%', height: "24px", margin: '0px 0px 0px 0px', 
-                        background: primaryColor, border: "#ffffff", verticalAlign: "middle" }}></Button>
-                        {this.state.displayColorPicker ? <div style={popover}>
-                            <div style={cover} onClick={this.handleColorClose} />
-                            <SketchPicker color={primaryColor} onChange={this.handleColorChange} />
-                        </div> : null} */}
-
+                    <Col span={3} style={{ margin: '1px 4px 0px 7px', fontSize: '14px' }}>
                     <Button size='small' icon="bg-colors" onClick={ this.handleColorClick } 
                     style={{width: '100%',height: "24px",margin: '0px 0px 0px 0px',
                     background:primaryColor,border:"#ffffff",verticalAlign: "middle"}}></Button> 
@@ -206,6 +191,13 @@ export default class ImageTab extends Component {
                      <div style={ cover } onClick={ this.handleColorClose } />
                      <SketchPicker color={primaryColor}  onChange={this.handleColorChange}  />
                      </div>:null }
+                    </Col>
+                    <Col span={19}style={{ margin: '3px 4px 0px 0px' }} >
+                        <Search
+                            size="small"
+                            placeholder="search illustration"
+                            onChange={value => this.onSearch(value)}
+                        />
                     </Col>
                 </Row>
                 <Collapse

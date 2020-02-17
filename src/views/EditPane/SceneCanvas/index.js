@@ -133,8 +133,10 @@ export default class EditCanvas extends Component {
             this.setState({
                 dbClickedElementIndex: eleIndex,
             });
-            this.props.cleanInterationLayer(false);
 
+            if(dbElement.type() !== ElementType.SHAPE){
+                this.props.cleanInterationLayer(false);
+            }
             if (dbElement.type() === ElementType.TEXT) {
                 this.setState({
                     showTextEditor: true,
@@ -151,6 +153,7 @@ export default class EditCanvas extends Component {
                 this.setState({
                     showChartPreview: true,
                 })
+
             } 
         }
     }
@@ -174,12 +177,11 @@ export default class EditCanvas extends Component {
 
     render() {
         //isPerforming判断是否在播放，showPathLayer用于anicard拖拽管理，isElementSelected判断是否有元素被选中,判断选中的元素是否含有path动画
-
+        const { showResourcePane, showToolPane} = this.props;
         const { isPerforming,showPathLayer, isCleanInterationLayer} = this.props; 
-        //const canvasW = 800*(this.props.contentHeight-100)/450;
         const canvasW = this.props.contentWidth;
         const canvasH = this.props.contentHeight-100;
-        const { showResourcePane, showToolPane} = this.props;
+
 
         //当宽高同时变化，按照最小的scale缩放
         const scaleX = canvasW/800;
@@ -193,7 +195,7 @@ export default class EditCanvas extends Component {
             fakeHeight = canvasH;
         }else {
             fakeWidth = canvasW;
-            fakeHeight = canvasW*450/800;
+            fakeHeight =canvasW*450/800;
         }
         
 
@@ -253,8 +255,8 @@ export default class EditCanvas extends Component {
                 marginTop:
                 showResourcePane&&showToolPane?(canvasH-fakeHeight)/2+'px'
                 :!showResourcePane&&showToolPane?(canvasH-fakeHeight)/2+'px'
-                :showResourcePane&&!showToolPane?'0px'
-                :'0px',                    
+                :showResourcePane&&!showToolPane?(canvasH-fakeHeight)/2+'px'
+                :(canvasH-fakeHeight)/2+'px',                    
                 }
             } 
                  >
