@@ -90,18 +90,19 @@ export default class  PathLayer extends Component {
     }
 
     componentWillReceiveProps(){
+        console.log("ReceiveProps")
         //切换element，state状态清空
         this.setState({
             x2: "",
             y2: "",
         });
+
     }
-
-
 
 
     render() {
         //动态更新
+        console.log(this.props.currentElement)
         if(this.props.currentElement && this.props.currentElement.info()){
 
             if (this.props.transformInfo){

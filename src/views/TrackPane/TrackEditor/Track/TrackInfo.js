@@ -22,11 +22,11 @@ export default class TrackInfo extends Component {
     }
 
     deleteElement() {
-        this.props.unselectElement();
         const deleteIndex = this.props.index;
         const newScene = Object.assign({},this.props.currentScene);
         newScene.elements().splice(deleteIndex, 1);
         this.props.updateScene(this.props.sceneIndex, newScene);
+        this.props.unselectElement();
     }
 
     render() {

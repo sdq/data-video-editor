@@ -29,12 +29,17 @@ export default class VideoAnimator extends Component {
         }
 
         return (
-            <div style={{marginLeft:this._videoInfo && this._videoInfo.x*scale,marginTop:this._videoInfo && this._videoInfo.y*scale}} >
+            <div style={{
+                marginLeft:this._videoInfo && this._videoInfo.x*scale,
+                marginTop:this._videoInfo && this._videoInfo.y*scale,
+                transformOrigin:"left top",
+                transform:"rotate("+this.props.currentElement.info().rotation+"deg)",
+                }} >
                 <Player
                      ref={(player) => { this.videoPlayer = player }}
                      fluid={false}
                      width={ this._videoInfo && this._videoInfo.width*scale }
-                     height={ this._videoInfo && this._videoInfo.height*scale }
+                     height={ this._videoInfo && this._videoInfo.height*scale }  
                     autoPlay
                 >
                     <source src={this._videoInfo.src} />

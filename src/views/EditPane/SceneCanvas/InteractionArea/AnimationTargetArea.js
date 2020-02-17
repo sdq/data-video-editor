@@ -19,6 +19,7 @@ class AnimationTargetArea extends Component {
         const { canDrop, isOver, connectDropTarget, currentElement } = this.props;
         const isActive = canDrop && isOver;
         const canvasH = this.props.contentHeight-100;
+
         let backgroundColor = 'white';
         if (isActive) {
 			backgroundColor = Color.BLUE;
@@ -35,6 +36,8 @@ class AnimationTargetArea extends Component {
                     left: currentElement.info().x*(canvasH/450),
                     width: currentElement.info().width*(canvasH/450),
                     height: currentElement.info().height*(canvasH/450),
+                    transformOrigin:"left top",
+                    transform:"rotate("+currentElement.info().rotation+"deg)",
                     backgroundColor: backgroundColor,
                     opacity: 0.5,
                 }}

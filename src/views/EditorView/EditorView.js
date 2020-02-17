@@ -50,11 +50,16 @@ export default class EditorView extends Component {
       }
 
     handleResize = e => {
+        const {showResourcePane, showToolPane} = this.props;
         this.setState({
             windowWidth:window.innerWidth,
             windowHeight:window.innerHeight,
             contentHeight:window.innerHeight-370,
-            contentWidth:window.innerWidth-660,
+            contentWidth:
+            showResourcePane&&showToolPane?window.innerWidth-660
+            :!showResourcePane&&showToolPane?window.innerWidth-300
+            :showResourcePane&&!showToolPane?window.innerWidth-360
+            :window.innerWidth
         })
       }
 
@@ -89,7 +94,7 @@ export default class EditorView extends Component {
                     <Layout style={{ height: contentHeight+'px' }}>
                         <Sider 
                             width={360} 
-                            style={{ background: '#fff', height: contentHeight+'px',
+                            style={{background : '#fff', height: contentHeight+'px',
                             borderRightStyle: "solid",
                             borderRightWidth: "1px",
                             borderRightColor: "#FFC107",
@@ -126,7 +131,8 @@ export default class EditorView extends Component {
                             {/* 收起右边栏按钮 */}
                             <div className="maskbutton2" 
                             onClick={this.showTool}
-                            style={{right:showToolPane?(windowWidth<1300?298-(1300-windowWidth)+"px":"298px"):"0px",top:canvasH/2+33+"px",width:"18px",}}>
+                            style={{right:showToolPane?"298px":"0px",top:canvasH/2+33+"px",width:"18px",}}>
+                            {/* style={{right:showToolPane?(windowWidth<1300?298-(1300-windowWidth)+"px":"298px"):"0px",top:canvasH/2+33+"px",width:"18px",}}> */}
                             <p style={{marginLeft:"4px",marginTop:"3px"}} >{showToolPane?">":"<" }</p>
                             </div>
                         </Sider>
