@@ -40,6 +40,7 @@ export default class innerAnimationRecorder {
         recorder = new MediaRecorder(stream, options);
         this.recorder = recorder;
         recorder.start();
+        this.isStopCreatUrl = false;
         recorder.ondataavailable = function (event) {
             data.push(event.data);
             // console.log("event.data", event.data, recorder.state)
@@ -73,22 +74,24 @@ export default class innerAnimationRecorder {
                 recorder.stop();
                 this.recorder = null
                 setTimeout(() => {
-                    let videoBlob = new Blob(data, { type: "video/mp4" });
-                    url = URL.createObjectURL(videoBlob);
-                    //fileChange
-                    // FileChange.blobToDataURL(videoBlob, (dataURI) => {
-                    //     let base64Data = dataURI.split(",")[1];
-                    //     console.log("base64Data", base64Data)
-                    //     let folderId = '4962';
-                    //     let name = "chartvideo";//重名会引起接口报错
-                    //     let type = 'video' //文件夹不会显示此类型文件
-                    //     WebApi.CreatNewAsset(folderId, type, name, dataURI).then(resolve => {
-                    //         console.log("上传", resolve.data.id)
-                    //     })
-                    // })
-                    //console.log("url...", url)
-                    resolve(url)
-                }, 2000)
+                    if (!this.isStopCreatUrl) {
+                        let videoBlob = new Blob(data, { type: "video/mp4" });
+                        url = URL.createObjectURL(videoBlob);
+                        //fileChange
+                        // FileChange.blobToDataURL(videoBlob, (dataURI) => {
+                        //     let base64Data = dataURI.split(",")[1];
+                        //     console.log("base64Data", base64Data)
+                        //     let folderId = '4962';
+                        //     let name = "chartvideo";//重名会引起接口报错
+                        //     let type = 'video' //文件夹不会显示此类型文件
+                        //     WebApi.CreatNewAsset(folderId, type, name, dataURI).then(resolve => {
+                        //         console.log("上传", resolve.data.id)
+                        //     })
+                        // })
+                        console.log("setTimeout...", url)
+                        resolve(url)
+                    }
+                }, 16)
             }
         })
     }
@@ -96,9 +99,10 @@ export default class innerAnimationRecorder {
     stop = () => {
         //console.log("用户退出录制过程...")
         if (this.recorder && recorder.state === 'recording') {
-           //结束录制
-           recorder.stop();
-           this.recorder = null 
+            //结束录制
+            recorder.stop();
+            this.recorder = null;
+            this.isStopCreatUrl = true; //此种情况是，在录制过程中，取消录制
         }
         //console.log("用户退出录制过程..recorder.", this.recorder)
     }

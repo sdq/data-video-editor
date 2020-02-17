@@ -21,6 +21,7 @@ export const selectedAnimation = state => state.vis.selectedAnimation;
 export const selectedAnimationIndex = state => state.vis.selectedAnimationIndex;
 export const isSelectingChartElement = state => state.vis.isSelectingChartElement;
 export const selectingParameter = state => state.vis.selectingParameter;
+export const chartAnimationVideoURL = state => state.vis.chartAnimationVideoUrl;
 
 export const currentData = createSelector(
     dataIndex,

@@ -5,6 +5,7 @@ import ChartEditor from '@/components/ChartEditor';
 import SimpleDataPreview from '@/components/DataPreview/SimpleDataPreview';
 import DataProcessor from '@/components/DataPreview/processor';
 import ChartRecorderInstance from '@/recorder/innerAnimation';
+import createElementUtils from "@/utils/creatElement";
 import { getDefaultSpec } from '@/charts/Info';
 //import _ from 'lodash'
 
@@ -119,14 +120,33 @@ export default class DataTool extends Component {
         // update info dataIndex
         newEle.info().dataIndex = this.props.currentData.dataIndex;
         newEle.info().spec = this.props.displaySpec;
-        newScene.updateElement(newEle, this.props.elementIndex);
-        this.props.updateScene(this.props.sceneIndex, newScene);
-        const elementName = this.props.sceneIndex + '-' + this.props.elementIndex;
-        this.props.updateElement(newEle, this.props.elementIndex, elementName);
-        // Disable editor
-        this.setState({
-            chartvisible: false,
-        });
+        if (this.props.displaySpec.animation.length) { //有配置动画
+            createElementUtils.loadVideoDuration(this.props.chartAnimationVideoURL).then(duration => {
+                //console.log("duration...", typeof duration, duration)
+                newEle.info().src = this.props.chartAnimationVideoURL; //双击可以预览chartAnimationVideo
+                newEle.duration(duration); //更改charteElement解析到的播放时长
+                newEle.fragments()[0].duration(duration); //更新在轨道编辑器中的时间显示
+                newScene.updateElement(newEle, this.props.elementIndex);
+                this.props.updateScene(this.props.sceneIndex, newScene);
+                const elementName = this.props.sceneIndex + '-' + this.props.elementIndex;
+                this.props.updateElement(newEle, this.props.elementIndex, elementName);
+                // Disable editor
+                this.setState({
+                    chartvisible: false,
+                });
+            })
+        } else {
+            newEle.info().src = null; //没有动画
+            newScene.updateElement(newEle, this.props.elementIndex);
+            this.props.updateScene(this.props.sceneIndex, newScene);
+            const elementName = this.props.sceneIndex + '-' + this.props.elementIndex;
+            this.props.updateElement(newEle, this.props.elementIndex, elementName);
+            // Disable editor
+            this.setState({
+                chartvisible: false,
+            });
+        }
+
     }
 
     handleCancel = () => {

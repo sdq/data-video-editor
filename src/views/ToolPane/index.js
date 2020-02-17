@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import ToolPane from './ToolPane';
 import {currentScene, sceneIndex, scenes} from '@/selectors/video';
 import {currentElement, elementIndex, isElementSelected, dragPos,transformInfo} from '@/selectors/canvas';
-import { dataNameList, dataList, fieldsList, displaySpec, currentData, currentVis, channels, choosenAnimation, selectedAnimation, selectedAnimationIndex, isSelectingChartElement, selectingParameter } from '@/selectors/vis';
+import { dataNameList, dataList, fieldsList, displaySpec, currentData, currentVis, channels, choosenAnimation, selectedAnimation, selectedAnimationIndex, isSelectingChartElement, selectingParameter, chartAnimationVideoURL } from '@/selectors/vis';
 import * as videoActions from '@/actions/videoAction';
 import * as canvasActions from '@/actions/canvasAction';
 import * as visActions from '@/actions/visAction';
@@ -32,6 +32,8 @@ const mapStateToProps = state => {
         selectedAnimationIndex: selectedAnimationIndex(state),
         isSelectingChartElement: isSelectingChartElement(state),
         selectingParameter: selectingParameter(state),
+        //Animation
+        chartAnimationVideoURL: chartAnimationVideoURL(state),
     }
 }
 
@@ -70,6 +72,7 @@ const mapDispatchToProps = dispatch => {
         modifyChartAnimation: (index, animation) => dispatch(visActions.modifyChartAnimation(index, animation)),
         removeChartAnimation: (index) => dispatch(visActions.removeChartAnimation(index)),
         reorderChartAnimation: (animations) => dispatch(visActions.reorderChartAnimation(animations)),
+        updatChartInnerAnimationUrl: (url) => dispatch(visActions.updatChartInnerAnimationUrl(url))
     }
 }
 

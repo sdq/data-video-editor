@@ -17,6 +17,8 @@ export default class D3Chart extends Component {
             pointx: 0,
             pointy: 0,
             isSelecting: false,
+            isAnimating: false,
+            isCleanAnimation :false,
         };
         this._animations = [];
         this.drawFramesTimer = 0;
@@ -37,12 +39,6 @@ export default class D3Chart extends Component {
                 this.renderAnimation();
             } else {
                 this.renderChart();
-                if (!this.props.currentElement) return;
-                //此处没有内部动画（或者用户在手动删除）要清除之前保存的chartVideoURL
-                this.props.currentElement.info().src = null   //这样在双击图表，就不显示录制好的video
-                const newScene = _.cloneDeep(this.props.currentScene);
-                newScene.updateElement(this.props.currentElement, this.props.elementIndex);
-                this.props.updateScene(this.props.sceneIndex, newScene);
             }
         } else if (this.props.pointx !== this.state.pointx && this.props.pointy !== this.state.pointy) {
             // dragging animation
@@ -63,6 +59,20 @@ export default class D3Chart extends Component {
             this.setState({
                 isSelecting: false,
             })
+        }else if (this.props.startAnimation && this.state.isAnimating) {
+            //console.log("播放动画...")
+            this.renderAnimation();
+            this.setState({
+                isAnimating: false,
+                isCleanAnimation : true
+            })
+        }else if (this.props.cleanAnimation && this.state.isCleanAnimation) {
+            //console.log("取消动画...")
+            this.renderChart();
+            this.setState({
+                isCleanAnimation: false,
+                isAnimating : true
+            })
         }
     }
     
@@ -73,7 +83,8 @@ export default class D3Chart extends Component {
         newProps.height = 600;
         const svg = this.props.draw(newProps);
         this.setState({
-            showAnimation: this.props.showAnimation
+            showAnimation: this.props.showAnimation,
+            isCleanAnimation : true
         });
         if (svg) {
             const visSource = svg.node().parentNode.innerHTML;
@@ -97,6 +108,7 @@ export default class D3Chart extends Component {
 
 
     renderAnimation = () => {
+        this.props.updatChartInnerAnimationUrl(null);   //播放动画即重新录制  
         this.cancelAnimation();
         let canvasOptions = {
             width: this.props.width,
@@ -113,6 +125,7 @@ export default class D3Chart extends Component {
 
         this.setState({
             specString: JSON.stringify(this.props.spec),
+            isAnimating : true,
         });
         const animations = this.props.spec.animation;
         let animationDelay = 0;
@@ -135,20 +148,7 @@ export default class D3Chart extends Component {
             //播放完毕！ 生成video url
             clearInterval(this.drawFramesTimer)
             chartRecorderInstance.finish().then(VideoURL => {
-                //console.log("VideoURL", VideoURL)
-                if (VideoURL) {
-                    //console.log("this.props.currentElement", this.props.currentElement)
-                    this.props.currentElement.info().src = VideoURL; //VideoURL内存中的地址，上传pimcore转换成线上地址；项目导入导出需要
-                    this.loadVideoDuration(VideoURL).then(duration => {
-                        //console.log("duration...", typeof duration, duration)
-                        this.props.currentElement.duration(duration);
-                        const newScene = _.cloneDeep(this.props.currentScene);
-                        //console.log("fragments()", this.props.currentElement.fragments());
-                        this.props.currentElement.fragments()[0].duration(duration);
-                        newScene.updateElement(this.props.currentElement, this.props.elementIndex);
-                        this.props.updateScene(this.props.sceneIndex, newScene);
-                    })
-                }
+                if (VideoURL) this.props.updatChartInnerAnimationUrl(VideoURL);
             });
         }, totalDelay)
         //totalDelay 是为了倒计时的初始值
@@ -195,28 +195,7 @@ export default class D3Chart extends Component {
             }
         }
     }
-    loadVideoDuration = (url) => {
-        return new Promise((reslove) => {
-            let video = document.createElement('video');
-            let source = document.createElement("source");
-            source.src = url;
-            video.appendChild(source);
-            video.preload = "auto";
-            video.addEventListener("canplay", () => {
-                //console.log("canplay",video.duration,typeof video.duration)
-                if (video.duration === Infinity) {
-                    video.currentTime = 100000;//set the element’s currentTime pointer long past the end of the clip,and the duration property will be updated
-                } else {
-                    reslove(video.duration)
-                }
-            })
-            
-            video.addEventListener("timeupdate", () => {
-                //console.log("timeupdate...", video.duration)
-                reslove(video.duration)
-            })
-        })
-    }
+   
     render() {
         if (this.props.onCanvas) {
             return <ChartImage name={this.props.name} src={this.state.chartImageUrl} getImageRef={this.getImageRef} {...this.props} />;
