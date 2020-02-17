@@ -188,51 +188,61 @@ export default class HeaderBar extends Component {
                             }
                             break;
                         case ElementType.VIDEO:
-                            const newVideo = new VideoInfo(newE.name, newE.src, newE.duration, newE.x, newE.y, newE.width, newE.height, newE.rotation, newE.opacity);
-                            newElement = new Element(ElementType.VIDEO, newVideo);
-                            newElement.start(jsonObj[i]._elements[m]._start);
-                            newElement.duration(jsonObj[i]._elements[m]._duration);
-                            //animation
-                            for (let n = 0; n < jsonObj[i]._elements[m]._animations.length; n++) {
-                                aniM = jsonObj[i]._elements[m]._animations[n];
-                                animation = new AnimationModel(aniM._type, aniM._name);
-                                animation.start(aniM._start);
-                                animation.duration(aniM._duration);
-                                animation.pathinfo(aniM._pathinfo);
-                                newElement.add(animation);
-                            }
-                            //更新newElement
-                            this.props.addElement(newElement);
-                            newScene.addElement(newElement);
-                            //add videoResource to videoList
-                            let videoResource = {};
-                            videoResource.id = newElement.id();
-                            this.createElement(ElementType.VIDEO, newE.src).then(reslove => {
-                                videoResource.element = reslove;
-                                //console.log("添加", videoResource) 
-                                newScene.addVideoTag(videoResource);
-                                this.props.updateScene(this.props.sceneIndex, newScene);
+                            let videoId = newE.assetId;
+                            WebApi.GetGIFAsset(videoId).then(fileURL => {
+                                const newVideo = new VideoInfo(newE.assetId, newE.name, fileURL, newE.duration, newE.x, newE.y, newE.width, newE.height, newE.rotation, newE.opacity);
+                                newElement = new Element(ElementType.VIDEO, newVideo);
+                                newElement.start(jsonObj[i]._elements[m]._start);
+                                newElement.duration(jsonObj[i]._elements[m]._duration);
+                                //animation
+                                for (let n = 0; n < jsonObj[i]._elements[m]._animations.length; n++) {
+                                    aniM = jsonObj[i]._elements[m]._animations[n];
+                                    animation = new AnimationModel(aniM._type, aniM._name);
+                                    animation.start(aniM._start);
+                                    animation.duration(aniM._duration);
+                                    animation.pathinfo(aniM._pathinfo);
+                                    newElement.add(animation);
+                                }
+                                //更新newElement
+                                //console.log("newElement",newElement)
+                                this.props.addElement(newElement);
+                                newScene.addElement(newElement);
+                                //add videoResource to videoList
+                                let videoResource = {};
+                                videoResource.id = newElement.id();
+                                this.createElement(ElementType.VIDEO, newE.src).then(reslove => {
+                                    videoResource.element = reslove;
+                                    //console.log("添加", videoResource) 
+                                    newScene.addVideoTag(videoResource);
+                                    this.props.updateScene(this.props.sceneIndex, newScene);
+                                })
                             })
+
                             break;
                         case ElementType.AUDIO:
-                            const newAudio = new AudioInfo(newE.name, newE.src, Math.round(newE.duration), newE.backgroundmusic, newE.volume);
-                            newElement = new Element(ElementType.AUDIO, newAudio);
-                            newElement.start(jsonObj[i]._elements[m]._start);
-                            newElement.duration(jsonObj[i]._elements[m]._duration);
-                            //更新newElement
-                            this.props.addElement(newElement);
-                            newScene.addElement(newElement);
-                            //add audioResource to audioList
-                            let audioResource = {};
-                            audioResource.id = newElement.id();
-                            //解析
-                            this.createElement(ElementType.AUDIO, newE.src).then(reslove => {
-                                audioResource.element = reslove;
-                                //console.log("添加", audioResource)
-                                newScene.addAudio(audioResource);
-                                this.props.updateScene(this.props.sceneIndex, newScene);
+                            let audioId = newE.assetId;
+                            WebApi.GetGIFAsset(audioId).then(fileURL => {
+                                const newAudio = new AudioInfo(newE.assetId, newE.name, fileURL, Math.round(newE.duration), newE.backgroundmusic, newE.volume);
+                                newElement = new Element(ElementType.AUDIO, newAudio);
+                                newElement.start(jsonObj[i]._elements[m]._start);
+                                newElement.duration(jsonObj[i]._elements[m]._duration);
+                                //更新newElement
+                                //console.log("newElement",newElement)
+                                this.props.addElement(newElement);
+                                newScene.addElement(newElement);
+                                //add audioResource to audioList
+                                let audioResource = {};
+                                audioResource.id = newElement.id();
+                                //解析
+                                this.createElement(ElementType.AUDIO, newE.src).then(reslove => {
+                                    audioResource.element = reslove;
+                                    //console.log("添加", audioResource)
+                                    newScene.addAudio(audioResource);
+                                    this.props.updateScene(this.props.sceneIndex, newScene);
+                                })
+                                //no animation
                             })
-                            //no animation
+
                             break;
                         default:
                             //TODO: remove

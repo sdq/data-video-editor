@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Upload, Button, Icon, Select, message } from 'antd';
 import DataProcessor from '@/components/DataPreview/processor';
-import {getDefaultSpec} from '@/charts/Info';
+import { getDefaultSpec } from '@/charts/Info';
 const { Dragger } = Upload;
 const { Option } = Select;
 const dataProcessor = new DataProcessor();
@@ -15,7 +15,7 @@ export default class DataPanel extends Component {
                 this.props.switchData(this.props.dataNameList.length - 1)
                 message.info('You have changed the chart data.');
                 let elementInfo = this.props.currentElement.info();
-                let defaultStyle= getDefaultSpec(elementInfo.category, elementInfo.type).style;
+                let defaultStyle = getDefaultSpec(elementInfo.category, elementInfo.type).style;
                 let spec = {
                     "encoding": {},
                     "style": defaultStyle,
@@ -40,7 +40,7 @@ export default class DataPanel extends Component {
             this.props.switchData(dataIndex);
             message.info('You have changed the chart data.');
             let elementInfo = this.props.currentElement.info();
-            let defaultStyle= getDefaultSpec(elementInfo.category, elementInfo.type).style;
+            let defaultStyle = getDefaultSpec(elementInfo.category, elementInfo.type).style;
             let spec = {
                 "encoding": {},
                 "style": defaultStyle,
@@ -55,7 +55,7 @@ export default class DataPanel extends Component {
     }
 
     render() {
-        let {currentData, dataNameList} = this.props;
+        let { currentData, dataNameList } = this.props;
         return (
             <div>
                 <div style={{ height: '300px' }} >
@@ -82,8 +82,10 @@ export default class DataPanel extends Component {
                     {dataNameList.map((d, i) => (
                         <Option label={d} key={d}>{d}
                             <span aria-label={d}>
-                                <Button shape="circle" icon="close" size='small' style={{ float: 'right', fontSize: 10 }}
-                                    onClick={(e) => { this.deleteData(i); e.stopPropagation() }} />
+                                {
+                                    (i === 0 || i === 1 || i === 2) ? null : <Button shape="circle" icon="close" size='small' style={{ float: 'right', fontSize: 10 }}
+                                        onClick={(e) => { this.deleteData(i); e.stopPropagation() }} />
+                                }
                             </span>
                         </Option>)
                     )}

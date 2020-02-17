@@ -60,7 +60,7 @@ export default class ChartTab extends Component {
                             )}
                         />
                     </Panel> */}
-                    <Panel header={"D3 (" + d3Charts.length + ")"} key={ChartCategory.D3} activeKey={ChartCategory.D3} className="collaspe-panel">
+                    <Panel header={"Visualization (" + d3Charts.length + ")"} key={ChartCategory.D3} activeKey={ChartCategory.D3} className="collaspe-panel">
                         <List
                             grid={{ gutter: 17, column: 3 }}
                             dataSource={d3Charts}
