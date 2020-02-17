@@ -1,6 +1,9 @@
 import * as d3 from 'd3';
-import {  getCategories, getAggregatedRows } from '../../helper';
+import {  getCategories, getAggregatedRows, getWidth} from '../../helper';
 import _ from 'lodash';
+const config = {
+    "legend-text-color": "#666"
+}
 
 
 const draw = (animation, props) => {
@@ -22,7 +25,7 @@ const draw = (animation, props) => {
                 .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
     //Get Encoding
     const encoding = props.spec.encoding;
-    if(_.isEmpty(encoding) || !('size' in encoding) || _.isEmpty(encoding.size) ){
+    if (_.isEmpty(encoding) || !('size' in encoding) || _.isEmpty(encoding.size)|| !('color' in encoding) || _.isEmpty(encoding.color)) {
         svg.append("circle")
             .attr("cx", width / 2)
             .attr("cy", height / 2)
@@ -104,14 +107,14 @@ const draw = (animation, props) => {
         .attr("opacity","0");
    
     // legend
-    const legend = svg.append("g")
-        .attr("transform", `translate(0, ${height + 140})`);
+    const legend = svg.append("g");
+        // .attr("transform", "translate(-40, 0)");
     var legends = legend.selectAll("legend_color")
         .data(categories)
         .enter()
         .append("g")
         .attr("class", "legend_color")
-        .attr('transform', (d, i) => `translate(${i * (80 + 10) + (width - (categories.length * 80 + (categories.length - 1) * 10)) / 2}, 0)`);
+        .attr('transform', (d, i) => `translate(${-15}, 0)`);//i * (80 + 10) + (width - (categories.length * 80 + (categories.length - 1) * 10)) / 2
 
     legends.append("rect")
         .attr("fill", d => color(d))
@@ -123,10 +126,32 @@ const draw = (animation, props) => {
         .attr("ry", 1.5)
     // .attr("cy", -5);
     legends.append("text")
-        .attr("fill", 'black')
+        .attr("fill", config["legend-text-color"])
         .attr("x", 35)
         .text(d => d);
-        
+
+        let legend_nodes=legends.nodes();
+        let before = legend_nodes[0];
+        let current;
+        let offset = -15;
+
+    for(let i = 1; i< legend_nodes.length; i++){
+        current = legend_nodes[i];
+        if(d3.select(before).select("text").node().getComputedTextLength()){
+            offset += d3.select(before).select("text").node().getComputedTextLength();
+        }else{
+            offset += getWidth(categories[i-1])
+        } 
+        d3.select(current)
+            .attr('transform', `translate(${i*30 + offset}, 0)`);
+        before = current;
+    }
+    if(legend.node().getBBox().width){
+        legend.attr("transform", `translate(${(width - legend.node().getBBox().width)/2}, ${height + 140})`);
+    }else{
+        offset += getWidth(categories[categories.length-1]);
+        legend.attr("transform", `translate(${(width - offset - 30 * categories.length + 20)/2}, ${height + 140})`);
+    }
     let extremeCategory = data[0][encoding.size.field];
 
     if(animation.spec.effect === "filter") {

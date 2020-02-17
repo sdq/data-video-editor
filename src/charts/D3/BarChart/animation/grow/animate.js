@@ -1,7 +1,10 @@
 import * as d3 from 'd3';
-import { getMaxRows } from '../../helper';
+import { getMaxRows, getWidth } from '../../helper';
 import _ from 'lodash';
 
+const config = {
+    "legend-text-color": "#666"
+}
 const offset = 20; // To show whole chart
 
 const draw = (animation, props) => {
@@ -88,26 +91,56 @@ const draw = (animation, props) => {
     }
     // legend
     let colorScale = d3.scaleOrdinal(d3.schemeCategory10);
+    // legend
     const legend = svg.append("g")
-        .attr("transform", `translate(0, ${height + 60})`);
+    //.attr("transform", `translate(0, ${height + 60})`);
+
+
     var legends = legend.selectAll("legend_color")
         .data(series)
         .enter()
         .append("g")
         .attr("class", "legend_color")
-        .attr('transform', (d, i) => `translate(${i * (80 + 10) + (width - (series.length * 80 + (series.length - 1) * 10)) / 2}, 0)`);
+        .attr('transform', (d, i) => `translate(${-15}, 0)`);//i * (80 + 10) + (width - (categories.length * 80 + (categories.length - 1) * 10)) / 2
+
     legends.append("rect")
         .attr("fill", d => colorScale(d))
-        .attr('y', -9)
+        .attr('x', 15)
+        .attr('y', -10)
         .attr("width", '10px')
         .attr('height', '10px')
         .attr("rx", 1.5)
         .attr("ry", 1.5)
     // .attr("cy", -5);
     legends.append("text")
-        .attr("fill", 'black')
-        .attr("x", 15)
+        .attr("fill", config["legend-text-color"])
+        .attr("x", 35)
         .text(d => d);
+
+    let legend_nodes = legends.nodes();
+    let before = legend_nodes[0];
+    let current;
+    let offset = -15;
+
+    for (let i = 1; i < legend_nodes.length; i++) {
+        current = legend_nodes[i];
+        if (d3.select(before).select("text").node().getComputedTextLength()) {
+            offset += d3.select(before).select("text").node().getComputedTextLength();
+        } else {
+            offset += getWidth(series[i - 1])
+        }
+        //console.log("offset1", offset)
+        d3.select(current)
+            .attr('transform', `translate(${i * 30 + offset}, 0)`);
+        before = current;
+    }
+    if (legend.node().getBBox().width) {
+        legend.attr("transform", `translate(${(width - legend.node().getBBox().width) / 2}, ${height + 60})`);
+    } else {
+        offset += getWidth(series[series.length - 1]);
+       // console.log("offset2", offset)
+        legend.attr("transform", `translate(${(width - offset - 30 * series.length + 20) / 2}, ${height + 60})`);
+    }
 }
 
 export default draw;

@@ -1,8 +1,12 @@
 import * as d3 from 'd3';
-import {getCategories, getAggregatedRows, getSize} from '../../helper';
+import {getCategories, getAggregatedRows, getSize, getWidth} from '../../helper';
 import _ from 'lodash';
 
 const offset = 20; // To show whole chart
+
+const config = {
+    "legend-text-color": "#666"
+}
 
 const draw = (animation, props) => {
     let a = document.createElement("div");
@@ -118,7 +122,7 @@ const draw = (animation, props) => {
 
     proportionAreas.attr("fill", d => color(d[encoding.color.field]));
     
-    content.selectAll("text")
+    var text = content.selectAll("text")
     .data(data)
     .enter()
     .append("text")
@@ -147,50 +151,72 @@ const draw = (animation, props) => {
                     }
                 }
                 size_all = size_all + size(Math.sqrt(sizes[i] / Math.PI))
-                return size_all + (chartWidth - 2 * inner - space * (categories.length - 1) * 2.7) / 2;
+                return size_all + (chartWidth - 2 * inner - space * (categories.length - 1)) / 2;
             }
         }
     })
     .text(function (d) {
-        return d[encoding.size.field].toFixed(2);
+        return parseFloat(d[encoding.size.field]).toFixed(2);
         // return animation.spec.value.toFixed(2);
     });
+    // var offset_t = text.node().getComputedTextLength();
+    // text.attr('transform',`translate(${-((offset_t)/2)}, 0)`);
+    var offset_t;
+    var dif = 10;
+    if(text.node().getComputedTextLength()){
+        offset_t = text.node().getComputedTextLength();
+        text.attr('transform', `translate(${-((offset_t)/2)}, 0)`);
+    }else{
+        offset_t = getWidth(parseFloat(sizes[0]).toFixed(2).toString());
+        text.attr('transform', `translate(${-((offset_t + dif)/2)}, 0)`);
+    } 
 
 
 
     //Show Legend
-    // var dataCategories = getCategories(data, encoding);
+    var colorSet = categories;
     var legends = legend.selectAll("legend_color")
-                .data(data)
-                .enter().append("g")
-                .attr("class", "legend_color")
-                // .attr('transform', (d, i) =>`translate(${i * 80 + (chartWidth - 80 * (categories.length))/2}, 0)`);
-                // .attr('transform',(d,i) => `translate(${i*70 + (i-1)*10 +(chartWidth-categories.length*70-(categories.length-1)*10)/2},0)`);
-                .attr('transform', (d, i) =>`translate(${i*(80 + 10) + (chartWidth - (categories.length * 80 + (categories.length - 1) * 10)) / 2}, 0)`);
-                // .attr('transform',(d) => `translate(${(chartWidth-categories.length*70-(categories.length-1)*10)/2},0)`);
-
+        .data(colorSet)
+        .enter().append("g")
+        .attr("class", "legend_color")
+        .attr('transform', (d, i) => `translate(${10}, 0)`); //i * 80 + (chartWidth - 80 * colorSet.length)/2
 
     legends.append("rect")
-                .attr("fill", d => color(d[encoding.color.field]))
-                // .attr("width", 10)
-                // .attr("height", 10)
-                // .attr("y",-15);
-                // // .attr("r", 6)
-                // // .attr("cy", -5);
-                .attr('x', 15)
-                .attr('y', -10)
-                .attr("width", '10px')
-                .attr('height', '10px')
-                .attr("rx", 1.5)
-                .attr("ry", 1.5);
+        .attr("fill", d => color(d))
+        .attr('x', -5)
+        .attr('y', -10)
+        .attr("width", '10px')
+        .attr('height', '10px')
+        .attr("rx", 1.5)
+        .attr("ry", 1.5);
 
-                
     legends.append("text")
-                // .attr("x", 12)
-                // .attr("y",-5)
-                .attr("fill", 'black')
-                .attr("x", 35)
-                .text(d => d[encoding.color.field]);
+        .attr("fill", config["legend-text-color"])
+        .attr("x", 10)
+        .text(d => d)
+        .style('font-family', 'Arial');
+    let legend_nodes = legends.nodes();
+    let before = legend_nodes[0];
+    let current;
+    let offset1 = 10;
+
+    for (let i = 1; i < legend_nodes.length; i++) {
+        current = legend_nodes[i];
+        if (d3.select(before).select("text").node().getComputedTextLength()) {
+            offset1 += d3.select(before).select("text").node().getComputedTextLength();
+        } else {
+            offset1 += getWidth(colorSet[i - 1])
+        }
+        d3.select(current)
+            .attr('transform', `translate(${i*30 + offset1}, 0)`);
+        before = current;
+    }
+    if (legend.node().getBBox().width) {
+        legend.attr("transform", `translate(${(chartWidth - legend.node().getBBox().width)/2}, ${chartHight + 60})`);
+    } else {
+        offset1 += getWidth(colorSet[colorSet.length - 1]);
+        legend.attr("transform", `translate(${(chartWidth - offset1 - 30 * colorSet.length + 20)/2}, ${chartHight + 60})`);
+    }
 
     // Animation
     // let originPosition = _.cloneDeep(data[0].map(function (d) {
@@ -273,7 +299,7 @@ const draw = (animation, props) => {
                 }
             }
         })
-        content.selectAll("text")
+        var text2 = content.selectAll("text")
         .transition()
         .duration(animation.duration)
         .delay(function (d, i) {
@@ -301,10 +327,22 @@ const draw = (animation, props) => {
                         }
                     } 
                     size_all = size_all + size(Math.sqrt(newS[i]/Math.PI))
-                    return size_all + (chartWidth - 2*inner - space*(newX.length-1)*2.7)/2;
+                    return size_all + (chartWidth - 2*inner - space*(newX.length-1))/2;
                 }
             }
         })
+        // var offset_t2 = text2.node().getComputedTextLength();
+        // text2.attr('transform',`translate(${-((offset_t2)/2)}, 0)`);
+        var offset_t2;
+        var dif2 = 10;
+        if (text2.node().getComputedTextLength()) {
+            offset_t2 = text2.node().getComputedTextLength();
+            text2.attr('transform', `translate(${-((offset_t2)/2)}, 0)`);
+        } else {
+            offset_t2 = getWidth(parseFloat(sizes[0]).toFixed(2).toString());
+            text2.attr('transform', `translate(${-((offset_t2 + dif2)/2)}, 0)`);
+        }
+
     }
     else if (animation.spec.effect === 'pull'){
         svg.selectAll("circle")
@@ -718,7 +756,7 @@ const draw = (animation, props) => {
         })
 
         content.selectAll("text").remove();
-        content.selectAll("text")
+        var text1 = content.selectAll("text")
         .data(data)
         .enter()
         .append("text")
@@ -747,14 +785,25 @@ const draw = (animation, props) => {
                         }
                     } 
                     size_all = size_all + size(Math.sqrt(newS[i]/Math.PI))
-                    return size_all + (chartWidth - 2*inner - space*(newX.length-1)*2.7)/2;
+                    return size_all + (chartWidth - 2*inner - space*(newX.length-1))/2;
                 }
             }
         })
         .text(function (d) {
-            return d[encoding.size.field].toFixed(2);
+            return parseFloat(d[encoding.size.field]).toFixed(2);
             // return animation.spec.value.toFixed(2);
         });
+        // var offset_t1 = text1.node().getComputedTextLength();
+        // text1.attr('transform',`translate(${-((offset_t1)/2)}, 0)`);
+        var offset_t1;
+        var dif1 = 10;
+        if(text1.node().getComputedTextLength()){
+            offset_t1 = text1.node().getComputedTextLength();
+            text1.attr('transform', `translate(${-((offset_t1)/2)}, 0)`);
+        }else{
+            offset_t1 = getWidth(parseFloat(sizes[0]).toFixed(2).toString());
+            text1.attr('transform', `translate(${-((offset_t1 + dif1)/2)}, 0)`);
+        } 
 
     }
     

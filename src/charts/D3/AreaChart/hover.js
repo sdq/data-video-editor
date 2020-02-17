@@ -183,7 +183,6 @@ const draw = (props) => {
         choosenAnimation.spec.series = hoverSeries;
         choosenAnimation.spec.category = category
         choosenAnimation.description = "Emphasize the " + choosenAnimation.spec.value + " value in the " + choosenAnimation.spec.series + " series";
-
     }
     props.chooseChartAnimation(choosenAnimation);
 }

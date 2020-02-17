@@ -157,6 +157,7 @@ const draw = (props) => {
             
             /** show legend **/
             var colorSet = getSeries(data, encoding);
+            console.log("colorSet...",colorSet)
             var legends = legend.selectAll("legend_color")
                 .data(colorSet)
                 .enter().append("g")
