@@ -29,8 +29,7 @@ const draw = (props) => {
     let geoFeatures;
     let center;
     let scale;
-    if (!chartType) { //encoding没有映射Country字段 
-        //各个地区（美国or中国）
+    if (!chartType) { //默认中国 
         geoFeatures = chinaData.features
         center = [102, 35];
         scale = 550;
