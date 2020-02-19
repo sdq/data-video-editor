@@ -27,6 +27,7 @@ class AnimationTargetArea extends Component {
 		else if (canDrop) {
 			backgroundColor = Color.LIGHT_BLUE;
         }
+        const  rotation = currentElement?currentElement.info().rotation:0;
         //Gridline、Assistline、interaction使用的不是konva图层，需要将x y w h 在显示前转换成普通canvas系统
         return connectDropTarget(
             <div
@@ -37,7 +38,7 @@ class AnimationTargetArea extends Component {
                     width: currentElement.info().width*(canvasH/450),
                     height: currentElement.info().height*(canvasH/450),
                     transformOrigin:"left top",
-                    transform:"rotate("+currentElement.info().rotation+"deg)",
+                    transform:"rotate("+rotation+"deg)",
                     backgroundColor: backgroundColor,
                     opacity: 0.5,
                 }}
