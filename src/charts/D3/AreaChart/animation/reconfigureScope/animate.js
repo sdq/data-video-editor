@@ -24,7 +24,8 @@ const draw = (animation, props) => {
         let x1 = rangeX[1];
         let scale = (x1 - x0) / 100;
         //TODO: 第三个条件是为了zoom out
-        if (!rangeY || rangeY.length === 0 || rangeY.toString() === [0, d3.max(stackedData[stackedData.length - 1], d => d[1])].toString()) {
+        // || rangeY.toString() === [0, d3.max(stackedData[stackedData.length - 1], d => d[1])].toString()
+        if (!rangeY || rangeY.length === 0) {
             y.domain([0, d3.max(stackedData[stackedData.length - 1], d => d[1])]).nice().range([height, 0]);
         } else {
             y.domain(rangeY);

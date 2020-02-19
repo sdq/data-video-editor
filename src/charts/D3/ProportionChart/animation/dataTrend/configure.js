@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Row, Col, Slider, Radio } from 'antd';
+// import _ from 'lodash';
 
 export default class configure extends Component {
 
@@ -32,7 +33,43 @@ export default class configure extends Component {
         const {animation, currentData, displaySpec} = this.props;
         let data = currentData.data;
         let encoding = displaySpec.encoding;
-        //TODO: parse date
+
+        if(!('time' in encoding) || !('field' in encoding.time)){
+            return (
+                <div>
+                <Row style={{ height: 50 }}> 
+                    <Col span={6}><h3 style={{ marginTop: 6 }}>Range:</h3></Col>
+                    <Col span={18}>
+                        <Radio.Group value={animation.spec.range} onChange={this.handleRangeChange}>
+                            <Radio.Button value="full">Full</Radio.Button>
+                            <Radio.Button value="customize">Customize</Radio.Button>
+                        </Radio.Group>
+                    </Col>
+                </Row>
+                {/* {animation.spec.range === "customize" ? customizedRange : null} */}
+                <Row style={{ height: 50 }}> 
+                    <Col span={6}><h3 style={{ marginTop: 6 }}>Gap:</h3></Col>
+                    <Col span={18}>
+                        <Radio.Group value={animation.spec.gap} onChange={this.handleGapChange}>
+                            <Radio.Button value={1}>Yes</Radio.Button>
+                            <Radio.Button value={0}>No</Radio.Button>
+                        </Radio.Group>
+                    </Col>
+                </Row>
+                    <Row style={{ height: 50 }}> 
+                        <Col span={6}><h3 style={{ marginTop: 6 }}>Duration:</h3></Col>
+                        <Col span={18}>
+                            <Radio.Group value={animation.duration} onChange={this.handleDurationChange}>
+                                <Radio.Button value={1000}>Short</Radio.Button>
+                                <Radio.Button value={2000}>Medium</Radio.Button>
+                                <Radio.Button value={5000}>Long</Radio.Button>
+                            </Radio.Group>
+                        </Col>
+                    </Row>
+                </div>
+            )
+        } else {
+                    //TODO: parse date
         let time = [...new Set(data.map(d => parseInt(d[encoding.time.field], 10)))];
         let maxTime = Math.max(...time);
         let minTime = Math.min(...time);
@@ -87,5 +124,7 @@ export default class configure extends Component {
                 </Row>
             </div>
         )
+        }
+
     }
 }

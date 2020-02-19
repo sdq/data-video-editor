@@ -47,7 +47,55 @@ export default class configure extends Component {
         const {animation, currentData, displaySpec} = this.props;
         let data = currentData.data;
         let encoding = displaySpec.encoding;
-        // let dataSeries = getSeries(data, encoding);
+        if( !('color' in encoding)) {
+            return (
+                <div>
+                    <Row  style={{ height: 50 }}>
+                        <Col span={6}><h3 style={{ marginTop: 6 }}>Category 1:</h3></Col>
+                        <Col span={9}>
+                            {/* <Select value={selectedCategory1} style={{ width: 120, marginTop: 4 }} onChange={this.handleCategory1Change}>
+                                {categories.map((s) => <Option key={s} value={s}>{s}</Option>)}
+                            </Select> */}
+                        </Col>
+                        <Col span={5}>
+                            <Button size={'small'} style={{ marginTop: 8 }} onClick={() => this.props.selectChartElement(true, {type: 'value', key1: 'series1', key2: 'category1'})}>Select</Button>
+                        </Col>
+                    </Row>
+                    <Row  style={{ height: 50 }}>
+                        <Col span={6}><h3 style={{ marginTop: 6 }}>Category 2:</h3></Col>
+                        <Col span={9}>
+                            {/* <Select value={selectedCategory2} style={{ width: 120, marginTop: 4 }} onChange={this.handleCategory2Change}>
+                                {categories.map((s) => <Option key={s} value={s}>{s}</Option>)}
+                            </Select> */}
+                        </Col>
+                        <Col span={5}>
+                            <Button size={'small'} style={{ marginTop: 8 }} onClick={() => this.props.selectChartElement(true, {type: 'value', key1: 'series2', key2: 'category2'})}>Select</Button>
+                        </Col>
+                    </Row>
+                    <Row style={{ height: 50 }}> 
+                        <Col span={6}><h3 style={{ marginTop: 6 }}>Effect:</h3></Col>
+                        <Col span={18}>
+                            <Radio.Group value={animation.spec.effect} onChange={this.handleEffectChange}>
+                                <Radio.Button value="juxtaposition">Juxtaposition</Radio.Button>
+                                {/* <Radio.Button value="superposition">Superposition</Radio.Button>
+                                <Radio.Button value="difference">Difference</Radio.Button> */}
+                            </Radio.Group>
+                        </Col>
+                    </Row>
+                    <Row style={{ height: 50 }}> 
+                        <Col span={6}><h3 style={{ marginTop: 6 }}>Duration:</h3></Col>
+                        <Col span={18}>
+                            <Radio.Group value={animation.duration} onChange={this.handleDurationChange}>
+                                <Radio.Button value={500}>Short</Radio.Button>
+                                <Radio.Button value={1000}>Medium</Radio.Button>
+                                <Radio.Button value={2000}>Long</Radio.Button>
+                            </Radio.Group>
+                        </Col>
+                    </Row>
+                </div>
+            ) 
+        } else{
+            // let dataSeries = getSeries(data, encoding);
         // let series = Object.keys(dataSeries);
         let dataCategories = getCategories(data, encoding);
         let categories = Object.keys(dataCategories);
@@ -135,5 +183,7 @@ export default class configure extends Component {
                 </Row>
             </div>
         )
+        }
+        
     }
 }

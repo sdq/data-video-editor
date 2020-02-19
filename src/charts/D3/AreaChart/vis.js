@@ -1,7 +1,10 @@
 import * as d3 from 'd3';
-import { getStackedData, getSeriesValue, getAggregatedRows } from './helper';
 import _ from 'lodash';
+import { getStackedData, getSeriesValue, getAggregatedRows, getWidth } from './helper';
 
+const config = {
+    "legend-text-color": "#666"
+}
 const draw = (props) => {
     let a = document.createElement("div");
     if (!props.onCanvas) {
@@ -19,13 +22,13 @@ const draw = (props) => {
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    //Get Encoding
+    // Get Encoding
     const encoding = props.spec.encoding;
-    if (_.isEmpty(encoding) || !('x' in encoding) || !('y' in encoding) || _.isEmpty(encoding.x) || _.isEmpty(encoding.y)) {
+    if (_.isEmpty(encoding) || !('x' in encoding) || !('y' in encoding) || _.isEmpty(encoding.x) || _.isEmpty(encoding.y.field)) {
         svg.append("rect")
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
-            .attr("fill", "pink");
+            .attr("fill", "steelblue");
         return svg;
     }
 
@@ -138,24 +141,70 @@ const draw = (props) => {
 
         d3.select("#clip rect").attr("width", width);
 
+        // var legends = legend.selectAll("legend_color")
+        //     .data(series)
+        //     .enter()
+        //     .append("g")
+        //     .attr("class", "legend_color")
+        //     .attr('transform', (d, i) => `translate(${i * (80 + 10) + (width - (series.length * 80 + (series.length - 1) * 10)) / 2}, 0)`);
+        // legends.append("rect")
+        //     .attr("fill", d => colorScale(d))
+        //     .attr('y', -9)
+        //     .attr("width", '10px')
+        //     .attr('height', '10px')
+        //     .attr("rx", 1.5)
+        //     .attr("ry", 1.5)
+        // // .attr("cy", -5);
+        // legends.append("text")
+        //     .attr("fill", 'black')
+        //     .attr("x", 15)
+        //     .text(d => d);
+
+        /** show legend **/
         var legends = legend.selectAll("legend_color")
             .data(series)
-            .enter()
-            .append("g")
+            .enter().append("g")
             .attr("class", "legend_color")
-            .attr('transform', (d, i) => `translate(${i * (80 + 10) + (width - (series.length * 80 + (series.length - 1) * 10)) / 2}, 0)`);
+            .attr('transform', (d, i) => `translate(${10}, 0)`);//i * 80 + (chartWidth - 80 * colorSet.length)/2
+        // legends.append("circle")
+        //     .attr("fill", d => colorScale(d))
+        //     .attr("r", 6)
+        //     .attr("cy", -5);
         legends.append("rect")
             .attr("fill", d => colorScale(d))
             .attr('y', -9)
-            .attr("width", '10px')
-            .attr('height', '10px')
+            .attr("width", 10)
+            .attr('height', 10)
             .attr("rx", 1.5)
             .attr("ry", 1.5)
-        // .attr("cy", -5);
         legends.append("text")
-            .attr("fill", 'black')
+            .attr("fill", config["legend-text-color"])
             .attr("x", 15)
-            .text(d => d);
+            .text(d => d)
+            .style('font-family', 'Arial');
+        let legend_nodes = legends.nodes();
+        let before = legend_nodes[0];
+        let current;
+        let offset = 10;
+
+        for (let i = 1; i < legend_nodes.length; i++) {
+            current = legend_nodes[i];
+            if (d3.select(before).select("text").node().getComputedTextLength()) {
+                offset += d3.select(before).select("text").node().getComputedTextLength();
+            } else {
+                offset += getWidth(series[i - 1])
+            }
+            d3.select(current)
+                .attr('transform', `translate(${i * 30 + offset}, 0)`);
+            before = current;
+        }
+        if (legend.node().getBBox().width) {
+            legend.attr("transform", `translate(${(width - legend.node().getBBox().width) / 2}, ${height + 60})`);
+        } else {
+            offset += getWidth(series[series.length - 1]);
+            legend.attr("transform", `translate(${(width - offset - 30 * series.length + 20) / 2}, ${height + 60})`);
+        }
+
 
     } else if (hasSeries && layout === 'percent') {
         y.domain([0, 1]);
@@ -166,31 +215,73 @@ const draw = (props) => {
             .attr("fill", ({ key }) => colorScale(key))
             .attr("d", percent_area_generator)
 
+        // legends = legend.selectAll("legend_color")
+        //     .data(series)
+        //     .enter()
+        //     .append("g")
+        //     .attr("class", "legend_color")
+        //     .attr('transform', (d, i) => `translate(${i * (80 + 10) + (width - (series.length * 80 + (series.length - 1) * 10)) / 2}, 0)`);
+        // legends.append("rect")
+        //     .attr("fill", d => colorScale(d))
+        //     .attr('y', -9)
+        //     .attr("width", '10px')
+        //     .attr('height', '10px')
+        //     .attr("rx", 1.5)
+        //     .attr("ry", 1.5)
+        // // .attr("cy", -5);
+        // legends.append("text")
+        //     .attr("fill", 'black')
+        //     .attr("x", 15)
+        //     .text(d => d);
+
+        /** show legend **/
+        // colorSet = getSeriesValue(data, encoding);
         legends = legend.selectAll("legend_color")
             .data(series)
-            .enter()
-            .append("g")
+            .enter().append("g")
             .attr("class", "legend_color")
-            .attr('transform', (d, i) => `translate(${i * (80 + 10) + (width - (series.length * 80 + (series.length - 1) * 10)) / 2}, 0)`);
+            .attr('transform', (d, i) => `translate(${10}, 0)`);//i * 80 + (chartWidth - 80 * colorSet.length)/2
         legends.append("rect")
             .attr("fill", d => colorScale(d))
             .attr('y', -9)
-            .attr("width", '10px')
-            .attr('height', '10px')
+            .attr("width", 10)
+            .attr('height', 10)
             .attr("rx", 1.5)
             .attr("ry", 1.5)
-        // .attr("cy", -5);
         legends.append("text")
-            .attr("fill", 'black')
+            .attr("fill", config["legend-text-color"])
             .attr("x", 15)
-            .text(d => d);
+            .text(d => d)
+            .style('font-family', 'Arial');
+        let legend_nodes = legends.nodes();
+        let before = legend_nodes[0];
+        let current;
+        let offset = 10;
+
+        for (let i = 1; i < legend_nodes.length; i++) {
+            current = legend_nodes[i];
+            if (d3.select(before).select("text").node().getComputedTextLength()) {
+                offset += d3.select(before).select("text").node().getComputedTextLength();
+            } else {
+                offset += getWidth(series[i - 1])
+            }
+            d3.select(current)
+                .attr('transform', `translate(${i * 30 + offset}, 0)`);
+            before = current;
+        }
+        if (legend.node().getBBox().width) {
+            legend.attr("transform", `translate(${(width - legend.node().getBBox().width) / 2}, ${height + 60})`);
+        } else {
+            offset += getWidth(series[series.length - 1]);
+            legend.attr("transform", `translate(${(width - offset - 30 * series.length + 20) / 2}, ${height + 60})`);
+        }
+
     } else {
         y.domain([0, d3.max(data, function (d) { return d[encoding.y.field]; })]).range([height, 0]);
         areaG.append("path")
+            .attr('id', 'series_0')
             .style("fill", colorScale(0))
             .attr("d", area_generator(data))
-        // .style('stroke', colorScale(0))
-        // .style('fill-opacity', 0.5);
     }
 
     // let rotate = false
@@ -208,7 +299,7 @@ const draw = (props) => {
     //     tickText.attr('transform', 'translate(14,14) rotate(30)')
 
     areaLayer.append("g")
-        .attr("class", "x axis")        
+        .attr("class", "x axis")
         .call(d3.axisBottom(x))
         .attr("transform", "translate(0," + height + ")")
         .selectAll("text")

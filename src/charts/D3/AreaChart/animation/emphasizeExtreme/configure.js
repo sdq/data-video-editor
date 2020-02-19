@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Row, Col, Select, Radio } from 'antd';
-import { getSeries } from '../../helper';
+import { getSeriesValue } from '../../helper';
 // import _ from 'lodash';
 
 const { Option } = Select;
@@ -38,7 +38,11 @@ export default class configure extends Component {
         const {animation, currentData, displaySpec} = this.props;
         let data = currentData.data;
         let encoding = displaySpec.encoding;
-        let series = Object.keys(getSeries(data, encoding)); 
+        let hasSeries = ('color' in encoding) && ('field' in encoding.color);
+        let series
+        if (hasSeries) {
+            series = getSeriesValue(data, encoding);
+        }   
         let selectSeries = animation.spec.series? animation.spec.series: 'all';
 
         let value = ["Max", "Min"]
@@ -50,7 +54,7 @@ export default class configure extends Component {
                     <Col span={9}>
                         <Select value={selectSeries} style={{ width: 120, marginTop: 4 }} onChange={this.handleSeriesChange}>
                             <Option value="all">All</Option>
-                            {series.map((key) => <Option key={key} value={key}>{key}</Option>)}
+                            {series && series.map((key) => <Option key={key} value={key}>{key}</Option>)}
                         </Select>
                     </Col>
                 </Row>

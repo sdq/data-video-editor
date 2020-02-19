@@ -1,10 +1,12 @@
 import * as d3 from 'd3';
-import { getStackedData, getSeries, getAggregatedRows } from './helper';
+import { getStackedData, getSeries, getAggregatedRows, getWidth } from './helper';
 import ChartAnimationTask from '../ChartAnimationTask';
 import ChartAnimationType from '../ChartAnimationType';
 import _ from 'lodash';
-
-const offset = 20; // To show whole chart
+const config = {
+    "legend-text-color": "#666"
+}
+//const offset = 20; // To show whole chart
 
 const inArea = (point, area) => {
     // check dragging mouse area
@@ -38,12 +40,12 @@ const draw = (props) => {
     }
 
     const margin = { top: 10, right: 10, bottom: 40, left: 40 };
-    const width = props.width - margin.left - margin.right - offset;
-    const height = props.height - margin.top - margin.bottom - offset - 40;
+    const width = props.width - margin.left - margin.right - 20;
+    const height = props.height - margin.top - margin.bottom - 20 - 40;
     let svg = d3.select(a)
         .append("svg")
         .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
+        .attr("height", height + margin.top + margin.bottom + 60)
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -168,13 +170,13 @@ const draw = (props) => {
             if (animationType === ChartAnimationType.EMPHASIZE_SERIES || animationType === ChartAnimationType.EMPHASIZE_EXTREME) {
                 choosenAnimation.spec.series = hoverSeries;
                 if (animationType === ChartAnimationType.EMPHASIZE_SERIES) {
-                    choosenAnimation.description = "Emphasize the "+choosenAnimation.spec.series+" series";
+                    choosenAnimation.description = "Emphasize the " + choosenAnimation.spec.series + " series";
                 } else {
-                    choosenAnimation.description = "Emphasize the " + choosenAnimation.spec.extreme + " in the "+choosenAnimation.spec.series+" series";
+                    choosenAnimation.description = "Emphasize the " + choosenAnimation.spec.extreme + " in the " + choosenAnimation.spec.series + " series";
                 }
             } else if (animationType === ChartAnimationType.RECONFIGURE_ORDER) {
                 choosenAnimation.spec.series = hoverSeries;
-                choosenAnimation.description = "Reconfigure the order to "+ choosenAnimation.spec.series +" series";
+                choosenAnimation.description = "Reconfigure the order to " + choosenAnimation.spec.series + " series";
             } else {
                 choosenAnimation.spec.series1 = hoverSeries;
             }
@@ -206,12 +208,14 @@ const draw = (props) => {
                 });
             if (animationType === ChartAnimationType.EMPHASIZE_CATEGORY) {
                 choosenAnimation.spec.category = hoverCategory;
-                choosenAnimation.description= "Emphasize the category with " + hoverCategory;
+                choosenAnimation.description = "Emphasize the category with " + hoverCategory;
             } else {
                 choosenAnimation.spec.category1 = hoverCategory;
             }
             props.chooseChartAnimation(choosenAnimation);
         }
+
+
 
     } else {
         svg.selectAll(".bar")
@@ -260,6 +264,58 @@ const draw = (props) => {
         .style("text-anchor", "end");
     svg.append("g").call(d3.axisLeft(y));
 
+    // legend
+    let colorScale = d3.scaleOrdinal(d3.schemeCategory10);
+    // legend
+    const legend = svg.append("g")
+    //.attr("transform", `translate(0, ${height + 60})`);
+
+    //console.log("seriesKeys",seriesKeys)
+    var legends = legend.selectAll("legend_color")
+        .data(seriesKeys)
+        .enter()
+        .append("g")
+        .attr("class", "legend_color")
+        .attr('transform', (d, i) => `translate(${-15}, 0)`);//i * (80 + 10) + (width - (categories.length * 80 + (categories.length - 1) * 10)) / 2
+
+    legends.append("rect")
+        .attr("fill", d => colorScale(d))
+        .attr('x', 15)
+        .attr('y', -10)
+        .attr("width", '10px')
+        .attr('height', '10px')
+        .attr("rx", 1.5)
+        .attr("ry", 1.5)
+    // .attr("cy", -5);
+    legends.append("text")
+        .attr("fill", config["legend-text-color"])
+        .attr("x", 35)
+        .text(d => d);
+
+    let legend_nodes = legends.nodes();
+    let before = legend_nodes[0];
+    let current;
+    let offset = -15;
+
+    for (let i = 1; i < legend_nodes.length; i++) {
+        current = legend_nodes[i];
+        if (d3.select(before).select("text").node().getComputedTextLength()) {
+            offset += d3.select(before).select("text").node().getComputedTextLength();
+        } else {
+            offset += getWidth(seriesData[i - 1])
+        }
+        //console.log("offset1", offset)
+        d3.select(current)
+            .attr('transform', `translate(${i * 30 + offset}, 0)`);
+        before = current;
+    }
+    if (legend.node().getBBox().width) {
+        legend.attr("transform", `translate(${(width - legend.node().getBBox().width) / 2}, ${height + 60})`);
+    } else {
+        offset += getWidth(seriesData[seriesData.length - 1]);
+       // console.log("offset2", offset)
+        legend.attr("transform", `translate(${(width - offset - 30 * seriesData.length + 20) / 2}, ${height + 60})`);
+    }
     return svg;
 }
 

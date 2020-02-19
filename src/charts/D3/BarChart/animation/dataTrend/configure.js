@@ -33,7 +33,7 @@ export default class configure extends Component {
         let data = currentData.data;
         let encoding = displaySpec.encoding;
         //TODO: parse date
-        let time = [...new Set(data.map(d => parseInt(d[encoding.time.field], 10)))];
+        let time = [...new Set(data.map(d => parseInt(d[encoding.time && encoding.time.field], 10)))];
         let maxTime = Math.max(...time);
         let minTime = Math.min(...time);
         if (animation.spec.rangeScope.length === 0) {

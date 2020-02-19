@@ -60,7 +60,7 @@ const draw = (animation, props) => {
 
     if (animation.spec.effect === "filter") {
         const tick = 8;
-        if (animation.spec.categoryIndex === '') {
+        if (animation.spec.category === '') {
             if (animation.spec.series === "all") {
                 let mData = [],
                     mDataIndex = [];
@@ -137,9 +137,8 @@ const draw = (animation, props) => {
             }
 
         } else {
-
             // for filter
-            let left = areaG.selectAll("path").filter(d => d.key !== animation.spec.series)
+            let left = areaG.selectAll("path").filter(d => d && d.key !== animation.spec.series)
                 .attr("fill-opacity", 1);
 
             left.attr("fill-opacity", 1)

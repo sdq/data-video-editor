@@ -82,7 +82,7 @@ const animations = {
             type: ChartAnimationType.RECONFIGURE_STYLE,
             task: ChartAnimationTask.RECONFIGURATION,
             title: "Style",
-            description: "Reconfigure the style to the {to} style",
+            description: "Reconfigure the stacked style to the percent style",
             duration: 2000,
             spec: {
                 startLayout: "stacked",
