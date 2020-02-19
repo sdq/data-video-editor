@@ -55,9 +55,9 @@ export const d3Charts = [
         chart: ChartType.PIECHART,
         src: MyURL.OSS+"/charts/piechart.png"
     },
-    // {
-    //     name:"Map",
-    //     chart: ChartType.MAP,
-    //     src: MyURL.OSS+"/charts/piechart.png" //map.png
-    // }
+    {
+        name:"Map",
+        chart: ChartType.MAP,
+        src: MyURL.OSS+"/charts/piechart.png" //map.png
+    }
 ]

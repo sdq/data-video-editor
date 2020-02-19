@@ -6,7 +6,8 @@ import usStateData from '@/datasets/map/usStateGeo';
 //验证是否是中文
 var pattern = new RegExp("[\u4E00-\u9FA5]+");
 
-const getProvinceData = (rawData, encoding) => {
+
+const getData = (rawData, encoding) => {
     let obj = {
         isEN: true
     }
@@ -19,7 +20,21 @@ const getProvinceData = (rawData, encoding) => {
                 }
                 //console.log("pattern",pattern.test(rawData[i][encoding.area.field]),rawData[i][encoding.area.field],obj.isEN)
             }
-            values[rawData[i][encoding.area.field]] = rawData[i][encoding.color.field]//索引号为各省的名称
+            //console.log("开始值:",rawData[i][encoding.area.field],values[rawData[i][encoding.area.field]])
+            let keys = Object.keys(values);
+            let isInList = keys.some(key => {
+                if (key === rawData[i][encoding.area.field]) { //类别存在，累加  
+                    values[rawData[i][encoding.area.field]] += parseInt(rawData[i][encoding.color.field]) //索引号为各省的名称
+                    return true;
+                }
+                return false;
+            })
+            //console.log("结束值",isInList,values[rawData[i][encoding.area.field]])
+            if (!isInList) {
+                values[rawData[i][encoding.area.field]] = parseInt(rawData[i][encoding.color.field])//索引号为各省的名称
+                //console.log("push",rawData[i][encoding.area.field],values[rawData[i][encoding.area.field]] )
+            }
+
         } else { //只有国家，没有数值（0）
             values[rawData[i][encoding.area.field]] = 0
         }
@@ -30,7 +45,7 @@ const getProvinceData = (rawData, encoding) => {
 
 const getMapType = (rawData, encoding) => {
     if (!encoding.area) return null;
-   
+
     let firstColumnValue = rawData[0][encoding.area.field];
     //console.log("rawData[0]",encoding.area.field,firstColumnValue,rawData[0])
     if (pattern.test(firstColumnValue)) { //中文
@@ -294,4 +309,4 @@ const getAggregatedRows = (rawData, encoding) => {
     return data;
 }
 
-export { getCategories, getSeries, getAreaData, getStackedData, getAggregatedRows, getMaxRows, getSeriesValue, getProvinceData, getMapType }
+export { getCategories, getSeries, getAreaData, getStackedData, getAggregatedRows, getMaxRows, getSeriesValue, getData, getMapType }
