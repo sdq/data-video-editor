@@ -2,7 +2,7 @@ import * as d3 from 'd3';
 import chinaData from '@/datasets/map/chinaGeo';
 import worldData from '@/datasets/map/worldGeo';
 import usStateData from '@/datasets/map/usStateGeo';
-import { getProvinceData, getMapType } from './helper';
+import { getData, getMapType} from './helper';
 import _ from 'lodash';
 
 
@@ -25,7 +25,7 @@ const draw = (props) => {
 
     //  获取地图类型
     let chartType = getMapType(parseData, encoding);
-    //console.log("parseData...chartType", chartType, parseData)
+    //console.log("parseData...chartType", chartType)
     let geoFeatures;
     let center;
     let scale;
@@ -74,18 +74,20 @@ const draw = (props) => {
         return svg;
     }
 
-    let provinceData = getProvinceData(parseData, encoding);
+    let encodingData = getData(parseData, encoding);
     //中英文地区值判断
-    let isEnLanguage = provinceData.isEN;
+    let isEnLanguage = encodingData.isEN;
     //将读取到的数据存到数组values，令其索引号为各省的名称
-    let values = provinceData.values;
-    //console.log("values",values)
+    let values = encodingData.values;
+    let encodingValue = Object.values(values);
+    //console.log("encodingValue",encodingValue)
+
     //求最大值和最小值
     let maxValue = 0;
     let minValue = 0;
     if (!_.isEmpty(encoding.color)) {
-        maxValue = d3.max(parseData, (d, i) => d[encoding.color.field]);
-        minValue = d3.min(parseData, (d, i) => d[encoding.color.field]);
+        maxValue = d3.max(encodingValue);
+        minValue = d3.min(encodingValue);
         //console.log("encoding.color.field ", isEnLanguage,encoding.color.field, "parseData ", parseData, " values ", values)
     }
     //console.log("maxValue", maxValue, typeof maxValue, minValue, typeof minValue)
@@ -126,7 +128,7 @@ const draw = (props) => {
             } else {
                 value = isEnLanguage ? values[d.properties.enName] : values[d.properties.name]; //中国与世界地图做中英文适配
             }
-           //console.log("设定各省份的填充色", d.properties.name, d.properties.enName, "数据", values[d.properties.enName])
+            //console.log("设定各省份的填充色", d.properties.name, d.properties.enName, "数据", values[d.properties.enName])
             if (!value) return 'rgb(227, 228, 229)' //不存在数据的国家，显示灰色
             //设定各省份的填充色
             let t = linear(value);
