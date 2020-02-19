@@ -6,16 +6,17 @@ export default class ChartInteractionArea extends Component {
         super(props)
         this.chartInfo = this.props.currentElement && this.props.currentElement.info()
     }
-
+    componentWillMount(){
+        if (!this.chartInfo.src) {
+            //提示用户去图表editor-animation-保存动画
+            message.info("please set Animation Plan in Chart Editor first !")
+        }
+    }
+ 
     render() {
         //画布伸缩
         const scale = (this.props.contentHeight - 100) / 450;
         if (!this.chartInfo) {
-            return null;
-        }
-        if (!this.chartInfo.src) {
-            //提示用户去图表editor-animation-保存动画
-            message.info("please set Animation Plan in Chart Editor first !")
             return null;
         }
         const  rotation = this.props.currentElement?this.props.currentElement.info().rotation:0;

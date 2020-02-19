@@ -71,6 +71,8 @@ export default class DataTool extends Component {
 
 
     handleChartEditor = () => {
+        //清除画布上正在预览的图表。再次回到画布后可以直接双击预览
+        this.props.cleanInterationLayer(true)
         let encoding = this.props.currentVis.spec.encoding;
         let hasEncoding = encoding && (JSON.stringify(encoding.x) !== "{}" || JSON.stringify(encoding.y) !== "{}")
         let index = hasEncoding ? this.props.currentVis.dataIndex : this.props.currentData.dataIndex;
@@ -192,7 +194,10 @@ export default class DataTool extends Component {
         let { dataNameList, currentData } = this.props;
         const text = 'Are you sure to change chart data?（All the encodings will be emptied.）';
         return (
-            <div style={{ padding: '0px 10px 10px 10px', fontSize: '14px', backgroundColor: 'white', height: this.props.contentHeight - 140 + 'px', overflow: 'auto' }}>
+            <div style={{ padding: '0px 10px 10px 10px', fontSize: '14px', backgroundColor: 'white', height: this.props.contentHeight - 140 + 'px', 
+            //overflow: 'auto' 
+            overflowY:"scroll"
+            }}>
                 <div style={{ height: '120px' }} >
                     <Dragger
                         accept=".csv"

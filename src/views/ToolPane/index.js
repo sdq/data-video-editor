@@ -42,6 +42,7 @@ const mapDispatchToProps = dispatch => {
         updateScene: (index, scene) => dispatch(videoActions.updateScene(index, scene)),
         selectElement: (elementIndex, selectElement) => dispatch(canvasActions.selectElement(elementIndex, selectElement)),
         unselectElement: () => dispatch(canvasActions.unselectElement()),
+        cleanInterationLayer: (isClean) => dispatch(canvasActions.cleanInterationLayer(isClean)),
         addElement: (element) => dispatch(canvasActions.addElement(element)),
         removeElement: (elementIndex) => dispatch(canvasActions.removeElement(elementIndex)),
         updateElement: (element, elementIndex, selectElement) => dispatch(canvasActions.updateElement(element, elementIndex, selectElement)),

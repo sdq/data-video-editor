@@ -175,7 +175,7 @@ export default class D3Chart extends Component {
         canvas.width = 600;
         canvas.height = 600; //为了分辨率
         canvg(canvas, source);
-        return canvas.toDataURL('image/png');
+        return canvas.toDataURL('image/png',1.0);
     }
 
     getImageRef = (ref) => {

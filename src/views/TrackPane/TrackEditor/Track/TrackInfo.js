@@ -29,7 +29,8 @@ export default class TrackInfo extends Component {
         const newScene = _.cloneDeep(this.props.currentScene);
         newScene.elements().splice(deleteIndex, 1);
         this.props.updateScene(this.props.sceneIndex, newScene);
-        this.props.cleanInterationLayer(true);
+        this.props.unselectElement();
+        this.props.cleanInterationLayer(true)
     }
 
     render() {
