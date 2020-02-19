@@ -18,6 +18,7 @@ export default class ChartInteractionArea extends Component {
             message.info("please set Animation Plan in Chart Editor first !")
             return null;
         }
+        const  rotation = this.props.currentElement?this.props.currentElement.info().rotation:0;
         return (
                <video
                style={{
@@ -26,7 +27,7 @@ export default class ChartInteractionArea extends Component {
                     marginTop: this.chartInfo.y * scale,
                     marginLeft: this.chartInfo.x * scale, 
                     transformOrigin:"left top",
-                    transform:"rotate("+this.props.currentElement.info().rotation+"deg)",
+                    transform:"rotate("+rotation+"deg)",
                     width:this.chartInfo && this.chartInfo.width * scale,
                     height:this.chartInfo && this.chartInfo.height * scale, 
                   }}

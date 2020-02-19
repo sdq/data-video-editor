@@ -85,6 +85,7 @@ export default class HeaderBar extends Component {
                             newElement = new Element(ElementType.IMAGE, newImage);//为什么不显示
                             newScene.addElement(newElement);
                             newElement.start(jsonObj[i]._elements[m]._start);
+                            //直接设置duration没用
                             newElement.duration(jsonObj[i]._elements[m]._duration);
 
                             //animation

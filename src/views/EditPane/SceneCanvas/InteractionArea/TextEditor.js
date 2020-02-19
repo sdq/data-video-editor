@@ -34,9 +34,31 @@ export default class TextEditor extends Component {
     }
 
     render() {
-             //画布伸缩
-             const scale = (this.props.contentHeight-100)/450;
 
+
+        const canvasW = this.props.contentWidth;
+        const canvasH = this.props.contentHeight-100;
+
+
+        //当宽高同时变化，按照最小的scale缩放
+        const scaleX = canvasW/800;
+        const scaleY = canvasH/450;
+        const scale = scaleX>scaleY?scaleY:scaleX;
+        // //获取现在画布的真实大小
+        // var fakeWidth = 0;
+        // var fakeHeight = 0;
+        // if(scaleX>scaleY){
+        //     fakeWidth = 800*canvasH/450;
+        //     fakeHeight = canvasH;
+        // }else {
+        //     fakeWidth = canvasW;
+        //     fakeHeight =canvasW*450/800;
+        // }
+        
+
+
+
+           //位移偏差
              //不同字体textarea 不同字号 与tranformer的变换伸缩度（暂时忽略其余浏览器）都不同
             let offwidth = 0; 
              //取得浏览器的userAgent字符串
@@ -65,9 +87,14 @@ export default class TextEditor extends Component {
             }; //判断是否IE浏览器
             //仍然需要更精准测试
 
+            //宽度偏差
             offsetW = (this.props.currentElement) ? this.props.currentElement.info().textSize:20;//基础偏差：一个字的偏差
-            offwidth = 0.25-offsetW/500;  //次级偏差：计算伸缩，假定为线性函数（中文） 
+            offwidth = 0.25-offsetW/500;  //次级偏差：计算伸缩，假定为线性函数,进行测试（中文）
             //假如换行的是英文，那么换行时就会出现跳行偏差
+
+
+            //高度偏差
+            offsetH = 10; //应该也是不同设备不相同，普通笔记本先设为10
 
 
         return (
@@ -83,20 +110,20 @@ export default class TextEditor extends Component {
               background:'none',
               color:this.props.currentElement.info().color,
               resize: 'none',
-              lineHeight:(this.props.currentElement) ? this.props.currentElement.info().textSize*scale+'px':'20px',//需要和当前字号相等
+              lineHeight:(this.props.currentElement) ? this.props.currentElement.info().textSize*scale+'px':20*scale+'px',//需要和当前字号相等
               //Elimination of displacement error between textTransform and textEditor
               //判断当前element是否存在，保证编辑时切换scene运行正确
               fontFamily:(this.props.currentElement) ? this.props.currentElement.info().fontFamily:"Arial",
-              fontSize:(this.props.currentElement) ? this.props.currentElement.info().textSize*scale:20,
+              fontSize:(this.props.currentElement) ? this.props.currentElement.info().textSize*scale:20*scale,
               top:(this.props.currentElement) ? (this.props.currentElement.info().y-offsetY)*scale : 0,
               left:(this.props.currentElement) ? (this.props.currentElement.info().x-offsetX)*scale : 0,
-              width:(this.props.currentElement) ? (this.props.currentElement.info().width+offsetW*offwidth)*scale: 0, 
+              width:(this.props.currentElement) ? (this.props.currentElement.info().width+offsetW+offwidth)*scale: 0, 
               height:(this.props.currentElement) ? (this.props.currentElement.info().height+offsetH)*scale: 0,
               fillOpacity:0.5
             }}
-            autofocus  //自动获取焦点 no use
+            autoFocus  //自动获取焦点 
             //cursor={1} //设置光标 no use
-            spellcheck ={false}//关闭拼写检查
+            spellCheck ={false}//关闭拼写检查
             value = {this.state.text}
             onChange={(value) => {this.onTextChange(value)}}
              />

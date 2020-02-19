@@ -27,13 +27,14 @@ export default class VideoAnimator extends Component {
         if (!this._videoInfo) {
             return null;
         }
+        const  rotation = this.props.currentElement?this.props.currentElement.info().rotation:0;
 
         return (
             <div style={{
                 marginLeft:this._videoInfo && this._videoInfo.x*scale,
                 marginTop:this._videoInfo && this._videoInfo.y*scale,
                 transformOrigin:"left top",
-                transform:"rotate("+this.props.currentElement.info().rotation+"deg)",
+                transform:"rotate("+rotation+"deg)",
                 }} >
                 <Player
                      ref={(player) => { this.videoPlayer = player }}
