@@ -3,4 +3,5 @@ export default {
     NOMINAL: 'nominal',
     ORDINAL: 'ordinal',
     TEMPORAL: 'temporal',
+    CATEGORICAL: 'categorical'
 }

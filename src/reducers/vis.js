@@ -3,8 +3,8 @@ import cars from '@/datasets/cars';
 import carsSchema from '@/datasets/carsSchema';
 import countrys from '@/datasets/scatterPlot/countrys';
 import countrysSchema from '@/datasets/scatterPlot/countrysSchema';
-import tourism from '@/datasets/map/tourism';
-import tourismSchema from '@/datasets/map/tourismSchema';
+import nCoV2020 from '@/datasets/map/nCoV2020';
+import nCoV2020Schema from '@/datasets/map/nCoV2020Schema';
 import Color from '@/constants/Color';
 import _ from 'lodash';
 
@@ -20,9 +20,10 @@ const originSpec = {
 const initialState = {
     // data
     dataIndex: 0,
-    dataNameList: ['cars.csv','countrys.csv','tourism.csv'],
-    dataList: [cars,countrys,tourism],
-    fieldsList: [carsSchema,countrysSchema,tourismSchema],
+    dataNameList: ['cars.csv','countrys.csv','nCoV2020.csv'],
+    dataList: [cars,countrys,nCoV2020],
+    fieldsList: [carsSchema,countrysSchema,nCoV2020Schema],
+
     // vis
     specIndex: 0,
     specHistory: [JSON.stringify(originSpec)],

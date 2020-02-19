@@ -1,7 +1,7 @@
 const defaultSpec = {
     "encoding": {
-        "area": { "field": "Area", "type": "nordinal" },
-        "color": {"field": "Value", "type": "nordinal"},
+        "area": { "field": "Country", "type": "categorical" },
+        "color": {"field": "Confirmed", "type": "nordinal"},
     },
     "style": {
     },
