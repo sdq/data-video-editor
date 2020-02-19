@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Icon } from 'antd';
 import Color from '@/constants/Color';
 import ElementType from '@/constants/ElementType';
+import _ from 'lodash';
 import './track.css';
 
 export default class TrackInfo extends Component {
@@ -22,16 +23,17 @@ export default class TrackInfo extends Component {
     }
 
     deleteElement() {
+        this.props.unselectElement();
+        this.props.displayPathLayer(false);
         const deleteIndex = this.props.index;
-        const newScene = Object.assign({},this.props.currentScene);
+        const newScene = _.cloneDeep(this.props.currentScene);
         newScene.elements().splice(deleteIndex, 1);
         this.props.updateScene(this.props.sceneIndex, newScene);
-        this.props.unselectElement();
+        this.props.cleanInterationLayer(true);
     }
 
     render() {
         let {element,isArrowHidden} = this.props;
-        //console.log(element.type(),isArrowHidden)
         var icon;
         var name = '';
         switch (element.type()) {

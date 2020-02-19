@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import TrackPane from './TrackPane';
 import {scenes, sceneIndex, currentScene, isLastScene, isFirstScene} from '@/selectors/video';
-import {currentElements, currentElement, elementIndex, isElementSelected} from '@/selectors/canvas';
+import {currentElements, currentElement, elementIndex, isElementSelected, isCleanInterationLayer} from '@/selectors/canvas';
 import { scenePosition, sceneScale } from '@/selectors/scene';
 import { isPerforming, isScenePerforming, isVideoPerforming } from '@/selectors/player';
 import * as videoActions from '@/actions/videoAction';
@@ -32,6 +32,7 @@ const mapStateToProps = state => {
         dataList: dataList(state),
         //path
         showPathLayer:showPathLayer(state),
+        isCleanInterationLayer: isCleanInterationLayer(state),
     }
 }
 
@@ -53,6 +54,7 @@ const mapDispatchToProps = dispatch => {
         stopScene: (sceneIndex) => dispatch(playerActions.stopScene(sceneIndex)),
         //showpath
         displayPathLayer:(isActive) => dispatch(uiActions.displayPathLayer(isActive)),
+        cleanInterationLayer: (isClean) => dispatch(canvasActions.cleanInterationLayer(isClean)),
         //project
         addProject: (source) => dispatch(videoActions.addProject(source)),
         removeProject: () => dispatch(videoActions.removeProject()),
