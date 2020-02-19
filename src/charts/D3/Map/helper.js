@@ -29,47 +29,24 @@ const getProvinceData = (rawData, encoding) => {
 }
 
 const getMapType = (rawData, encoding) => {
-    if (encoding.area && encoding.area.field === 'Country') {
-        for (let i = 0; i < rawData.length; i++) {
-            if (rawData[i][encoding.area.field] === 'China' || rawData[i][encoding.area.field] === '中国') {
-                continue;
-            }
-            //有不是“China” || "中国"的Country
-            if (pattern.test(rawData[i][encoding.area.field])) { //中文 0
-                //循环找到是否在feature里边
-                if (isInChinaMap(rawData[i][encoding.area.field], 0)) {
-                    return "ChinaMap"
-                } else if (isInWorldMap(rawData[i][encoding.area.field], 0)) {
-                    return "WorldMap"
-                }
-            } else { //英文 1
-                //循环找到是否在feature里边
-                if (isInChinaMap(rawData[i][encoding.area.field], 1)) {
-                    return "ChinaMap"
-                } else if (isInWorldMap(rawData[i][encoding.area.field], 1)) {
-                    return "WorldMap"
-                }
-            }
+    if (!encoding.area) return null;
+   
+    let firstColumnValue = rawData[0][encoding.area.field];
+    //console.log("rawData[0]",encoding.area.field,firstColumnValue,rawData[0])
+    if (pattern.test(firstColumnValue)) { //中文
+        if (isInChinaMap(firstColumnValue, 0)) { //0表示匹配name字段对应国家数值
+            return "ChinaMap"
+        } else if (isInWorldMap(firstColumnValue, 0)) {
+            return "WorldMap"
         }
-        return 'ChinaMap' //所有数据都是“China” || "中国"
-    } else if (encoding.area && encoding.area.field === 'Province') {
-        //中国或者美国
-        for (let i = 0; i < rawData.length; i++) {
-            if (pattern.test(rawData[i][encoding.area.field])) { //中文 0
-                //循环找到是否在feature里边
-                if (isInChinaMap(rawData[i][encoding.area.field], 0)) {
-                    return "ChinaMap"
-                }
-            } else { //英文 1
-                //循环找到是否在feature里边
-                if (isInChinaMap(rawData[i][encoding.area.field], 1)) {
-                    return "ChinaMap"
-                } else if (isInUsStateMap(rawData[i][encoding.area.field], 1)) {
-                    return "USMap"
-                }
-            }
+    } else { //英文
+        if (isInChinaMap(firstColumnValue, 1)) { //1表示匹配enName字段对应国家数值
+            return "ChinaMap"
+        } else if (isInWorldMap(firstColumnValue, 1)) {
+            return "WorldMap"
+        } else if (isInUsStateMap(firstColumnValue)) {
+            return "USMap"
         }
-        return null
     }
     return null
 }
@@ -123,7 +100,7 @@ const isInWorldMap = (value, language) => {
     }
 
 }
-const isInUsStateMap = (value, language) => {
+const isInUsStateMap = (value) => {
     let usStateNameList = usStateData.features;
     for (let i = 0; i < usStateNameList.length; i++) {
         if (value !== usStateNameList[i].properties.name) {
