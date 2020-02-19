@@ -74,8 +74,8 @@ export default class AssistLines extends Component {
 
         //Gridline、Assistline使用的不是konva图层，需要将x y w h 在显示前转换成普通canvas系统
 
-        const canvasW = this.props.contentWidth;
-        const canvasH = this.props.contentHeight-100;
+        var canvasW = this.props.contentWidth;
+        var canvasH = this.props.contentHeight-100;
 
         //当宽高同时变化，按照最小的scale缩放
         const scaleX = canvasW/800;
@@ -97,6 +97,10 @@ export default class AssistLines extends Component {
         y = y*(fakeHeight/originH);
         w = w*(fakeWidth/originW);
         h = h*(fakeHeight/originH);
+
+        canvasH = fakeHeight;
+        canvasW = fakeWidth;
+
         
         //显示固定辅助线和动态辅助线
         return (

@@ -10,7 +10,6 @@ let h = 0;
 
 //以konva为基础的pathlayer
 export default class  PathLayer extends Component {
-
     constructor(props) {
         super(props);
         this.state = {
