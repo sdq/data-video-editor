@@ -90,7 +90,6 @@ export default (state = initialState, action) => {
         case ActionType.ADD_BACKGROUND_MUSIC:
             newState.backgroundMusic = action.backgroundMusic;
             newState.backgroundMusicName = action.elementName;
-            console.log("newState.backgroundMusic",newState.backgroundMusic)
             return newState;     
         default:
             return state

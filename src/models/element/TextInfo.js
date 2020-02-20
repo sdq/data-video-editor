@@ -31,7 +31,9 @@ export default class TextInfo {
                widthTemp += textSize*0.3; // 默认英文大小为中文的0.3宽度（但是每个英文字体宽度本身不同，不同字体差别很大，难以适配）
             }
         }
-        this.width = text ? widthTemp:width; //the number of text*scale
+    
+        //this.width = text ? widthTemp:width; //the number of text*scale
+        this.width = text ? 200:width
         //this.width = text ? text.length * textSize:width; //the number of text*scale
         //this.height = height;//fake height
         this.height = text ? Math.ceil((lengthTemp * textSize)/widthTemp)*textSize : height;// 根据字数、字号、宽度，计算当前行高，不要额外行距,-5为减去最后一行多余行距

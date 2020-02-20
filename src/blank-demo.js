@@ -6,7 +6,8 @@ import AnimationType from './animation/AnimationType';
 import AnimationModel from './animation/AnimationModel';
 
 const demotext = new TextInfo(
-    "欢迎使用",
+    //"欢迎使用",
+    "welcome",
     320,
     205,
     0,
