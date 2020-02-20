@@ -40,27 +40,24 @@ export default class Player {
     get scenePosition() {
         return store.getState().scene.position;
     }
+    get backgroundMusic() {
+        return store.getState().video.backgroundMusic;
+    }
 
-    playScene(backgroundMusicID) {
+    playScene() {
         if (!this.isPerforming) {
             store.dispatch(playerActions.playScene(this.sceneIndex));
             this._clearTimeouts();
             const current = this.scenePosition;
             const end = this.currentSceneDuration;
             const msOffset = (end - current) * 1000;
-            const playScene = true;
-            AudioController.init(this.sceneIndex,current,playScene,backgroundMusicID);
+            AudioController.init(this.sceneIndex,current);
             const n = Math.round(msOffset / 100) + 1; // update every 100ms
             for (let index = 0; index < n; index++) {
                 this._timeouts.push(setTimeout(function () {
                     const position = current + index / 10 ;
                     store.dispatch(sceneActions.setPosition(position));
-                    AudioController.playAudio(backgroundMusicID);
-                    if (index === (n-1)) {
-                    //播放单个场景的停止
-                        this.pauseScene();
-                        store.dispatch(sceneActions.setPosition(0));
-                    }
+                    AudioController.playAudio();
                 }.bind(this), index * 100));
             }
         }
@@ -69,11 +66,10 @@ export default class Player {
     pauseScene() {
         this._clearTimeouts();
         store.dispatch(playerActions.stopScene(this.sceneIndex));
-        AudioController.pauseAudio(this.sceneIndex); 
-        //TODO：暂停后重播没有恢复播放音乐  
+        AudioController.pauseAudio(this.sceneIndex);  
     }
 
-    playVideo(backgroundMusicID) {
+    playVideo() {
         store.dispatch(playerActions.playVideo());
         this._clearTimeouts();
         this._clearVideoTimeouts();
@@ -91,21 +87,13 @@ export default class Player {
                 const end = this.currentSceneDuration;
                 // console.log(end)
                 const msOffset = (end - current) * 1000;
-                const playScene = false;
-                AudioController.init(this.sceneIndex,current,playScene);
+                AudioController.init(this.sceneIndex,current);
                 const n = Math.round(msOffset / 100) + 1; // update every 100ms
                 for (let index = 0; index < n; index++) {
                     this._timeouts.push(setTimeout(function () {
                         const position = current + index / 10 ;
                         store.dispatch(sceneActions.setPosition(position));
-                        const sceneOver = (index === n-1);
-                        // console.log(sceneOver)
-                        AudioController.playAudio(backgroundMusicID,sceneOver)
-                        if (index === (n-1)) {
-                            //this.pauseScene();
-                            this.pauseVideo();
-                            store.dispatch(sceneActions.setPosition(0));
-                        }
+                        AudioController.playAudio()
                     }.bind(this), index * 100));
                 }
             }.bind(this), sceneStart * 1000));
@@ -114,15 +102,22 @@ export default class Player {
         this._videoTimeouts.push(setTimeout(function () {
             store.dispatch(playerActions.stopVideo());
         }, sceneStart * 1000));
+
+
+        if (this.backgroundMusic) {
+            let wholeScene = sceneStart;
+            AudioController.playBackgroundMusic(this.backgroundMusic,wholeScene)   
+        }
     }
 
     pauseVideo() {
         AudioController.pauseAudio(this.sceneIndex)//暂停当前场景
-        AudioController.pauseAudio(0);             //暂停背景音乐
+        if(this.backgroundMusic){
+            AudioController.pauseBackgroundMusic(this.backgroundMusic)//暂停背景音乐
+        }
         this._clearTimeouts();
         this._clearVideoTimeouts();
         store.dispatch(playerActions.stopVideo());
-
     }
 
     _clearTimeouts() {

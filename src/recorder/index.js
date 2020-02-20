@@ -22,7 +22,9 @@ export default class Recorder {
 
     currentScene(index) { return store.getState().video.scenes[index] }
     get scenesCount() { return store.getState().video.scenes.length; }
-
+    get backgroundMusic() {
+        return store.getState().video.backgroundMusic;
+    }
     start(canvasId, duration, timeSlice, playCanvas) {
         if (this.isRecording) {
             return new Promise((_, reject) => {
@@ -45,6 +47,11 @@ export default class Recorder {
                         // })
                         audiolist.push(...audios.map(audio=>audio.element))                      
                     }  
+                    //背景音乐
+                    if(this.backgroundMusic){
+                        audiolist.push(this.backgroundMusic) 
+                    }
+
                    let videos = this.currentScene(k).videos();
                    if (videos.length !== 0){
                        audiolist.push(...videos.map(video=>video))                        

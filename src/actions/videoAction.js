@@ -35,3 +35,10 @@ export const addProject = (source) => ({
 export const removeProject = () => ({
     type: ActionType.REMOVE_PROJECT,
 })
+
+export const addBackgroundMusic = (backgroundMusic,elementName)=> ({
+    type :ActionType.ADD_BACKGROUND_MUSIC,
+    backgroundMusic,
+    elementName
+})
+
