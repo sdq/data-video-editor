@@ -196,8 +196,7 @@ export default class DataTool extends Component {
         return (
             <div style={{ padding: '0px 10px 10px 10px', fontSize: '14px', backgroundColor: 'white', height: this.props.contentHeight - 140 + 'px', 
             //overflow: 'auto' 
-            overflowY:"scroll"
-            }}>
+            overflowY:"scroll",overflowX: "hidden"}}>
                 <div style={{ height: '120px' }} >
                     <Dragger
                         accept=".csv"

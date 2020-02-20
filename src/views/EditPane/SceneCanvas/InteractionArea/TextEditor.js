@@ -27,6 +27,7 @@ export default class TextEditor extends Component {
                 if(e.target.value.indexOf('\n') !== -1){
                     this.props.currentElement.info().height += this.props.currentElement.info().textSize;
                 }
+                if(this.textarea && this.textarea.scrollHeight){ this.props.currentElement.info().height = this.textarea.scrollHeight }
                 return this.props.updateScene(this.props.sceneIndex, newScene);  
                 }       
         } 
@@ -100,6 +101,7 @@ export default class TextEditor extends Component {
         return (
              <div className="TextEditor" style={{display: (this.state.isShowTextArea) ? "block" : "none"}} > 
              <textarea
+             ref={node => { this.textarea = node; }}
              style={{
               // apply many styles to match text on canvas as close as possible
               // remember that text rendering on canvas and on the textarea can be different
@@ -118,7 +120,8 @@ export default class TextEditor extends Component {
               top:(this.props.currentElement) ? (this.props.currentElement.info().y-offsetY)*scale : 0,
               left:(this.props.currentElement) ? (this.props.currentElement.info().x-offsetX)*scale : 0,
               width:(this.props.currentElement) ? (this.props.currentElement.info().width+offsetW+offwidth)*scale: 0, 
-              height:(this.props.currentElement) ? (this.props.currentElement.info().height+offsetH)*scale: 0,
+              //height:(this.props.currentElement) ? (this.props.currentElement.info().height+offsetH)*scale: 0,
+              height: this.textarea?this.textarea.scrollHeight: (this.props.currentElement) ? (this.props.currentElement.info().height + offsetH) * scale : 0,
               fillOpacity:0.5
             }}
             autoFocus  //自动获取焦点 

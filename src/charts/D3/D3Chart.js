@@ -170,10 +170,17 @@ export default class D3Chart extends Component {
 
     getImageUrl = (source) => {
         var canvas = document.createElement('canvas');
-        //canvas.width = this.props.width;
-        //canvas.height = this.props.height;
-        canvas.width = 600;
-        canvas.height = 600; //为了分辨率
+        let ctx = canvas.getContext('2d');
+        var pixelRatio = window.devicePixelRatio || 1;
+        // let width = this.props.width;
+        // let height = this.props.height;
+        let width = 600;
+        let height = 600;
+        canvas.style.width = width + 'px';
+        canvas.style.height = height + 'px';
+        canvas.width = width * pixelRatio;
+        canvas.height = height * pixelRatio;
+        ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
         canvg(canvas, source);
         return canvas.toDataURL('image/png',1.0);
     }
