@@ -25,6 +25,7 @@ const mapDispatchToProps = dispatch => {
         addElement: (element) => dispatch(canvasActions.addElement(element)),
         addScene: (scene) => dispatch(videoActions.addScene(scene)),
         updateScene: (index, scene) => dispatch(videoActions.updateScene(index, scene)),
+        updateBackgroundMusic :(element,elementName)=>dispatch(videoActions.addBackgroundMusic(element,elementName)),
         displayTrackEditor: () => dispatch(uiActions.displayTrackEditor()),
         displayResourceTargetArea: (isActive) => dispatch(uiActions.displayResourceTargetArea(isActive)),
         displayResourcePane: (isActive) => dispatch(uiActions.displayResourcePane(isActive)),

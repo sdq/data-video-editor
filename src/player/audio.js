@@ -23,6 +23,8 @@ export default class AudioController {
         this._audioResources = [];
         this._audioElement = [];
         this._position = 0;
+        this.setTimer = 0; //循环播放背景音乐的
+        this.sceneTimer = 0; //倒计时关闭背景音乐播放的
     }
 
 
@@ -34,7 +36,7 @@ export default class AudioController {
         return store.getState().video.scenes[index]
     }
 
-    init(index, startPlayPosition,playScene,backgroundMusicID) {
+    init(index, startPlayPosition) {
         this.isAudioCanPlays = [];
         this._audioResources = [];
         this._audioElement = [];
@@ -45,24 +47,7 @@ export default class AudioController {
         //todo：音频切割功能
         const scene = this.currentScene(index);
         this._audioResources = scene.audios();
-        // audioResourceswithBackMusic = audioResourceswithBackMusic===""?scene.audios():audioResourceswithBackMusic;
-        // audioResourceswithoutBackMusic = scene.audios();
-        // if(playScene&&index===0){
-        //     for(let i = 0;i<=audioResourceswithoutBackMusic.length;i++){
-        //         //当播放scene0时候先隐藏背景音乐
-        //       if(audioResourceswithoutBackMusic[i].id === backgroundMusicID){
-        //         audioResourceswithoutBackMusic.splice(i,1);//为什么sceneaudio会被删除
-        //       }
-        //     }
-        //     console.log(scene.audios(),audioResourceswithoutBackMusic,audioResourceswithBackMusic)
-        // }
-        // if(!playScene){
-        //     //当播放scene0时候重新获取背景音乐
-        //     console.log(scene.audios(),audioResourceswithBackMusic)
-        //     this._audioResources = audioResourceswithBackMusic;
-        // }
-        //控制第一屏不播放
-        if(!this._audioResources) return
+        if (!this._audioResources) return
         this._audioResources.map(item => {
             this.isAudioCanPlays.push(AudioState.NOTREADY);
             this.audioPlayPosition.push(0);
@@ -75,7 +60,7 @@ export default class AudioController {
         })
     }
 
-    getAudioPlayState(element, index ,backgroundMusicID, sceneOver) {
+    getAudioPlayState(element, index) {
         let elementStart;
         let elementDuration;
         let elementFragments;
@@ -100,11 +85,7 @@ export default class AudioController {
         }
 
         if (scenePosition === elementStart + elementDuration) {
-            if(element.id === backgroundMusicID && !sceneOver){
-                //if has backgroundMusic , don't pause 
-            }else{
-                this.isAudioCanPlays[index] = AudioState.PAUSE;
-            }
+            this.isAudioCanPlays[index] = AudioState.PAUSE;
             return this.isAudioCanPlays[index];
         }
 
@@ -156,12 +137,12 @@ export default class AudioController {
         //可以设置audio.currentTime = audio.buffered.end(audio.buffered.length-1);回到缓冲的最大位置处
     }
 
-    playAudio(backgroundMusicID,sceneOver) {
+    playAudio() {
         this._audioResources.map((item, index) => {
             if(!item.element){
               return item;
             }
-            let playState = this.getAudioPlayState(item, index, backgroundMusicID, sceneOver)
+            let playState = this.getAudioPlayState(item, index)
             //console.log("beforeState====", index,this.beforeState[index])
             //console.log("playState====", index,playState)
             if (playState === AudioState.PLAY) {
@@ -191,7 +172,50 @@ export default class AudioController {
             return item;
         })
     }
+    playMusic(audio) {
+        let playPosition = 0;
+        //Safari浏览器支持该fastSeek方法，Chrome浏览器里没有该方法
+        if ('fastSeek' in audio) {  //Safari
+            //console.log("fastSeek", this.audioPlayPosition[index])
+            audio.fastSeek(playPosition);
+            audio.play();
+        } else {
+            let seekable = audio.seekable;
+            let seekableLength = seekable.length
+            let start;
+            let end;
 
+            for (let s = 0; s < seekableLength; s++) {
+                start = seekable.start(s)
+                end = seekable.end(s)
+                if (playPosition >= start && playPosition <= end) { //在缓存区域可以播放
+                    audio.currentTime = playPosition;
+                    //console.log("audio.currentTime", audio.currentTime)
+                    audio.play();
+                    return;
+                }
+            }
+        }
+    }
+    playBackgroundMusic(audio, scenesDuration) {
+        let duration = Math.round(audio.duration);
+        clearInterval(this.setTimer);
+        this.playMusic(audio); //播放一次
+        this.setTimer = setInterval(() => {
+            this.playMusic(audio);
+        }, duration * 1000) //循环播放
+
+        this.sceneTimer = setInterval(() => {
+            scenesDuration--;
+            //console.log("scenesDuration", scenesDuration)
+            if (scenesDuration <= 0) {
+                //console.log("场景播完了...")
+                clearInterval(this.sceneTimer)
+                clearInterval(this.setTimer) //停止循环播放
+                this.pauseBackgroundMusic(audio) //停止音频
+            }
+        }, 1000)
+    }
     pauseAudio(index) {
         const scene = this.currentScene(index)
         scene.audios().map(item => {
@@ -203,6 +227,14 @@ export default class AudioController {
             this.beforeState.push(AudioState.NOTREADY)
             return item;
         })
+    }
+    pauseBackgroundMusic(audio) {
+        clearInterval(this.setTimer);
+        clearInterval(this.sceneTimer);
+        if (!audio.paused) {
+            audio.pause();
+            //console.log("暂停播放...")
+        }
     }
 
 }

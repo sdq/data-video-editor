@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import EditPane from './EditPane';
-import {currentScene, sceneIndex, scenes, isFirstScene, isLastScene, past, future} from '@/selectors/video';
+import {currentScene, sceneIndex, scenes, isFirstScene, isLastScene, past, future, backgroundMusicName} from '@/selectors/video';
 import {currentElement, currentElements, elementIndex, elementName, isElementSelected, dragPos, transformInfo, isCleanInterationLayer} from '@/selectors/canvas';
 import { scenePosition } from '@/selectors/scene';
 import { isPerforming, isScenePerforming, isVideoPerforming } from '@/selectors/player';
@@ -22,6 +22,7 @@ const mapStateToProps = state => {
         currentScene: currentScene(state),
         past: past(state),
         future: future(state),
+        backgroundMusicName: backgroundMusicName(state),
         elementIndex: elementIndex(state),
         elementName: elementName(state),
         currentElement: currentElement(state),
@@ -69,6 +70,7 @@ const mapDispatchToProps = dispatch => {
         playVideo: () => dispatch(playerActions.playVideo()),
         stopVideo: () => dispatch(playerActions.stopVideo()),
         setPosition: (position) => dispatch(sceneActions.setPosition(position)),
+        updateBackgroundMusic :(element,elementName)=>dispatch(videoActions.addBackgroundMusic(element,elementName)),
         undoCanvas: (index) => dispatch(metaActions.undoCanvas(index)),
         redoCanvas: (index) => dispatch(metaActions.redoCanvas(index)),
         dragElement: (dragPos) => dispatch(canvasActions.dragElement(dragPos)),

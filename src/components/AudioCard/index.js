@@ -59,34 +59,9 @@ const audioSource = {
                 if(!props.info.audio){
                     return null;
                 }
-                //add music element to scene0
-                //删除旧背景音乐
-                if(props.scenes[0].backgroundMusic()!=="none"||!props.scenes[0].backgroundMusic()){
-                for(let i = 0;i<props.scenes[0].elements().length;i++){ 
-                    if(props.scenes[0].elements()[i].info().name === props.scenes[0].backgroundMusic())
-                    {
-                        props.scenes[0].elements().splice(i, 1);
-                    }
-                }
-                }
-                //设置全局backgroundmusicname,用于显示name
-                props.scenes[0].backgroundMusic(item.name);
-                //新增新背景音乐
-                const newbackGroundMusic = new AudioInfo(item.id, item.name,item.src,Math.round( props.info.audio && props.info.audio.duration),true);
-                const newElement = new Element(ElementType.AUDIO, newbackGroundMusic);
-                props.scenes[0].addElement(newElement); //添加给scene0
-                //add audioResource to audioList
-                let audioResource = {};
-                audioResource.id = newElement.id();
-                audioResource.element = props.info.audio
-                props.scenes[0].addAudio(audioResource);
-                props.addElement(newElement);
-                props.updateScene(0, props.scenes[0]);
-
-                //方案二：在添加背景音乐时直接切割为scenes份，添加到每一scene里
+                //更新新背景音乐
+                props.updateBackgroundMusic(props.info.audio,item.name)
             }
-
-
 		}
     },
 }

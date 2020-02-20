@@ -18,6 +18,8 @@ const initialState = {
     future:initialFuture,
     scenes: scenes,
     index: 0,
+    backgroundMusic : null,
+    backgroundMusicName : "none",
 };
 
 export default (state = initialState, action) => {
@@ -84,7 +86,12 @@ export default (state = initialState, action) => {
             newScenes.length = 1;//clear to at least one scene
             newState.scenes = newScenes;
             newState.index = 0;
-            return newState;        
+            return newState;  
+        case ActionType.ADD_BACKGROUND_MUSIC:
+            newState.backgroundMusic = action.backgroundMusic;
+            newState.backgroundMusicName = action.elementName;
+            console.log("newState.backgroundMusic",newState.backgroundMusic)
+            return newState;     
         default:
             return state
     }

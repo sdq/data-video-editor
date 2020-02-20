@@ -11,10 +11,6 @@ const ButtonGroup = Button.Group;
 export default class PlayControlBar extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            backgroundMusic : "none",
-            backgroundMusicID: "",
-        }
         this.playScene = this.playScene.bind(this);
         this.nextScene = this.nextScene.bind(this);
         this.lastScene = this.lastScene.bind(this);
@@ -25,7 +21,7 @@ export default class PlayControlBar extends Component {
         this.props.unselectElement();
         this.props.displayTrackEditor();
         if (this.props.isPerforming === false) {
-            player.playScene(this.state.backgroundMusicID);
+            player.playScene();
         } else {
             player.pauseScene();
         }
@@ -50,39 +46,13 @@ export default class PlayControlBar extends Component {
     }
 
 
-    componentWillReceiveProps(){
-        this.setState({
-            backgroundMusic:this.props.scenes[0].backgroundMusic(),
-        })
-        for(let i = 0;i<this.props.scenes[0].elements().length;i++){ 
-            if(this.props.scenes[0].elements()[i].info().name === this.props.scenes[0].backgroundMusic())
-            {
-                this.setState({
-                    backgroundMusicID:this.props.scenes[0].elements()[i].id(),
-                })
-            }
-        }
-    }
 
     deleteBackgroundMusic(){
-        this.setState({
-            backgroundMusic:"none",
-        })
-        for(let i = 0;i<this.props.scenes[0].elements().length;i++){ //element删除
-            if(this.props.scenes[0].elements()[i].info().name === this.props.scenes[0].backgroundMusic())
-            {
-                this.props.scenes[0].elements().splice(i, 1);
-                this.props.updateScene(0, this.props.scenes[0]);
-            }
-        }
-        this.props.scenes[0].backgroundMusic("none");//name置空
+        this.props.updateBackgroundMusic(null,'none')
     }
 
-
-
     render() {  
-        const { isVideoPerforming, isPerforming, isLastScene, isFirstScene } = this.props;
-
+        const { isVideoPerforming, isPerforming, isLastScene, isFirstScene,backgroundMusicName } = this.props;
         const canvasW = this.props.contentWidth;
         const canvasH = this.props.contentHeight-100;
     
@@ -105,7 +75,7 @@ export default class PlayControlBar extends Component {
         return (
             <div id='playcontrol' style = { { background: Color.LIGHT_ORANGE,marginTop:margin,position:"relative"} }>
                 <Button icon="delete" type="link" style = { {float:"left",margin:"10px 0px 10px 12px"} }  onClick={this.deleteBackgroundMusic}/> 
-                <p style = { {float:"left",paddingTop:"15px",marginLeft:"10px",textAlign:"left",zIndex:5} }>Music: {this.state.backgroundMusic}</p>  
+                <p style = { {float:"left",paddingTop:"15px",marginLeft:"10px",textAlign:"left",zIndex:5} }>Music: {backgroundMusicName}</p>  
                 <div style = { {textAlign:"center",paddingRight: '90px'}}>
                 <ButtonGroup style = { {textAlign:"center",paddingTop:"10px",width:"180px",zIndex:2}}>
                     <Button icon="step-backward" style = { {paddingRight: '20px',paddingLeft:"20px"} } disabled = {isFirstScene || isPerforming} onClick={this.lastScene}/>
