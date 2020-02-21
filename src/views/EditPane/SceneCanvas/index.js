@@ -241,8 +241,9 @@ export default class EditCanvas extends Component {
         return (
             <div id="canvasContainer" 
                  style={{  
-                 height: canvasH+'px',
+                 height: fakeHeight+'px',
                  width: canvasW+'px',
+                //  maxHeight:window.innerHeight-480+"px",
                  zIndex:1,
                  //缩放居中策略 全局统一缩放
                 

@@ -132,7 +132,7 @@ export default class EditPane extends Component {
 
     render() {
         return (
-            <div id="editpane">
+            <div id="editpane" style={{height:window.innerHeight-370+"px"}} >
                 <HotKeys keyMap={shortcuts} handlers={this.handlers}>
                     <EditToolBar
                         copyElement = {this.copyElement}
