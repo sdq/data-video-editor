@@ -5,6 +5,7 @@
     font-size: 20px;
     position: relative;
     z-index: 5;
+    min-width: 785px;
 }
 
 .recordConfirm {
