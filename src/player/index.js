@@ -58,7 +58,7 @@ export default class Player {
                     const position = current + index / 10 ;
                     store.dispatch(sceneActions.setPosition(position));
                     AudioController.playAudio();
-                }.bind(this), index * 100));
+                }, index * 100));
             }
         }
     }
@@ -94,7 +94,7 @@ export default class Player {
                         const position = current + index / 10 ;
                         store.dispatch(sceneActions.setPosition(position));
                         AudioController.playAudio()
-                    }.bind(this), index * 100));
+                    }, index * 100));
                 }
             }.bind(this), sceneStart * 1000));
             sceneStart += sceneDuration; // whole time  
