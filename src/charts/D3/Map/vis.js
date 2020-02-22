@@ -2,27 +2,25 @@ import * as d3 from 'd3';
 import chinaData from './geo/chinaGeo';
 import worldData from './geo/worldGeo';
 import usStateData from './geo/usStateGeo';
-import { getData, getMapType} from './helper';
+import { getData, getMapType } from './helper';
 import _ from 'lodash';
 
 const mapParams = {
     "ChinaMap": {
-        geoFeatures: chinaData.features,
-        center: [102, 35],
-        scale: 550 //TODO: 根据屏幕大小做适配
+        geoData: chinaData,
     },
     "WorldMap": {
-        geoFeatures: worldData.features,
-        center: [0, 30],
-        scale: 80//TODO: 根据屏幕大小做适配
+        geoData: worldData,
     },
     "USMap": {
-        geoFeatures: usStateData.features,
-        center: [487.5, 305], //TODO:暂时显示不出来，需调试
-        scale: 550//TODO: 根据屏幕大小做适配
+        geoData: usStateData,
     },
 
 }
+//legend宽高位置 
+const rectWidth = 340; //矩形的宽度
+const rectHight = 20;//矩形的高度
+const rectMarginBottom = 90;//距离底部90
 
 const draw = (props) => {
     let a = document.createElement("div");
@@ -31,9 +29,9 @@ const draw = (props) => {
         a = '.vis-map';
     }
 
-    const margin = { top: 10, right: 10, bottom: 40, left: 40 };
-    const width = props.width - margin.left - margin.right;
-    const height = props.height - margin.top - margin.bottom;
+    // const margin = { top: 10, right: 10, bottom: 10, left: 10 };
+    // const width = props.width - margin.left - margin.right;
+    // const height = props.height - margin.top - margin.bottom;
 
     // Get Encoding
     const encoding = props.spec.encoding;
@@ -45,6 +43,7 @@ const draw = (props) => {
     let chartType = getMapType(parseData, encoding);
     //console.log("parseData...chartType", chartType)
     let mapdata = {};
+    let projection = d3.geoMercator();    // 默认地图投影
     if (!chartType) { //默认中国 
         mapdata = mapParams.ChinaMap
     } else {
@@ -55,22 +54,24 @@ const draw = (props) => {
             mapdata = mapParams.WorldMap
         } else if (chartType === 'USMap') {
             mapdata = mapParams.USMap
+            projection = d3.geoAlbersUsa(); //美国地图投影
         } else { //默认中国地图
             mapdata = mapParams.ChinaMap
         }
     }
+    projection.fitSize([props.width, props.height - rectMarginBottom - rectHight], mapdata.geoData) //地图根据屏幕自适配 
 
     let svg = d3.select(a)
         .append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", props.height + margin.top + margin.bottom - 60)
+        .attr("width", props.width)
+        .attr("height", props.height)
         .append("g")
     //.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     if (_.isEmpty(encoding) || !('area' in encoding) || _.isEmpty(encoding.area)) {
         svg.append("rect")
-            .attr("width", width + margin.left + margin.right)
-            .attr("height", height + margin.top + margin.bottom)
+            .attr("width", props.width)
+            .attr("height", props.height)
             .attr("fill", "pink");
         return svg;
     }
@@ -105,18 +106,13 @@ const draw = (props) => {
     let computeColor = d3.interpolate(minColorValue, maxColorValue);
 
 
-    // 定义地图投影
-    const projection = d3.geoMercator()
-        .center(mapdata.center)
-        .scale(mapdata.scale)
-        .translate([width / 2, height / 2]);
     // 定义地理路径生成器
     const path = d3.geoPath()
         .projection(projection);
 
     //包含中国各省路径的分组元素
     svg.selectAll('path')
-        .data(mapdata.geoFeatures)
+        .data(mapdata.geoData.features)
         .enter()
         .append('path')
         .attr('stroke', '#000')
@@ -125,7 +121,7 @@ const draw = (props) => {
             let value;
             if (chartType === 'USMap') { //
                 value = values[d.properties.name]
-               // console.log("USMap...",d.properties.name,values[d.properties.name])
+                // console.log("USMap...",d.properties.name,values[d.properties.name])
             } else {
                 value = isEnLanguage ? values[d.properties.enName] : values[d.properties.name]; //中国与世界地图做中英文适配
             }
@@ -182,9 +178,6 @@ const draw = (props) => {
             .style("stop-color", maxColorValue.toString());
 
         //添加一个矩形，并应用线性渐变
-        let rectWidth = 340; //矩形的宽度
-        let rectHight = 20;//矩形的高度
-        let rectMarginBottom = 90;//具体底部60
         svg.append("rect")
             .attr("x", (props.width - rectWidth) / 2)
             .attr("y", props.width - rectMarginBottom)
@@ -195,7 +188,7 @@ const draw = (props) => {
         //添加文字
         svg.append("text")
             .attr("class", "valueText")
-            .attr("x", (props.width - rectWidth) / 2 - 20) //字离左侧矩形往左偏移20
+            .attr("x", (props.width - rectWidth) / 2 - 10) //字离左侧矩形往左偏移10
             .attr("y", props.width - rectMarginBottom + 50) //字离下侧矩形偏移50
             .attr("dy", "-0.3em")
             .text(function () {
@@ -204,7 +197,7 @@ const draw = (props) => {
 
         svg.append("text")
             .attr("class", "valueText")
-            .attr("x", (props.width / 2) - 20) //字离中间矩形往左偏移20
+            .attr("x", (props.width / 2) - 10) //字离中间矩形往左偏移10
             .attr("y", props.width - rectMarginBottom + 50) //字离下侧矩形偏移50
             .attr("dy", "-0.3em")
             .text(function () {
@@ -213,7 +206,7 @@ const draw = (props) => {
 
         svg.append("text")
             .attr("class", "valueText")
-            .attr("x", ((props.width - rectWidth) / 2 + rectWidth) - 20) //字离右侧矩形往左偏移20
+            .attr("x", ((props.width - rectWidth) / 2 + rectWidth) - 10) //字离右侧矩形往左偏移10
             .attr("y", props.width - rectMarginBottom + 50) //字离下侧矩形偏移50
             .attr("dy", "-0.3em")
             .text(function () {
