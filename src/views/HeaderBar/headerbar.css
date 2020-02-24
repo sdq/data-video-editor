@@ -15,3 +15,6 @@
 #spin {
     margin: 20px;
 }
+.ant-upload.ant-upload-select.ant-upload-select-text{
+    float:right;
+}

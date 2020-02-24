@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Scene from '@/models/Scene';
-import { Button, Modal, Spin, Input, Upload, Icon } from 'antd';
+import { Button, Modal, Spin, Input, Upload } from 'antd';
 import Recorder from '@/recorder';
 import Player from '@/player';
 import ElementType from '@/constants/ElementType';
@@ -555,22 +555,18 @@ export default class HeaderBar extends Component {
     render() {
         return (
             <div className="headerbar">
-                <font color="white"><b>Data Video Editor</b></font>
-                <Button type="primary" icon="logout" shape="round" onClick={this.logout} style={{ float: 'right', marginLeft: 12 }}>
+                <font color="white"><b>Calliope Video</b></font>
+                {/* <Button type="primary" icon="logout" shape="round" onClick={this.logout} style={{ float: 'right', marginLeft: 12 }}>
                     Logout
-                </Button>
-                <Upload
-                    showUploadList={false}
-                    accept=".idv"  //后缀名
-                    beforeUpload={this.importProject}
-                >
-                    <Button type="primary" shape="round" style={{ marginLeft: 12 }}>
-                        <Icon type="import" /> Import
-                 </Button>
-                </Upload>
+                </Button> */}
                 <Button type="primary" icon="export" shape="round" style={{ float: 'right', marginLeft: 12 }} onClick={this.showModal}>
                     Export
                 </Button>
+                <Upload showUploadList={false} accept=".idv" beforeUpload={this.importProject}>
+                    <Button type="primary" icon="import" shape="round" style={{ float: 'right', marginLeft: 12 }}>
+                        Import
+                    </Button>
+                </Upload>
                 <Button type="primary" icon="save" shape="round" style={{ float: 'right', marginLeft: 12 }} onClick={this.saveProject}>
                     Save
                 </Button>

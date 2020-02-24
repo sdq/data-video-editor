@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 
 let offsetX = 0.0;  //offset in browers，不同浏览器不同，每一次刷新都不同
 let offsetY = 0.0;  //offset in browers
-let offsetW = 20;   //offset between textelement and texteditor，不同浏览器不同
-let offsetH = 0;    //offset between textelement and texteditor
+//let offsetW = 20;   //offset between textelement and texteditor，不同浏览器不同
+//let offsetH = 0;    //offset between textelement and texteditor
 
 export default class TextEditor extends Component {
     constructor(props) {
@@ -29,8 +29,15 @@ export default class TextEditor extends Component {
                 }
                 return this.props.updateScene(this.props.sceneIndex, newScene);  
                 }       
-        } 
-        
+        }     
+    }
+    componentWillUnmount(){
+        const newScene = Object.assign({},this.props.currentScene);
+        let newWidth = parseInt(this.textarea.style.width.split('px')[0]) 
+        let newHeight = parseInt(this.textarea.style.height.split('px')[0])
+        this.props.currentElement.info().width = newWidth ;
+        this.props.currentElement.info().height = newHeight;
+        this.props.updateScene(this.props.sceneIndex, newScene);   
     }
 
     render() {
@@ -60,7 +67,7 @@ export default class TextEditor extends Component {
 
            //位移偏差
              //不同字体textarea 不同字号 与tranformer的变换伸缩度（暂时忽略其余浏览器）都不同
-            let offwidth = 0; 
+            //let offwidth = 0; 
              //取得浏览器的userAgent字符串
             let userAgent = navigator.userAgent; 
             let isOpera = userAgent.indexOf("Opera") > -1;
@@ -88,18 +95,19 @@ export default class TextEditor extends Component {
             //仍然需要更精准测试
 
             //宽度偏差
-            offsetW = (this.props.currentElement) ? this.props.currentElement.info().textSize:20;//基础偏差：一个字的偏差
-            offwidth = 0.25-offsetW/500;  //次级偏差：计算伸缩，假定为线性函数,进行测试（中文）
+            //offsetW = (this.props.currentElement) ? this.props.currentElement.info().textSize:20;//基础偏差：一个字的偏差
+            //offwidth = 0.25-offsetW/500;  //次级偏差：计算伸缩，假定为线性函数,进行测试（中文）
             //假如换行的是英文，那么换行时就会出现跳行偏差
 
 
             //高度偏差
-            offsetH = 10; //应该也是不同设备不相同，普通笔记本先设为10
+            //offsetH = 10; //应该也是不同设备不相同，普通笔记本先设为10
 
 
         return (
              <div className="TextEditor" style={{display: (this.state.isShowTextArea) ? "block" : "none"}} > 
              <textarea
+             ref={node => { this.textarea = node; }}
              style={{
               // apply many styles to match text on canvas as close as possible
               // remember that text rendering on canvas and on the textarea can be different
@@ -117,8 +125,10 @@ export default class TextEditor extends Component {
               fontSize:(this.props.currentElement) ? this.props.currentElement.info().textSize*scale:20*scale,
               top:(this.props.currentElement) ? (this.props.currentElement.info().y-offsetY)*scale : 0,
               left:(this.props.currentElement) ? (this.props.currentElement.info().x-offsetX)*scale : 0,
-              width:(this.props.currentElement) ? (this.props.currentElement.info().width+offsetW+offwidth)*scale: 0, 
-              height:(this.props.currentElement) ? (this.props.currentElement.info().height+offsetH)*scale: 0,
+              //width:(this.props.currentElement) ? (this.props.currentElement.info().width+offsetW+offwidth)*scale: 0, 
+              //height: this.textarea?this.textarea.scrollHeight: (this.props.currentElement) ? (this.props.currentElement.info().height + offsetH) * scale : 0,
+              width:(this.props.currentElement) ? (this.props.currentElement.info().width ): 0, 
+              height: this.textarea?this.textarea.scrollHeight: (this.props.currentElement) ? (this.props.currentElement.info().height ) : 0,
               fillOpacity:0.5
             }}
             autoFocus  //自动获取焦点 

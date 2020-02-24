@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import {Button,Modal,Col,Row,Menu, Dropdown,Icon} from 'antd';
+//import {Button,Modal,Col,Row,Menu, Dropdown,Icon} from 'antd';
+import {Button,Menu, Dropdown,Icon} from 'antd';
 import {Element,TextInfo,ShapeInfo} from '@/models/Element';
 import ElementType from '@/constants/ElementType';
 import Color from '@/constants/Color';
@@ -10,7 +11,8 @@ const ButtonGroup = Button.Group;
 
 //目前仅支持中文长度识别
 let defaultText = new TextInfo(
-    "输入文字",
+    //"输入文字",
+    'text',
     360,
     220, 
     0,
@@ -338,7 +340,7 @@ export default class EditToolBar extends Component {
                     <Button icon="redo" style = { {padding: '0 20px 0 20px'} } onClick={this.redoCanvas} disabled={isPerforming || currentFuture.length === 0}/>
                 </ButtonGroup>
 
-                <ButtonGroup id = "assist-position" style = { {margin: '10px 20px 0px 0px', float:'right'} }>
+                {/* <ButtonGroup id = "assist-position" style = { {margin: '10px 20px 0px 0px', float:'right'} }>
                 <Button id = "quickalign" icon="pic-center" style = { {padding: '0 20px 0 20px'} } disabled={!isElementSelected || isPerforming} onClick={this.showModal}/> 
                 <Modal
                      //title="Quick Align"
@@ -373,7 +375,7 @@ export default class EditToolBar extends Component {
                     </Row>
                 </Modal> 
                 <Button icon="table" style = { {padding: '0 20px 0 20px'} } disabled={isPerforming} onClick={this.showGrid}/>
-                </ButtonGroup>
+                </ButtonGroup> */}
 
                 <Button icon="font-size" style = { {width:'80px',margin: '10px 20px 0px 0px', float:'right'} } disabled={isPerforming}  onClick={this.addText}/>
                 

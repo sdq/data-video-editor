@@ -85,7 +85,11 @@ class VideoCard extends Component {
         const { connectDragSource } = this.props;
         return connectDragSource(
             <div className="videocard" align="center">
-                <p>{this.props.info.name}</p>
+                <p style={{
+                    textOverflow:"ellipsis",
+                    width:"80%",
+                    overflow:'hidden'
+                }}>{this.props.info.name}</p>
                 <Player ref={(player) => { this.videoPlayer = player }}
                 preload={'auto'}>
                     <source src={this.props.info.src} />

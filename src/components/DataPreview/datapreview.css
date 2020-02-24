@@ -5,4 +5,33 @@
     border-color: #d8d8d8;
     border-radius: 4px;
     padding: 2px;
+    flex: 1;
+}
+
+.simple-data-preview .ant-table-wrapper {
+    height: 100%;
+}
+
+.simple-data-preview .ant-table-wrapper .ant-spin-nested-loading {
+    height: 100%;
+}
+
+.simple-data-preview .ant-table-wrapper .ant-spin-nested-loading .ant-spin-container {
+    height: 100%;
+}
+
+.simple-data-preview .ant-table-wrapper .ant-spin-nested-loading .ant-spin-container .ant-table.ant-table-small.ant-table-fixed-header.ant-table-scroll-position-left {
+    height: 100%;
+}
+
+.simple-data-preview .ant-table-wrapper .ant-spin-nested-loading .ant-spin-container .ant-table.ant-table-small.ant-table-fixed-header.ant-table-scroll-position-left .ant-table-content {
+    height: 100%;
+}
+
+.simple-data-preview .ant-table-wrapper .ant-spin-nested-loading .ant-spin-container .ant-table.ant-table-small.ant-table-fixed-header.ant-table-scroll-position-left .ant-table-content .ant-table-scroll {
+    height: 100%;
+}
+
+.simple-data-preview .ant-table-wrapper .ant-spin-nested-loading .ant-spin-container .ant-table.ant-table-small.ant-table-fixed-header.ant-table-scroll-position-left .ant-table-content .ant-table-scroll .ant-table-body {
+    max-height: 100% !important;
 }

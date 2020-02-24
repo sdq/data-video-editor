@@ -11,7 +11,7 @@ import ElementType from '@/constants/ElementType';
 import _ from 'lodash';
 
 
-let lastScale = '';
+//let lastScale = '';
 let xPosArray= [];
 let yPosArray = [];
 
@@ -167,8 +167,8 @@ export default class EditableLayer extends Component {
     transforming(e,originWidth,originHeight) {
         this.setState({isDrag:false});
         //different element
-        let currentWidth = this.props.currentElement.info().width;
-        let currentHeight = this.props.currentElement.info().height;
+        //let currentWidth = this.props.currentElement.info().width;
+        //let currentHeight = this.props.currentElement.info().height;
         let w,h,r = '';
         let transforminfo = '';
        switch (this.props.currentElement.type()) {
@@ -176,19 +176,21 @@ export default class EditableLayer extends Component {
 
                     //Determine whether scale is equal to last time(Rotation only)
                     //So scale calculation is not performed at this time
-                    if(lastScale!==e.currentTarget.scaleX()){
-                         w = currentWidth*e.currentTarget.scaleX();
-                         //h = currentHeight*e.currentTarget.scaleY();
-                         //计算新的文字高度
-                         h = Math.ceil((this.props.currentElement.info().text.length * this.props.currentElement.info().textSize)/w)*this.props.currentElement.info().textSize;
-                         //实时更改素材的真实w,h，以便显示正确边框和辅助线
-                         this.props.currentElement.info().width = w;
-                         this.props.currentElement.info().height = h;
+                    // if(lastScale!==e.currentTarget.scaleX()){
+                    //      w = currentWidth*e.currentTarget.scaleX();
+                    //      //h = currentHeight*e.currentTarget.scaleY();
+                    //      //计算新的文字高度
+                    //      h = Math.ceil((this.props.currentElement.info().text.length * this.props.currentElement.info().textSize)/w)*this.props.currentElement.info().textSize;
+                    //      //实时更改素材的真实w,h，以便显示正确边框和辅助线
+                    //      this.props.currentElement.info().width = w;
+                    //      this.props.currentElement.info().height = h;
                          
-                    }else{
-                         w = currentWidth;
-                         h = currentHeight;
-                    }
+                    // }else{
+                    //      w = currentWidth;
+                    //      h = currentHeight;
+                    // }
+                         w = e.currentTarget.attrs.width;
+                         h = e.currentTarget.attrs.height;    
                          r = e.currentTarget.rotation();
                     //实时更改素材的真实r，以便显示正确边框和辅助线
                     this.props.currentElement.info().rotation = r;
@@ -237,12 +239,13 @@ export default class EditableLayer extends Component {
          newEle.info().y = e.target.y();
          switch (this.props.currentElement.type()) {
               case ElementType.TEXT:
-                    if(lastScale!==e.target.scaleX()){
-                        newEle.info().width = newEle.info().width*e.target.scaleX(); 
-                        //newEle.info().height = newEle.info().height*e.target.scaleY(); 
-                        //拉伸后的高度计算要包含中英文的宽度
-                        newEle.info().height = Math.ceil((this.props.currentElement.info().text.length * this.props.currentElement.info().textSize)/this.props.currentElement.info().width)*this.props.currentElement.info().textSize
-                    }
+                    // if(lastScale!==e.target.scaleX()){
+                    //     newEle.info().width = newEle.info().width*e.target.scaleX(); 
+                    //     //newEle.info().height = newEle.info().height*e.target.scaleY(); 
+                    //     //拉伸后的高度计算要包含中英文的宽度
+                    //     newEle.info().height = Math.ceil((this.props.currentElement.info().text.length * this.props.currentElement.info().textSize)/this.props.currentElement.info().width)*this.props.currentElement.info().textSize
+                    // }
+                    newEle.info().width = e.currentTarget.attrs.width;
                     newEle.info().rotation = e.target.rotation();
                     this.editElement(index, newEle);
                   return ;

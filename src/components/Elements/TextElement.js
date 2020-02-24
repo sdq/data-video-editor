@@ -9,6 +9,7 @@ export default class TextElement extends Component {
         this.state = {
             isDragging: false,
             text: props.element.info().text,
+            textWidth: this.props.element.info().width,
         };
         this.dragstart = this.dragstart.bind(this);
         this.dragmove = this.dragmove.bind(this);
@@ -52,9 +53,20 @@ export default class TextElement extends Component {
     }
 
     onTransform(e) {
-        let originWidth = this.originWidth;
-        let originHeight = this.originHeight;
-        this.props.transforming(e,originWidth,originHeight);
+        // let originWidth = this.originWidth;
+        // let originHeight = this.originHeight;
+        // this.props.transforming(e,originWidth,originHeight);
+        let scaleX = this.textNode.attrs.scaleX;
+        let width = this.textNode.attrs.width;
+        // reset scale, so only with is changing by transformer
+        this.textNode.setAttrs({
+            width: scaleX * width,
+            scaleX: 1
+        });
+        this.setState({
+            textWidth: width
+        })
+        this.props.transforming(e);
      }
 
     onTransformEnd(e) {
@@ -68,6 +80,8 @@ export default class TextElement extends Component {
 
         return (
             <Group name={this.props.name}
+                ref={node => this.textNode = node}
+                width={this.state.textWidth}         
                 draggable = {this.props.draggable}
                 x={this.props.element.info().x}
                 y={this.props.element.info().y}
@@ -107,8 +121,9 @@ export default class TextElement extends Component {
                     textDecoration = {this.props.element.info().textDecorationLine}//can be line-through, underline or empty string. Default is empty string. 
                     opacity = {this.props.element.info().opacity}
                     align = {this.props.element.info().textAlign}
-                    width = {this.props.element.info().width}
-                    height = {this.props.element.info().height} 
+                    // width = {this.props.element.info().width}
+                    //height = {this.props.element.info().height} 
+                    width={this.state.textWidth}
                 />
             </Group>
             
