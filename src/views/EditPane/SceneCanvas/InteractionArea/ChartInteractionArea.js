@@ -15,11 +15,16 @@ export default class ChartInteractionArea extends Component {
  
     render() {
         //画布伸缩
-        const scale = (this.props.contentHeight - 100) / 450;
+        const canvasW = this.props.contentWidth;
+        const canvasH = this.props.contentHeight-100;
+        const scaleX = canvasW/800;
+        const scaleY = canvasH/450;
+        const scale = scaleX>scaleY?scaleY:scaleX;
         if (!this.chartInfo) {
             return null;
         }
         const  rotation = this.props.currentElement?this.props.currentElement.info().rotation:0;
+
         return (
                <video
                style={{

@@ -8,7 +8,11 @@ export default class GifAnimator extends Component {
 
     render() {
         //画布伸缩
-        const scale = (this.props.contentHeight-100)/450;
+        const canvasW = this.props.contentWidth;
+        const canvasH = this.props.contentHeight-100;
+        const scaleX = canvasW/800;
+        const scaleY = canvasH/450;
+        const scale = scaleX>scaleY?scaleY:scaleX;
         const  rotation = this.props.currentElement?this.props.currentElement.info().rotation:0;
         if(!this._gifInfo) return null;
         return (

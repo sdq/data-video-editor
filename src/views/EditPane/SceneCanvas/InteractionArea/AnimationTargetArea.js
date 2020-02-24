@@ -18,7 +18,11 @@ class AnimationTargetArea extends Component {
     render() {
         const { canDrop, isOver, connectDropTarget, currentElement } = this.props;
         const isActive = canDrop && isOver;
+        const canvasW = this.props.contentWidth;
         const canvasH = this.props.contentHeight-100;
+        const scaleX = canvasW/800;
+        const scaleY = canvasH/450;
+        const scale = scaleX>scaleY?scaleY:scaleX;
 
         let backgroundColor = 'white';
         if (isActive) {
@@ -33,10 +37,10 @@ class AnimationTargetArea extends Component {
             <div
                 style={{
                     position: 'absolute',
-                    top: currentElement.info().y*(canvasH/450),
-                    left: currentElement.info().x*(canvasH/450),
-                    width: currentElement.info().width*(canvasH/450),
-                    height: currentElement.info().height*(canvasH/450),
+                    top: currentElement.info().y*scale,
+                    left: currentElement.info().x*scale,
+                    width: currentElement.info().width*scale,
+                    height: currentElement.info().height*scale,
                     transformOrigin:"left top",
                     transform:"rotate("+rotation+"deg)",
                     backgroundColor: backgroundColor,
