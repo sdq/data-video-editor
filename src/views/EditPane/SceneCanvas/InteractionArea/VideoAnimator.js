@@ -21,8 +21,11 @@ export default class VideoAnimator extends Component {
 
     render() {
         //画布伸缩
-        const scale = (this.props.contentHeight-100)/450;
-        //console.log("this._videoInfo", this._videoInfo)
+        const canvasW = this.props.contentWidth;
+        const canvasH = this.props.contentHeight-100;
+        const scaleX = canvasW/800;
+        const scaleY = canvasH/450;
+        const scale = scaleX>scaleY?scaleY:scaleX;
 
         if (!this._videoInfo) {
             return null;
