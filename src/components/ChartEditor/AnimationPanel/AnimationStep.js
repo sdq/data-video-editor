@@ -24,7 +24,6 @@ export default class AnimationStep extends Component {
                 color = '#e78ac3';
                 taskIcon = 'G'; 
                 break;
-                break;
             case ChartAnimationTask.CAUSAL:
                 color = '#a6d854';
                 taskIcon = 'C'; 

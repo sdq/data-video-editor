@@ -2,7 +2,7 @@ import * as d3 from 'd3';
 import chinaData from './geo/chinaGeo';
 import worldData from './geo/worldGeo';
 import usStateData from './geo/usStateGeo';
-import { getData, getMapType, toPercent } from './helper';
+import { getData, getMapType } from './helper';
 import _ from 'lodash';
 
 const mapParams = {
@@ -199,17 +199,13 @@ const draw = (props) => {
             //绘制中间的数值
             let totalCount = middleCount + 1;//将矩形的宽度totalCount等分
             let currentCount = 1;
+            let textValue = firstText;
             while (middleCount--) {
-                svg.append("text")
-                    .attr("class", "valueText")
-                    .attr("x", (props.width - rectWidth) / 2 + (currentCount / totalCount) * rectWidth - 10) //字离中间矩形往左偏移10
-                    .attr("y", props.width - rectMarginBottom + 50) //字离下侧矩形偏移50
-                    .attr("dy", "-0.3em")
-                    .text(function () {
-                        return firstText;
-                    });
+                let posX = (props.width - rectWidth) / 2 + (currentCount / totalCount) * rectWidth - 10;//字离中间矩形往左偏移10
+                let posY = props.width - rectMarginBottom + 50;//字离下侧矩形偏移50
+                drawMiddleText(svg, posX, posY, textValue);
                 currentCount++;
-                firstText *= 10
+                textValue *= 10
             }
         } else {
             //零的位置
@@ -232,6 +228,15 @@ const draw = (props) => {
             });
     }
     return svg;
+}
+function drawMiddleText(svg, posX, posY, text) {
+    svg.append("text").attr("class", "valueText")
+        .attr("x", posX)
+        .attr("y", posY)
+        .attr("dy", "-0.3em")
+        .text(function () {
+            return text;
+        });
 }
 
 export default draw;

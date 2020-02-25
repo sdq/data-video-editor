@@ -148,8 +148,10 @@ export default class ShapeElement extends Component {
             <Group 
                 name={this.props.name}
                 draggable = {this.props.draggable}
-                 x={this.props.element.info().x}
-                 y={this.props.element.info().y}
+                x={this.props.element.info().x}
+                y={this.props.element.info().y}
+                scaleX={isPosTool?1:this.props.element.info().scaleX} //posTool控制了真实的宽高，需要将scaleX重置
+                scaleY={isPosTool?1:this.props.element.info().scaleY} //posTool控制了真实的宽高，需要将scaleY重置
                 rotation={this.props.element.info().rotation}
                 onDragStart={() => {
                     this.dragstart();
