@@ -16,7 +16,7 @@ import ReconfigureOrderConf from './reconfigureOrder/configure';
 const animate = (animation, props) => {
 
     switch (animation.type) {
-        case ChartAnimationType.DATA_TREND:
+        case ChartAnimationType.TREND:
             dataTrend(animation, props);
             break;
 
@@ -48,7 +48,7 @@ const animate = (animation, props) => {
 const configure = (animation, index, props) => {
 
     switch (animation.type) {
-        case ChartAnimationType.DATA_TREND:
+        case ChartAnimationType.TREND:
             return <DataTrendConf animation={animation} index={index} {...props} />
     
         case ChartAnimationType.EMPHASIZE_EXTREME:

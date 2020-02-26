@@ -18,9 +18,9 @@ const draw = (props) => {
     let choosenAnimation = props.choosenAnimation;
     if (choosenAnimation) {
         animationType = choosenAnimation.type; // Data Trend
-        animationTask = choosenAnimation.task; // Tendency
+        animationTask = choosenAnimation.task; // Temporal
     }
-    if (animationTask !== ChartAnimationTask.TENDENCY && animationTask !== ChartAnimationTask.EMPHASIZE && animationTask !== ChartAnimationTask.COMPARISON && animationType !== ChartAnimationType.RECONFIGURE_ORDER) {
+    if (animationTask !== ChartAnimationTask.TEMPORAL && animationTask !== ChartAnimationTask.EMPHASIZE && animationTask !== ChartAnimationTask.COMPARE && animationType !== ChartAnimationType.RECONFIGURE_ORDER) {
         // no highlight
         return;
     }
@@ -35,7 +35,7 @@ const draw = (props) => {
     const items = content.selectAll("path.data-item");
     const itemsCircle = content.selectAll("circle.data-item")
     if (point.x >= 0) {
-        if (animationType === ChartAnimationType.DATA_TREND || animationType === ChartAnimationType.REGRESSION || animationType === ChartAnimationType.EMPHASIZE_SERIES || animationType === ChartAnimationType.EMPHASIZE_SERIES || animationType === ChartAnimationType.EMPHASIZE_EXTREME || animationType === ChartAnimationType.COMPARE_SERIES || animationType === ChartAnimationType.COMPARE_EXTREMES) {
+        if (animationType === ChartAnimationType.TREND || animationType === ChartAnimationType.REGRESSION || animationType === ChartAnimationType.EMPHASIZE_SERIES || animationType === ChartAnimationType.EMPHASIZE_SERIES || animationType === ChartAnimationType.EMPHASIZE_EXTREME || animationType === ChartAnimationType.COMPARE_SERIES || animationType === ChartAnimationType.COMPARE_EXTREMES) {
             let nearestSet = [];
             items.nodes().forEach((item) => {
                 const _item = d3.select(item)
@@ -58,7 +58,7 @@ const draw = (props) => {
             var near_ = nearestSet.map((n) => {return Math.abs(n[2]-point.y)})
             var _y = Math.min.apply(null, near_)
             var seriesNearest;
-            if (animationType === ChartAnimationType.DATA_TREND || animationType === ChartAnimationType.EMPHASIZE_EXTREME) {
+            if (animationType === ChartAnimationType.TREND || animationType === ChartAnimationType.EMPHASIZE_EXTREME) {
                 if (_y < 15) {
                     seriesNearest = nearestSet[near_.indexOf(_y)][0][0].color;
                     items.attr('stroke-width', (d) => {
@@ -82,7 +82,7 @@ const draw = (props) => {
             } 
     
             switch (animationType) {
-                case ChartAnimationType.DATA_TREND:
+                case ChartAnimationType.TREND:
                     choosenAnimation.spec.series = seriesNearest;
                     choosenAnimation.description = "Show data trend of "+ choosenAnimation.spec.series +" series";
                     break;

@@ -2,10 +2,10 @@ import ChartAnimationTask from '../ChartAnimationTask';
 import ChartAnimationType from '../ChartAnimationType';
 
 const animations = {
-    "Tendency": [
+    "Temporal": [
         {
-            type: ChartAnimationType.DATA_TREND,
-            task: ChartAnimationTask.TENDENCY,
+            type: ChartAnimationType.TREND,
+            task: ChartAnimationTask.TEMPORAL,
             title: "Trend",
             description: "Show data trend of all series from {range}",
             duration: 2000,
@@ -15,7 +15,21 @@ const animations = {
             }
         }
     ],
-    "Emphasize": [
+    'Compare': [
+        {
+            type: ChartAnimationType.COMPARE_SERIES,
+            task: ChartAnimationTask.COMPARE,
+            title: "Series",
+            description: "Compare the {series1} and {series2}",
+            duration: 2000,
+            spec: {
+                series1: null,
+                series2: null,
+                effect: "superposition" // superposition difference
+            }
+        },
+    ],
+    "Emphasis": [
         {
             type: ChartAnimationType.EMPHASIZE_SERIES,
             task: ChartAnimationTask.EMPHASIZE,
@@ -26,7 +40,7 @@ const animations = {
                 series: "all",
                 effect: "flicker" // or filter
             }
-        },{
+        }, {
             type: ChartAnimationType.EMPHASIZE_EXTREME,
             task: ChartAnimationTask.EMPHASIZE,
             title: "Extreme",
@@ -52,24 +66,10 @@ const animations = {
             }
         },
     ],
-    'Comparison': [
+    "Granularity": [
         {
-            type: ChartAnimationType.COMPARE_SERIES,
-            task: ChartAnimationTask.COMPARISON,
-            title: "Series",
-            description: "Compare the {series1} and {series2}",
-            duration: 2000,
-            spec: {
-                series1: null,
-                series2: null,
-                effect: "superposition" // superposition difference
-            }
-        },
-    ],
-    "Reconfiguration": [
-        {
-            type: ChartAnimationType.RECONFIGURE_SCOPE,
-            task: ChartAnimationTask.RECONFIGURATION,
+            type: ChartAnimationType.GRANULARITY_SCOPE,
+            task: ChartAnimationTask.GRANULARITY,
             title: "Scope",
             description: "Reconfigure the view scope to {scope}",
             duration: 2000,
@@ -78,9 +78,11 @@ const animations = {
                 effect: "zoom in"
             }
         },
+    ],
+    "Style": [
         {
             type: ChartAnimationType.RECONFIGURE_STYLE,
-            task: ChartAnimationTask.RECONFIGURATION,
+            task: ChartAnimationTask.STYLE,
             title: "Style",
             description: "Reconfigure the stacked style to the percent style",
             duration: 2000,

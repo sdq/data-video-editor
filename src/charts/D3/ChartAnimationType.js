@@ -1,5 +1,5 @@
 export default {
-    DATA_TREND: 'Data Trend',
+    TREND: 'Trend',
     REGRESSION: 'Regression',
     EMPHASIZE_CATEGORY : 'Emphasize Category',
     EMPHASIZE_EXTREME : 'Emphasize Extreme',
@@ -11,5 +11,7 @@ export default {
     COMPARE_VALUES : 'Compare Values',
     RECONFIGURE_ORDER : 'Reconfigure Order',
     RECONFIGURE_STYLE : 'Reconfigure Style',
-    RECONFIGURE_SCOPE : 'Reconfigure Scope',
+    GRANULARITY_ZOOMIN : 'Granularity ZoomIn',
+    GRANULARITY_ZOOMOUT : 'Granularity ZoomOut',
+    GRANULARITY_SCOPE : 'Granularity Scope',
 }

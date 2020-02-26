@@ -22,37 +22,44 @@ const boxSource = {
 }
 
 class AnimationCard extends Component {
-    render() {
+	render() {
 		const { connectDragSource, animation } = this.props;
 		let color = '#FFFFFF';
 		switch (animation.task) {
-			case ChartAnimationTask.TENDENCY:
-				color = '#0091FF';
+			case ChartAnimationTask.TEMPORAL:
+				color = '#66c2a5';
+				break;
+			case ChartAnimationTask.COMPARE:
+				color = '#fc8d62';
 				break;
 			case ChartAnimationTask.EMPHASIZE:
-				color = '#6DD400';
+				color = '#8da0cb';
 				break;
-			case ChartAnimationTask.COMPARISON:
-				color = '#F7B500';
+
+			case ChartAnimationTask.GRANULARITY:
+				color = '#e78ac3';
 				break;
-			case ChartAnimationTask.RECONFIGURATION:
-				color = '#FA6400';
-				break;		
+			case ChartAnimationTask.CAUSAL:
+				color = '#a6d854';
+				break;
+			case ChartAnimationTask.STYLE:
+				color = '#ffd92f';
+				break;
 			default:
 				break;
 		}
 		color += '3C';
-        return connectDragSource(
-            <div className={"animation-card"} style={{backgroundColor: color}}>
-                {animation.title}
-            </div>
-        )
-    }
+		return connectDragSource(
+			<div className={"animation-card"} style={{ backgroundColor: color }}>
+				{animation.title}
+			</div>
+		)
+	}
 }
 
 export default DragSource(
-    DNDType.DND_CHART_ANIMATION,
-    boxSource,
+	DNDType.DND_CHART_ANIMATION,
+	boxSource,
 	(connect, monitor) => ({
 		connectDragSource: connect.dragSource(),
 		isDragging: monitor.isDragging()

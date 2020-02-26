@@ -111,7 +111,7 @@ const demochart2 = new ChartInfo(
             //     "duration": 800,
             // },
             // {
-            //     "type": "emphasize",
+            //     "type": "emphasis",
             //     "duration": 800,
             // }
         ]

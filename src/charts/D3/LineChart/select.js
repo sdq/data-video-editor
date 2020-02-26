@@ -57,7 +57,7 @@ const draw = (props) => {
                     animation.spec[selectingParameter.key] = item[0].color;
                 else   animation.spec[selectingParameter.key] = item.color;
                 switch (animation.type) {
-                    // case ChartAnimationType.DATA_TREND:
+                    // case ChartAnimationType.TREND:
                     //     animation.description = "Show data trend of "+ animation.spec.series +" series";
                     //     break;
                     // case ChartAnimationType.REGRESSION:
