@@ -2,10 +2,10 @@ import ChartAnimationTask from '../ChartAnimationTask';
 import ChartAnimationType from '../ChartAnimationType';
 
 const animations = {
-    "Tendency": [
+    "Temporal": [
         {
-            type: ChartAnimationType.DATA_TREND,
-            task: ChartAnimationTask.TENDENCY,
+            type: ChartAnimationType.TREND,
+            task: ChartAnimationTask.TEMPORAL,
             title: "Trend",
             description: "Show data trend of all data from 1970-1982",
             duration: 10000,
@@ -16,7 +16,33 @@ const animations = {
             }
         },
     ],
-    "Emphasize": [
+    "Compare": [
+        {
+            type: ChartAnimationType.COMPARE_EXTREMES,
+            task: ChartAnimationTask.COMPARE,
+            title: "Extremes",
+            description: "Compare the extreme values between max and max",
+            duration: 1000,
+            spec: {
+                extreme1: "max",
+                extreme2: "min",
+                effect: "juxtaposition" 
+            }
+        },
+        {
+            type: ChartAnimationType.COMPARE_VALUES,
+            task: ChartAnimationTask.COMPARE,
+            title: "Values",
+            description: "Compare the values between USA and Europe",
+            duration: 1000,
+            spec: {
+                category1: "",
+                category2: "",
+                effect: "juxtaposition" 
+            }
+        },
+    ],
+    "Emphasis": [
         {
             type: ChartAnimationType.EMPHASIZE_EXTREME,
             task: ChartAnimationTask.EMPHASIZE,
@@ -40,33 +66,6 @@ const animations = {
             }
         },
     ],
-    "Comparison": [
-        {
-            type: ChartAnimationType.COMPARE_EXTREMES,
-            task: ChartAnimationTask.COMPARISON,
-            title: "Extremes",
-            description: "Compare the extreme values between max and max",
-            duration: 1000,
-            spec: {
-                extreme1: "max",
-                extreme2: "min",
-                effect: "juxtaposition" 
-            }
-        },
-        {
-            type: ChartAnimationType.COMPARE_VALUES,
-            task: ChartAnimationTask.COMPARISON,
-            title: "Values",
-            description: "Compare the values between USA and Europe",
-            duration: 1000,
-            spec: {
-                category1: "",
-                category2: "",
-                effect: "juxtaposition" 
-            }
-        },
-    ],
-
 };
 
 export default animations;

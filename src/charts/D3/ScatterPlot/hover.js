@@ -18,7 +18,7 @@ const draw = (props) => {
         animationType = choosenAnimation.type;
         animationTask = choosenAnimation.task;
     }
-    if (animationTask !== ChartAnimationTask.TENDENCY && animationTask !== ChartAnimationTask.EMPHASIZE && animationTask !== ChartAnimationTask.COMPARISON && animationType !== ChartAnimationType.RECONFIGURE_ORDER) {
+    if (animationTask !== ChartAnimationTask.TEMPORAL && animationTask !== ChartAnimationTask.EMPHASIZE && animationTask !== ChartAnimationTask.COMPARE && animationType !== ChartAnimationType.RECONFIGURE_ORDER) {
         // no highlight
         return;
     }
@@ -67,7 +67,7 @@ const draw = (props) => {
             des += " with the " + choosenAnimation.spec.value2 + " value in the " + choosenAnimation.spec.channel + " channel in the " + choosenAnimation.spec.series2 + " series";
             choosenAnimation.description = des;
         }
-    }else if(animationType === ChartAnimationType.DATA_TREND || animationType === ChartAnimationType.REGRESSION || animationType === ChartAnimationType.EMPHASIZE_SERIES || animationType === ChartAnimationType.COMPARE_SERIES || animationType === ChartAnimationType.EMPHASIZE_EXTREME || animationType === ChartAnimationType.COMPARE_EXTREMES){
+    }else if(animationType === ChartAnimationType.TREND || animationType === ChartAnimationType.REGRESSION || animationType === ChartAnimationType.EMPHASIZE_SERIES || animationType === ChartAnimationType.COMPARE_SERIES || animationType === ChartAnimationType.EMPHASIZE_EXTREME || animationType === ChartAnimationType.COMPARE_EXTREMES){
         let hoverSeries = "all";
 
         if(!('color' in encoding) || _.isEmpty(encoding.color)){
@@ -107,7 +107,7 @@ const draw = (props) => {
         }
 
         switch (animationType) {
-            case ChartAnimationType.DATA_TREND:
+            case ChartAnimationType.TREND:
                 choosenAnimation.spec.series = hoverSeries;
                 choosenAnimation.description = "Show data trend of "+ choosenAnimation.spec.series +" series";
                 break;

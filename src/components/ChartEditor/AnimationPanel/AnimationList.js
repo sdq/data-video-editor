@@ -11,7 +11,7 @@ export default class AnimationList extends Component {
         let taskAnimations = []
         for (const task in animations) {
             taskAnimations.push(
-                <Row key={task} style={{ height: 50 }}> 
+                <Row key={task} style={{ height: 35 }}> 
                     <Col span={8}><h4 style={{marginLeft: 12}}>{task}</h4></Col>
                     <Col span={16}>
                      {animations[task].map((animation, index) => {

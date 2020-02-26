@@ -1,6 +1,8 @@
 export default {
-    TENDENCY: 'Tendency',
+    TEMPORAL: 'Temporal',
+    COMPARE : 'Compare',
     EMPHASIZE : 'Emphasize',
-    COMPARISON : 'Comparison',
-    RECONFIGURATION : 'Reconfiguration',
+    GRANULARITY : 'Granularity',
+    CAUSAL : 'Causal',
+    STYLE : 'Style',
 }

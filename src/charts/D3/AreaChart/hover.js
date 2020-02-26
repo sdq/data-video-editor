@@ -21,7 +21,7 @@ const draw = (props) => {
         animationType = choosenAnimation.type;
         animationTask = choosenAnimation.task;
     }
-    if (animationTask !== ChartAnimationTask.TENDENCY && animationTask !== ChartAnimationTask.EMPHASIZE && animationTask !== ChartAnimationTask.COMPARISON && animationType !== ChartAnimationType.RECONFIGURE_ORDER) {
+    if (animationTask !== ChartAnimationTask.TEMPORAL && animationTask !== ChartAnimationTask.EMPHASIZE && animationTask !== ChartAnimationTask.COMPARE && animationType !== ChartAnimationType.RECONFIGURE_ORDER) {
         // no highlight
         return;
     }
@@ -78,7 +78,7 @@ const draw = (props) => {
         y: y.invert(pointScreen.y)
     }
 
-    if (animationType === ChartAnimationType.DATA_TREND || animationType === ChartAnimationType.EMPHASIZE_SERIES || animationType === ChartAnimationType.COMPARE_SERIES || animationType === ChartAnimationType.EMPHASIZE_EXTREME) {
+    if (animationType === ChartAnimationType.TREND || animationType === ChartAnimationType.EMPHASIZE_SERIES || animationType === ChartAnimationType.COMPARE_SERIES || animationType === ChartAnimationType.EMPHASIZE_EXTREME) {
         let hoverSeries = new Set();
         if (hasSeries) {
             areaPath
@@ -106,7 +106,7 @@ const draw = (props) => {
         }
 
         switch (animationType) {
-            case ChartAnimationType.DATA_TREND:
+            case ChartAnimationType.TREND:
                 choosenAnimation.spec.series = hoverSeries;
                 choosenAnimation.description = "Show data trend of " + choosenAnimation.spec.series + " series";
                 break;

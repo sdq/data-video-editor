@@ -149,7 +149,7 @@ const draw = (props) => {
         animationType = choosenAnimation.type;
         animationTask = choosenAnimation.task;
     }
-    if (animationTask !== ChartAnimationTask.EMPHASIZE && animationTask !== ChartAnimationTask.COMPARISON && animationType !== ChartAnimationType.RECONFIGURE_ORDER) {
+    if (animationTask !== ChartAnimationTask.EMPHASIZE && animationTask !== ChartAnimationTask.COMPARE && animationType !== ChartAnimationType.RECONFIGURE_ORDER) {
         // no highlight
         return;
     }

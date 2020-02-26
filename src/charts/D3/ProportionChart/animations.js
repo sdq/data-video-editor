@@ -2,10 +2,10 @@ import ChartAnimationTask from '../ChartAnimationTask';
 import ChartAnimationType from '../ChartAnimationType';
 
 const animations = {
-    "Tendency": [
+    "Temporal": [
         {
-            type: ChartAnimationType.DATA_TREND,
-            task: ChartAnimationTask.TENDENCY,
+            type: ChartAnimationType.TREND,
+            task: ChartAnimationTask.TEMPORAL,
             title: "Data Trend",
             description: "Show data trend of all series",
             duration: 10000,
@@ -16,7 +16,37 @@ const animations = {
             }
         },
     ],
-    "Emphasize": [
+    "Compare": [
+        {
+            type: ChartAnimationType.COMPARE_EXTREMES,
+            task: ChartAnimationTask.COMPARE,
+            title: "Extremes",
+            description: "Compare the extreme values",
+            duration: 1000,
+            spec: {
+                series1: "",
+                extreme1: "max",
+                series2: "",
+                extreme2: "min",
+                effect: "juxtaposition" // juxtaposition
+            }
+        },
+        {
+            type: ChartAnimationType.COMPARE_VALUES,
+            task: ChartAnimationTask.COMPARE,
+            title: "Values",
+            description: "Compare between the values of category",
+            duration: 1000,
+            spec: {
+                series1: "",
+                category1: "",
+                series2: "",
+                category2: "",
+                effect: "juxtaposition" // juxtaposition
+            }
+        }
+    ],
+    "Emphasis": [
         {
             type: ChartAnimationType.EMPHASIZE_EXTREME,
             task: ChartAnimationTask.EMPHASIZE,
@@ -42,40 +72,10 @@ const animations = {
             }
         }
     ],
-    "Comparison": [
-        {
-            type: ChartAnimationType.COMPARE_EXTREMES,
-            task: ChartAnimationTask.COMPARISON,
-            title: "Extremes",
-            description: "Compare the extreme values",
-            duration: 1000,
-            spec: {
-                series1: "",
-                extreme1: "max",
-                series2: "",
-                extreme2: "min",
-                effect: "juxtaposition" // juxtaposition
-            }
-        },
-        {
-            type: ChartAnimationType.COMPARE_VALUES,
-            task: ChartAnimationTask.COMPARISON,
-            title: "Values",
-            description: "Compare between the values of category",
-            duration: 1000,
-            spec: {
-                series1: "",
-                category1: "",
-                series2: "",
-                category2: "",
-                effect: "juxtaposition" // juxtaposition
-            }
-        }
-    ],
-    "Reconfiguration": [
+    "Style": [
         {
             type: ChartAnimationType.RECONFIGURE_ORDER,
-            task: ChartAnimationTask.RECONFIGURATION,
+            task: ChartAnimationTask.STYLE,
             title: "Order",
             description: "Reconfigure the order to all series",
             duration: 1000,
