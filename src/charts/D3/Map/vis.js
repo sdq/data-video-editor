@@ -2,7 +2,7 @@ import * as d3 from 'd3';
 import chinaData from './geo/chinaGeo';
 import worldData from './geo/worldGeo';
 import usStateData from './geo/usStateGeo';
-import { getData, getMapType } from './helper';
+import { getData, getMapType, toPercent } from './helper';
 import _ from 'lodash';
 
 const mapParams = {
@@ -29,25 +29,18 @@ const draw = (props) => {
         a = '.vis-map';
     }
 
-    // const margin = { top: 10, right: 10, bottom: 10, left: 10 };
-    // const width = props.width - margin.left - margin.right;
-    // const height = props.height - margin.top - margin.bottom;
-
     // Get Encoding
     const encoding = props.spec.encoding;
-    //console.log("map encoding", encoding)
     // Process Data
     let parseData = props.data;
 
     //  获取地图类型
     let chartType = getMapType(parseData, encoding);
-    //console.log("parseData...chartType", chartType)
     let mapdata = {};
     let projection = d3.geoMercator();    // 默认地图投影
     if (!chartType) { //默认中国 
         mapdata = mapParams.ChinaMap
     } else {
-        //console.log("chartType...", chartType)
         if (chartType === 'ChinaMap') {
             mapdata = mapParams.ChinaMap
         } else if (chartType === 'WorldMap') {
@@ -66,7 +59,6 @@ const draw = (props) => {
         .attr("width", props.width)
         .attr("height", props.height)
         .append("g")
-    //.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     if (_.isEmpty(encoding) || !('area' in encoding) || _.isEmpty(encoding.area)) {
         svg.append("rect")
@@ -82,7 +74,6 @@ const draw = (props) => {
     //将读取到的数据存到数组values，令其索引号为各省的名称
     let values = encodingData.values;
     let encodingValue = Object.values(values);
-    //console.log("encodingValue",encodingValue)
 
     //求最大值和最小值
     let maxValue = 0;
@@ -90,27 +81,37 @@ const draw = (props) => {
     if (!_.isEmpty(encoding.color)) {
         maxValue = d3.max(encodingValue);
         minValue = d3.min(encodingValue);
-        //console.log("encoding.color.field ", isEnLanguage,encoding.color.field, "parseData ", parseData, " values ", values)
     }
-    //console.log("maxValue", maxValue, typeof maxValue, minValue, typeof minValue)
-    let middleValue = (parseInt(maxValue) + parseInt(minValue)) / 2;
-    //console.log("maxValue", maxValue)
-    //定义一个线性比例尺，将最小值和最大值之间的值映射到[0, 1]
-    let linear = d3.scaleLinear().domain([minValue, maxValue]).range([0, 1]);
 
     //定义最小值和最大值对应的颜色
-    let minColorValue = d3.rgb(31, 72, 233);  //蓝色
-    let maxColorValue = d3.rgb(192, 86, 36);    //黄色
-    //let color = d3.interpolate(minColorValue, maxColorValue);        //颜色插值函数
-    //颜色插值函数
-    let computeColor = d3.interpolate(minColorValue, maxColorValue);
+    let blueColor = d3.rgb(31, 72, 233);
+    let whiteColor = d3.rgb(255, 255, 255);
+    let redColor = d3.rgb(192, 86, 36);
 
+    let scale;
+    let isLogScale = false;
+    let computeColor;
+    if (minValue >= 0) { //如果都是大于0的数，就直接从白到红即可，不需要蓝色
+        computeColor = d3.interpolate(whiteColor, redColor);
+        let logScale = d3.scaleLog().domain([1, maxValue]); //默认值域range是[0, 1]
+        scale = logScale;
+        isLogScale = true;
+    } else if (minValue < 0 && maxValue >= 0) { //如果数据中有负数，有正数，取绝对值最大的值最大值，取相反数为最小值；负数为蓝，正数为红, 零为白色
+        computeColor = d3.interpolate(blueColor, redColor);
+        maxValue = Math.abs(minValue) >= maxValue ? Math.abs(minValue) : maxValue
+        minValue = -maxValue;
+        scale = d3.scaleLinear().domain([minValue, maxValue]);
+    } else {
+        computeColor = d3.interpolate(blueColor, redColor);
+        scale = d3.scaleLinear().domain([minValue, maxValue]);
+        //console.log("数值全负数。。。")
+    }
 
     // 定义地理路径生成器
     const path = d3.geoPath()
         .projection(projection);
 
-    //包含中国各省路径的分组元素
+    //路径的分组元素
     svg.selectAll('path')
         .data(mapdata.geoData.features)
         .enter()
@@ -119,41 +120,20 @@ const draw = (props) => {
         .attr('stroke-width', 1)
         .attr('fill', function (d, i) {
             let value;
-            if (chartType === 'USMap') { //
+            if (chartType === 'USMap') {
                 value = values[d.properties.name]
-                // console.log("USMap...",d.properties.name,values[d.properties.name])
             } else {
                 value = isEnLanguage ? values[d.properties.enName] : values[d.properties.name]; //中国与世界地图做中英文适配
             }
-            //console.log("设定各省份的填充色", d.properties.name, d.properties.enName, "数据", values[d.properties.enName])
             if (!value) return 'rgb(227, 228, 229)' //不存在数据的国家，显示灰色
             //设定各省份的填充色
-            let t = linear(value);
-            let color = computeColor(t);
-            //console.log('设定各省份的填充色',d.properties.name,color)
+            let color = computeColor(scale(value));
+            //console.log("logScale", d.properties.name,value,scale(value),color)
             return color.toString()
         })
         .attr('d', path)
-    // .on("mouseover", function (d, i) {
-    //     d3.select(this)
-    //         .attr("fill", "yellow");
-    // })
-    // .on("mouseout", function (d, i) {
-    //     //恢复各省份的填充色
-    //     let value = values[d.properties.name]
-    //     if (!value) {
-    //         d3.select(this)
-    //             .attr("fill", 'rgb(227, 228, 229)');//不存在数据的国家，显示灰色
-    //     } else {
-    //         let t = linear(values[d.properties.name]);
-    //         let color = computeColor(t);
-    //         d3.select(this)
-    //             .attr("fill", color.toString());
-    //     }
-    // });
 
 
-    //console.log("encoding.color", !_.isEmpty(encoding.color))
     if (!_.isEmpty(encoding.color)) {
         //定义一个线性渐变
         var defs = svg.append("defs");
@@ -167,15 +147,17 @@ const draw = (props) => {
 
         linearGradient.append("stop")
             .attr("offset", "0%")
-            .style("stop-color", minColorValue.toString());
+            .style("stop-color", computeColor(scale(minValue)));
 
-        linearGradient.append("stop")
-            .attr("offset", "50%")
-            .style("stop-color", 'rgb(255, 255, 255)');
+        if (!isLogScale) {
+            linearGradient.append("stop")
+                .attr("offset", '50%')
+                .style("stop-color", whiteColor);
+        }
 
         linearGradient.append("stop")
             .attr("offset", "100%")
-            .style("stop-color", maxColorValue.toString());
+            .style("stop-color", computeColor(scale(maxValue)));
 
         //添加一个矩形，并应用线性渐变
         svg.append("rect")
@@ -195,15 +177,51 @@ const draw = (props) => {
                 return minValue;
             });
 
-        svg.append("text")
-            .attr("class", "valueText")
-            .attr("x", (props.width / 2) - 10) //字离中间矩形往左偏移10
-            .attr("y", props.width - rectMarginBottom + 50) //字离下侧矩形偏移50
-            .attr("dy", "-0.3em")
-            .text(function () {
-                return middleValue;
-            });
+        if (isLogScale) {
+            //中间是1,10,100...
+            let middleCount = 0;
+            let firstText = 1;
+            let countMin = minValue;
+            while (countMin >= 1) { //找第一个点
+                firstText *= 10;
+                countMin /= 10;
+            }
+            if (firstText > 1 && minValue !== 1) {
+                middleCount++;
+            }
 
+            let afterFirstText = firstText;
+            while (afterFirstText < maxValue) {
+                afterFirstText *= 10;
+                middleCount++;
+            }
+
+            //绘制中间的数值
+            let totalCount = middleCount + 1;//将矩形的宽度totalCount等分
+            let currentCount = 1;
+            while (middleCount--) {
+                svg.append("text")
+                    .attr("class", "valueText")
+                    .attr("x", (props.width - rectWidth) / 2 + (currentCount / totalCount) * rectWidth - 10) //字离中间矩形往左偏移10
+                    .attr("y", props.width - rectMarginBottom + 50) //字离下侧矩形偏移50
+                    .attr("dy", "-0.3em")
+                    .text(function () {
+                        return firstText;
+                    });
+                currentCount++;
+                firstText *= 10
+            }
+        } else {
+            //零的位置
+            svg.append("text")
+                .attr("class", "valueText")
+                .attr("x", (props.width / 2) - 10) //字离中间矩形往左偏移10
+                .attr("y", props.width - rectMarginBottom + 50) //字离下侧矩形偏移50
+                .attr("dy", "-0.3em")
+                .text(function () {
+                    return 0;
+                });
+        }
         svg.append("text")
             .attr("class", "valueText")
             .attr("x", ((props.width - rectWidth) / 2 + rectWidth) - 10) //字离右侧矩形往左偏移10
