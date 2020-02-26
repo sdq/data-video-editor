@@ -17,24 +17,23 @@ class MusicTargetArea extends Component {
         const windowinnerWidth =window.innerWidth;
 
 
+        //当宽高同时变化，按照最小的scale缩放
         const canvasW = this.props.contentWidth;
         const canvasH = this.props.contentHeight-100;
-
-        //当宽高同时变化，按照最小的scale缩放
         const scaleX = canvasW/800;
         const scaleY = canvasH/450;
+        //const scale = scaleX>scaleY?scaleY:scaleX;
         //获取现在画布的真实大小
         var fakeWidth = 0;
-       // var fakeHeight = 0;
+        var fakeHeight = 0;
         if(scaleX>scaleY){
             fakeWidth = 800*canvasH/450;
-            //fakeHeight = canvasH;
+            fakeHeight = canvasH;
         }else {
             fakeWidth = canvasW;
-            //fakeHeight = canvasW*450/800;
+            fakeHeight = canvasW*450/800;
         }
-        
-
+    
 
         const isActive = canDrop && isOver;
         let backgroundColor = '#fff';
@@ -51,6 +50,7 @@ class MusicTargetArea extends Component {
                 height: 50, 
                 width: windowinnerWidth,
                 marginLeft:-(windowinnerWidth-fakeWidth-660)/2,
+                marginTop:(canvasH-fakeHeight)/2,
                 border:"dotted 2px black",
                 }}>
                     {/* <p>music here</p> */}
