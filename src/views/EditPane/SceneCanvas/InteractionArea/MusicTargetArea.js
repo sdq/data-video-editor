@@ -33,7 +33,6 @@ class MusicTargetArea extends Component {
             fakeWidth = canvasW;
             fakeHeight = canvasW*450/800;
         }
-    
 
         const isActive = canDrop && isOver;
         let backgroundColor = '#fff';
@@ -45,12 +44,14 @@ class MusicTargetArea extends Component {
         }
         return connectDropTarget(
             <div style={{ 
+                position:"absolute",
+                zIndex:6,
                 backgroundColor: backgroundColor, 
                 opacity: 0.4, 
                 height: 50, 
-                width: windowinnerWidth,
+                width: canvasW,
                 marginLeft:-(windowinnerWidth-fakeWidth-660)/2,
-                marginTop:(canvasH-fakeHeight)/2,
+                marginTop:fakeHeight+(canvasH-fakeHeight)/2,
                 border:"dotted 2px black",
                 }}>
                     {/* <p>music here</p> */}

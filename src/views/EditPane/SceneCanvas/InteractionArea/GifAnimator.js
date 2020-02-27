@@ -26,6 +26,7 @@ export default class GifAnimator extends Component {
                     left: this._gifInfo.x*scale,
                     transformOrigin:"left top",
                     transform:"rotate("+rotation+"deg)",
+                    overflow:"hidden",
                 }}
                 src={this._gifInfo.src}
                 alt={this._gifInfo.name}>
