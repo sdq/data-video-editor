@@ -44,7 +44,7 @@ class ResourceTargetArea extends Component {
                 opacity: 0.4, 
                 height: fakeHeight, 
                 width: fakeWidth, 
-                zIndex:1,
+                zIndex:6,
                 border:"dotted 2px black", }}/>
         )
     }

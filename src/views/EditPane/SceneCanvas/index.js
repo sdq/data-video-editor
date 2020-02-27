@@ -6,6 +6,7 @@ import BackgroundLayer from './BackgroundLayer';
 import AnimationLayer from './AnimationLayer';
 import PathLayer from './PathLayer';
 import ElementType from '@/constants/ElementType';
+import MusicTargetArea from '@/views/EditPane/SceneCanvas/InteractionArea/MusicTargetArea';
 import './scenecanvas.css';
 
 export default class EditCanvas extends Component {
@@ -177,7 +178,8 @@ export default class EditCanvas extends Component {
 
     render() {
         //isPerforming判断是否在播放，showPathLayer用于anicard拖拽管理，isElementSelected判断是否有元素被选中,判断选中的元素是否含有path动画
-        const { showResourcePane, showToolPane} = this.props;
+        const { showResourcePane, showToolPane,showMusicTargetArea} = this.props;
+        
         const { isPerforming,showPathLayer, isCleanInterationLayer} = this.props; 
         const canvasW = this.props.contentWidth;
         const canvasH = this.props.contentHeight-100;
@@ -261,6 +263,7 @@ export default class EditCanvas extends Component {
                 }
             } 
                  >
+
                 {editable?
                 <InteractionArea 
                     showTextEditor={showTextEditor}
@@ -270,8 +273,10 @@ export default class EditCanvas extends Component {
                     showAssistLines={showAssistLines} 
                     dynamicAssistLines = {this.state.dynamicAssistLines}
                     {...this.props}
-                />: 
-                null}
+                />: null}
+
+                {showMusicTargetArea?<MusicTargetArea {...this.props}/>:null}
+                
                 <Stage 
                     ref={ref => { this.stageRef = ref; }}
                     //控制画布缩放，限定大于800*450时
@@ -290,6 +295,7 @@ export default class EditCanvas extends Component {
                     {!isPerforming&&showPathLayer&&this.props.isElementSelected?pathLayer:null}
                     {isPerforming?animationLayer:null}
                 </Stage>
+  
                </div>
         )
     }
