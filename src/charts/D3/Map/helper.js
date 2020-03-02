@@ -6,6 +6,11 @@ import usStateData from './geo/usStateGeo';
 //验证是否是中文
 var pattern = new RegExp("[\u4E00-\u9FA5]+");
 
+function toPercent(point){
+    var str=Number(point*100).toFixed(1);
+    str+="%";
+    return str;
+}
 
 const getData = (rawData, encoding) => {
     let obj = {
@@ -309,4 +314,4 @@ const getAggregatedRows = (rawData, encoding) => {
     return data;
 }
 
-export { getCategories, getSeries, getAreaData, getStackedData, getAggregatedRows, getMaxRows, getSeriesValue, getData, getMapType }
+export { getCategories, getSeries, getAreaData, getStackedData, getAggregatedRows, getMaxRows, getSeriesValue, getData, getMapType, toPercent }
