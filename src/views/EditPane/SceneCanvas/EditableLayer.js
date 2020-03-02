@@ -206,8 +206,8 @@ export default class EditableLayer extends Component {
             default: //gif video image
                 newEle.info().width = originWidth * e.target.scaleX();
                 newEle.info().height = originHeight * e.target.scaleY();
-                newEle.info().scaleX = e.target.scaleX();
-                newEle.info().scaleY = e.target.scaleY();
+                // newEle.info().scaleX = e.target.scaleX();
+                // newEle.info().scaleY = e.target.scaleY();
                 newEle.info().rotation = e.target.rotation();
                 this.editElement(index, newEle);
                 return;

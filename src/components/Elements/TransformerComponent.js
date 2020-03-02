@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Transformer } from 'react-konva';
-import { message } from 'antd';
 import Color from '@/constants/Color';
 
 export default class TransformerComponent extends Component {
@@ -40,11 +39,7 @@ export default class TransformerComponent extends Component {
 
         this.transformer.getLayer().batchDraw();
     }
-    componentWillUpdate() {
-        if (this.preWidth !== this.currentWidth && this.currentWidth === 50) {
-            message.info("Width is limited!")
-        }  
-    }
+
     setMinimumWidth(oldBox, newBox) {
         this.preWidth = this.currentWidth;
         newBox.width = Math.max(50, newBox.width); //限制宽度
