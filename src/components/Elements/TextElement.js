@@ -3,13 +3,13 @@ import { Text, Group } from 'react-konva';
 import Color from '@/constants/Color';
 import { AnimationCreator } from '@/animation';
 
+let textRealHeight;
 export default class TextElement extends Component {
     constructor(props) {
         super(props);
         this.state = {
             isDragging: false,
-            text: props.element.info().text,
-            textWidth: this.props.element.info().width,
+            text: props.element.info().text
         };
         this.dragstart = this.dragstart.bind(this);
         this.dragmove = this.dragmove.bind(this);
@@ -20,6 +20,10 @@ export default class TextElement extends Component {
     }
 
     componentDidMount() {
+        //页面加载后动态根据宽度更新高度
+        textRealHeight = this.textref.getHeight(); 
+        this.props.element.info().height = textRealHeight;
+
         const animations = this.props.element.animations(); 
         if (this.props.showAnimation && animations.length !== 0) {
             let animationCreator = new AnimationCreator(this.textref);
@@ -53,35 +57,44 @@ export default class TextElement extends Component {
     }
 
     onTransform(e) {
-        // let originWidth = this.originWidth;
-        // let originHeight = this.originHeight;
-        // this.props.transforming(e,originWidth,originHeight);
+        textRealHeight = this.textref.getHeight();
         let scaleX = this.textNode.attrs.scaleX;
         let width = this.textNode.attrs.width;
         // reset scale, so only with is changing by transformer
         this.textNode.setAttrs({
             width: scaleX * width,
+            height: textRealHeight,
             scaleX: 1
         });
-        this.setState({
-            textWidth: width
-        })
+        this.textref.setAttrs({
+            width: scaleX * width,
+            scaleX: 1
+        }); 
         this.props.transforming(e);
      }
 
     onTransformEnd(e) {
-        let index = this.props.elementIndex;
-        let originWidth = this.originWidth;
-        let originHeight = this.originHeight;
-        this.props.transformEnding(e,index,originWidth,originHeight);
+        textRealHeight = this.textref.getHeight();
+        let scaleX = this.textNode.attrs.scaleX;
+        let width = this.textNode.attrs.width;
+        // reset scale, so only with is changing by transformer
+        this.textNode.setAttrs({
+            width: scaleX * width,
+            height: textRealHeight,
+            scaleX: 1
+        });
+        this.textref.setAttrs({
+            width: scaleX * width,
+            scaleX: 1
+        }); 
+        this.props.transformEnding(e);
     }
-
     render() {
 
         return (
             <Group name={this.props.name}
                 ref={node => this.textNode = node}
-                width={this.state.textWidth}         
+                width={this.props.element.info().width}         
                 draggable = {this.props.draggable}
                 x={this.props.element.info().x}
                 y={this.props.element.info().y}
@@ -121,9 +134,7 @@ export default class TextElement extends Component {
                     textDecoration = {this.props.element.info().textDecorationLine}//can be line-through, underline or empty string. Default is empty string. 
                     opacity = {this.props.element.info().opacity}
                     align = {this.props.element.info().textAlign}
-                    // width = {this.props.element.info().width}
-                    //height = {this.props.element.info().height} 
-                    width={this.state.textWidth}
+                    width={this.props.element.info().width}
                 />
             </Group>
             

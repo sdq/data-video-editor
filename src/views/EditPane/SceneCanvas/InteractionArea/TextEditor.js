@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 let offsetX = 0.0;  //offset in browers，不同浏览器不同，每一次刷新都不同
 let offsetY = 0.0;  //offset in browers
 //let offsetW = 20;   //offset between textelement and texteditor，不同浏览器不同
-//let offsetH = 0;    //offset between textelement and texteditor
+let offsetH = 10;    //by gmj 确认需要 offset between textelement and texteditor
 
 export default class TextEditor extends Component {
     constructor(props) {
@@ -14,10 +14,12 @@ export default class TextEditor extends Component {
             currentTextId:this.props.currentElement.id(),
             isShowTextArea:this.props.showTextEditor,
         };
+        this.isTextChanged = false
     }
 
     onTextChange(e)
     {
+        this.isTextChanged = true;
         this.setState({text:e.target.value}); 
         for (let i=0;i<Object.keys(this.props.currentElements).length;i++){
                 if(this.props.currentElements[i].id()===this.state.currentTextId){
@@ -31,12 +33,17 @@ export default class TextEditor extends Component {
                 }       
         }     
     }
-    componentWillUnmount(){
+    //由交互层到编辑层
+    componentWillUnmount(){ 
         const newScene = Object.assign({},this.props.currentScene);
-        let newWidth = parseInt(this.textarea.style.width.split('px')[0]) 
-        let newHeight = parseInt(this.textarea.style.height.split('px')[0])
-        this.props.currentElement.info().width = newWidth ;
-        this.props.currentElement.info().height = newHeight;
+        let realWidth = parseInt(this.textarea.style.width.split('px')[0]) 
+        let realHeight = parseInt(this.textarea.style.height.split('px')[0]) 
+        this.props.currentElement.info().width = realWidth;
+        if(this.isTextChanged){
+            this.props.currentElement.info().height = realHeight;//真实的高度
+        }else{
+            this.props.currentElement.info().height = realHeight - offsetH; //为了显示的，增加了offsetH。现在要恢复
+        }
         this.props.updateScene(this.props.sceneIndex, newScene);   
     }
 
@@ -100,10 +107,9 @@ export default class TextEditor extends Component {
             //假如换行的是英文，那么换行时就会出现跳行偏差
 
 
-            //高度偏差
-            //offsetH = 10; //应该也是不同设备不相同，普通笔记本先设为10
+       
 
-
+       
         return (
              <div className="TextEditor" style={{display: (this.state.isShowTextArea) ? "block" : "none"}} > 
              <textarea
@@ -128,11 +134,13 @@ export default class TextEditor extends Component {
               //width:(this.props.currentElement) ? (this.props.currentElement.info().width+offsetW+offwidth)*scale: 0, 
               //height: this.textarea?this.textarea.scrollHeight: (this.props.currentElement) ? (this.props.currentElement.info().height + offsetH) * scale : 0,
               width:(this.props.currentElement) ? (this.props.currentElement.info().width ): 0, 
-              height: this.textarea?this.textarea.scrollHeight: (this.props.currentElement) ? (this.props.currentElement.info().height ) : 0,
-              fillOpacity:0.5
+              height: this.textarea?this.textarea.scrollHeight: (this.props.currentElement) ? (this.props.currentElement.info().height+ offsetH ) : 0,
+              fillOpacity:0.5,
+              padding:'0px',
+              margin:'0px',
+              overflow:'hidden'
             }}
             autoFocus  //自动获取焦点 
-            //cursor={1} //设置光标 no use
             spellCheck ={false}//关闭拼写检查
             value = {this.state.text}
             onChange={(value) => {this.onTextChange(value)}}
